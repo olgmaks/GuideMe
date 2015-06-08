@@ -1,1 +1,3 @@
-aaaaaaaaaaaaaaa
+<<<<<<< .mine
+vova=======
+aaaaaaaaaaaaaaa>>>>>>> .r9
