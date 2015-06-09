@@ -1,6 +1,7 @@
 package com.epam.gm.olgmaks.absractdao.transformer;
 
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
+import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
 import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 import com.epam.gm.olgmaks.absractdao.crudoperation.GetHelper;
@@ -67,7 +68,7 @@ public class ResultTransformer<T> {
 
         try {
             t = clazz.newInstance();
-//            System.out.println(clazz.getAnnotation(Entity.class));
+            System.out.println(clazz.getAnnotation(Entity.class));
             for (Field field : fields) {
                 field.setAccessible(true);
                 String columnLabel = new String();
