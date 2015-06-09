@@ -241,6 +241,9 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
 			String propertyName = field.getName();
 			Object paramVal = null;
 			
+			
+			
+			
 			System.out.println("propertyName = " + propertyName);
 			
 			Class<?> clazzField = field.getType();

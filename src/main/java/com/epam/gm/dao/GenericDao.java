@@ -5,6 +5,8 @@ import java.util.Map;
 
 public interface GenericDao<T>  {
 	
+	
+	
 	public void save(T t) throws Exception;
 	
 	public void delete(Object id,Class<T> clazz) throws Exception;
