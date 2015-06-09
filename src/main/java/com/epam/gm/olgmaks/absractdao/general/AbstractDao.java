@@ -27,7 +27,7 @@ public class AbstractDao<T> implements IDao<T> {
         this.connection = connection;
         this.clazz = clazz;
         transformer = new ResultTransformer<T>(connection, clazz);
-        dataBaseTableName = clazz.getAnnotation(Entity.class).value();
+		dataBaseTableName = clazz.getAnnotation(Entity.class).value();
         deleteHelper = new DeleteHelper<T>(connection, clazz);
         getHelper = new GetHelper<>(connection, clazz);
 

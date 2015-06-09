@@ -11,30 +11,30 @@ import java.sql.SQLException;
  */
 public class GetHelper<T> extends AbstractHelper<T> {
 
-    private T t;
+	private T t;
 
-    public GetHelper(Connection connection, Class<T> clazz) {
-        super(connection, clazz);
-    }
+	public GetHelper(Connection connection, Class<T> clazz) {
+		super(connection, clazz);
+	}
 
+	public PreparedStatement getByFieldName(String fieldName, Object fieldValue)
+			throws SQLException {
 
+		String sql = String.format(IDao.SELECT + " where %S=?", tableName,
+				fieldName);
 
-    public PreparedStatement getByFieldName(String fieldName, Object fieldValue)
-            throws SQLException {
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setObject(1, fieldValue);
 
-        String sql = String.format(IDao.SELECT + " where %S=?", tableName, fieldName);
-        System.out.println(sql);
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setObject(1, fieldValue);
+		return statement;
+	}
 
-        return statement;
-    }
-
-    //Query should start with "from ... " statement
-    public PreparedStatement getWithSpecialQuery (String sqlWithRestrictions) throws SQLException {
-        String baseSelect = "SELECT * %S";
-        String sql = String.format(baseSelect,sqlWithRestrictions);
-        PreparedStatement statement = connection.prepareStatement(sql);
-        return statement;
-    }
+	// Query should start with "from ... " statement
+	public PreparedStatement getWithSpecialQuery(String sqlWithRestrictions)
+			throws SQLException {
+		String baseSelect = "SELECT * %S";
+		String sql = String.format(baseSelect, sqlWithRestrictions);
+		PreparedStatement statement = connection.prepareStatement(sql);
+		return statement;
+	}
 }
