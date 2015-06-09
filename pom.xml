@@ -4,6 +4,18 @@
   <artifactId>GuideMe</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
+  
+  
+  
+      <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.6</version>
+        </dependency>
+
+    </dependencies>
+  
   <build>
     <testSourceDirectory>src/main/test</testSourceDirectory>
     <plugins>
