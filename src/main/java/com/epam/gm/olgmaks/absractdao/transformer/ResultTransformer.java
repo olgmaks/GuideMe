@@ -68,12 +68,13 @@ public class ResultTransformer<T> {
 
         try {
             t = clazz.newInstance();
-            System.out.println(clazz.getAnnotation(Entity.class));
+//            System.out.println(clazz.getAnnotation(Entity.class));
             for (Field field : fields) {
                 field.setAccessible(true);
                 String columnLabel = new String();
                 if (field.isAnnotationPresent(Column.class) && !field.isAnnotationPresent(OneToMany.class)) {
                     columnLabel = field.getAnnotation(Column.class).value();
+//                    System.out.println("col label = "  + columnLabel);
                     try {
                         field.set(t, rs.getObject(columnLabel));
                     } catch (IllegalArgumentException | IllegalAccessException
@@ -83,35 +84,26 @@ public class ResultTransformer<T> {
 
                 }
             }
-
+    
             for (Field referencedField : referencedFields) {
+        	
                 referencedField.setAccessible(true);
 
 //                String id = referencedField.getAnnotation(Column.class).value();
+		
+                String mappedBy = referencedField.getAnnotation(ForeignKey.class).value();
+                String foreignKey = referencedField.getAnnotation(OneToMany.class).field();
 
-                String mappedBy = null;
-                String foreignKey = null;
-                for (Field field : referencedField.getType().getDeclaredFields()) {
-                    if (field.isAnnotationPresent(ForeignKey.class)) {
-//                        for (Field field1 : field.getAnnotation(OneToMany.class).value().getDeclaredFields()) {
-//                            if (field.isAnnotationPresent(ForeignKey.class)) {
-//                        foreignKey = referencedField.getAnnotation(Column.class).value();
-                        mappedBy = field.getAnnotation(ForeignKey.class).value();
-                        foreignKey =field.getAnnotation(Column.class).value();
-//                            }
-//                        }
-                    }
-                }
 
-                Object currentKey = rs.getObject(mappedBy);
-//                System.out.println(clazz + "mapped by " + mappedBy);
+                Object currentKey = rs.getObject(foreignKey);
+//                System.out.println(clazz + "mappedBy " + mappedBy);
 //                System.out.println(clazz + "  foreignKey=" + foreignKey);
 //                System.out.println(clazz + "  currentKey=" + currentKey);
 
                 Class<?> referencedFieldClass = referencedField.getType();
                 GetHelper<?> getHelper = new GetHelper<>(connection, referencedFieldClass);
                 PreparedStatement preparedStatement = getHelper.
-                        getByFieldName(foreignKey, currentKey);
+                        getByFieldName(mappedBy, currentKey);
                 ResultTransformer<?> resultTransformer =
                         new ResultTransformer<>(connection, referencedFieldClass);
                 referencedField.set(t, resultTransformer.

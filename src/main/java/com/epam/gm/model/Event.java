@@ -9,7 +9,7 @@ import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("event")
 public class Event {
-    @ForeignKey("event_id")
+    
     @Column("id")
     private Integer id;
     @Column("name")
@@ -25,11 +25,14 @@ public class Event {
     @Column("moderator_id")
     private Integer moderatorId;
 
-    @OneToMany(User.class)
+    @ForeignKey("id")
+    @OneToMany(field = "moderator_id", value = User.class)
     private User moderator;
     @Column("status")
     private String status;
-    @OneToMany(Address.class)
+    
+    @ForeignKey("id")
+    @OneToMany(field = "address_id", value = Address.class)
     private Address address;
 
     public Address getAddress() {

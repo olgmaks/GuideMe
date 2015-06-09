@@ -1,7 +1,10 @@
 package com.epam.gm.model;
 
+import org.omg.CORBA.portable.ValueBase;
+
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
+import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
 import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 
@@ -11,15 +14,19 @@ public class UserInEvent {
 
     	@Column("id")
 	private Integer id;
+    	
 	@Column("user_id")
 	private Integer userId;
 	
-	@OneToMany(User.class)
+	@ForeignKey("id")
+	@OneToMany(field = "user_id",value= User.class)
 	private User user;
+	
 	@Column("event_id")
 	private Integer eventId;
 	
-	@OneToMany(Event.class)
+	@ForeignKey("id")
+	@OneToMany(field = "event_id",value= Event.class)
 	private Event event;
 	@Column("status")
 	private String status;
@@ -95,5 +102,16 @@ public class UserInEvent {
 	public void setIsMember(Boolean isMember) {
 		this.isMember = isMember;
 	}
+
+	@Override
+	public String toString() {
+	    return "UserInEvent [id=" + id + ", userId=" + userId + ", user="
+		    + user + ", eventId=" + eventId + ", event=" + event
+		    + ", status=" + status + ", bedCount=" + bedCount
+		    + ", foodCount=" + foodCount + ", carplaceCount="
+		    + carplaceCount + ", isMember=" + isMember + "]";
+	}
+	
+	
 
 }

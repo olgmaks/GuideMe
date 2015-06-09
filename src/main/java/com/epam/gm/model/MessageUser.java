@@ -3,6 +3,8 @@ package com.epam.gm.model;
 import com.epam.gm.model.annotation.ID;
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
+import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
+import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("message_user")
 public class MessageUser {
@@ -11,9 +13,15 @@ public class MessageUser {
     private Integer id;
     @Column("sender_id")
     private Integer senderId;
+    
+    @ForeignKey("id")
+    @OneToMany (field = "sender_id", value = User.class)
     private User sender;
     @Column("user_id")
     private Integer userId;
+    
+    @ForeignKey("id")
+    @OneToMany (field = "userr_id", value = User.class)
     private User user;
     @Column("message")
     private String message;

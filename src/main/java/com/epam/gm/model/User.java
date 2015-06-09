@@ -11,7 +11,6 @@ import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
 @Entity("User")
 public class User {
 
-    @ForeignKey("user_id")
     @Column("id")
     private Integer Id;
     @Column("last_name")

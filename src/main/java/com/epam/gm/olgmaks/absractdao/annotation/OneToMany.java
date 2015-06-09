@@ -8,6 +8,6 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface OneToMany {
+    public String field();
     public Class value();
-
 }
