@@ -1,24 +1,31 @@
 package com.epam.gm.model;
 
-import com.epam.gm.model.annotation.Column;
-import com.epam.gm.model.annotation.Entity;
-import com.epam.gm.model.annotation.ID;
+import com.epam.gm.olgmaks.absractdao.annotation.Column;
+import com.epam.gm.olgmaks.absractdao.annotation.Entity;
+import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
+
+
 
 @Entity("user_in_event")
 public class UserInEvent {
-	@ID("id")
+
+    	@Column("id")
 	private Integer id;
 	@Column("user_id")
 	private Integer userId;
+	
+	@OneToMany(User.class)
 	private User user;
 	@Column("event_id")
 	private Integer eventId;
+	
+	@OneToMany(Event.class)
 	private Event event;
 	@Column("status")
 	private String status;
 	@Column("bed_count")
 	private Integer bedCount;
-	@Column("feed_count")
+	@Column("food_count")
 	private Integer foodCount;
 	@Column("carplace_count")
 	private Integer carplaceCount;
