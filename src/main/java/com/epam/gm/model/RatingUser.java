@@ -9,8 +9,10 @@ public class RatingUser {
 	private Integer id;
 	@Column("estimator_id")
 	private Integer estimatorId;
+	private User estimator;
 	@Column("user_id")
 	private Integer userId;
+	private User user; 
 	@Column("mark")
 	private Integer mark;
 	public Integer getId() {

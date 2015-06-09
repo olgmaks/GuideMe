@@ -22,6 +22,7 @@ public class Event {
 	private Integer addressId;
 	@Column("moderator_id")
 	private Integer moderatorId;
+	private User moderator;
 	@Column("status")
 	private String status;
 	@OneToMany(Address.class)

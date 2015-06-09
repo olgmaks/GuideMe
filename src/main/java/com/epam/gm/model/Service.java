@@ -10,6 +10,7 @@ public class Service {
 	private Integer id;
 	@Column("guide_id")
 	private Integer guideId;
+	private User guide;
 	@Column("name")
 	private String name;
 	@Column("price")

@@ -10,8 +10,10 @@ public class UserLanguage {
 	private Integer id;
 	@Column("user_id")
 	private Integer userId;
+	private User user;
 	@Column("lang_id")
 	private Integer langId;
+	private Language lang;
 	public Integer getId() {
 		return id;
 	}

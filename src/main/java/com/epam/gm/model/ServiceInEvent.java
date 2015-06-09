@@ -19,8 +19,10 @@ public class ServiceInEvent {
 	private Time timeTo;
 	@Column("service_id")
 	private Integer serviceId;
+	private Service service; 
 	@Column("event_id")
 	private Integer eventId;
+	private Event event;
 
 	public Integer getId() {
 		return id;

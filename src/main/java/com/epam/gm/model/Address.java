@@ -16,6 +16,7 @@ public class Address {
 	@Column("city_id")
 	private Integer cityId;
 
+	private City city;
 	public Integer getId() {
 		return id;
 	}

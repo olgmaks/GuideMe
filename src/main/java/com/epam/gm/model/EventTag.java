@@ -8,10 +8,12 @@ import com.epam.gm.model.annotation.ID;
 public class EventTag {
 	@ID("id")
 	private Integer id;
+	private Event event;
 	@Column("event_id")
 	private Integer eventId;
 	@Column("tag_id")
 	private Integer tagId;
+	private Tag tag;
 
 	public Integer getId() {
 		return id;

@@ -12,6 +12,7 @@ public class RatingEvent {
 	private Integer estimatorId;
 	@Column("event_id")
 	private Integer eventId;
+	private Event event;
 	@Column("mark")
 	private Integer mark;
 

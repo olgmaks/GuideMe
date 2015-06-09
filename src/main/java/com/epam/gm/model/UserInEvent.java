@@ -10,8 +10,10 @@ public class UserInEvent {
 	private Integer id;
 	@Column("user_id")
 	private Integer userId;
+	private User user;
 	@Column("event_id")
 	private Integer eventId;
+	private Event event;
 	@Column("status")
 	private String status;
 	@Column("bed_count")

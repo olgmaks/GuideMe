@@ -13,8 +13,14 @@ public class CommentEvent {
 	private Date date;
 	@Column("commentator_id")
 	private Integer comentatorId;
+	
+	private User commentator;
+	
 	@Column("event_id")
 	private Integer eventId;
+	
+	private Event event;
+	
 	@Column("comment")
 	private String comment;
 	public Integer getId() {

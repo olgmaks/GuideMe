@@ -22,8 +22,10 @@ public class User {
 	private String sex;
 	@Column("user_type_id")
 	private Integer userTypeId;
+	private UserType userType;
 	@Column("lang_id")
 	private Integer langId;
+	private Language lang;
 	@Column("cell_number")
 	private String cellNumber;
 	@Column("facebook_id")
@@ -34,6 +36,7 @@ public class User {
 	private Boolean isActive;
 	@Column("address_id")
 	private Integer addressId;
+	private Address address;
 	@Column("password")
 	private String password;
 

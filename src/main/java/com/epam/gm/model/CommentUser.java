@@ -14,8 +14,11 @@ public class CommentUser {
 	private Date date;
 	@Column("commentator_id")
 	private Integer commentatorId;
+	
+	private User Commentator;
 	@Column("user_id")
 	private Integer userId;
+	private User user;
 	@Column("comment")
 	private String comment;
 

@@ -10,8 +10,10 @@ public class MessageEvent {
 	private Integer id;
 	@Column("sender_id")
 	private Integer senderId;
+	private User sender;
 	@Column("event_id")
 	private Integer eventId;
+	private Event event;
 	@Column("message")
 	private String message;
 

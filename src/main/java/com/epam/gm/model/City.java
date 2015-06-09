@@ -12,7 +12,9 @@ public class City {
 	private String name;
 	@Column("country_id")
 	private Integer countryId;
-
+	
+	private Country country;
+	
 	public Integer getId() {
 		return id;
 	}

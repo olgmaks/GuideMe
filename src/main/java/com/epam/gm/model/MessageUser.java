@@ -10,8 +10,10 @@ public class MessageUser {
 	private Integer id;
 	@Column("sender_id")
 	private Integer senderId;
+	private User sender;
 	@Column("user_id")
 	private Integer userId;
+	private User user; 
 	@Column("message")
 	private String message;
 
