@@ -1,75 +1,92 @@
 package com.epam.gm.model;
 
-import java.sql.Date;
 import java.sql.Time;
+import java.util.Date;
 
-import com.epam.gm.model.annotation.Column;
-import com.epam.gm.model.annotation.Entity;
-import com.epam.gm.model.annotation.ID;
+import com.epam.gm.olgmaks.absractdao.annotation.Column;
+import com.epam.gm.olgmaks.absractdao.annotation.Entity;
+import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
+import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("service_in_event")
 public class ServiceInEvent {
-	@ID("id")
-	private Integer id;
-	@Column("date")
-	private Date date;
-	@Column("time_from")
-	private Time timeFrom;
-	@Column("time_to")
-	private Time timeTo;
-	@Column("service_id")
-	private Integer serviceId;
-	private Service service; 
-	@Column("event_id")
-	private Integer eventId;
-	private Event event;
+    @Column("id")
+    private Integer id;
+    @Column("date")
+    private Date date;
+    @Column("time_from")
+    private Time timeFrom;
+    @Column("time_to")
+    private Time timeTo;
+    @Column("service_id")
+    private Integer serviceId;
 
-	public Integer getId() {
-		return id;
-	}
+    @ForeignKey
+    @OneToMany(field = "service_id", value = Service.class)
+    private Service service;
+    @Column("event_id")
+    private Integer eventId;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @ForeignKey
+    @OneToMany(field = "event_id", value = Event.class)
+    private Event event;
 
-	public Date getDate() {
-		return date;
-	}
+    public Integer getId() {
+	return id;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public Time getTimeFrom() {
-		return timeFrom;
-	}
+    public Date getDate() {
+	return date;
+    }
 
-	public void setTimeFrom(Time timeFrom) {
-		this.timeFrom = timeFrom;
-	}
+    public void setDate(Date date) {
+	this.date = date;
+    }
 
-	public Time getTimeTo() {
-		return timeTo;
-	}
+    public Time getTimeFrom() {
+	return timeFrom;
+    }
 
-	public void setTimeTo(Time timeTo) {
-		this.timeTo = timeTo;
-	}
+    public void setTimeFrom(Time timeFrom) {
+	this.timeFrom = timeFrom;
+    }
 
-	public Integer getServiceId() {
-		return serviceId;
-	}
+    public Time getTimeTo() {
+	return timeTo;
+    }
 
-	public void setServiceId(Integer serviceId) {
-		this.serviceId = serviceId;
-	}
+    public void setTimeTo(Time timeTo) {
+	this.timeTo = timeTo;
+    }
 
-	public Integer getEventId() {
-		return eventId;
-	}
+    public Integer getServiceId() {
+	return serviceId;
+    }
 
-	public void setEventId(Integer eventId) {
-		this.eventId = eventId;
-	}
+    public void setServiceId(Integer serviceId) {
+	this.serviceId = serviceId;
+    }
 
+    public Integer getEventId() {
+	return eventId;
+    }
+
+    public void setEventId(Integer eventId) {
+	this.eventId = eventId;
+    }
+
+    @Override
+    public String toString() {
+	return "ServiceInEvent [id=" + id + ", date=" + date + ", timeFrom="
+		+ timeFrom + ", timeTo=" + timeTo + ", serviceId=" + serviceId
+		+ ", service=" + service + ", eventId=" + eventId + ", event="
+		+ event + "]";
+    }
+
+    
+    
 }

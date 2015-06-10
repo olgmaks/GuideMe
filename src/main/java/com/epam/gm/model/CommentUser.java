@@ -1,72 +1,80 @@
 package com.epam.gm.model;
 
-import java.sql.Date;
+import java.util.Date;
 
-import com.epam.gm.model.annotation.Column;
-import com.epam.gm.model.annotation.Entity;
-import com.epam.gm.model.annotation.ID;
+import com.epam.gm.olgmaks.absractdao.annotation.Column;
+import com.epam.gm.olgmaks.absractdao.annotation.Entity;
+import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
+import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("comment_user")
 public class CommentUser {
-	@ID("id")
-	private Integer id;
-	@Column("date")
-	private Date date;
-	@Column("commentator_id")
-	private Integer commentatorId;
-	
-	private User Commentator;
-	@Column("user_id")
-	private Integer userId;
-	private User user;
-	@Column("comment")
-	private String comment;
+    @Column("id")
+    private Integer id;
+    @Column("date")
+    private Date date;
+    @Column("commentator_id")
+    private Integer commentatorId;
 
-	public Integer getId() {
-		return id;
-	}
+    @ForeignKey
+    @OneToMany(field="commentator_id",value= User.class)
+    private User Commentator;
+    @Column("user_id")
+    private Integer userId;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @ForeignKey
+    @OneToMany(field="user_id",value=User.class)
+    private User user;
+    @Column("comment")
+    private String comment;
 
-	public Date getDate() {
-		return date;
-	}
+    public Integer getId() {
+	return id;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public Integer getCommentatoId() {
-		return userId;
-	}
+    public Date getDate() {
+	return date;
+    }
 
-	public void setCommentatoId(Integer userId) {
-		this.userId = userId;
-	}
+    public void setDate(Date date) {
+	this.date = date;
+    }
 
-	public Integer getUserId() {
-		return userId;
-	}
+    public Integer getCommentatoId() {
+	return userId;
+    }
 
-	public void setCommentatorId(Integer commentatorId) {
-		this.commentatorId = commentatorId;
-	}
+    public void setCommentatoId(Integer userId) {
+	this.userId = userId;
+    }
 
-	public String getComment() {
-		return comment;
-	}
+    public Integer getUserId() {
+	return userId;
+    }
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+    public void setCommentatorId(Integer commentatorId) {
+	this.commentatorId = commentatorId;
+    }
 
-	@Override
-	public String toString() {
-		return "CommentUser [id=" + id + ", date=" + date + ", comentatoId="
-				+ userId + ", commentatorId=" + commentatorId
-				+ ", comment=" + comment + "]";
-	}
+    public String getComment() {
+	return comment;
+    }
+
+    public void setComment(String comment) {
+	this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+	return "CommentUser [id=" + id + ", date=" + date + ", commentatorId="
+		+ commentatorId + ", Commentator=" + Commentator + ", userId="
+		+ userId + ", user=" + user + ", comment=" + comment + "]";
+    }
+
+
 
 }

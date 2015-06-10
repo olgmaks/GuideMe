@@ -1,47 +1,62 @@
 package com.epam.gm.model;
 
-import com.epam.gm.model.annotation.Column;
-import com.epam.gm.model.annotation.Entity;
-import com.epam.gm.model.annotation.ID;
+import com.epam.gm.olgmaks.absractdao.annotation.Column;
+import com.epam.gm.olgmaks.absractdao.annotation.Entity;
+import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
+import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("user_tag")
 public class UserTag {
-	@ID("id")
-	private Integer id;
-	@Column("user_id")
-	private Integer userId;
-	private User user;
-	@Column("tag_id")
-	private Integer tagId;
-	private Tag tag; 
-	@Override
-	public String toString() {
-		return "UserTag [id=" + id + ", tagId=" + tagId + ", userId=" + userId
-				+ "]";
-	}
 
-	public Integer getId() {
-		return id;
-	}
+    @Column("id")
+    private Integer id;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Column("user_id")
+    private Integer userId;
 
-	public Integer getUserId() {
-		return userId;
-	}
+    @ForeignKey
+    @OneToMany(field = "user_id", value = User.class)
+    private User user;
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+    @Column("tag_id")
+    private Integer tagId;
 
-	public Integer getTagId() {
-		return tagId;
-	}
+    @ForeignKey
+    @OneToMany(field = "tag_id", value = Tag.class)
+    private Tag tag;
 
-	public void setTagId(Integer tagId) {
-		this.tagId = tagId;
-	}
+
+
+    @Override
+    public String toString() {
+	return "UserTag [" + (id != null ? "id=" + id + ", " : "")
+		+ (userId != null ? "userId=" + userId + ", " : "")
+		+ (tagId != null ? "tagId=" + tagId + ", " : "")
+		+ (tag != null ? "tag=" + tag : "") + "]";
+    }
+
+    public Integer getId() {
+	return id;
+    }
+
+    public void setId(Integer id) {
+	this.id = id;
+    }
+
+    public Integer getUserId() {
+	return userId;
+    }
+
+    public void setUserId(Integer userId) {
+	this.userId = userId;
+    }
+
+    public Integer getTagId() {
+	return tagId;
+    }
+
+    public void setTagId(Integer tagId) {
+	this.tagId = tagId;
+    }
 
 }

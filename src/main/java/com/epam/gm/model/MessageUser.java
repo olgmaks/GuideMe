@@ -1,6 +1,5 @@
 package com.epam.gm.model;
 
-import com.epam.gm.model.annotation.ID;
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
@@ -13,15 +12,15 @@ public class MessageUser {
     private Integer id;
     @Column("sender_id")
     private Integer senderId;
-    
+
     @ForeignKey("id")
-    @OneToMany (field = "sender_id", value = User.class)
+    @OneToMany(field = "sender_id", value = User.class)
     private User sender;
     @Column("user_id")
     private Integer userId;
-    
+
     @ForeignKey("id")
-    @OneToMany (field = "userr_id", value = User.class)
+    @OneToMany(field = "user_id", value = User.class)
     private User user;
     @Column("message")
     private String message;
@@ -58,4 +57,13 @@ public class MessageUser {
 	this.message = message;
     }
 
+    @Override
+    public String toString() {
+	return "MessageUser [id=" + id + ", senderId=" + senderId + ", sender="
+		+ sender + ", userId=" + userId + ", user=" + user
+		+ ", message=" + message + "]";
+    }
+
+    
+    
 }

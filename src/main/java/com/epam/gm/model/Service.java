@@ -1,57 +1,61 @@
 package com.epam.gm.model;
 
-import com.epam.gm.model.annotation.Column;
-import com.epam.gm.model.annotation.Entity;
-import com.epam.gm.model.annotation.ID;
+import com.epam.gm.olgmaks.absractdao.annotation.Column;
+import com.epam.gm.olgmaks.absractdao.annotation.Entity;
+import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
+import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("service")
 public class Service {
-	@ID("id")
-	private Integer id;
-	@Column("guide_id")
-	private Integer guideId;
-	private User guide;
-	@Column("name")
-	private String name;
-	@Column("price")
-	private Double price;
+    @Column("id")
+    private Integer id;
+    @Column("guide_id")
+    private Integer guideId;
 
-	public Integer getId() {
-		return id;
-	}
+    @ForeignKey
+    @OneToMany(field = "guide_id", value = User.class)
+    private User guide;
+    @Column("name")
+    private String name;
+    @Column("price")
+    private Double price;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+	return id;
+    }
 
-	public Integer getGuideId() {
-		return guideId;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public void setGuideId(Integer guideId) {
-		this.guideId = guideId;
-	}
+    public Integer getGuideId() {
+	return guideId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setGuideId(Integer guideId) {
+	this.guideId = guideId;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public Double getPrice() {
-		return price;
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
+    public Double getPrice() {
+	return price;
+    }
 
-	@Override
-	public String toString() {
-		return "Service [id=" + id + ", guideId=" + guideId + ", name=" + name
-				+ ", price=" + price + "]";
-	}
+    public void setPrice(Double price) {
+	this.price = price;
+    }
+
+    @Override
+    public String toString() {
+	return "Service [id=" + id + ", guideId=" + guideId + ", name=" + name
+		+ ", price=" + price + "]";
+    }
 
 }

@@ -1,29 +1,36 @@
 package com.epam.gm.model;
 
-import com.epam.gm.model.annotation.Column;
-import com.epam.gm.model.annotation.Entity;
-import com.epam.gm.model.annotation.ID;
+import com.epam.gm.olgmaks.absractdao.annotation.Column;
+import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 
 @Entity("tag")
 public class Tag {
-	@ID("id")
-	private Integer id;
-	@Column("name")
-	private String name;
 
-	public Integer getId() {
-		return id;
-	}
+    @Column("id")
+    private Integer id;
+    @Column("name")
+    private String name;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+	return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+	return name;
+    }
+
+    public void setName(String name) {
+	this.name = name;
+    }
+
+    @Override
+    public String toString() {
+	return "Tag [id=" + id + ", name=" + name + "]";
+    }
+    
+    
 }

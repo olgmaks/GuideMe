@@ -3,11 +3,11 @@ package com.epam.gm.model;
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
+import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("address")
 public class Address {
 
-	@ForeignKey(value = "address_id")
 	@Column("id")
 	private Integer id;
 	@Column("address")
@@ -15,6 +15,8 @@ public class Address {
 	@Column("city_id")
 	private Integer cityId;
 
+	@ForeignKey
+	@OneToMany(field="city_id",value=City.class)
 	private City city;
 	public Integer getId() {
 		return id;
@@ -42,8 +44,12 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return "Address [id=" + id + ", address=" + address + ", cityId="
-				+ cityId + "]";
+	    return "Address [" + (id != null ? "id=" + id + ", " : "")
+		    + (address != null ? "address=" + address + ", " : "")
+		    + (cityId != null ? "cityId=" + cityId + ", " : "")
+		    + (city != null ? "city=" + city : "") + "]";
 	}
+
+
 
 }

@@ -1,7 +1,5 @@
 package com.epam.gm.model;
 
-import org.omg.CORBA.portable.ValueBase;
-
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
