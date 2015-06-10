@@ -15,7 +15,7 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
        
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath()).append("HomePage");
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 		
 	}
 
