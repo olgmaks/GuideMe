@@ -1,11 +1,5 @@
 package com.epam.gm.olgmaks.absractdao.transformer;
 
-import com.epam.gm.olgmaks.absractdao.annotation.Column;
-import com.epam.gm.olgmaks.absractdao.annotation.Entity;
-import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
-import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
-import com.epam.gm.olgmaks.absractdao.crudoperation.GetHelper;
-
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.epam.gm.olgmaks.absractdao.annotation.Column;
+import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
+import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
+import com.epam.gm.olgmaks.absractdao.crudoperation.GetHelper;
 
 public class ResultTransformer<T> {
 

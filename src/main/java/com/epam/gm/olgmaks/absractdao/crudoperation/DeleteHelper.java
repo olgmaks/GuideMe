@@ -1,14 +1,12 @@
 package com.epam.gm.olgmaks.absractdao.crudoperation;
 
-import com.epam.gm.olgmaks.absractdao.general.IDao;
-import com.epam.gm.olgmaks.absractdao.annotation.Column;
-
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.epam.gm.olgmaks.absractdao.annotation.Column;
+import com.epam.gm.olgmaks.absractdao.general.IDao;
 
 /**
  * Created by OLEG on 07.06.2015.
@@ -16,12 +14,12 @@ import java.util.List;
 public class DeleteHelper<T> extends AbstractHelper<T> {
 
     private String whereCondition;
-    private List<String> conditionFields;
+//    private List<String> conditionFields;
 
     public DeleteHelper(Connection connection, Class<T> clazz) {
         super(connection, clazz);
         whereCondition = new String();
-        conditionFields = new ArrayList<>();
+//        conditionFields = new ArrayList<>();
     }
 
     public PreparedStatement delete(T t) throws SQLException,

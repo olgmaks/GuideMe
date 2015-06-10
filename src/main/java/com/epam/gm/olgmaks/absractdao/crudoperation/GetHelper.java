@@ -11,7 +11,7 @@ import java.sql.SQLException;
  */
 public class GetHelper<T> extends AbstractHelper<T> {
 
-	private T t;
+//	private T t;
 
 	public GetHelper(Connection connection, Class<T> clazz) {
 		super(connection, clazz);

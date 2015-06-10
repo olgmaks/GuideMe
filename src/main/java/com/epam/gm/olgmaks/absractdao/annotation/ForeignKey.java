@@ -10,5 +10,5 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ForeignKey {
 
-    public String value() ;
+    public String value() default "id";
 }

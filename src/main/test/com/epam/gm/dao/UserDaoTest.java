@@ -5,25 +5,22 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.model.User;
-import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
-import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
-import com.epam.gm.olgmaks.absractdao.general.IDao;
 
 public class UserDaoTest {
 
-    private static IDao<User> userDao;
+    private static UserDao userDao;
 
     @BeforeClass
     public static void bef() {
-	userDao = new AbstractDao<User>(ConnectionManager.getConnection(),
-		User.class);
+	userDao = new UserDao();
     }
-    
+
     @Test
-    public void testGetUsers () {
-	List<User> users = userDao.getAll();
-	
+    public void testGetUsers() {
+	List<User> users = userDao.getAllUsers();
+
 	for (User user : users) {
 	    System.out.println(user);
 	}

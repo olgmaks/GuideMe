@@ -18,7 +18,7 @@ public abstract class AbstractHelper<T> {
     protected List<Field> referencedFields;
     protected Connection connection;
     protected String sql;
-    protected String tableName;
+    protected String tableName = new String();
     protected PreparedStatement preparedStatement;
     protected List<String> fieldNames;
     protected List<Object> fieldValues;
@@ -32,7 +32,8 @@ public abstract class AbstractHelper<T> {
         this.connection = connection;
         fieldNames = new ArrayList<String>();
         fieldValues = new ArrayList<Object>();
-        tableName = clazz.getAnnotation(Entity.class).value();
+//System.out.println(clazz.getAnnotation(Entity.class).value());
+            tableName = clazz.getAnnotation(Entity.class).value(); 
         fields = clazz.getDeclaredFields();
 
         referencedFields = new ArrayList<>();

@@ -1,26 +1,26 @@
 package com.epam.gm.dao;
 
-import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.epam.gm.daolayer.MessageEventDao;
 import com.epam.gm.model.MessageEvent;
-import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
-import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
-import com.epam.gm.olgmaks.absractdao.general.IDao;
 
 public class MessageEventTest {
+    
+    
+    private static MessageEventDao messageEventDao;
 
+    @BeforeClass
+    public static void bef() {
+	messageEventDao = new MessageEventDao();
+    }
 
 
     @Test
     public void test() {
-	IDao<MessageEvent> dao = new AbstractDao<MessageEvent>(ConnectionManager.getConnection(), MessageEvent.class);
-	for (MessageEvent m : dao.getAll()) {
+	
+	for (MessageEvent m : messageEventDao.getAllMessagesEvents()) {
 	    System.out.println(m);
 	}
     }
