@@ -15,37 +15,37 @@ public class AccessFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain filterChain) throws IOException, ServletException {
 		
-//		request.setCharacterEncoding(encoding);
-//		
-//		HttpServletRequest req = (HttpServletRequest) request;
-//		String uri = req.getRequestURI().toLowerCase().trim();
-//		
-//		String path = req.getServletPath();
-//		
-//		boolean error = false;
-//		if (uri.endsWith(".html") || uri.endsWith(".jsp")
-//				|| uri.endsWith(".md") || uri.endsWith("licence"))
-//			error = true;
-//		
-//		if(path.trim().length() > 0)
-//			if(!path.contains(".do"))
-//				error = true;
-//		
-// 
-//		if (error) {
-//			System.out.println("Filter not pass: ");
-//			System.out.println(uri);
-//			System.out.println(path);
-//			
-//			
-//			HttpServletResponse resp = (HttpServletResponse)response; 
-//			req.getRequestDispatcher("404.do").forward(request, response);
-//			
-//			
-//			
-//			return;
-//		}
-//		
+		request.setCharacterEncoding(encoding);
+		
+		HttpServletRequest req = (HttpServletRequest) request;
+		String uri = req.getRequestURI().toLowerCase().trim();
+		
+		String path = req.getServletPath();
+		
+		boolean error = false;
+		if (uri.endsWith(".html") || uri.endsWith(".jsp")
+				|| uri.endsWith(".md") || uri.endsWith("licence"))
+			error = true;
+		
+		if(path.trim().length() > 0)
+			if(!path.contains(".do"))
+				error = true;
+		
+ 
+		if (error) {
+			System.out.println("Filter not pass: ");
+			System.out.println(uri);
+			System.out.println(path);
+			
+			
+			HttpServletResponse resp = (HttpServletResponse)response; 
+			req.getRequestDispatcher("404.do").forward(request, response);
+			
+			
+			
+			return;
+		}
+		
 		
 		filterChain.doFilter(request, response);
 		
