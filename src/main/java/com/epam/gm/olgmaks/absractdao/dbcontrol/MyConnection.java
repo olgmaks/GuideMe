@@ -48,9 +48,4 @@ public class MyConnection {
 		return getInstance();
 	}
 
-	public static void main(String[] args) {
-		 System.out.println(getConnection());
-		
-		
-	}
 }
