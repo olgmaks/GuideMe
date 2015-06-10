@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%><%@ taglib prefix="c"
+	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +21,43 @@
 <![endif]-->
 </head>
 <body id="page1">
+	<script>
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId : '1606321409631462',
+				xfbml : true,
+				version : 'v2.3'
+			});
+		};
+
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {
+				return;
+			}
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
+
+	<div class="fb-like" data-share="true" data-width="450"
+		data-show-faces="true"></div>
+	<div id="fb-root"></div>
+	<script>
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id))
+				return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.3&appId=1606321409631462";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
+	<div class="fb-login-button" data-size="xlarge" data-show-faces="true"
+		data-auto-logout-link="true"></div>
 	<div class="extra">
 		<div class="main">
 			<!-- header -->
@@ -128,7 +167,7 @@
 					<img src="images/img.jpg" alt="">
 				</div>
 			</header>
-			
+
 			<div class="ic">More Website Templates at TemplateMonster.com!</div>
 			<!-- / header -->
 			<!-- content -->
