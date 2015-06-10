@@ -1,12 +1,13 @@
 package com.epam.gm.model;
 
-import com.epam.gm.model.annotation.Column;
-import com.epam.gm.model.annotation.Entity;
-import com.epam.gm.model.annotation.ID;
+import com.epam.gm.olgmaks.absractdao.annotation.Column;
+import com.epam.gm.olgmaks.absractdao.annotation.Entity;
+
 
 @Entity("user_type")
 public class UserType {
-	@ID("id")
+
+	@Column("id")
 	private Integer id;
 	@Column("name")
 	private String name;
@@ -26,4 +27,11 @@ public class UserType {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+	    return "UserType [id=" + id + ", name=" + name + "]";
+	}
+	
+	
 }

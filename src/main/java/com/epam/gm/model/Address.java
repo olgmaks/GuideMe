@@ -3,7 +3,6 @@ package com.epam.gm.model;
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
-import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("address")
 public class Address {

@@ -3,6 +3,7 @@ package com.epam.gm.model;
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
+import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 /**
  * @author user
@@ -23,9 +24,15 @@ public class User {
     private String sex;
     @Column("user_type_id")
     private Integer userTypeId;
+    
+    @ForeignKey
+    @OneToMany(field = "user_type_id", value = UserType.class)
     private UserType userType;
     @Column("lang_id")
     private Integer langId;
+    
+    @ForeignKey
+    @OneToMany(field ="lang_id", value =  Language.class)
     private Language lang;
     @Column("cell_number")
     private String cellNumber;
@@ -37,6 +44,9 @@ public class User {
     private Boolean isActive;
     @Column("address_id")
     private Integer addressId;
+    
+    @ForeignKey
+    @OneToMany(field="address_id", value=Address.class)
     private Address address;
     @Column("password")
     private String password;
@@ -149,10 +159,13 @@ public class User {
     public String toString() {
 	return "User [Id=" + Id + ", lastName=" + lastName + ", firstName="
 		+ firstName + ", email=" + email + ", sex=" + sex
-		+ ", userTypeId=" + userTypeId + ", langId=" + langId
-		+ ", cellNumber=" + cellNumber + ", facebookId=" + facebookId
-		+ ", vkId=" + vkId + ", isActive=" + isActive + ", addressId="
-		+ addressId + ", password=" + password + "]";
+		+ ", userTypeId=" + userTypeId + ", userType=" + userType
+		+ ", langId=" + langId + ", lang=" + lang + ", cellNumber="
+		+ cellNumber + ", facebookId=" + facebookId + ", vkId=" + vkId
+		+ ", isActive=" + isActive + ", addressId=" + addressId
+		+ ", address=" + address + ", password=" + password + "]";
     }
+
+ 
 
 }
