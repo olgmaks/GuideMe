@@ -6,19 +6,19 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.epam.gm.daolayer.UserService;
+import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.daolayer.UserTypeDao;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserType;
 
 public class UserDaoTest {
 
-    private static UserService userDao;
+    private static UserDao userDao;
     private static UserType roleUser;
 
     @BeforeClass
     public static void bef() throws SQLException {
-	userDao = new UserService();
+	userDao = new UserDao();
 	roleUser = new UserTypeDao().getByField("name", "user").get(0);
     }
 

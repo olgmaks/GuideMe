@@ -4,27 +4,29 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import com.epam.gm.daolayer.UserService;
+import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.daolayer.UserTypeDao;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserType;
 
 public class UserServiceTest {
 
-    private static UserService userService;
+    private static UserDao userService;
     private static UserType roleUser;
 
     @BeforeClass
     public static void bef() throws SQLException {
-	userService = new UserService();
-	
-	//Returns list with UserTypes where field"name" = user
-	//in this case we have only one result 
+	userService = new UserDao();
+
+	// Returns list with UserTypes where field"name" = user
+	// in this case we have only one result
 	roleUser = new UserTypeDao().getByField("name", "user").get(0);
     }
 
+    @Ignore
     @Test
     public void testGetUsers() {
 	System.out.println("userRole = " + roleUser);
@@ -34,6 +36,16 @@ public class UserServiceTest {
 	}
     }
 
+    @Test
+    public void getUserByEmailTest() {
+	try {
+	    System.out.println(userService.getUserByEmail("someem@gmail.com"));
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+    }
+
+    @Ignore
     @Test
     public void saveUser() {
 	User user = new User();
