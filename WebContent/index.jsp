@@ -29,7 +29,26 @@
 
     </div>
   </nav>
+    <div class="row">
+      <div class="col s12" style="margin-top: 20px;">
+    <ul class="collection">
+      <li class="collection-item" style="margin-left: 30%;">
+        <div class="input-field col s6">
+          <i class="mdi-action-search prefix"></i>
+          <input id="icon_prefix" type="text" class="ligth-blue">
+          
+          <label for="icon_prefix">Search</label>
+        </div>
 
+	</li>
+    </ul>
+	  </div>
+		
+		
+		
+      <div class="col s6">This div is 6-columns wide</div>
+      <div class="col s6">This div is 6-columns wide</div>
+    </div>
   <div class="container" style = "width:80%; margin-left:10%;">
     <div class="section">
 		
@@ -256,7 +275,7 @@
     <div class="modal-content">
       <p style="margin-left: 40%;">Login form</p>
 	   <div class="row">
-    <form class="col s12">
+    <form class="col s12 ">
 	      <div class="row" >
         <div class="input-field col s12" >
           <input id="email" type="email" class="validate"  >
@@ -273,8 +292,7 @@
   </div>	  
     </div>
     <div class="modal-footer" >
-        <button class="light-blue btn waves-effect waves-light" type="submit" name="action" >Submit
-    <i class="mdi-content-send right"></i>
+        <button class="light-blue btn waves-effect waves-light" type="submit" name="action" style="margin-right: 35%;">Submit
   </button>
     </div>
   </div>
