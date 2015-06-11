@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.epam.gm.daolayer.UserDao;
@@ -22,6 +23,7 @@ public class UserDaoTest {
 	roleUser = new UserTypeDao().getByField("name", "user").get(0);
     }
 
+    @Ignore
     @Test
     public void testGetUsers() {
 	System.out.println("userRole = " + roleUser);
@@ -31,6 +33,7 @@ public class UserDaoTest {
 	}
     }
 
+    @Ignore
     @Test
     public void saveUser() {
 	User user = new User();
@@ -46,6 +49,14 @@ public class UserDaoTest {
 	user.setPassword("qwerty");
 
 	userDao.save(user);
+    }
+    
+    @Test
+    public void testCustomQuery() throws SQLException{
+	List<User> users= userDao.getUsersByCityName("kyiv");
+	for (User user : users) {
+	    System.out.println(user);
+	}
     }
 
 }

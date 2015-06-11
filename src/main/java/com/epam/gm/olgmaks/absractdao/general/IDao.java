@@ -35,6 +35,6 @@ public interface IDao<T> {
 
     public List<T>  getByField(String fieldName, Object fieldValue) throws SQLException;
 
-    public List<T> getWithSpecialQuery (String sqlWithRestrictions);
+    public List<T> customQuery (String sqlWithRestrictions) throws SQLException;
 
 }

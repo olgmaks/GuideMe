@@ -85,42 +85,30 @@ public class AbstractDao<T> implements IDao<T> {
     public List<T> getAll() {
         List<T> result = new ArrayList<T>();
         String baseSelect = SELECT;
-        String concreteTableSelect = String.format(baseSelect,
-                dataBaseTableName);
+        String concreteTableSelect = String.format(baseSelect, dataBaseTableName);
         try {
-
-            ResultSet rs = connection.prepareStatement(concreteTableSelect)
-                    .executeQuery();
+            ResultSet rs = connection.prepareStatement(concreteTableSelect).executeQuery();
             result = transformer.getAllInstances(rs);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return result;
     }
 
+    //Query should start with "join"
     @Override
-    public List<T> getWithSpecialQuery(String sqlWithRestrictions) {
+    public List<T> customQuery (String sqlWithRestrictions) throws SQLException {
         List<T> result = new ArrayList<T>();
-        try {
-            ResultSet resultSet = getHelper.getWithSpecialQuery(sqlWithRestrictions).executeQuery();
+            ResultSet resultSet = getHelper.customQuery(sqlWithRestrictions).executeQuery();
             ResultTransformer<T> transformer = new ResultTransformer<>(connection, clazz);
             result = transformer.getAllInstances(resultSet);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return result;
     }
 
     @Override
-    public List<T> getByField(String fieldName, Object fieldValue)
-            throws SQLException {
-        ResultSet resultSet = getHelper.getByFieldName(fieldName,
-                fieldValue).executeQuery();
-
+    public List<T> getByField(String fieldName, Object fieldValue) throws SQLException {
+        ResultSet resultSet = getHelper.getByFieldName(fieldName, fieldValue).executeQuery();
         ResultTransformer<T> transformer = new ResultTransformer<>(connection, clazz);
-
         return transformer.getAllInstances(resultSet);
     }
 
