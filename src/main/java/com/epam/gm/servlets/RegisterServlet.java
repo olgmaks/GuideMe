@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epam.gm.daolayer.UserTypeDao;
 import com.epam.gm.model.UserType;
 import com.epam.gm.services.UserTypeService;
 import com.epam.gm.servlets.frontcontroller.HttpRequestHandler;

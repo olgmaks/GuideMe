@@ -39,7 +39,7 @@ public class UserServiceTest {
     @Test
     public void getUserByEmailTest() {
 	try {
-	    System.out.println(userService.getUserByEmail("someem@gmail.com"));
+	    System.out.println(userService.getUserByEmail("elon.mask@gmail.com"));
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}

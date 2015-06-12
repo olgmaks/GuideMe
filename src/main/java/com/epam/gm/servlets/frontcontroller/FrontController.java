@@ -1,6 +1,7 @@
 package com.epam.gm.servlets.frontcontroller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Map;
 
 import javax.servlet.ServletConfig;
@@ -52,11 +53,19 @@ public class FrontController extends HttpServlet {
 
 		if (handler != null) {
 
-			handler.handle(request, response);
+			try {
+			    handler.handle(request, response);
+			} catch (SQLException e) {
+			    e.printStackTrace();
+			}
 
 		} else {
 
-			handlers.get("404").handle(request, response);
+			try {
+			    handlers.get("404").handle(request, response);
+			} catch (SQLException e) {
+			    e.printStackTrace();
+			}
 			// throw new ServletException("No Matching Handler");
 		}
 

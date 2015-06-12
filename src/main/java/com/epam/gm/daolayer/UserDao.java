@@ -32,7 +32,7 @@ public class UserDao extends AbstractDao<User> {
     
     public List<User> getUsersByCityName (String cityName) throws SQLException {
 	return customQuery(String.format(GET_USER_BY_CITY_NAME_SQL, cityName));
-    } 
+    }
 
     public List<User> getAllUsers() {
 	return getAll();

@@ -1,6 +1,7 @@
 package com.epam.gm.services;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.model.User;
@@ -21,4 +22,9 @@ public class UserService {
 	return userDao.getUserByEmail(email);
     }
 
+    public List<User> getUsersByCityName(String cityName) throws SQLException {
+	return userDao.getUsersByCityName(cityName);
+	
+    }
+    
 }
