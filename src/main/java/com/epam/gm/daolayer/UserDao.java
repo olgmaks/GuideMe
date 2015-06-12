@@ -17,7 +17,7 @@ public class UserDao extends AbstractDao<User> {
 	super(ConnectionManager.getConnection(), User.class);
     }
 
-    public void saveUser(User user) {
+    public void saveUser(User user) throws IllegalArgumentException, IllegalAccessException, SQLException {
 	super.save(user);
     }
 
@@ -34,7 +34,7 @@ public class UserDao extends AbstractDao<User> {
 	return customQuery(String.format(GET_USER_BY_CITY_NAME_SQL, cityName));
     }
 
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers() throws SQLException {
 	return getAll();
     }
 

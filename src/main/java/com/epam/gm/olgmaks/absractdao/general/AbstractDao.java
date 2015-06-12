@@ -34,64 +34,32 @@ public class AbstractDao<T> implements IDao<T> {
     }
 
     @Override
-    public void save(T t) {
-        try {
-            new SaveHelper<T>(connection, clazz).prepareSave(t).
-                    executeUpdate();
-        } catch (IllegalArgumentException | IllegalAccessException
-                | SQLException e) {
-            e.printStackTrace();
-        }
+    public void save(T t) throws IllegalArgumentException, IllegalAccessException, SQLException {
+            new SaveHelper<T>(connection, clazz).prepareSave(t).executeUpdate();
     }
-
     @Override
-    public void update(T t, String... updateConditions) {
+    public void update(T t, String... updateConditions) throws IllegalAccessException, SQLException {
         System.out.println("abstract dao update");
-        try {
-            new UpdateHelper<T>(connection, clazz, updateConditions).
-                    update(t).executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
+        new UpdateHelper<T>(connection, clazz, updateConditions).update(t).executeUpdate();
     }
 
     @Override
-    public void delete(T t) {
-        try {
+    public void delete(T t) throws IllegalAccessException, SQLException {
             deleteHelper.delete(t).executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
     }
 
     @Override
-    public void deleteByField(String fieldName, Object fieldValue) {
-        try {
+    public void deleteByField(String fieldName, Object fieldValue) throws IllegalAccessException, SQLException {
             deleteHelper.delete(fieldName, fieldValue).executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
-    public List<T> getAll() {
+    public List<T> getAll() throws SQLException {
         List<T> result = new ArrayList<T>();
         String baseSelect = SELECT;
         String concreteTableSelect = String.format(baseSelect, dataBaseTableName);
-        try {
             ResultSet rs = connection.prepareStatement(concreteTableSelect).executeQuery();
             result = transformer.getAllInstances(rs);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return result;
     }
 

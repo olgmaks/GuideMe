@@ -13,25 +13,25 @@ public interface IDao<T> {
     /**
      * Saving operations
      */
-    public void save(T t);
+    public void save(T t) throws IllegalArgumentException, IllegalAccessException, SQLException ;
 
     /**
      * Update operations
      */
-    public void update(T t, String ... updateConditions);
+    public void update(T t, String ... updateConditions)  throws IllegalAccessException, SQLException ;
 
     /**
      * Delete operations
      */
-    public void delete(T t);
+    public void delete(T t) throws IllegalAccessException, SQLException ;
 
-    public void deleteByField(String fieldName, Object fieldValue);
+    public void deleteByField(String fieldName, Object fieldValue)  throws IllegalAccessException, SQLException ;
 
     /**
      * Get operations
      */
 
-    public List<T> getAll();
+    public List<T> getAll() throws SQLException;
 
     public List<T>  getByField(String fieldName, Object fieldValue) throws SQLException;
 

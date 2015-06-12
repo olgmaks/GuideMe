@@ -14,7 +14,7 @@ public class UserService {
 	userDao = new UserDao();
     }
     
-    public void saveUser(User user){
+    public void saveUser(User user) throws IllegalArgumentException, IllegalAccessException, SQLException{
 	userDao.saveUser(user);
     }
     

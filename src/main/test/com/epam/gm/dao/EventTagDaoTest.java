@@ -1,5 +1,6 @@
 package com.epam.gm.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -18,7 +19,7 @@ public class EventTagDaoTest {
     }
 
     @Test
-    public void testEventTagDao() {
+    public void testEventTagDao() throws SQLException {
 	List<EventTag> eventTags = eventTagDao.getAll();
 	for (EventTag eventTag : eventTags) {
 	    System.out.println(eventTag);

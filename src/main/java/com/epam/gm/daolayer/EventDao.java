@@ -1,5 +1,6 @@
 package com.epam.gm.daolayer;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.epam.gm.model.Event;
@@ -13,7 +14,7 @@ public class EventDao extends AbstractDao<Event>{
     }
     
     
-    public List<Event> getAllEvents() {
+    public List<Event> getAllEvents() throws SQLException {
 	return super.getAll();
     }
     

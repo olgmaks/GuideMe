@@ -1,5 +1,6 @@
 package com.epam.gm.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -18,7 +19,7 @@ public class CommentUserDaoTest {
     }
 
     @Test
-    public void test() {
+    public void test() throws SQLException {
 	List<CommentUser> commentUsers = commentUserDao.getAll();
     
 	for (CommentUser commentUser : commentUsers) {

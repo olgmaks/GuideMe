@@ -2,6 +2,7 @@ package com.epam.gm.servlets;
 
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,8 +16,7 @@ import com.epam.gm.servlets.frontcontroller.HttpRequestHandler;
 public class RegisterServlet implements HttpRequestHandler {
 
 	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		
 		
 		UserTypeService userTypeService = new UserTypeService();

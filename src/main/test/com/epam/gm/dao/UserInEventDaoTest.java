@@ -1,5 +1,6 @@
 package com.epam.gm.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -20,7 +21,7 @@ public class UserInEventDaoTest {
 
 
     @Test
-    public void test() {
+    public void test() throws SQLException {
 	System.out.println("user in event test");
 	List<UserInEvent> usersInEvents = userInEventDao.getAllUsersInEvents();
 	for (UserInEvent userInEvent : usersInEvents) {

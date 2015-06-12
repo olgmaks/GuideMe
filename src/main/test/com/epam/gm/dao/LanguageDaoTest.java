@@ -1,5 +1,6 @@
 package com.epam.gm.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -18,7 +19,7 @@ public class LanguageDaoTest {
     }
 
     @Test
-    public void test() {
+    public void test() throws SQLException {
 	List<Language> languages = languageDao.getAll();
 	for (Language language : languages) {
 	    System.out.println(language);

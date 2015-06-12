@@ -19,7 +19,7 @@ public class UserService extends AbstractDao<User>{
 	return  getByField(fieldName, fieldValue);
     }
     
-    public List<User> getAllUsers () {
+    public List<User> getAllUsers () throws SQLException {
 	return getAll();
     }
 

@@ -25,7 +25,7 @@ public class UserDaoTest {
 
     @Ignore
     @Test
-    public void testGetUsers() {
+    public void testGetUsers() throws SQLException {
 	System.out.println("userRole = " + roleUser);
 	List<User> users = userDao.getAllUsers();
 	for (User user : users) {
@@ -35,7 +35,7 @@ public class UserDaoTest {
 
     @Ignore
     @Test
-    public void saveUser() {
+    public void saveUser() throws IllegalArgumentException, IllegalAccessException, SQLException {
 	User user = new User();
 	user.setFirstName("Elon");
 	user.setLastName("Mask");

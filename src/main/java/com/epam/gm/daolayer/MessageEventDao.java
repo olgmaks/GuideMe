@@ -1,5 +1,6 @@
 package com.epam.gm.daolayer;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.epam.gm.model.MessageEvent;
@@ -12,7 +13,7 @@ public class MessageEventDao extends AbstractDao<MessageEvent> {
 	super(ConnectionManager.getConnection(), MessageEvent.class);
     }
 
-    public List<MessageEvent> getAllMessagesEvents() {
+    public List<MessageEvent> getAllMessagesEvents() throws SQLException {
 	return super.getAll();
     }
 

@@ -48,7 +48,7 @@
 				} else {
 						$('#password').val('');
 						$('#errorMessage').text('Email or/and password are not valid. Please try again');
-						}
+					  }
 					}
 				});
 			return false;

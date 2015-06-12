@@ -1,6 +1,7 @@
 
 package com.epam.gm.daolayer;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.epam.gm.model.UserInEvent;
@@ -13,7 +14,7 @@ public class UserInEventDao extends AbstractDao<UserInEvent>{
 	super(ConnectionManager.getConnection(), UserInEvent.class);
     }
     
-    public List<UserInEvent> getAllUsersInEvents () {
+    public List<UserInEvent> getAllUsersInEvents () throws SQLException {
 	return super.getAll();
     }
     

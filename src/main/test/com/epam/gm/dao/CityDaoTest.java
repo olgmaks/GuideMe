@@ -1,5 +1,6 @@
 package com.epam.gm.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -18,7 +19,7 @@ public class CityDaoTest {
     }
 
     @Test
-    public void test() {
+    public void test() throws SQLException {
 	List<City> cities = cityDao.getAll();
 	for (City city : cities) {
 	    System.out.println(city);

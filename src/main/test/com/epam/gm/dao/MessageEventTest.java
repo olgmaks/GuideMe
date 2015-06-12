@@ -1,5 +1,7 @@
 package com.epam.gm.dao;
 
+import java.sql.SQLException;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -18,7 +20,7 @@ public class MessageEventTest {
 
 
     @Test
-    public void test() {
+    public void test() throws SQLException {
 	
 	for (MessageEvent m : messageEventDao.getAllMessagesEvents()) {
 	    System.out.println(m);

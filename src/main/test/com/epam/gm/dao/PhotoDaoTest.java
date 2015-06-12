@@ -1,5 +1,6 @@
 package com.epam.gm.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -19,7 +20,7 @@ public class PhotoDaoTest {
  
 
     @Test
-    public void test() {
+    public void test() throws SQLException {
 	List<Photo> photos = photoDao.getAll();
 	for (Photo photo : photos) {
 	    System.out.println(photo);
