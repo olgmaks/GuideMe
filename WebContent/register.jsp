@@ -7,15 +7,9 @@
     <script>
         $(document).ready(function() {
             $("#firstName").change(function() {
-                $.get("ValidateUsernameServlet", $(this).serialize(), function(data) {
-                    $("#firstNameMessage").text(data.valid);
-                });
-            });
-            
-            $("#firstName").change(function() {
                 $.ajax({
-                		url: "ValidateUsernameServlet", 
-                		type : "GET",
+                		url: "registervalidator.do", 
+                		type : "post",
                 		dataType: "json",
                 		data:  $(this).serialize(),
                 		success:  function(data) {
@@ -28,8 +22,8 @@
             
             $("#lastName").change(function() {
                 $.ajax({
-                		url: "ValidateUsernameServlet", 
-                		type : "GET",
+                		url: "registervalidator.do", 
+                		type : "post",
                 		dataType: "json",
                 		data:  $(this).serialize(),
                 		success:  function(data) {
@@ -47,8 +41,8 @@
             
             $("#email").change(function() {
                 $.ajax({
-                		url: "ValidateUsernameServlet", 
-                		type : "GET",
+                		url: "registervalidator.do", 
+                		type : "post",
                 		dataType: "json",
                 		data:  $(this).serialize(),
                 		success:  function(data) {
@@ -60,8 +54,8 @@
             
             $("#password").change(function() {
                 $.ajax({
-                		url: "ValidateUsernameServlet", 
-                		type : "GET",
+                		url: "registervalidator.do", 
+                		type : "post",
                 		dataType: "json",
                 		data:  $(this).serialize(),
                 		success:  function(data) {
