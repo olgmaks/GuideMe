@@ -44,7 +44,7 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
         // Setting values to set
         for (String fieldName : fieldNames) {
             for (Field field : fields) {
-                if (field.getAnnotation(Column.class).value().equals(fieldName)) {
+                if (field.getAnnotation(Column.class).value().equals(fieldName) && fieldName != null) {
                     statement.setObject(index++, field.get(t));
                 }
             }
@@ -52,7 +52,7 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
         //Setting updating conditions
         for (String conditionField : conditionFields) {
             for (Field field : fields) {
-                if (field.getAnnotation(Column.class).value().equals(conditionField)) {
+                if (field.getAnnotation(Column.class).value().equals(conditionField) && conditionField != null) {
                     statement.setObject(index++, field.get(t));
                 }
             }
@@ -62,14 +62,22 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
 
     public PreparedStatement update(Integer id, Map<String, Object> updates) throws SQLException {
         String updatesInString = new String();
+        String whereConditionInString = new String();
         Iterator<String> keys = updates.keySet().iterator();
-        while (keys.hasNext()){
+        while (keys.hasNext()) {
             updatesInString += keys.next() + "=" + "?,";
         }
-        updatesInString = updatesInString.substring(0,updatesInString.length()-1);
+        updatesInString = updatesInString.substring(0, updatesInString.length() - 1);
+        whereConditionInString = "id = ?";
 
-        String sql = String.format(IDao.UPDATE, tableName,updatesInString);
+        String sql = String.format(IDao.UPDATE, tableName, updatesInString, whereConditionInString);
+        System.out.println(sql);
         PreparedStatement statement = connection.prepareStatement(sql);
+        int index = 1;
+        for (String key : updates.keySet()) {
+            statement.setObject(index++, updates.get(key));
+        }
+        statement.setInt(index++, id);
         return statement;
     }
 

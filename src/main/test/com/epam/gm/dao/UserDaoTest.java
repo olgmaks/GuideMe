@@ -9,7 +9,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserDaoTest {
 
@@ -60,8 +62,11 @@ public class UserDaoTest {
     }
 
     @Test
-    public void testUpdateUserById () {
-
+    public void testUpdateUserById () throws SQLException {
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("first_name","Bogdan");
+        updates.put("facebook_id", 265);
+        userDao.updateById(8,updates);
     }
 
 }
