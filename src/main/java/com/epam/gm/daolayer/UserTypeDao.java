@@ -1,13 +1,17 @@
 package com.epam.gm.daolayer;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import com.epam.gm.model.UserType;
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 public class UserTypeDao extends AbstractDao<UserType> {
 
-    public UserTypeDao() {
-	super(ConnectionManager.getConnection(), UserType.class);
-    }
+	public UserTypeDao() {
+		super(ConnectionManager.getConnection(), UserType.class);
+	}
+
 
 }

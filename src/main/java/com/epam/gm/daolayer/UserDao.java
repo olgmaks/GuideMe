@@ -10,6 +10,7 @@ import java.util.List;
 public class UserDao extends AbstractDao<User> {
 
     private static final String USER_EMAIL_FIELD = "email";
+    private static final String USER_TYPE_FIELD = "user_type_id";
     private static final String GET_USER_BY_CITY_NAME_SQL = "JOIN address ON user.address_id = address.id "
             + "JOIN city ON address.city_id = city.id WHERE name = '%S'";
     private static final String UPDATE = "";
@@ -34,6 +35,12 @@ public class UserDao extends AbstractDao<User> {
     public List<User> getUsersByCityName(String cityName) throws SQLException {
         return getWithCustomQuery(String.format(GET_USER_BY_CITY_NAME_SQL, cityName));
     }
+    
+    public List<User> getUsersByUserType (String userTypeId) throws SQLException {
+    	List<User> result = getByField(USER_TYPE_FIELD, userTypeId);
+    	System.out.println(userTypeId);
+    	 return result;
+    }  
 
     public List<User> getAllUsers() throws SQLException {
         return getAll();

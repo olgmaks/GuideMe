@@ -29,4 +29,7 @@ public class UserService {
     public List<User> getAll() throws SQLException{
     	return userDao.getAll();
     }
+    public List<User> getByUserType(String userTypeId) throws SQLException{
+    	return userDao.getUsersByUserType(userTypeId);
+    }
 }

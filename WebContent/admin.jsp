@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8 "
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -35,15 +35,49 @@ $(document).ready(function() {
 	        $('input[type= "checkbox').removeClass('checked');
 	    }
 	});
+	
+	$('#userTypeId').change(function() {
+	        var selectedValue = $(this).val();	
+	        $.ajax({
+	        type: "POST",
+	        url: 'AdminServletPost?action=filterByUserType' + "&userTypeId=" + selectedValue,
+	        contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+	          success: function(data){
+	        	  var table = $("#userTable");
+	                table.find("tr").remove();
+	        	  $.each(data,function(counts, user){
+	        		  table.append("<tr>"
+	        		  			 +"<td>"+user.firstName + "</td>"
+	                             +"<td>"+user.lastName +  "</td>"
+	                             +"<td>"+user.email +     "</td>" 
+	                             +"<td>"+user.userTypeId +"</td>" 
+	                             +"<td>"+user.sex  +      "</td>"
+	                     	     +"</tr>");
+			        });
+	              
+	     
+	          }
+	         	
+	    });
+	 });
 });
 </script>
 
 </head>
 <body>
 <div class="container">
+
+<select class="form-control" name="userTypeId" id = "userTypeId">
+										<option value = 0> Select userType </option>
+										<c:forEach items="${userType}" var="userType">
+											<option value="${userType.id}">${userType.name}</option>
+										</c:forEach>
+</select>
+									
   	<form method="POST" action="controller">
 	  	
-	  	  <table class="table table-hover">
+	  	  <table class="table table-hover" id = "userTable">
                 <tr>
 				    <th>Id</th>
 				    <th>firstName</th> 
