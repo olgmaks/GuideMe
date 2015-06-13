@@ -2,6 +2,7 @@ package com.epam.gm.services;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.model.User;
@@ -32,4 +33,9 @@ public class UserService {
     public List<User> getByUserType(String userTypeId) throws SQLException{
     	return userDao.getUsersByUserType(userTypeId);
     }
+
+    public void  updateWithCustomQuery (Map<String, Object> updates, String joined, String where) throws SQLException {
+        userDao.updateWithCustomQuery(updates,joined,where);
+    }
+
 }

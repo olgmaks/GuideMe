@@ -61,12 +61,22 @@ public class UserDaoTest {
         }
     }
 
+    @Ignore
     @Test
-    public void testUpdateUserById () throws SQLException {
+    public void testUpdateUserById() throws SQLException {
         Map<String, Object> updates = new HashMap<>();
-        updates.put("first_name","Bogdan");
+        updates.put("first_name", "Bogdan");
         updates.put("facebook_id", 265);
-        userDao.updateById(8,updates);
+        userDao.updateById(8, updates);
     }
 
+    @Test
+    public void testUpdateWithCustomQuery() throws SQLException {
+        Map<String, Object> updates = new HashMap<>();
+        String joined = "JOIN address a ON user.address_id = a.id JOIN city c ON a.city_id = c.id";
+        String where = "WHERE a.city_id = 1";
+        updates.put("first_name", "Bogdan");
+        updates.put("facebook_id", 265);
+        userDao.updateWithCustomQuery(updates, joined, where);
+    }
 }

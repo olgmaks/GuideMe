@@ -6,6 +6,7 @@ import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public class UserDao extends AbstractDao<User> {
 
@@ -44,6 +45,10 @@ public class UserDao extends AbstractDao<User> {
 
     public List<User> getAllUsers() throws SQLException {
         return getAll();
+    }
+
+    public void  updateWithCustomQuery (Map<String, Object> updates, String joined, String where) throws SQLException {
+        super.updateWithCustomQuery(updates,joined,where);
     }
 
 

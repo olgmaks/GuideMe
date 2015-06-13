@@ -118,7 +118,28 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
 
 
     public PreparedStatement update(Map<String, Object> updates, String joined, String where) throws SQLException {
+
+        String sql = "UPDATE" + " " + tableName + " " + joined;
+
+        String updatesInString = new String();
+
+        Iterator<String> keys = updates.keySet().iterator();
+        while (keys.hasNext()) {
+            updatesInString += tableName + "." + keys.next() + "=" + "?,";
+        }
+        updatesInString = updatesInString.substring(0, updatesInString.length() - 1);
+
+        sql += " " + "SET" + " " + updatesInString + " " + where;
+
+        System.out.println(sql);
+
         PreparedStatement statement = connection.prepareStatement(sql);
+
+        int index = 1;
+        for (String key : updates.keySet()) {
+            statement.setObject(index++, updates.get(key));
+        }
+
         return statement;
     }
 
