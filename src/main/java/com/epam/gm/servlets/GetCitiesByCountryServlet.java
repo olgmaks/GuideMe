@@ -2,12 +2,15 @@ package com.epam.gm.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.gm.services.CityService;
 import com.epam.gm.servlets.frontcontroller.HttpRequestHandler;
+import com.google.gson.Gson;
 
 public class GetCitiesByCountryServlet implements HttpRequestHandler {
 
@@ -17,22 +20,17 @@ public class GetCitiesByCountryServlet implements HttpRequestHandler {
 		
 		System.out.println("GetCitiesByCountryServlet");
 		
-
 		String selectedValue = request.getParameter("value");
-		String otherCity = request.getParameter("other");
 
 		
 		System.out.println("value = " +selectedValue);
-		System.out.println("other = " +otherCity);
 		
-		
-//		CityDAO city = new CityDAO();
-//		Map<Integer, String> options = city.getByCountry(selectedValue,
-//				otherCity);
-//		String json = new Gson().toJson(options);
-//		response.setContentType("application/json");
-//		response.setCharacterEncoding("UTF-8");
-//		response.getWriter().write(json);
+		CityService cityService = new CityService();
+		Map<Integer, String> options = cityService.getMapOfCitiesByCountryId(Integer.parseInt(selectedValue));
+		String json = new Gson().toJson(options);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(json);
 		
 	}
 	

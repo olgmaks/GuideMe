@@ -129,12 +129,12 @@
         loginpage.adress: 
         
         <c:forEach items="${requestScope.languageList}" var = "lang">
-   			<br>
+   			<br><br>
    			${lang.name} :
    			<br>     
    			loginpage.country: 
    			<select id = "countryByLang_${lang.id}" >
-   				<option selected value = "choose"  disabled>loginpage.country.choose</option>
+   				<option selected value = "choose"  disabled selected>loginpage.country.choose</option>
    				
    				<c:forEach items="${requestScope.countryList}" var = "country">
    					<c:if test="${country.localId == lang.id}">
@@ -144,30 +144,32 @@
    				
 				<script>
 				$('#countryByLang_${lang.id}').change(function() {
-					
-					
-// 					alert('countryByLang_${lang.id}');
-					
-					
+	
     				var destination = $('#cityByLang_${lang.id}').val();
           				var selectedValue = $(this).val();
           				$("#cityByLang_${lang.id} > option").remove(); //first of all clear select items           
           				
           				$.ajax({
-          				type: "GET",
-          				url: 'getCitiesByCountry.do?value=' + selectedValue + '&other=' + destination, 
+          				type: "post",
+          				url: 'getCitiesByCountry.do?value=' + selectedValue, 
           				success: function(originCityId){ //we're calling the response json array 'cities'
-           				$.each(originCityId,function(id,city){ //here we're doing a foeach loop round each city with id as the key and city as the value
-            				var opt = $('<option />'); // here we're creating a new select option with for each city
+           				
+           				var optFirst = $('<option disabled selected />'); // here we're creating a new select option with for each city
+           				optFirst.val('choose');
+           				optFirst.text('loginpage.city.choose');
+           				$('#cityByLang_${lang.id}').append(optFirst); 
+          					
+          				$.each(originCityId,function(id,city){ //here we're doing a foeach loop round each city with id as the key and city as the value
+           					
+           					
+           					var opt = $('<option />'); // here we're creating a new select option with for each city
             				opt.val(id);
             				opt.text(city);
+            				
             				$('#cityByLang_${lang.id}').append(opt); //here we will append these new select options to a dropdown with the id 'cities'
             				});
            				}
-          				
-          				
           				});
-           
       			}); 
 				</script>   				
    				
