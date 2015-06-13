@@ -15,8 +15,10 @@ public class Address {
 	@Column("city_id")
 	private Integer cityId;
 	@Column("local_id")
-	private Integer localId;	
-
+	private Integer localId;
+	@Column("pure_id")
+	private Integer pureId;
+	
 	@ForeignKey
 	@OneToMany(field="city_id",value=City.class)
 	private City city;
@@ -50,6 +52,15 @@ public class Address {
 
 	public void setLocalId(Integer localId) {
 		this.localId = localId;
+	}
+	
+
+	public Integer getPureId() {
+		return pureId;
+	}
+
+	public void setPureId(Integer pureId) {
+		this.pureId = pureId;
 	}
 
 	@Override

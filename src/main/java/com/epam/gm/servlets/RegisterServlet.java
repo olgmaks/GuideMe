@@ -9,8 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epam.gm.model.UserType;
-import com.epam.gm.services.UserTypeService;
+import com.epam.gm.model.*;
+import com.epam.gm.services.LanguageService;
+
 import com.epam.gm.servlets.frontcontroller.HttpRequestHandler;
 
 public class RegisterServlet implements HttpRequestHandler {
@@ -19,11 +20,11 @@ public class RegisterServlet implements HttpRequestHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		
 		
-		UserTypeService userTypeService = new UserTypeService();
+		LanguageService languageService = new LanguageService();
 		
-		List<UserType> userTypeList = userTypeService.getAll();
+		List<Language> languageList = languageService.getLocalizedLangs();
 		
-		request.setAttribute("userTypeList", userTypeList);
+		request.setAttribute("languageList", languageList);
 		
 		request.getRequestDispatcher("register.jsp").forward(request, response);
 		

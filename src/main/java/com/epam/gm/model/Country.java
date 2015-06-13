@@ -13,6 +13,9 @@ public class Country {
 	@Column("local_id")
 	private Integer localId;
 	
+	@Column("pure_id")
+	private Integer pureId;
+	
 	public Integer getId() {
 	return id;
     }
@@ -37,11 +40,22 @@ public class Country {
 		this.localId = localId;
 	}
 	
-    @Override
-    public String toString() {
-	return "Country [" + (id != null ? "id=" + id + ", " : "")
-		+ (name != null ? "name=" + name : "") + "]";
-    }
-    
+	
+	
+    public Integer getPureId() {
+		return pureId;
+	}
+
+	public void setPureId(Integer pureId) {
+		this.pureId = pureId;
+	}
+
+	@Override
+	public String toString() {
+		return "Country [id=" + id + ", name=" + name + ", localId=" + localId
+				+ ", pureId=" + pureId + "]";
+	}
+
+	
     
 }

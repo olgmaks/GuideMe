@@ -20,6 +20,8 @@ public class City {
 	@Column("local_id")
 	private Integer localId;
 	
+	@Column("pure_id")
+	private Integer pureId;
 	
     @ForeignKey
     @OneToMany(field="country_id", value=Country.class)
@@ -57,7 +59,17 @@ public class City {
 		this.localId = localId;
 	}
 	
-    @Override
+	
+	
+    public Integer getPureId() {
+		return pureId;
+	}
+
+	public void setPureId(Integer pureId) {
+		this.pureId = pureId;
+	}
+
+	@Override
     public String toString() {
 	return "City [" + (id != null ? "id=" + id + ", " : "")
 		+ (name != null ? "name=" + name + ", " : "")
