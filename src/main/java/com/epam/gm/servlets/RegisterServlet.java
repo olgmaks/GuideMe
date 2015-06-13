@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.gm.model.*;
+import com.epam.gm.services.CountryService;
 import com.epam.gm.services.LanguageService;
-
 import com.epam.gm.servlets.frontcontroller.HttpRequestHandler;
 
 public class RegisterServlet implements HttpRequestHandler {
@@ -21,10 +21,14 @@ public class RegisterServlet implements HttpRequestHandler {
 		
 		
 		LanguageService languageService = new LanguageService();
-		
 		List<Language> languageList = languageService.getLocalizedLangs();
-		
 		request.setAttribute("languageList", languageList);
+		
+		
+		CountryService countryService = new CountryService();
+		List<Country> countryList = countryService.getAll();
+		request.setAttribute("countryList", countryList);
+		
 		
 		request.getRequestDispatcher("register.jsp").forward(request, response);
 		

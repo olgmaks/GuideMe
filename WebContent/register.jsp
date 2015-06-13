@@ -94,7 +94,11 @@
             });             
             
         });
+        
     </script>
+    
+    
+    
 </head>
 <body>
 
@@ -128,7 +132,56 @@
    			<br>
    			${lang.name} :
    			<br>     
+   			loginpage.country: 
+   			<select id = "countryByLang_${lang.id}" >
+   				<option selected value = "choose"  disabled>loginpage.country.choose</option>
+   				
+   				<c:forEach items="${requestScope.countryList}" var = "country">
+   					<c:if test="${country.localId == lang.id}">
+   					<option value = "${country.id}">${country.name}</option>	
+   					</c:if>
+   				</c:forEach>
+   				
+				<script>
+				$('#countryByLang_${lang.id}').change(function() {
+					
+					
+// 					alert('countryByLang_${lang.id}');
+					
+					
+    				var destination = $('#cityByLang_${lang.id}').val();
+          				var selectedValue = $(this).val();
+          				$("#cityByLang_${lang.id} > option").remove(); //first of all clear select items           
+          				
+          				$.ajax({
+          				type: "GET",
+          				url: 'getCitiesByCountry.do?value=' + selectedValue + '&other=' + destination, 
+          				success: function(originCityId){ //we're calling the response json array 'cities'
+           				$.each(originCityId,function(id,city){ //here we're doing a foeach loop round each city with id as the key and city as the value
+            				var opt = $('<option />'); // here we're creating a new select option with for each city
+            				opt.val(id);
+            				opt.text(city);
+            				$('#cityByLang_${lang.id}').append(opt); //here we will append these new select options to a dropdown with the id 'cities'
+            				});
+           				}
+          				
+          				
+          				});
+           
+      			}); 
+				</script>   				
+   				
+   			</select>
+   			
+   			<br>
+   			loginpage.city:
+   			<select id = "cityByLang_${lang.id}" >
+   				<option selected value = "choose"  disabled>loginpage.city.choosecountryfirst</option>
+   			</select> 
+   			
+   			
         </c:forEach>
+        
         
     </form>
 
