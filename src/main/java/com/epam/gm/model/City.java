@@ -16,7 +16,11 @@ public class City {
     
     @Column("country_id")
     private Integer countryId;
-
+    
+	@Column("local_id")
+	private Integer localId;
+	
+	
     @ForeignKey
     @OneToMany(field="country_id", value=Country.class)
     private Country country;
@@ -44,7 +48,15 @@ public class City {
     public void setCountryId(Integer countryId) {
 	this.countryId = countryId;
     }
+    
+	public Integer getLocalId() {
+		return localId;
+	}
 
+	public void setLocalId(Integer localId) {
+		this.localId = localId;
+	}
+	
     @Override
     public String toString() {
 	return "City [" + (id != null ? "id=" + id + ", " : "")

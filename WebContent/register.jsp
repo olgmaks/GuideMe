@@ -63,8 +63,33 @@
 							
                 		}	
                 });
-            });            
+            });     
             
+            $("#sex").change(function() {
+                $.ajax({
+                		url: "registervalidator.do", 
+                		type : "post",
+                		dataType: "json",
+                		data:  $(this).serialize(),
+                		success:  function(data) {
+                    		$("#sexMessage").text(data.valid);
+							
+                		}	
+                });
+            });  
+            
+            $("#cellNumber").change(function() {
+                $.ajax({
+                		url: "registervalidator.do", 
+                		type : "post",
+                		dataType: "json",
+                		data:  $(this).serialize(),
+                		success:  function(data) {
+                    		$("#cellNumberMessage").text(data.valid);
+							
+                		}	
+                });
+            });             
             
         });
     </script>
@@ -81,6 +106,20 @@
         <br>
                 
         loginpage.password: <input type="password" id="password" name="password" /> <span id="passwordMessage"></span>
+        <br>
+        
+        loginpage.sex: 
+        <select id = "sex" name = "sex">
+        	<option selected value = "choose"  disabled>loginpage.sex.choose</option>
+  			<option value = "male">loginpage.sex.male</option>
+  			<option value = "female">loginpage.sex.female</option>
+		</select>
+		<span id="sexMessage"></span>
+		<br>
+		
+		loginpage.cellNumber: <input type="text" id="cellNumber" name="cellNumber" /> <span id="cellNumberMessage"></span>
+        <br>
+              
         
     </form>
 

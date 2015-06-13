@@ -9,8 +9,11 @@ public class Country {
     private Integer id;
     @Column("name")
     private String name;
-
-    public Integer getId() {
+    
+	@Column("local_id")
+	private Integer localId;
+	
+	public Integer getId() {
 	return id;
     }
 
@@ -25,7 +28,15 @@ public class Country {
     public void setName(String name) {
 	this.name = name;
     }
+    
+	public Integer getLocalId() {
+		return localId;
+	}
 
+	public void setLocalId(Integer localId) {
+		this.localId = localId;
+	}
+	
     @Override
     public String toString() {
 	return "Country [" + (id != null ? "id=" + id + ", " : "")

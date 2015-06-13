@@ -7,8 +7,21 @@ import com.epam.gm.model.User;
 //Пізніше будуть юзатись анотації
 public class ValidateHelper {
 	
+	public static String validateForScripts(String value) {
+		
+		if(value != null){
+			String temp = value.toLowerCase().replaceAll(" ", "").replaceAll("\t", "").replaceAll("\n", "");
+			if(temp.contains("<script")) 
+				return "validation.containsscripts";
+		}
+		return "";
+	}
+	
 	public static String validateField(String fieldName, String value, Class<?> clazz) {
-		String result = "";
+		String result = validateForScripts(value);
+		
+		if(!"".equals(value))
+			return result;
 		
 		if(clazz == User.class) {
 			if(fieldName.equals("firstName")) {
@@ -51,7 +64,13 @@ public class ValidateHelper {
 
 
 			if(fieldName.equals("sex")) {
-				
+				if(value.trim().length() == 0) 
+					result = "validation.sex.empty";
+				else if("male".equals(value.trim()) ||  "female".equals(value.trim())) {
+					
+					result = "validation.ok";
+				} else 
+					result = "validation.sex.wrongformat";
 			}
 
 
@@ -61,11 +80,12 @@ public class ValidateHelper {
 			
 		}
 		
+		
 		return result;
 	}
 	
 
-	private static String[] userFields = "email firstName lastName cellNumber password".split(" ");
+	private static String[] userFields = "email firstName lastName sex cellNumber password".split(" ");
 	
 	public static String[] getArrayOfFields(Class<?> clazz) {
 		
@@ -75,4 +95,7 @@ public class ValidateHelper {
 		
 		return null;
 	}
+	
+	
+	
 }
