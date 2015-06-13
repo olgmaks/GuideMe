@@ -6,7 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
-import com.epam.gm.olgmaks.absractdao.general.IDao;
+import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
+
 
 /**
  * Created by OLEG on 07.06.2015.
@@ -25,7 +26,7 @@ public class DeleteHelper<T> extends AbstractHelper<T> {
     public PreparedStatement delete(T t) throws SQLException,
             IllegalAccessException {
         init(t);
-        String sql = String.format(IDao.DELETE, tableName, whereCondition);
+        String sql = String.format(AbstractDao.DELETE, tableName, whereCondition);
         System.out.println(sql);
         PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -42,7 +43,7 @@ public class DeleteHelper<T> extends AbstractHelper<T> {
             throws SQLException, IllegalAccessException {
 
         whereCondition += fieldName + "=?";
-        String sql = String.format(IDao.DELETE, tableName, whereCondition);
+        String sql = String.format(AbstractDao.DELETE, tableName, whereCondition);
         System.out.println(sql);
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setObject(1, fieldValue);

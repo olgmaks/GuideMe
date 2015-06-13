@@ -1,7 +1,6 @@
 package com.epam.gm.olgmaks.absractdao.crudoperation;
 
-import com.epam.gm.olgmaks.absractdao.general.IDao;
-
+import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -19,7 +18,7 @@ public class GetHelper<T> extends AbstractHelper<T> {
 
 	public PreparedStatement getByFieldName(String fieldName, Object fieldValue)
 			throws SQLException {
-		String sql = String.format(IDao.SELECT + " where %S=?", tableName,
+		String sql = String.format(AbstractDao.SELECT + " where %S=?", tableName,
 				fieldName);
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setObject(1, fieldValue);
@@ -29,7 +28,7 @@ public class GetHelper<T> extends AbstractHelper<T> {
 	// Query should start with "join ... on ... where ... " statement
 	public PreparedStatement customQuery(String sqlWithRestrictions)
 			throws SQLException {
-		String baseSelect = IDao.SELECT;
+		String baseSelect = AbstractDao.SELECT;
 		String sql = String.format(baseSelect,
 				(tableName + " " + sqlWithRestrictions));
 		System.out.println(sql);
