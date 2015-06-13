@@ -39,4 +39,9 @@ public class UserDao extends AbstractDao<User> {
 	return getAll();
     }
 
+
+	public void activeUser(int userId) throws SQLException, IllegalAccessException {
+		callStoredProcedure("{call confirmUnconfirmUser(?)}", String.valueOf(userId));
+
+	}
 }
