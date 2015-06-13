@@ -16,7 +16,7 @@ public class LanguageDao extends AbstractDao<Language> {
 	//gryn
 	public List<Language> getLocalizedLangs() throws SQLException {
 		List<Language> result = getByField("localized", true);
-		return result;
+		return result;      
 	}
 
 }
