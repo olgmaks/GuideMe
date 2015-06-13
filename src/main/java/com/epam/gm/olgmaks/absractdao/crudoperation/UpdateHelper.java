@@ -117,7 +117,9 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
     }
 
 
-    public void update(String sql) {
+    public PreparedStatement update(Map<String, Object> updates, String joined, String where) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(sql);
+        return statement;
     }
 
 

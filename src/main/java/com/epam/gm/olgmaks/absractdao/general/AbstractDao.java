@@ -1,7 +1,10 @@
 package com.epam.gm.olgmaks.absractdao.general;
 
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
-import com.epam.gm.olgmaks.absractdao.crudoperation.*;
+import com.epam.gm.olgmaks.absractdao.crudoperation.DeleteHelper;
+import com.epam.gm.olgmaks.absractdao.crudoperation.GetHelper;
+import com.epam.gm.olgmaks.absractdao.crudoperation.SaveHelper;
+import com.epam.gm.olgmaks.absractdao.crudoperation.UpdateHelper;
 import com.epam.gm.olgmaks.absractdao.transformer.ResultTransformer;
 
 import java.sql.CallableStatement;
@@ -32,15 +35,15 @@ public class AbstractDao<T> {
         this.connection = connection;
         this.clazz = clazz;
         transformer = new ResultTransformer<T>(connection, clazz);
-		dataBaseTableName = clazz.getAnnotation(Entity.class).value();
+        dataBaseTableName = clazz.getAnnotation(Entity.class).value();
         deleteHelper = new DeleteHelper<T>(connection, clazz);
         getHelper = new GetHelper<>(connection, clazz);
-        updateHelper = new UpdateHelper<>(connection,clazz);
+        updateHelper = new UpdateHelper<>(connection, clazz);
     }
 
 
     public void save(T t) throws IllegalArgumentException, IllegalAccessException, SQLException {
-            new SaveHelper<T>(connection, clazz).prepareSave(t).executeUpdate();
+        new SaveHelper<T>(connection, clazz).prepareSave(t).executeUpdate();
     }
 
     public void update(T t, String... updateConditions) throws IllegalAccessException, SQLException {
@@ -49,23 +52,24 @@ public class AbstractDao<T> {
     }
 
 
-    public void updateById (Integer id, Map<String, Object> updates) throws SQLException{
+    public void updateById(Integer id, Map<String, Object> updates) throws SQLException {
         updateHelper.update(id, updates).executeUpdate();
     }
 
 
-    public void updateWithCustomQuery(String sql) {
-        updateHelper.update(sql);
+    public void updateWithCustomQuery(Map<String, Object> updates, String joined, String where) throws SQLException {
+        System.out.println("update with custom query");
+        updateHelper.update(updates, joined, where).executeUpdate();
     }
 
 
     public void delete(T t) throws IllegalAccessException, SQLException {
-            deleteHelper.delete(t).executeUpdate();
+        deleteHelper.delete(t).executeUpdate();
     }
 
 
     public void deleteByField(String fieldName, Object fieldValue) throws IllegalAccessException, SQLException {
-            deleteHelper.delete(fieldName, fieldValue).executeUpdate();
+        deleteHelper.delete(fieldName, fieldValue).executeUpdate();
     }
 
 
@@ -73,8 +77,8 @@ public class AbstractDao<T> {
         List<T> result = new ArrayList<T>();
         String baseSelect = SELECT;
         String concreteTableSelect = String.format(baseSelect, dataBaseTableName);
-            ResultSet rs = connection.prepareStatement(concreteTableSelect).executeQuery();
-            result = transformer.getAllInstances(rs);
+        ResultSet rs = connection.prepareStatement(concreteTableSelect).executeQuery();
+        result = transformer.getAllInstances(rs);
         return result;
     }
 
@@ -82,12 +86,11 @@ public class AbstractDao<T> {
 
     public List<T> getWithCustomQuery(String sqlWithRestrictions) throws SQLException {
         List<T> result = new ArrayList<T>();
-            ResultSet resultSet = getHelper.customQuery(sqlWithRestrictions).executeQuery();
-            ResultTransformer<T> transformer = new ResultTransformer<>(connection, clazz);
-            result = transformer.getAllInstances(resultSet);
+        ResultSet resultSet = getHelper.customQuery(sqlWithRestrictions).executeQuery();
+        ResultTransformer<T> transformer = new ResultTransformer<>(connection, clazz);
+        result = transformer.getAllInstances(resultSet);
         return result;
     }
-    
 
 
     public List<T> getByField(String fieldName, Object fieldValue) throws SQLException {
@@ -96,9 +99,9 @@ public class AbstractDao<T> {
         return transformer.getAllInstances(resultSet);
     }
 
-    public void callStoredProcedure(String procedureName, String ...parameters) throws SQLException{
-    	CallableStatement cs =	connection.prepareCall(procedureName);
-    	cs.setInt(1, Integer.parseInt(parameters[0]));
-    	cs.execute();
+    public void callStoredProcedure(String procedureName, String... parameters) throws SQLException {
+        CallableStatement cs = connection.prepareCall(procedureName);
+        cs.setInt(1, Integer.parseInt(parameters[0]));
+        cs.execute();
     }
 }
