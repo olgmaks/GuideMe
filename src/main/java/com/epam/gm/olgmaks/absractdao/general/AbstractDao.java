@@ -1,17 +1,18 @@
 package com.epam.gm.olgmaks.absractdao.general;
 
-import com.epam.gm.olgmaks.absractdao.crudoperation.DeleteHelper;
-import com.epam.gm.olgmaks.absractdao.transformer.ResultTransformer;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
+import com.epam.gm.olgmaks.absractdao.crudoperation.DeleteHelper;
 import com.epam.gm.olgmaks.absractdao.crudoperation.GetHelper;
 import com.epam.gm.olgmaks.absractdao.crudoperation.SaveHelper;
 import com.epam.gm.olgmaks.absractdao.crudoperation.UpdateHelper;
+import com.epam.gm.olgmaks.absractdao.transformer.ResultTransformer;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AbstractDao<T> implements IDao<T> {
 
@@ -21,6 +22,7 @@ public class AbstractDao<T> implements IDao<T> {
     private Class<T> clazz;
     private DeleteHelper<T> deleteHelper;
     private GetHelper<T> getHelper;
+    private UpdateHelper<T> updateHelper;
 
 
     public AbstractDao(Connection connection, Class<T> clazz) {
@@ -30,7 +32,6 @@ public class AbstractDao<T> implements IDao<T> {
 		dataBaseTableName = clazz.getAnnotation(Entity.class).value();
         deleteHelper = new DeleteHelper<T>(connection, clazz);
         getHelper = new GetHelper<>(connection, clazz);
-
     }
 
     @Override
@@ -40,7 +41,12 @@ public class AbstractDao<T> implements IDao<T> {
     @Override
     public void update(T t, String... updateConditions) throws IllegalAccessException, SQLException {
         System.out.println("abstract dao update");
-        new UpdateHelper<T>(connection, clazz, updateConditions).update(t).executeUpdate();
+        new UpdateHelper<T>(connection, clazz).update(t, updateConditions).executeUpdate();
+    }
+
+    @Override
+    public void updateById (Integer id, Map<String, Object> updates) throws SQLException{
+        new UpdateHelper<T>(connection, clazz).update(id, updates).executeUpdate();
     }
 
     @Override

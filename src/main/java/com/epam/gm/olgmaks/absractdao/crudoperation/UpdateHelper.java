@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by OLEG on 07.06.2015.
@@ -20,50 +22,54 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
     private String namesAndValuesForUpdating;
     private List<String> conditionFields;
 
-    public UpdateHelper(Connection connection, Class<T> clazz, String[]
-            updateConditions) {
+    public UpdateHelper(Connection connection, Class<T> clazz) {
         super(connection, clazz);
         whereCondition = new String();
         namesAndValuesForUpdating = new String();
         conditionFields = new ArrayList<>();
-        for (String condition : updateConditions) {
-            conditionFields.add(condition);
-        }
+
     }
 
 
-    public PreparedStatement update(T t) throws SQLException,
-            IllegalAccessException {
+    public PreparedStatement update(T t, String[] updateConditions) throws SQLException, IllegalAccessException {
         System.out.println("update method");
+        for (String condition : updateConditions) {
+            conditionFields.add(condition);
+        }
         init(t);
-        String sql = String.format(IDao.UPDATE, tableName,
-                namesAndValuesForUpdating, whereCondition);
+        String sql = String.format(IDao.UPDATE, tableName, namesAndValuesForUpdating, whereCondition);
         System.out.println(sql);
-        
         PreparedStatement statement = connection.prepareStatement(sql);
-
         int index = 1;
-
         // Setting values to set
         for (String fieldName : fieldNames) {
             for (Field field : fields) {
-                if (field.getAnnotation(Column.class).value().equals(
-                        fieldName)){
+                if (field.getAnnotation(Column.class).value().equals(fieldName)) {
                     statement.setObject(index++, field.get(t));
                 }
             }
         }
-
         //Setting updating conditions
         for (String conditionField : conditionFields) {
             for (Field field : fields) {
-                if (field.getAnnotation(Column.class).value().equals(
-                        conditionField)){
+                if (field.getAnnotation(Column.class).value().equals(conditionField)) {
                     statement.setObject(index++, field.get(t));
                 }
             }
         }
+        return statement;
+    }
 
+    public PreparedStatement update(Integer id, Map<String, Object> updates) throws SQLException {
+        String updatesInString = new String();
+        Iterator<String> keys = updates.keySet().iterator();
+        while (keys.hasNext()){
+            updatesInString += keys.next() + "=" + "?,";
+        }
+        updatesInString = updatesInString.substring(0,updatesInString.length()-1);
+
+        String sql = String.format(IDao.UPDATE, tableName,updatesInString);
+        PreparedStatement statement = connection.prepareStatement(sql);
         return statement;
     }
 
@@ -95,9 +101,8 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
             whereCondition += conditionField + "=? AND, ";
         }
 
-        namesAndValuesForUpdating = namesAndValuesForUpdating.substring(0,
-                namesAndValuesForUpdating.length() - 1);
-        whereCondition = whereCondition.substring(0, whereCondition.length()-5);
+        namesAndValuesForUpdating = namesAndValuesForUpdating.substring(0, namesAndValuesForUpdating.length() - 1);
+        whereCondition = whereCondition.substring(0, whereCondition.length() - 5);
         System.out.println("table name : " + tableName);
         System.out.println("names and values : " + namesAndValuesForUpdating);
         System.out.println("update conditions : " + whereCondition);

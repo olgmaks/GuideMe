@@ -2,6 +2,7 @@ package com.epam.gm.olgmaks.absractdao.general;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface IDao<T> {
 
@@ -19,6 +20,8 @@ public interface IDao<T> {
      * Update operations
      */
     public void update(T t, String ... updateConditions)  throws IllegalAccessException, SQLException ;
+
+    public void updateById (Integer id, Map<String, Object> updates) throws SQLException;
 
     /**
      * Delete operations
