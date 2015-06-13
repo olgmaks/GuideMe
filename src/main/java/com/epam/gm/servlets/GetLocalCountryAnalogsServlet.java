@@ -16,7 +16,7 @@ public class GetLocalCountryAnalogsServlet implements HttpRequestHandler {
 			throws ServletException, IOException, SQLException {
 
 
-		
+		System.out.println("GetLocalCountryAnalogsServlet");
 		
 	}
 	

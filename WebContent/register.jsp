@@ -145,7 +145,7 @@
 				<script>
 				$('#countryByLang_${lang.id}').change(function() {
 	
-    				var destination = $('#cityByLang_${lang.id}').val();
+    					var destination = $('#cityByLang_${lang.id}').val();
           				var selectedValue = $(this).val();
           				$("#cityByLang_${lang.id} > option").remove(); //first of all clear select items           
           				
@@ -170,6 +170,30 @@
             				});
            				}
           				});
+          				
+          				//change other countries
+          				$.ajax({
+              				type: "post",
+              				url: 'getLocalCountryAnalogs.do?value=' + selectedValue, 
+              				success: function(originCityId){ //we're calling the response json array 'cities'
+               				
+//                				var optFirst = $('<option disabled selected />'); // here we're creating a new select option with for each city
+//                				optFirst.val('choose');
+//                				optFirst.text('loginpage.city.choose');
+//                				$('#cityByLang_${lang.id}').append(optFirst); 
+              					
+//               				$.each(originCityId,function(id,city){ //here we're doing a foeach loop round each city with id as the key and city as the value
+               					
+               					
+//                					var opt = $('<option />'); // here we're creating a new select option with for each city
+//                 				opt.val(id);
+//                 				opt.text(city);
+                				
+//                 				$('#cityByLang_${lang.id}').append(opt); //here we will append these new select options to a dropdown with the id 'cities'
+//                 				});
+               				}
+              				});          				
+          				
       			}); 
 				</script>   				
    				
