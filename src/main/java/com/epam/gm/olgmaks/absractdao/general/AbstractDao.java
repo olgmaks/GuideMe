@@ -7,6 +7,7 @@ import com.epam.gm.olgmaks.absractdao.crudoperation.SaveHelper;
 import com.epam.gm.olgmaks.absractdao.crudoperation.UpdateHelper;
 import com.epam.gm.olgmaks.absractdao.transformer.ResultTransformer;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -78,6 +79,7 @@ public class AbstractDao<T> implements IDao<T> {
             result = transformer.getAllInstances(resultSet);
         return result;
     }
+    
 
     @Override
     public List<T> getByField(String fieldName, Object fieldValue) throws SQLException {
@@ -86,5 +88,9 @@ public class AbstractDao<T> implements IDao<T> {
         return transformer.getAllInstances(resultSet);
     }
 
-
+    public void callStoredProcedure(String procedureName, String ...parameters) throws SQLException{
+    	CallableStatement cs =	connection.prepareCall(procedureName);
+    	cs.setInt(1, Integer.parseInt(parameters[0]));
+    	cs.execute();
+    }
 }
