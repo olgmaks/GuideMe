@@ -26,5 +26,7 @@ public class UserService {
 	return userDao.getUsersByCityName(cityName);
 	
     }
-    
+    public List<User> getAll() throws SQLException{
+    	return userDao.getAll();
+    }
 }

@@ -8,8 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epam.gm.daolayer.UserDao;
+
 import com.epam.gm.model.User;
+import com.epam.gm.services.UserService;
 import com.epam.gm.servlets.frontcontroller.HttpRequestHandler;
 
 public class AdminServlet implements HttpRequestHandler {
@@ -18,9 +19,9 @@ public class AdminServlet implements HttpRequestHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		
 		
-		UserDao userdao = new UserDao();
+		UserService userService = new UserService();
 		
-		List<User> userList = userdao.getAll();
+		List<User> userList = userService.getAll();
 		
 		request.setAttribute("userList", userList);
 		
