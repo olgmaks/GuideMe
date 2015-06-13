@@ -10,7 +10,7 @@ public class ConnectionManager {
 
 	public static final String DB_URL = "jdbc:mysql://localhost:3306/guideme";
 	public static final String USER_NAME = "root";
-	public static final String USER_PASSWORD = "";
+	public static final String USER_PASSWORD = "root";
 
 	private static Connection connection;
 

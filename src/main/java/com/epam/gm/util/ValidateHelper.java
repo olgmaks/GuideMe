@@ -20,7 +20,7 @@ public class ValidateHelper {
 	public static String validateField(String fieldName, String value, Class<?> clazz) {
 		String result = validateForScripts(value);
 		
-		if(!"".equals(value))
+		if(!"".equals(result))
 			return result;
 		
 		if(clazz == User.class) {
