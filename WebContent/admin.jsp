@@ -49,12 +49,13 @@ $(document).ready(function() {
 	          success: function(data){
 	        	  var table = $("#userTable");
 	                table.find("tr").remove();
+	                table.append("<tr><th>Id</th><th>firstName</th> <th>lastName</th><th>email</th><th>typeId</th><th>active</th></tr>")
 	        	  $.each(data,function(counts, user){
 	        		  table.append("<tr>"
 	        		  			 +"<td>"+user.firstName + "</td>"
 	                             +"<td>"+user.lastName +  "</td>"
 	                             +"<td>"+user.email +     "</td>" 
-	                             +"<td>"+user.userTypeId +"</td>" 
+	                             +"<td>"+user.userType.name +"</td>" 
 	                             +"<td>"+user.sex  +      "</td>"
 	                     	     +"</tr>");
 			        });
@@ -64,6 +65,32 @@ $(document).ready(function() {
 	         	
 	    });
 	 });
+	
+	$('#deleteId').on('click', function() {	
+		var currentRow = this.parentNode.parentNode;
+        var userId = currentRow.getElementsByTagName("td")[0];
+	        $.ajax({
+	        type: "POST",
+	        url: 'AdminServletPost?action=delete' + "&userId=" + userId.textContent + "&userTypeId=" + $("#userTypeId").val(),
+	        contentType: "application/json; charset=utf-8",
+         	dataType: 'json',
+	          success: function(data){
+	        	  var table = $("#userTable");
+	                table.find("tr").remove();
+	                table.append("<tr><th>Id</th><th>firstName</th> <th>lastName</th><th>email</th><th>typeId</th><th>active</th></tr>")
+	        	  $.each(data,function(counts, user){
+	        		  table.append("<tr>"
+	        		  			 +"<td>"+user.firstName + "</td>"
+	                             +"<td>"+user.lastName +  "</td>"
+	                             +"<td>"+user.email +     "</td>" 
+	                             +"<td>"+user.userType.name +"</td>" 
+	                             +"<td>"+user.sex  +      "</td>"
+	                     	     +"</tr>");
+			        });
+	          }
+	         	
+	    });
+ });
 });
 </script>
 
@@ -115,18 +142,6 @@ $(document).ready(function() {
 		</div>
 		<!-- End Small Nav -->
 		
-		<!-- Message OK -->		
-		<div class="msg msg-ok">
-			<p><strong>Your file was uploaded succesifully!</strong></p>
-			<a href="#" class="close">close</a>
-		</div>
-		<!-- End Message OK -->		
-		
-		<!-- Message Error -->
-		<div class="msg msg-error">
-			<p><strong>You must select a file to upload first!</strong></p>
-			<a href="#" class="close">close</a>
-		</div>
 		<!-- End Message Error -->
 		<br />
 		<!-- Main -->
@@ -148,12 +163,12 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<!-- End Box Head -->	
-<select name="userTypeId" id = "userTypeId">
-										<option value = 0> Select userType </option>
-										<c:forEach items="${userType}" var="userType">
-											<option value="${userType.id}">${userType.name}</option>
-										</c:forEach>
-</select>
+					<select name="userTypeId" id = "userTypeId">
+						<option value = 0> Select userType </option>
+						<c:forEach items="${userType}" var="userType">
+							<option value="${userType.id}">${userType.name}</option>
+						</c:forEach>
+					</select>
 					<!-- Table -->
 					<div class="table">
 						<table  id = "userTable">
@@ -173,7 +188,8 @@ $(document).ready(function() {
 			                        <td>${user.email}</td>
 			                        <td>${user.userTypeId}</td>
 			                        <td><input type="checkbox" class="style2" id = "activeUser" ${user.userTypeId == '2' ? 'checked' : ''}/></td> 
-			                        <td><a href="#" class="ico del">Delete</a><a href="#" class="ico edit">Edit</a></td>              
+			                        <td><a class="ico del" id = "deleteId">Delete</a>
+			                        <a href="#" class="ico edit">Edit</a></td>              
 			                    </tr>
 			                </c:forEach>
 			            </table>

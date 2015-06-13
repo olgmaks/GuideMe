@@ -33,6 +33,9 @@ public class UserService {
     public List<User> getByUserType(String userTypeId) throws SQLException{
     	return userDao.getUsersByUserType(userTypeId);
     }
+    public void deleteById(int userId) throws IllegalAccessException, SQLException{
+    	userDao.deleteById(userId);
+    }
 
     public void  updateWithCustomQuery (Map<String, Object> updates, String joined, String where) throws SQLException {
         userDao.updateWithCustomQuery(updates,joined,where);

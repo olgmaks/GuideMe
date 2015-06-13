@@ -46,7 +46,10 @@ public class UserDao extends AbstractDao<User> {
     public List<User> getAllUsers() throws SQLException {
         return getAll();
     }
-
+    
+    public void deleteById(int userId) throws IllegalAccessException, SQLException{
+    	deleteByField("id", userId);
+    }
     public void  updateWithCustomQuery (Map<String, Object> updates, String joined, String where) throws SQLException {
         super.updateWithCustomQuery(updates,joined,where);
     }
