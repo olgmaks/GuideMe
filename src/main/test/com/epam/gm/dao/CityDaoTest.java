@@ -38,9 +38,26 @@ public class CityDaoTest {
 		}
 	}
 	
+	@Ignore
 	@Test
 	public void test3() throws SQLException {
 		System.out.println(new CityService().getCitiesByCountryId(5));
 
 	}	
+	
+	@Ignore
+	@Test
+	public void test4() throws SQLException {
+		System.out.println(cityDao.getCityById(5));
+
+	}	
+	
+	@Test
+	public void test5() throws SQLException {
+		List<City> cities = cityDao.getCitiesByPureId(1);
+		for (City city : cities) {
+			System.out.println(city);
+		}
+	}	
+
 }

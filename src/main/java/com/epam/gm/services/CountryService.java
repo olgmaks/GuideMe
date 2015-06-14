@@ -12,4 +12,16 @@ public class CountryService {
 	public List<Country> getAll() throws SQLException {
 		return countryDao.getAll();
 	}
+	
+    //gryn
+    public Country getCountryById(Integer id) throws SQLException {
+        return countryDao.getCountryById(id);
+    }
+    
+    //gryn
+    //Получити країни аналоги в різних мовах:
+    //Ukraine - Україна - Украина
+    public List<Country> getCountriesByPureId(Integer pureId) throws SQLException {
+    	return countryDao.getCountriesByPureId(pureId);
+    }	
 }
