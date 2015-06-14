@@ -19,7 +19,7 @@ public class ConnectionManager {
 	private static Connection getInstance() {
 		if (conn == null) {
 			Properties prop = new Properties();
-			String propFileName = "src\\main\\resources\\dbConnection.properties";
+			String propFileName = "src/main/resources/dbConnection.properties";
 			InputStream inputStream = null;
 			try {
 				inputStream = new FileInputStream(propFileName);
