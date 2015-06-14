@@ -19,12 +19,8 @@ public class AdminServlet implements HttpRequestHandler {
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-		
-		
 		UserService userService = new UserService();
-		
 		List<User> userList = userService.getAll();
-		
 		request.setAttribute("userList", userList);
 		request.setAttribute("userType", new UserTypeService().getAll());
 		request.getRequestDispatcher("pages/admin.jsp").forward(request, response);

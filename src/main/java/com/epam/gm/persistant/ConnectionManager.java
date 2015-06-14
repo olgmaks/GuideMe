@@ -13,8 +13,8 @@ public class ConnectionManager {
 	        String url= "jdbc:mysql://localhost/";
 	        String dbName = "guideme";
 	        //String driver = "com.mysql.jdbc.Driver";
-	        String userName = "root";
-	        String password = "root";
+	        String userName = "taras";
+	        String password = "1";
 	        try {
 	          conn = DriverManager.getConnection(url+dbName,userName,password);
 	        }
