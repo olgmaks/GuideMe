@@ -64,7 +64,17 @@ public class ValidateHelper {
 					result = "validation.ok";
 				
 			}
-
+			
+			if(fieldName.equals("cityId")) {
+				
+				//System.out.println("################################################################################");
+				
+				if(ValidateHelper.isNumber(value.trim()))
+					result = "validation.cityId.ok";
+				else
+					result = "validation.cityId.empty";
+				
+			}
 
 			if(fieldName.equals("sex")) {
 				if(value.trim().length() == 0) 
@@ -88,7 +98,7 @@ public class ValidateHelper {
 	}
 	
 
-	private static String[] userFields = "email firstName lastName sex cellNumber password address".split(" ");
+	private static String[] userFields = "email firstName lastName sex cellNumber password address cityId".split(" ");
 	
 	public static String[] getArrayOfFields(Class<?> clazz) {
 		

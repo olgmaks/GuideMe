@@ -8,7 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 import com.epam.gm.model.City;
+import com.epam.gm.model.Language;
 import com.epam.gm.services.CityService;
+import com.epam.gm.services.LanguageService;
 import com.epam.gm.util.ValidateHelper;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.google.gson.Gson;
@@ -38,7 +40,17 @@ public class GetLocalCityAnalogsServlet implements HttpRequestHandler {
 			for(City c: cities) {
 				map.put(c.getLocalId().toString(), c.getId().toString());
 			}
-		}		
+		} else {
+	//		System.out.println("Ho-ho-ho " + selectedValue);
+			
+			LanguageService languageService = new LanguageService();
+			List<Language> languageList = languageService.getLocalizedLangs();
+			request.setAttribute("languageList", languageList);
+			for(Language lang: languageList) {
+				map.put(lang.getId().toString(), selectedValue);
+			}
+			
+		}
 		
 		String json = new Gson().toJson(map);
 		response.setContentType("application/json");

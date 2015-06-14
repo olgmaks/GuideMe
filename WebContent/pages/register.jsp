@@ -11,31 +11,56 @@
         	
            
                 $("#registerform").submit(function () {
-                	alert('submit');
+                	$("#firstName").change();
+                	$("#lastName").change();
+                	$("#email").change();
+                	$("#password").change();
+                	$("#confirm").change();
+                	$("#sex").change();
+                	$("#cellNumber").change();
                 	
-                    $.ajax({
-                        url: 'login.do',
-                        type: 'GET',
+                    
+                        $.ajax({
+                        		url: "registervalidator.do", 
+                        		type : "post",
+                        		dataType: "json",
+                        		data:  $("#cityId").serialize(),
+                        		success:  function(data) {
+                            		$("#cityIdMessage").text(data.valid);
+        							
+                        		}	
+                        });
+                    
+                	
+                	$.ajax({
+                    	
+                        url: 'submitRegister.do',
+                        type: 'post',
                         dataType: 'json',
-                        data: $("#loginform").serialize(),
+                        data: $("#registerform").serialize(),
                         success: function (data) {
+                        	alert('Ok!!!');
+                        	
 
-                            if (data.isValid) {
-                                console.log(data);
-                                $('#signinlabel').text(
-                                        data.sessionUser.email);
-                                $('#signinlabel').attr("href", "#logoutModal");
-                                $('#signInModal').closeModal();
-                                var helloMessage = 'Hello, ' + data.sessionUser.firstName + ' ' + data.sessionUser.lastName;
-                                console.log(helloMessage);
-                                $('#helloMessageOnLogoutModal').text(helloMessage);
-                            } else {
-                                $('#password').val('');
-                                $('#errorMessage').text('Email or/and password are not valid. Please try again');
-                            }
+//                             if (data.isValid) {
+//                                 console.log(data);
+//                                 $('#signinlabel').text(
+//                                         data.sessionUser.email);
+//                                 $('#signinlabel').attr("href", "#logoutModal");
+//                                 $('#signInModal').closeModal();
+//                                 var helloMessage = 'Hello, ' + data.sessionUser.firstName + ' ' + data.sessionUser.lastName;
+//                                 console.log(helloMessage);
+//                                 $('#helloMessageOnLogoutModal').text(helloMessage);
+//                             } else {
+//                                 $('#password').val('');
+//                                 $('#errorMessage').text('Email or/and password are not valid. Please try again');
+//                             }
+                            
+                            
+                            
                         }
                     });
-                    return true;
+                    return false;
                 });
         	
         	
@@ -116,6 +141,7 @@
             });            
             
             $("#sex").change(function() {
+            	
                 $.ajax({
                 		url: "registervalidator.do", 
                 		type : "post",
@@ -150,7 +176,7 @@
 </head>
 <body>
 
-    <form action="register" method="post" id = "registerform"  name = "registerform" >
+    <form action="submitRegister.do" method="post" id = "registerform"  name = "registerform" >
         loginpage.firstName: <input type="text" id="firstName" name="firstName" /> <span id="firstNameMessage"></span>
         <br>
         loginpage.lastName: <input type="text" id="lastName" name="lastName" /> <span id="lastNameMessage"></span>
@@ -167,7 +193,7 @@
         
         loginpage.sex: 
         <select id = "sex" name = "sex">
-        	<option selected value = "choose"  disabled>loginpage.sex.choose</option>
+        	<option selected value = "choose" >loginpage.sex.choose</option>
   			<option value = "male">loginpage.sex.male</option>
   			<option value = "female">loginpage.sex.female</option>
 		</select>
@@ -220,8 +246,10 @@
                   				url: 'getCitiesByCountry.do?value=' + country, 
                   				success: function(originCityId){ //we're calling the response json array 'cities'
                    				
-                   				var optFirst = $('<option disabled selected />'); // here we're creating a new select option with for each city
+                   				var optFirst = $('<option selected />'); // here we're creating a new select option with for each city
                    				optFirst.val('choose');
+                   				$('#cityId').val('choose');
+                   				
                    				optFirst.text('loginpage.city.choose');
                    				$('#cityByLang_' + countryId).append(optFirst); 
                   					
@@ -251,12 +279,14 @@
    			<br>
    			loginpage.city:
    			<select id = "cityByLang_${lang.id}" >
-   				<option selected value = "choose"  disabled>loginpage.city.choosecountryfirst</option>
+   				<option selected value = "choose"  >loginpage.city.choosecountryfirst</option>
    			</select> 
    			<script>
 			$('#cityByLang_${lang.id}').change(function() {
 				
   				var selectedValue = $(this).val();
+  				
+  				$('#cityId').val(selectedValue);
   				
   				//change other cities
   				$.ajax({
@@ -297,6 +327,12 @@
             </script>
             
         </c:forEach>
+        
+         <br>
+         <br>
+         <input type="hidden" id="cityId" name="cityId" /> <span id="cityIdMessage"></span>
+         <br>
+           
         
         <br>
 		loginpage.isGuide: <input type="checkbox" id="isGuide" name="isGuide" />

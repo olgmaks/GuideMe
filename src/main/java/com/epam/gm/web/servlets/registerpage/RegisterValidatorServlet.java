@@ -26,9 +26,11 @@ public class RegisterValidatorServlet implements HttpRequestHandler {
 			String value = request.getParameter(p);
 
 			
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!! param = " + p);
+			
 			if(value == null) continue;
 
-			System.out.println("param = " + p);
+			
 			
 			
 			String valid = ValidateHelper.validateField(p, value, User.class);

@@ -49,7 +49,6 @@ public class RegisterAddressValidatorServlet implements HttpRequestHandler {
 							
 							response.getWriter().write(new Gson().toJson(map));	
 							
-							
 						}
 						
 					}
