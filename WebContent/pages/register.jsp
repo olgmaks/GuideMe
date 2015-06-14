@@ -8,6 +8,38 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
         $(document).ready(function() {
+        	
+           
+                $("#registerform").submit(function () {
+                	alert('submit');
+                	
+                    $.ajax({
+                        url: 'login.do',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: $("#loginform").serialize(),
+                        success: function (data) {
+
+                            if (data.isValid) {
+                                console.log(data);
+                                $('#signinlabel').text(
+                                        data.sessionUser.email);
+                                $('#signinlabel').attr("href", "#logoutModal");
+                                $('#signInModal').closeModal();
+                                var helloMessage = 'Hello, ' + data.sessionUser.firstName + ' ' + data.sessionUser.lastName;
+                                console.log(helloMessage);
+                                $('#helloMessageOnLogoutModal').text(helloMessage);
+                            } else {
+                                $('#password').val('');
+                                $('#errorMessage').text('Email or/and password are not valid. Please try again');
+                            }
+                        }
+                    });
+                    return true;
+                });
+        	
+        	
+        	
             $("#firstName").change(function() {
                 $.ajax({
                 		url: "registervalidator.do", 
@@ -65,7 +97,23 @@
 							
                 		}	
                 });
-            });     
+            });   
+            
+            $('#confirm').change(function() {
+                	  var pass = $('#password').val();
+                      var conf = $('#confirm').val();
+                      
+                      $.ajax({
+                      type: "post",
+                      url: 'confirmValidator.do?password=' + pass + '&confirm=' + conf, 
+                      success: function(data){ //we're calling the response json array 'cities'
+
+                    	  $("#confirmMessage").text(data.valid);
+                    	  
+                      }
+                      });
+                       
+            });            
             
             $("#sex").change(function() {
                 $.ajax({
@@ -102,7 +150,7 @@
 </head>
 <body>
 
-    <form action="register" method="post">
+    <form action="register" method="post" id = "registerform"  name = "registerform" >
         loginpage.firstName: <input type="text" id="firstName" name="firstName" /> <span id="firstNameMessage"></span>
         <br>
         loginpage.lastName: <input type="text" id="lastName" name="lastName" /> <span id="lastNameMessage"></span>
@@ -112,6 +160,9 @@
         <br>
                 
         loginpage.password: <input type="password" id="password" name="password" /> <span id="passwordMessage"></span>
+        <br>
+        
+        loginpage.confirm: <input type="password" id="confirm" name="confirm" /> <span id="confirmMessage"></span>
         <br>
         
         loginpage.sex: 
@@ -252,6 +303,9 @@
         <br>
         
         
+             <button type = "submit">
+                Submit 
+            </button>       
     </form>
 
 
