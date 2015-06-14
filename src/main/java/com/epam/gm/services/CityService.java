@@ -27,4 +27,18 @@ public class CityService {
 		
 		return map;
 	}
+	
+	
+    //gryn
+    public City getCityById(Integer id) throws SQLException {
+    	return cityDao.getCityById(id);
+    }
+    
+    //gryn
+    //Получити міста аналоги в різних мовах:
+    //Lviv - Львів - Львов
+    public List<City> getCitiesByPureId(Integer pureId) throws SQLException {
+    	return cityDao.getCitiesByPureId(pureId);
+    			
+    }	
 }

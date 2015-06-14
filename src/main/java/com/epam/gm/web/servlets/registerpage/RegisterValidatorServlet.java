@@ -24,10 +24,12 @@ public class RegisterValidatorServlet implements HttpRequestHandler {
 		String[] params = ValidateHelper.getArrayOfFields(User.class);
 		for(String p: params) {
 			String value = request.getParameter(p);
+
 			
 			if(value == null) continue;
-			
+
 			System.out.println("param = " + p);
+			
 			
 			String valid = ValidateHelper.validateField(p, value, User.class);
 			

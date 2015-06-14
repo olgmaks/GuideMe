@@ -91,7 +91,7 @@
 							
                 		}	
                 });
-            });             
+            }); 
             
         });
         
@@ -192,32 +192,6 @@
                				}
               			});
           				
-//           				//fill city list
-//           				$("#cityByLang_${lang.id} > option").remove(); //first of all clear select items           
-//           				$.ajax({
-//           				type: "post",
-//           				url: 'getCitiesByCountry.do?value=' + selectedValue, 
-//           				success: function(originCityId){ //we're calling the response json array 'cities'
-           				
-//            				var optFirst = $('<option disabled selected />'); // here we're creating a new select option with for each city
-//            				optFirst.val('choose');
-//            				optFirst.text('loginpage.city.choose');
-//            				$('#cityByLang_${lang.id}').append(optFirst); 
-          					
-//           				$.each(originCityId,function(id,city){ //here we're doing a foeach loop round each city with id as the key and city as the value
-           					
-           					
-//            					var opt = $('<option />'); // here we're creating a new select option with for each city
-//             				opt.val(id);
-//             				opt.text(city);
-            				
-//             				$('#cityByLang_${lang.id}').append(opt); //here we will append these new select options to a dropdown with the id 'cities'
-//             				});
-//            				}
-//           				});
-          				
-       				
-          				
       			}); 
 				</script>   				
    				
@@ -228,8 +202,49 @@
    			<select id = "cityByLang_${lang.id}" >
    				<option selected value = "choose"  disabled>loginpage.city.choosecountryfirst</option>
    			</select> 
-   			
-   			
+   			<script>
+			$('#cityByLang_${lang.id}').change(function() {
+				
+  				var selectedValue = $(this).val();
+  				
+  				//change other cities
+  				$.ajax({
+      				type: "post",
+      				url: 'getLocalCityAnalogs.do?value=' + selectedValue, 
+      				success: function(originCityId){ //we're calling the response json array 'cities'
+       				
+      				$.each(originCityId,function(cityId,city){ //here we're doing a foeach loop round each city with id as the key and city as the value
+      				
+      					$('#cityByLang_' + cityId).val(city);
+      				
+        			});
+       				}
+      			});
+  				
+			});    			
+   			</script>
+
+        <br>
+        loginpage.address: <input type="text" id="addressByLang_${lang.id}"  /> <span id="addressByLangMessage_${lang.id}"></span>
+        
+        <script>    
+        $(document).ready(function() {
+            $("#addressByLang_${lang.id}").change(function() {
+                $.ajax({
+                		url: "registervalidator.do", 
+                		type : "post",
+                		dataType: "json",
+                		data:  $(this).serialize(),
+                		success:  function(data) {
+                    		$("#addressByLang_${lang.id}_Message").text(data.valid);
+							
+                		}	
+                });
+            });   
+        });    
+            
+            </script>
+            
         </c:forEach>
         
         
