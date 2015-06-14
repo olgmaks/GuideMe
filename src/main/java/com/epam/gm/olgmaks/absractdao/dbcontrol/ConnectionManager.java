@@ -18,28 +18,51 @@ public class ConnectionManager {
 
 	private static Connection getInstance() {
 		if (conn == null) {
-			Properties prop = new Properties();
-			String propFileName = "src/main/resources/dbConnection.properties";
-			InputStream inputStream = null;
+//			Properties prop = new Properties();
+//			String propFileName = "src/main/resources/dbConnection.properties";
+//			InputStream inputStream = null;
+//			try {
+//				inputStream = new FileInputStream(propFileName);
+//				prop.load(inputStream);
+//				BasicDataSource dataSource = new BasicDataSource();
+//				String driver = prop.getProperty("driver");
+//				String url = prop.getProperty("url");
+//				String login = prop.getProperty("name");
+//				String password = prop.getProperty("pass");
+//
+//				dataSource.setDriverClassName(driver);
+//				dataSource.setUrl(url);
+//				dataSource.setUsername(login);
+//				dataSource.setPassword(password);
+//
+//				conn = dataSource.getConnection();
+//			} catch (IOException | SQLException e) {
+//				e.printStackTrace();
+//			}
+		
+		
+			BasicDataSource dataSource = new BasicDataSource();
+			String driver = "com.mysql.jdbc.Driver";
+			String url = "jdbc:mysql://localhost/guideme";
+			String login = "root";
+			String password = "root";
+
+			dataSource.setDriverClassName(driver);
+			dataSource.setUrl(url);
+			dataSource.setUsername(login);
+			dataSource.setPassword(password);
+
 			try {
-				inputStream = new FileInputStream(propFileName);
-				prop.load(inputStream);
-				BasicDataSource dataSource = new BasicDataSource();
-				String driver = prop.getProperty("driver");
-				String url = prop.getProperty("url");
-				String login = prop.getProperty("name");
-				String password = prop.getProperty("pass");
-
-				dataSource.setDriverClassName(driver);
-				dataSource.setUrl(url);
-				dataSource.setUsername(login);
-				dataSource.setPassword(password);
-
 				conn = dataSource.getConnection();
-			} catch (IOException | SQLException e) {
+			} catch (SQLException e) {
+				
 				e.printStackTrace();
-			}
+			}		
+		
 		}
+		
+		
+		
 		return conn;
 	}
 
