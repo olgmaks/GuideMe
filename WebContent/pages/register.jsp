@@ -225,18 +225,18 @@
    			</script>
 
         <br>
-        loginpage.address: <input type="text" id="addressByLang_${lang.id}"  /> <span id="addressByLangMessage_${lang.id}"></span>
+        loginpage.address: <input type="text" id="addressByLang_${lang.id}" name="addressByLang_${lang.id}"   /> <span id="addressByLangMessage_${lang.id}"></span>
         
         <script>    
         $(document).ready(function() {
             $("#addressByLang_${lang.id}").change(function() {
                 $.ajax({
-                		url: "registervalidator.do", 
+                		url: "registerAddressValidator.do", 
                 		type : "post",
                 		dataType: "json",
                 		data:  $(this).serialize(),
                 		success:  function(data) {
-                    		$("#addressByLang_${lang.id}_Message").text(data.valid);
+                    		$("#addressByLangMessage_${lang.id}").text(data.valid);
 							
                 		}	
                 });
@@ -246,6 +246,10 @@
             </script>
             
         </c:forEach>
+        
+        <br>
+		loginpage.isGuide: <input type="checkbox" id="isGuide" name="isGuide" />
+        <br>
         
         
     </form>

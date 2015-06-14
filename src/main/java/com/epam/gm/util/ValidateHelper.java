@@ -37,6 +37,9 @@ public class ValidateHelper {
 				
 			}
 			
+			if(fieldName.equals("address")) {
+				
+			}			
 			
 			if(fieldName.equals("email")) {
 				
@@ -85,7 +88,7 @@ public class ValidateHelper {
 	}
 	
 
-	private static String[] userFields = "email firstName lastName sex cellNumber password".split(" ");
+	private static String[] userFields = "email firstName lastName sex cellNumber password address".split(" ");
 	
 	public static String[] getArrayOfFields(Class<?> clazz) {
 		
