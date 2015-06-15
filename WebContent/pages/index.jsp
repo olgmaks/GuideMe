@@ -137,7 +137,7 @@
                     </div>
                 </th>
                 <th>
-                    <div class="card small">
+                    <div class="card small" >
                         <div class="card-image waves-effect waves-block waves-light">
                             <img class="activator" src="img/guide1.jpg">
                         </div>

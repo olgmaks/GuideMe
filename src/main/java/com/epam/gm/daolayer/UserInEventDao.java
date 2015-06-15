@@ -1,21 +1,28 @@
-
 package com.epam.gm.daolayer;
-
-import java.sql.SQLException;
-import java.util.List;
 
 import com.epam.gm.model.UserInEvent;
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
-public class UserInEventDao extends AbstractDao<UserInEvent>{
-    
+import java.sql.SQLException;
+import java.util.List;
+
+public class UserInEventDao extends AbstractDao<UserInEvent> {
+
     public UserInEventDao() {
-	super(ConnectionManager.getConnection(), UserInEvent.class);
+        super(ConnectionManager.getConnection(), UserInEvent.class);
     }
-    
-    public List<UserInEvent> getAllUsersInEvents () throws SQLException {
-	return super.getAll();
+
+    public List<UserInEvent> getAllUsersInEvents() throws SQLException {
+        return super.getAll();
     }
-    
+
+    public List<UserInEvent> getEventsByUserId(int userId) throws SQLException {
+        return super.getByField("user_id", userId);
+    }
+
+    public List<UserInEvent> getUsersByEventId(int eventId) throws SQLException {
+        return super.getByField("event_id", eventId);
+    }
+
 }

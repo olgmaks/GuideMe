@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>User Cabinet</title>
@@ -33,7 +34,7 @@
 
 <table>
     <tr >
-        <td style=" width:20%; ">
+        <td style=" width:20%; vertical-align: top;">
 
             <%--User controls panel - left side of a page--%>
             <div class="row" >
@@ -68,19 +69,26 @@
                     <ul class="collection z-depth-2 ">
                         <li class="collection-item" >
                             <ul class="collection z-depth-2 ">
+                                <c:forEach var="userInEvent" items="${userInEvents}">
                                 <li class="collection-item" >
-                                    Event
+                                    <table>
+                                        <tr>
+                                        <td width="20%;">
+                                <img class="circle" style="height: 120px; width: 120px; object-fit: cover" src="${userPhoto.path}">
+                                        </td>
+                                        <td width="70%;">
+                                            ${userInEvent.event.name}<br><br>
+                                            ${userInEvent.event.description}<br><br>
+                                            ${userInEvent.status}<br>
+                                        </td>
+                                        <td width="10%;">
+                                            <a class="btn-floating btn-large waves-effect waves-light green" style="transform: scaleY(0.7) scaleX(0.7)"><i class="mdi-image-remove-red-eye"></i></a>
+                                            <br><a class="btn-floating btn-large waves-effect waves-light red" style="transform: scaleY(0.7) scaleX(0.7)"><i class="mdi-content-remove"></i></a>
+                                        </td>
+                                        </tr>
+                                    </table>
                                 </li>
-                            </ul>
-                            <ul class="collection z-depth-2 ">
-                                <li class="collection-item" >
-                                    Event
-                                </li>
-                            </ul>
-                            <ul class="collection z-depth-2 ">
-                                <li class="collection-item" >
-                                    Events
-                                </li>
+                                </c:forEach>
                             </ul>
                         </li>
                     </ul>
