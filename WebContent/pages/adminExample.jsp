@@ -77,14 +77,7 @@
 			        display:function(data){
 			                   return data.record.moderator.firstName;
 			        }
-				},
-				name: {
-			        title: 'status',
-			        display:function(data){
-			                   return data.record.status.name;
-			        }
-				}
-				
+				}				
 			}
 		});
 		$('#tblAdminEvent').jtable('load');
