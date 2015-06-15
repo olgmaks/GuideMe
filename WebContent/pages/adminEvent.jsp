@@ -25,53 +25,16 @@
 	<title>Free CSS template by ChocoTemplates.com</title>
 	<link rel="stylesheet" href="css/styleForAdmin.css" type="text/css" media="all" />
 <script>
-$(document).ready(function() {
-	$('input[type= "checkbox"]').change(function () {
-	    if ($('input[type= "checkbox').is(':checked')) {
-	    	var currentRow = this.parentNode.parentNode;
-            var userId = currentRow.getElementsByTagName("td")[0];
-            $.ajax({
-		        type: "POST",
-		        url: 'AdminServletPost?action=activeUser' +'&userId='  + userId.textContent
-            });
-	    } else {
-	        $('input[type= "checkbox').removeClass('checked');
-	    }
-	});
-	
-	$('#userTypeId').change(function() {
-	        var selectedValue = $(this).val();	
-	        $.ajax({
-	        type: "POST",
-	        url: 'AdminServletPost?action=filterByUserType' + "&userTypeId=" + selectedValue,
-	        contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-	          success: function(data){
-	        	  var table = $("#userTable");
-	                table.find("tr").remove();
-	                table.append("<tr><th>Id</th><th>firstName</th> <th>lastName</th><th>email</th><th>typeId</th><th>active</th></tr>")
-	        	  $.each(data,function(counts, user){
-	        		  table.append("<tr>"
-	        		  			 +"<td>"+user.firstName + "</td>"
-	                             +"<td>"+user.lastName +  "</td>"
-	                             +"<td>"+user.email +     "</td>" 
-	                             +"<td>"+user.userType.name +"</td>" 
-	                             +"<td>"+user.sex  +      "</td>"
-	                     	     +"</tr>");
-			        });
-	              
-	     
-	          }
-	         	
-	    });
-	 });
-	
-	$('#deleteId').on('click', function() {	
+
+	function func() {
+		alert(1)
 		var currentRow = this.parentNode.parentNode;
-        var userId = currentRow.getElementsByTagName("td")[0];
+		alert(1)
+        var eventId = currentRow.getElementsByTagName("td")[0];
 	        $.ajax({
+	        	
 	        type: "POST",
-	        url: 'AdminServletPost?action=delete' + "&userId=" + userId.textContent + "&userTypeId=" + $("#userTypeId").val(),
+	        url: 'AdminEventAjax?action=delete' + "&eventId=" + eventId.textContent,
 	        contentType: "application/json; charset=utf-8",
          	dataType: 'json',
 	          success: function(data){
@@ -89,9 +52,7 @@ $(document).ready(function() {
 			        });
 	          }
 	         	
-	    });
- });
-});
+	    })}
 </script>
 
 </head>
@@ -112,9 +73,6 @@ $(document).ready(function() {
 				<a href="#">Log out</a>
 			</div>
 		</div>
-		<!-- End Logo + Top Nav -->
-		
-		<!-- Main Nav -->
 		<div id="navigation">
 			<ul>
 			    <li><a href="#" class="active"><span>Dashboard</span></a></li>
@@ -165,7 +123,7 @@ $(document).ready(function() {
 					<!-- End Box Head -->	
 					<!-- Table -->
 					<div class="table">
-						<table  id = "userTable">
+						<table  id = "tblEvent">
 			                <tr>
 							    <th>Id</th>
 							    <th>name</th> 
@@ -179,10 +137,10 @@ $(document).ready(function() {
 			                        <td>${event.id}</td>
 			                        <td>${event.name}</td>
 			                        <td>${event.description}</td>
-			                        <td>${event.dateFrom}</td>
-			                        <td>${event.dateTo}</td>
-			                         <td>${event.status}</td> 
-			                        <td><a class="ico del" id = "deleteId">Delete</a>
+<%-- 			                        <td>${event.dateFrom}</td> --%>
+<%-- 			                        <td>${event.dateTo}</td> --%>
+<%-- 			                         <td>${event.status}</td>  --%>
+			                        <td><a class="ico del" id = "deleteId" onclick="func">Delete</a>
 			                        <a href="#" class="ico edit">Edit</a></td>              
 			                    </tr>
 			                </c:forEach>
@@ -210,53 +168,7 @@ $(document).ready(function() {
 				<!-- End Box -->
 				
 				<!-- Box -->
-				<div class="box">
-					<!-- Box Head -->
-					<div class="box-head">
-						<h2>Add New Article</h2>
-					</div>
-					<!-- End Box Head -->
-					
-					<form action="" method="post">
-						
-						<!-- Form -->
-						<div class="form">
-								<p>
-									<span class="req">max 100 symbols</span>
-									<label>Article Title <span>(Required Field)</span></label>
-									<input type="text" class="field size1" />
-								</p>	
-								<p class="inline-field">
-									<label>Date</label>
-									<select class="field size2">
-										<option value="">23</option>
-									</select>
-									<select class="field size3">
-										<option value="">July</option>
-									</select>
-									<select class="field size3">
-										<option value="">2009</option>
-									</select>
-								</p>
-								
-								<p>
-									<span class="req">max 100 symbols</span>
-									<label>Content <span>(Required Field)</span></label>
-									<textarea class="field size1" rows="10" cols="30"></textarea>
-								</p>	
-							
-						</div>
-						<!-- End Form -->
-						
-						<!-- Form Buttons -->
-						<div class="buttons">
-							<input type="button" class="button" value="preview" />
-							<input type="submit" class="button" value="submit" />
-						</div>
-						<!-- End Form Buttons -->
-					</form>
-				</div>
-				<!-- End Box -->
+				
 
 			</div>
 			<!-- End Content -->
