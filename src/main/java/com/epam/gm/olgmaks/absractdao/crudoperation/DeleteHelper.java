@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
@@ -42,15 +44,25 @@ public class DeleteHelper<T> extends AbstractHelper<T> {
     public PreparedStatement delete(String fieldName, Object fieldValue)
             throws SQLException, IllegalAccessException {
 
+        whereCondition = new String();
+
         whereCondition += fieldName + "=?";
+        System.out.println("where : " + whereCondition);
         String sql = String.format(AbstractDao.DELETE, tableName, whereCondition);
+
         System.out.println(sql);
+
         PreparedStatement statement = connection.prepareStatement(sql);
+
         statement.setObject(1, fieldValue);
+
         return statement;
     }
 
     public void init(T t) {
+
+        whereCondition = new String();
+
         for (Field field : fields) {
             whereCondition += field.getAnnotation(Column.class).value() + "=? AND ";
         }

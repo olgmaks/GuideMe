@@ -96,6 +96,9 @@ EventDao dao;
 					System.out.println( "delete id "+request.getParameter("id"));
 					if (request.getParameter("id") != null) {
 						int eventId = Integer.parseInt(request.getParameter("id"));
+
+						System.out.println("event id " +eventId);
+
 						dao.deleteById(eventId);
 
 						// Return in the format required by jTable plugin

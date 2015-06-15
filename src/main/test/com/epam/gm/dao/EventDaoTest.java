@@ -35,7 +35,7 @@ public class EventDaoTest {
             System.out.println(event);
         }
     }
-
+@Ignore
     @Test//Passed
     public void testSaveEvent() throws ParseException, SQLException, IllegalAccessException {
         Event event = new Event();
@@ -51,6 +51,11 @@ public class EventDaoTest {
         event.setStatus("active");
 
         eventDao.save(event);
+    }
+
+    @Test
+    public void testDelete () throws SQLException, IllegalAccessException {
+        eventDao.deleteById(3);
     }
 
 }

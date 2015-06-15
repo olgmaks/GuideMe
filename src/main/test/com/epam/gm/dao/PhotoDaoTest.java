@@ -36,7 +36,7 @@ public class PhotoDaoTest {
 
     @Test
     public void testDeleteById () throws SQLException, IllegalAccessException {
-        photoDao.deleteByField("id",1);
+        photoDao.deleteByField("id",10);
     }
 
 }
