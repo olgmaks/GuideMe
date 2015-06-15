@@ -230,7 +230,7 @@ div.jtable-main-container div.jtable-column-selection-container ul.jtable-column
   cursor: pointer;
 }
 form.jtable-dialog-form div.jtable-input-field-container {
-  padding: 2px 0px 3px 0px;
+  padding: 2px 2px 3px 0px;
   border-bottom: 1px solid #ddd;
 }
 form.jtable-dialog-form div.jtable-input-field-container:last-child {
@@ -257,7 +257,7 @@ form.jtable-dialog-form span.jtable-option-text-clickable {
   top: -2px;
 }
 form.jtable-dialog-form div.jtable-textarea-input textarea {
-  width: 300px;
+  width: 500px;
   min-height: 60px;
 }
 form.jtable-dialog-form div.jtable-checkbox-input span,

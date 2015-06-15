@@ -64,7 +64,7 @@
 					title : 'status',
 					width : '67%',
 					edit : true,
-					visibility: 'hidden'
+					options: { 'active': 'active', 'cancel': 'cancel' },
 				},
 				city: {
 			        title: 'city',
@@ -72,12 +72,12 @@
 			                return data.record.address.city.name;
 			        }
 				},
-				firstName: {
-			        title: 'First Name',
-			        display:function(data){
-			                   return data.record.moderator.firstName;
-			        }
-				}				
+				moderator: {
+			        title: 'moderator1',
+					display: function (data) {
+                     return '<a href="adminUserProfile.do?id=' + data.record.moderatorId + '">'+data.record.moderator.lastName+'</a>';
+                 }
+				}
 			}
 		});
 		$('#tblAdminEvent').jtable('load');
