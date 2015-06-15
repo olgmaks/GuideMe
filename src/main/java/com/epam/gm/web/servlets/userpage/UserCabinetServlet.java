@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by OLEG on 14.06.2015.
@@ -41,7 +43,18 @@ public class UserCabinetServlet implements HttpRequestHandler {
             Photo userPhoto = photoService.getUserPhoto(user.getId());
             List<UserInEvent> userInEvents = userInEventService.getEventsByUserId(user.getId());
 
+            //Creating map with paths for events photo <eventId, pathToEventPhoto>
+            Map<Integer,String> eventPhotosPathMap= new HashMap<>();
+
+            for (UserInEvent iter : userInEvents) {
+                int eventId= iter.getEventId();
+                String pathToEventPhoto = photoService.getEventPhoto(eventId).getPath();
+                eventPhotosPathMap.put(eventId, pathToEventPhoto);
+            }
+
             request.setAttribute("userInEvents", userInEvents);
+            request.setAttribute("eventPhotosPathMap", eventPhotosPathMap);
+
 
             if (userPhoto != null) {
                 request.setAttribute("userPhoto", userPhoto);

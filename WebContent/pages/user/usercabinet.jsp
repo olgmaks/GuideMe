@@ -74,7 +74,8 @@
                                     <table>
                                         <tr>
                                         <td width="20%;">
-                                <img class="circle" style="height: 120px; width: 120px; object-fit: cover" src="${userPhoto.path}">
+
+                                <img class="" style="height: 120px; width: 120px; object-fit: cover" src="${eventPhotosPathMap.get(userInEvent.eventId)}">
                                         </td>
                                         <td width="70%;">
                                             ${userInEvent.event.name}<br><br>

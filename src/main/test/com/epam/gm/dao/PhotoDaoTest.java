@@ -27,10 +27,16 @@ public class PhotoDaoTest {
         }
     }
 
+    @Ignore
     @Test
     public void testGet() throws SQLException {
-        Photo photo= photoDao.getUserPhoto(2);
+        Photo photo = photoDao.getUserPhoto(2);
         System.out.println(photo);
+    }
+
+    @Test
+    public void testDeleteById () throws SQLException, IllegalAccessException {
+        photoDao.deleteByField("id",1);
     }
 
 }
