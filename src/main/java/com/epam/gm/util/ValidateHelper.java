@@ -1,6 +1,9 @@
 package com.epam.gm.util;
 
+import java.sql.SQLException;
+
 import com.epam.gm.model.User;
+import com.epam.gm.services.UserService;
 
 //gryn
 //Проміжна утилітка для валідації, поки захардкоджено
@@ -49,8 +52,22 @@ public class ValidateHelper {
 					result = "validation.email.empty";
 				else if(!value.contains("@")) {
 					result = "validation.email.wrongformat";
-				} else 
-					result = "validation.ok";
+				} else {
+					User temp = null;
+					try {
+						temp = new UserService().getUserByEmail(value.trim().toLowerCase());
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					if(temp == null)
+						result = "validation.ok";
+					else
+						result = "validation.email.exists";
+				}
+					
 				
 			}
 			

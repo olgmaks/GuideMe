@@ -34,17 +34,17 @@ public class UserDaoTest {
         }
     }
 
-    @Ignore
+    
     @Test
     public void saveUser() throws IllegalArgumentException, IllegalAccessException, SQLException {
         User user = new User();
-        user.setFirstName("Elon");
-        user.setLastName("Mask");
-        user.setEmail("elon.mask@gmail.com");
+        user.setFirstName("Сергій");
+        user.setLastName("Журба");
+        user.setEmail("serg@gmail.com");
         user.setUserTypeId(roleUser.getId());
         user.setSex("male");
         user.setLangId(3);
-        user.setCellNumber("+380635560235");
+        user.setCellNumber("+38097585454");
         user.setIsActive(true);
         user.setAddressId(1);
         user.setPassword("qwerty");
@@ -70,6 +70,7 @@ public class UserDaoTest {
         userDao.updateById(8, updates);
     }
 
+    @Ignore
     @Test
     public void testUpdateWithCustomQuery() throws SQLException {
         Map<String, Object> updates = new HashMap<>();
@@ -79,4 +80,7 @@ public class UserDaoTest {
         updates.put("facebook_id", 265);
         userDao.updateWithCustomQuery(updates, joined, where);
     }
+    
+
+
 }

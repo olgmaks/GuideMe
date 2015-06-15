@@ -35,4 +35,21 @@ public class CityDao extends AbstractDao<City> {
     public List<City> getCitiesByPureId(Integer pureId) throws SQLException {
     	return getByField("pure_id", pureId);
     }	
+    
+    //gryn
+    //must be optimized later
+    public Integer getLastPureId() throws SQLException {
+    	
+    	List<City> list = getAll();
+    	
+    	Integer max = 0;
+    	for(City c: list) {
+    		if(c.getPureId() > max)
+    			max = c.getPureId();
+    	}
+    	
+    	return max;
+    }	
+    
+    
 }

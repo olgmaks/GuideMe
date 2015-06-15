@@ -50,10 +50,10 @@ public class UserDao extends AbstractDao<User> {
     public void deleteById(int userId) throws IllegalAccessException, SQLException{
     	deleteByField("id", userId);
     }
+    
     public void  updateWithCustomQuery (Map<String, Object> updates, String joined, String where) throws SQLException {
         super.updateWithCustomQuery(updates,joined,where);
     }
-
 
 	public void activeUser(int userId) throws SQLException, IllegalAccessException {
 		callStoredProcedure("{call confirmUnconfirmUser(?)}", String.valueOf(userId));

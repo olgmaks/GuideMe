@@ -28,7 +28,6 @@ public class CityService {
 		return map;
 	}
 	
-	
     //gryn
     public City getCityById(Integer id) throws SQLException {
     	return cityDao.getCityById(id);
@@ -41,4 +40,9 @@ public class CityService {
     	return cityDao.getCitiesByPureId(pureId);
     			
     }	
+    
+    //gryn
+    public Integer getLastPureId() throws SQLException {
+    	return cityDao.getLastPureId();
+    }
 }

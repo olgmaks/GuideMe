@@ -52,12 +52,19 @@ public class CityDaoTest {
 
 	}	
 	
+	@Ignore
 	@Test
 	public void test5() throws SQLException {
 		List<City> cities = cityDao.getCitiesByPureId(1);
 		for (City city : cities) {
 			System.out.println(city);
 		}
+	}	
+	
+	@Test
+	public void test6() throws SQLException {
+		System.out.println("Last pure:");
+		System.out.println(cityDao.getLastPureId());
 	}	
 
 }

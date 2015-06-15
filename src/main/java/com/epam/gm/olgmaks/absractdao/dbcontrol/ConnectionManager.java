@@ -44,8 +44,8 @@ public class ConnectionManager {
 			BasicDataSource dataSource = new BasicDataSource();
 			String driver = "com.mysql.jdbc.Driver";
 			String url = "jdbc:mysql://localhost/guideme";
-			String login = "taras";
-			String password = "1";
+			String login = "root";
+			String password = "root";
 
 			dataSource.setDriverClassName(driver);
 			dataSource.setUrl(url);
