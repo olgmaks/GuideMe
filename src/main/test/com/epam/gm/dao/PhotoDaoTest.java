@@ -1,30 +1,36 @@
 package com.epam.gm.dao;
 
+import com.epam.gm.daolayer.PhotoDao;
+import com.epam.gm.model.Photo;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import java.sql.SQLException;
 import java.util.List;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.epam.gm.daolayer.PhotoDao;
-import com.epam.gm.model.Photo;
-
 public class PhotoDaoTest {
-    
+
     private static PhotoDao photoDao;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-	photoDao = new PhotoDao();
+        photoDao = new PhotoDao();
     }
- 
 
+    @Ignore
     @Test
     public void test() throws SQLException {
-	List<Photo> photos = photoDao.getAll();
-	for (Photo photo : photos) {
-	    System.out.println(photo);
-	}
+        List<Photo> photos = photoDao.getAll();
+        for (Photo photo : photos) {
+            System.out.println(photo);
+        }
+    }
+
+    @Test
+    public void testGet() throws SQLException {
+        Photo photo= photoDao.getUserPhoto(2);
+        System.out.println(photo);
     }
 
 }

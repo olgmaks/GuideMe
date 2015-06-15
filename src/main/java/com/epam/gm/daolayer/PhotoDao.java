@@ -4,10 +4,25 @@ import com.epam.gm.model.Photo;
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
+import java.sql.SQLException;
+
 public class PhotoDao extends AbstractDao<Photo> {
-    
+
+    private static final String GET_PHOTO_USER = "where owner_type='user' and owner_id = %S";
+    private static final String GET_PHOTO_EVENT = "where owner_type='event' and owner_id = %S";
+
     public PhotoDao() {
-	super(ConnectionManager.getConnection(), Photo.class);
+        super(ConnectionManager.getConnection(), Photo.class);
     }
-    
+
+    public Photo getUserPhoto(int userId) throws SQLException {
+        Photo result = super.getWithCustomQuery(String.format(GET_PHOTO_USER, userId)).get(0);
+        return result;
+    }
+
+    public Photo getEventPhoto(int eventId) throws SQLException {
+        Photo result = super.getWithCustomQuery(String.format(GET_PHOTO_EVENT, eventId)).get(0);
+        return result;
+    }
+
 }
