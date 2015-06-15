@@ -27,7 +27,6 @@
 </head>
 <body>
 
-<jsp:include page="../home/loginmodal.jsp"/>
 <jsp:include page="../home/logoutmodal.jsp"/>
 <jsp:include page="usercabinetheader.jsp"/>
 
@@ -68,7 +67,21 @@
                     </ul>
                     <ul class="collection z-depth-2 ">
                         <li class="collection-item" >
-                            Events
+                            <ul class="collection z-depth-2 ">
+                                <li class="collection-item" >
+                                    Event
+                                </li>
+                            </ul>
+                            <ul class="collection z-depth-2 ">
+                                <li class="collection-item" >
+                                    Event
+                                </li>
+                            </ul>
+                            <ul class="collection z-depth-2 ">
+                                <li class="collection-item" >
+                                    Events
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
