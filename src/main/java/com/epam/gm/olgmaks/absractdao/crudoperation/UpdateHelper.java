@@ -88,7 +88,9 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
         // Setting values to set
         for (String fieldName : fieldNames) {
             for (Field field : fields) {
-                if (fieldName != null && field.getAnnotation(Column.class).value().equals(fieldName)) {
+            	System.out.println(field.getAnnotation(Column.class) != null);
+                if (fieldName != null && field.getAnnotation(Column.class) != null 
+                		&& field.getAnnotation(Column.class).value().equals(fieldName)) {
                     statement.setObject(index++, field.get(t));
                 }
             }
@@ -96,7 +98,7 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
         //Setting updating conditions
         for (String conditionField : conditionFields) {
             for (Field field : fields) {
-                if (conditionField != null && field.getAnnotation(Column.class).value().equals(conditionField)) {
+                if (conditionField != null && field.getAnnotation(Column.class) != null && field.getAnnotation(Column.class).value().equals(conditionField)) {
                     statement.setObject(index++, field.get(t));
                 }
             }

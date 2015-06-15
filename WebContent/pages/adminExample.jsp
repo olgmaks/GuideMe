@@ -26,9 +26,8 @@
 					width : '3%',
 					key : true,
 					list : true,
-					edit : false,
-					create : true
-				},
+					edit : false				
+					},
 				name : {
 					title : 'name',
 					width : '30%',
@@ -38,6 +37,34 @@
 					title : 'description',
 					width : '67%',
 					edit : true
+				},
+				dateFrom : {
+					title : 'dateFrom',
+					width : '67%',
+					edit : true
+				},
+				dateTo : {
+					title : 'dateTo',
+					width : '67%',
+					edit : true
+				},
+				moderatorId : {
+					title : 'moderatorId',
+					width : '67%',
+					edit : true,
+					visibility: 'hidden'
+				},
+				addressId : {
+					title : 'addressId',
+					width : '67%',
+					edit : true,
+					visibility: 'hidden'
+				},
+				status : {
+					title : 'status',
+					width : '67%',
+					edit : true,
+					visibility: 'hidden'
 				},
 				city: {
 			        title: 'city',
@@ -49,6 +76,12 @@
 			        title: 'First Name',
 			        display:function(data){
 			                   return data.record.moderator.firstName;
+			        }
+				},
+				name: {
+			        title: 'status',
+			        display:function(data){
+			                   return data.record.status.name;
 			        }
 				}
 				
