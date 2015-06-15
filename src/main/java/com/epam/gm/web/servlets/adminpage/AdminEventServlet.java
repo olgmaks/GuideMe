@@ -9,10 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
-public class AdminEventServlet  implements HttpRequestHandler {
+public class AdminEventServlet implements HttpRequestHandler {
 
 	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	public void handle(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException {
 
-		request.getRequestDispatcher("pages/adminExample.jsp").forward(request, response);
-}}
+		request.getRequestDispatcher("pages/adminExample.jsp").forward(request,
+				response);
+	}
+}

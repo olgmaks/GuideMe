@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html>
 <head>
-<title>CRUD operations using jTable in J2EE</title>
+<title>Event List</title>
 <!-- Include one of jTable styles. -->
 <link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
 <link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
@@ -12,18 +12,18 @@
  
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#StudentTableContainer').jtable({
-			title : 'Students List',
+		$('#tblAdminEvent').jtable({
+			title : 'Event List',
 			actions : {
-				listAction :   '?action=list',
-				createAction : 'com.epam.gm.web.servlets.adminpage.TestControllerr?action=create',
-				updateAction : 'adminController?action=update',
-				deleteAction : 'adminController?action=delete'
+				listAction :   'adminEventRequest.do?action=list',
+				createAction : 'adminEventRequest.do?action=create',
+				updateAction : 'adminEventRequest.do?action=update',
+				deleteAction : 'adminEventRequest.do?action=delete'
 			},
 			fields : {
 				id : {
 					title : 'id',
-					width : '30%',
+					width : '3%',
 					key : true,
 					list : true,
 					edit : false,
@@ -36,12 +36,25 @@
 				},
 				description : {
 					title : 'description',
-					width : '30%',
+					width : '67%',
 					edit : true
+				},
+				city: {
+			        title: 'city',
+			        display:function(data){
+			                return data.record.address.city.name;
+			        }
+				},
+				firstName: {
+			        title: 'First Name',
+			        display:function(data){
+			                   return data.record.moderator.firstName;
+			        }
 				}
+				
 			}
 		});
-		$('#StudentTableContainer').jtable('load');
+		$('#tblAdminEvent').jtable('load');
 	});
 </script>
 
@@ -49,8 +62,8 @@
 <body>
 <div style="width: 80%; margin-right: 10%; margin-left: 10%; text-align: center;">
 
-		<h4>AJAX based CRUD operations using jTable in J2ee</h4>
-		<div id="StudentTableContainer"></div>
+		<h4>AEvent List</h4>
+		<div id="tblAdminEvent"></div>
 	</div>
 </body>
 </html>

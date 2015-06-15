@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 
-public class AdminEventRequest  extends HttpServlet {
+public class AdminEventRequest  implements HttpRequestHandler {
 	private static final long serialVersionUID = 1L;
 	private HashMap<String, Object> JSONROOT = new HashMap<String, Object>();
 
@@ -27,8 +27,8 @@ EventDao dao;
 		dao = new EventDao();
 	}
 
-	public void doPost(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	public void handle(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String action = request.getParameter("action");
 		System.out.println(action);
 		if (action  == null) action =  "list";
@@ -50,25 +50,26 @@ EventDao dao;
 					// Convert Java Object to Json
 					String jsonArray = gson.toJson(JSONROOT);
 					//request.setAttribute("",jsonArray);
+					response.setCharacterEncoding("UTF-8");
 					response.getWriter().print(jsonArray);
 				} else if (action.equals("create") || action.equals("update")) {
 					System.out.println("create");
 					Event event = new Event();
-					if (request.getParameter("studentId") != null) {
+					if (request.getParameter("id") != null) {
 						int id = Integer.parseInt(request.getParameter("eventId"));
 						event.setId(id);
 					}
-//
-//					if (request.getParameter("name") != null) {
-//						String name = request.getParameter("name");
-//						student.setName(name);
-//					}
-//
-//					if (request.getParameter("department") != null) {
-//						String department = request.getParameter("department");
-//						student.setDepartment(department);
-//					}
-//
+
+					if (request.getParameter("name") != null) {
+						String name = request.getParameter("name");
+						event.setName(name);
+					}
+
+					if (request.getParameter("description") != null) {
+						String description = request.getParameter("department");
+						event.setDescription(description); 
+					}
+
 //					if (request.getParameter("emailId") != null) {
 //						String emailId = request.getParameter("emailId");
 //						student.setEmailId(emailId);
@@ -88,18 +89,21 @@ EventDao dao;
 
 					// Convert Java Object to Json
 					String jsonArray = gson.toJson(JSONROOT);
+					 response.setCharacterEncoding("UTF-8");
 					response.getWriter().print(jsonArray);
 				} else if (action.equals("delete")) {
 					// Delete record
-					if (request.getParameter("eventId") != null) {
-						int eventId = Integer.parseInt(request.getParameter("studentId"));
-						//dao.delete(studentId);
+					System.out.println( "delete id "+request.getParameter("id"));
+					if (request.getParameter("id") != null) {
+						int eventId = Integer.parseInt(request.getParameter("id"));
+						dao.deleteById(eventId);
 
 						// Return in the format required by jTable plugin
 						JSONROOT.put("Result", "OK");
 
 						// Convert Java Object to Json
 						String jsonArray = gson.toJson(JSONROOT);
+						 response.setCharacterEncoding("UTF-8");
 						response.getWriter().print(jsonArray);
 					}
 				}
@@ -109,6 +113,7 @@ EventDao dao;
 				JSONROOT.put("Message", ex.getMessage());
 				String error = gson.toJson(JSONROOT);
 				ex.printStackTrace();
+				 response.setCharacterEncoding("UTF-8");
 				response.getWriter().print(error);
 			}
 		}

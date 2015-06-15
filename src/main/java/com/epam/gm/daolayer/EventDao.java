@@ -17,5 +17,8 @@ public class EventDao extends AbstractDao<Event> {
     public List<Event> getAllEvents() throws SQLException {
         return super.getAll();
     }
+    public void deleteById(int eventId) throws IllegalAccessException, SQLException{
+    	deleteByField("id", eventId);
+    }
 
 }
