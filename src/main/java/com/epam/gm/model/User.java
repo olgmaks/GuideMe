@@ -39,7 +39,7 @@ public class User {
     @Column("cell_number")
     private String cellNumber;
     @Column("facebook_id")
-    private Integer facebookId;
+    private String facebookId;
     @Column("vk_id")
     private Integer vkId;
     @Column("is_active")
@@ -85,15 +85,17 @@ public class User {
 	this.cellNumber = cellNumber;
     }
 
-    public Integer getFacebookId() {
-	return facebookId;
-    }
+ 
 
-    public void setFacebookId(Integer facebookId) {
-	this.facebookId = facebookId;
-    }
+    public String getFacebookId() {
+		return facebookId;
+	}
 
-    public Integer getVkId() {
+	public void setFacebookId(String facebookId) {
+		this.facebookId = facebookId;
+	}
+
+	public Integer getVkId() {
 	return vkId;
     }
 

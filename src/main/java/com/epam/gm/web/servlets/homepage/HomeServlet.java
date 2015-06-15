@@ -16,7 +16,8 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("pages/index.jsp");
+		RequestDispatcher requestDispatcher = request
+				.getRequestDispatcher("pages/index.jsp");
 		requestDispatcher.forward(request, response);
 
 	}
