@@ -6,15 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Deprecated
 public class ConnectionManager {
 		private static Connection conn;
 	 	private static ConnectionManager db;
 	    private ConnectionManager() {
-	        String url= "jdbc:mysql://localhost/";
-	        String dbName = "guideme";
+	        String url= "----------";
+	        String dbName = "-------";
 	        //String driver = "com.mysql.jdbc.Driver";
-	        String userName = "taras";
-	        String password = "1";
+	        String userName = "--------";
+	        String password = "---------";
 	        try {
 	          conn = DriverManager.getConnection(url+dbName,userName,password);
 	        }

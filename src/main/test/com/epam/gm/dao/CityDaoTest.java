@@ -20,7 +20,7 @@ public class CityDaoTest {
 		cityDao = new CityDao();
 	}
 
-	@Ignore
+	
 	@Test
 	public void test() throws SQLException {
 		List<City> cities = cityDao.getAll();
@@ -61,6 +61,7 @@ public class CityDaoTest {
 		}
 	}	
 	
+	@Ignore
 	@Test
 	public void test6() throws SQLException {
 		System.out.println("Last pure:");

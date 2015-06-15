@@ -12,13 +12,22 @@ import java.util.Iterator;
 
 public class SaveHelper<T> extends AbstractHelper<T> {
 
-    public SaveHelper(Connection connection, Class<T> clazz) {
-        super(connection, clazz);
+	//gryn - removing connection from construct, and adding to methods
+    //public SaveHelper(Connection connection, Class<T> clazz) {
+    //    super(connection, clazz);
+    //}
+    public SaveHelper(Class<T> clazz) {
+        super(clazz);
     }
+	
 
-    public PreparedStatement prepareSave(T t) throws IllegalArgumentException,
-            IllegalAccessException {
-
+    
+    //public PreparedStatement prepareSave(T t) throws IllegalArgumentException,
+    //        IllegalAccessException {
+    
+    public PreparedStatement prepareSave(Connection connection, T t) throws IllegalArgumentException,
+    IllegalAccessException {
+    	
         init(t);
 
         sql = String.format(AbstractDao.INSERT, tableName, fieldNameSequence,

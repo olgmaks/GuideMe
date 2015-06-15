@@ -16,7 +16,10 @@ import com.epam.gm.olgmaks.absractdao.crudoperation.GetHelper;
 public class ResultTransformer<T> {
 
     private T t;
-    private Connection connection;
+    
+    //gryn
+    //private Connection connection;
+    
     private Field[] fields;
     private Class<T> clazz;
 
@@ -28,11 +31,17 @@ public class ResultTransformer<T> {
      * with annotation "Column" in com.epam.lab.annotation. Annotation value
      * describe exactly name of current field in DB.
      */
-    public ResultTransformer(Connection connection, Class<T> clazz) {
+    
+    //gryn
+    //public ResultTransformer(Connection connection, Class<T> clazz) {
+    public ResultTransformer(Class<T> clazz) {
 
         this.clazz = clazz;
         fields = clazz.getDeclaredFields();
-        this.connection = connection;
+        
+        //gryn
+        //this.connection = connection;
+        
         referencedFields = new ArrayList<>();
         for (Field field : fields) {
             if (field.isAnnotationPresent(OneToMany.class)) {
@@ -41,21 +50,28 @@ public class ResultTransformer<T> {
         }
     }
 
-    public T getOneInstance(ResultSet rs) {
+    //gryn
+    //public T getOneInstance(ResultSet rs) {
+    public T getOneInstance(Connection connection,  ResultSet rs) {
         try {
             rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return toInstance(rs);
+        
+        //return toInstance(rs);
+        return toInstance(connection, rs);
     }
 
-    public List<T> getAllInstances(ResultSet rs) {
+    //gryn
+    //public List<T> getAllInstances(ResultSet rs) {
+    public List<T> getAllInstances(Connection connection, ResultSet rs) {
 
         List<T> result = new ArrayList<T>();
         try {
             while (rs.next()) {
-                result.add(toInstance(rs));
+                //result.add(toInstance(rs));
+            	result.add(toInstance(connection, rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -63,7 +79,9 @@ public class ResultTransformer<T> {
         return result;
     }
 
-    private T toInstance(ResultSet rs) {
+    //gryn
+    //private T toInstance(ResultSet rs) {
+    private T toInstance(Connection connection, ResultSet rs) {
 
         try {
             t = clazz.newInstance();
@@ -100,13 +118,22 @@ public class ResultTransformer<T> {
 //                System.out.println(clazz + "  currentKey=" + currentKey);
 
                 Class<?> referencedFieldClass = referencedField.getType();
-                GetHelper<?> getHelper = new GetHelper<>(connection, referencedFieldClass);
+                
+                //gryn
+                //GetHelper<?> getHelper = new GetHelper<>(connection, referencedFieldClass);
+                GetHelper<?> getHelper = new GetHelper<>(referencedFieldClass);
+                
                 PreparedStatement preparedStatement = getHelper.
-                        getByFieldName(mappedBy, currentKey);
+                        //getByFieldName(mappedBy, currentKey);
+                		getByFieldName(connection, mappedBy, currentKey);
                 ResultTransformer<?> resultTransformer =
-                        new ResultTransformer<>(connection, referencedFieldClass);
+                        //gryn
+                		//new ResultTransformer<>(connection, referencedFieldClass);
+                		new ResultTransformer<>(referencedFieldClass);
+                
                 referencedField.set(t, resultTransformer.
-                        getOneInstance(preparedStatement.executeQuery()));
+                        //getOneInstance(preparedStatement.executeQuery()));
+                		getOneInstance(connection, preparedStatement.executeQuery()));
             }
         } catch (InstantiationException | IllegalAccessException e1) {
             e1.printStackTrace();

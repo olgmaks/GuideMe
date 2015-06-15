@@ -1,17 +1,19 @@
 package com.epam.gm.daolayer;
 
+
 import java.sql.SQLException;
 import java.util.List;
 
 import com.epam.gm.model.Address;
-import com.epam.gm.model.City;
-import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
+
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 public class AddressDao extends AbstractDao<Address>{
 
     public AddressDao() {
-	super(ConnectionManager.getConnection(), Address.class);
+    	//gryn
+    	//super(ConnectionManager.getConnection(), Address.class);
+    	super(Address.class);
     }
 
     //gryn
@@ -32,6 +34,7 @@ public class AddressDao extends AbstractDao<Address>{
     //gryn
     //Получити адреси аналоги в різних мовах:
     public List<Address> getAddressByPureId(Integer pureId) throws SQLException {
-    	return getByField("pure_id", pureId);
+    	List<Address> list = getByField("pure_id", pureId);
+    	return list;
     }	    
 }

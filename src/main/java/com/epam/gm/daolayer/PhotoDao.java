@@ -1,7 +1,7 @@
 package com.epam.gm.daolayer;
 
 import com.epam.gm.model.Photo;
-import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
+
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 import java.sql.SQLException;
@@ -12,7 +12,9 @@ public class PhotoDao extends AbstractDao<Photo> {
     private static final String GET_PHOTO_EVENT = "where owner_type='event' and owner_id = %S";
 
     public PhotoDao() {
-        super(ConnectionManager.getConnection(), Photo.class);
+        //gryn
+    	//super(ConnectionManager.getConnection(), Photo.class);
+    	super(Photo.class);
     }
 
     public Photo getUserPhoto(int userId) throws SQLException {

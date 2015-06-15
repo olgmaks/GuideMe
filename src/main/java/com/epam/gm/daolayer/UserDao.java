@@ -1,7 +1,7 @@
 package com.epam.gm.daolayer;
 
 import com.epam.gm.model.User;
-import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
+import com.epam.gm.model.UserType;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 import java.sql.SQLException;
@@ -14,10 +14,13 @@ public class UserDao extends AbstractDao<User> {
     private static final String USER_TYPE_FIELD = "user_type_id";
     private static final String GET_USER_BY_CITY_NAME_SQL = "JOIN address ON user.address_id = address.id "
             + "JOIN city ON address.city_id = city.id WHERE name = '%S'";
-    private static final String UPDATE = "";
+    @SuppressWarnings("unused")
+	private static final String UPDATE = "";
 
     public UserDao() {
-        super(ConnectionManager.getConnection(), User.class);
+        //gryn
+    	//super(ConnectionManager.getConnection(), User.class);
+    	super(User.class);
     }
 
     public void saveUser(User user) throws IllegalArgumentException, IllegalAccessException, SQLException {
@@ -58,5 +61,28 @@ public class UserDao extends AbstractDao<User> {
 	public void activeUser(int userId) throws SQLException, IllegalAccessException {
 		callStoredProcedure("{call confirmUnconfirmUser(?)}", String.valueOf(userId));
 
+	}
+	
+	public static void main(String[] args) {
+		 UserDao userDao;
+		 UserType roleUser;
+		
+		try {
+			
+	        userDao = new UserDao();
+	        roleUser = new UserTypeDao().getByField("name", "user").get(0);
+	        
+	        System.out.println("userRole = " + roleUser);
+	        List<User> users = userDao.getAllUsers();
+	        for (User user : users) {
+	            System.out.println(user);
+	        }
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

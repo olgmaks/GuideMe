@@ -4,7 +4,7 @@ import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 
 import java.lang.reflect.Field;
-import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,10 @@ public abstract class AbstractHelper<T> {
 
     protected Field[] fields;
     protected List<Field> referencedFields;
-    protected Connection connection;
+    
+    //gryn
+    //protected Connection connection;
+    
     protected String sql;
     protected String tableName = new String();
     protected PreparedStatement preparedStatement;
@@ -28,8 +31,13 @@ public abstract class AbstractHelper<T> {
     protected String fieldNameSequence;
 
 
-    public AbstractHelper(Connection connection, Class<T> clazz) {
-        this.connection = connection;
+    //gryn 
+    //public AbstractHelper(Connection connection, Class<T> clazz) {
+    public AbstractHelper(Class<T> clazz) {
+        //gryn
+    	//this.connection = connection;
+        
+        
         fieldNames = new ArrayList<String>();
         fieldValues = new ArrayList<Object>();
 //System.out.println(clazz.getAnnotation(Entity.class).value());

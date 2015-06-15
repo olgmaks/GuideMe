@@ -1,18 +1,19 @@
 package com.epam.gm.daolayer;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import com.epam.gm.model.Country;
-import com.epam.gm.model.User;
-import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
+
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 public class CountryDao extends AbstractDao<Country> {
 
     public CountryDao() {
-    	super(ConnectionManager.getConnection(), Country.class);
+    	//gryn
+    	//super(ConnectionManager.getConnection(), Country.class);
+    	super(Country.class);
     }
     
     //gryn

@@ -22,8 +22,14 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
     private String namesAndValuesForUpdating;
     private List<String> conditionFields;
 
-    public UpdateHelper(Connection connection, Class<T> clazz) {
-        super(connection, clazz);
+    
+    //gryn - removing connection from constructor
+    //public UpdateHelper(Connection connection, Class<T> clazz) {
+    //    super(connection, clazz);
+    
+    public UpdateHelper(Class<T> clazz) {
+        super(clazz);
+        
         whereCondition = new String();
         namesAndValuesForUpdating = new String();
         conditionFields = new ArrayList<>();
@@ -66,8 +72,11 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
         System.out.println("update conditions : " + whereCondition);
     }
 
-    public PreparedStatement update(T t, String[] updateConditions) throws SQLException, IllegalAccessException {
-        System.out.println("update method");
+    //gryn
+    //public PreparedStatement update(T t, String[] updateConditions) throws SQLException, IllegalAccessException {
+    public PreparedStatement update(Connection connection, T t, String[] updateConditions) throws SQLException, IllegalAccessException {
+    
+    	System.out.println("update method");
         for (String condition : updateConditions) {
             conditionFields.add(condition);
         }
@@ -95,7 +104,10 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
         return statement;
     }
 
-    public PreparedStatement update(Integer id, Map<String, Object> updates) throws SQLException {
+    //gryn
+    //public PreparedStatement update(Integer id, Map<String, Object> updates) throws SQLException {
+    public PreparedStatement update(Connection connection, Integer id, Map<String, Object> updates) throws SQLException {
+
         String updatesInString = new String();
         String whereConditionInString = new String();
         Iterator<String> keys = updates.keySet().iterator();
@@ -117,8 +129,10 @@ public class UpdateHelper<T> extends AbstractHelper<T> {
     }
 
 
-    public PreparedStatement update(Map<String, Object> updates, String joined, String where) throws SQLException {
-
+    //gryn
+    //public PreparedStatement update(Map<String, Object> updates, String joined, String where) throws SQLException {
+    public PreparedStatement update(Connection connection, Map<String, Object> updates, String joined, String where) throws SQLException {
+    
         String sql = "UPDATE" + " " + tableName + " " + joined;
 
         String updatesInString = new String();

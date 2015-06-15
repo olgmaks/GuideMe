@@ -1,81 +1,76 @@
 package com.epam.gm.olgmaks.absractdao.dbcontrol;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
-
-import org.apache.commons.dbcp.BasicDataSource;
+import javax.sql.DataSource;
 
 public class ConnectionManager {
-	private static Connection conn = null;
+	// Database credentials
+	public static final String DB_URL = "jdbc:mysql://localhost/guideme";
+	public static final String USER = "root";
+	public static final String PASS = "root";
+	public static final String DRIVER = "com.mysql.jdbc.Driver";
+	public static final boolean USE_POOL = true;
+	
+	private static GuideMeConnectionPool pool;
+	private static DataSource dataSource;
+	
+	
+	private static Connection conn;
 
 	private ConnectionManager() {
-
+	}
+	
+	public static void closeConnection(Connection conn) throws SQLException {
+		if(USE_POOL) {
+			if(conn != null) {
+				conn.close();
+			}
+		}
 	}
 
-	private static Connection getInstance() {
-		if (conn == null) {
-//			Properties prop = new Properties();
-//			String propFileName = "src/main/resources/dbConnection.properties";
-//			InputStream inputStream = null;
-//			try {
-//				inputStream = new FileInputStream(propFileName);
-//				prop.load(inputStream);
-//				BasicDataSource dataSource = new BasicDataSource();
-//				String driver = prop.getProperty("driver");
-//				String url = prop.getProperty("url");
-//				String login = prop.getProperty("name");
-//				String password = prop.getProperty("pass");
-//
-//				dataSource.setDriverClassName(driver);
-//				dataSource.setUrl(url);
-//				dataSource.setUsername(login);
-//				dataSource.setPassword(password);
-//
-//				conn = dataSource.getConnection();
-//			} catch (IOException | SQLException e) {
-//				e.printStackTrace();
-//			}
+	public static Connection getConnection()  {
 		
-		
-			BasicDataSource dataSource = new BasicDataSource();
-			String driver = "com.mysql.jdbc.Driver";
-			String url = "jdbc:mysql://localhost/guideme";
-			String login = "taras";
-			String password = "1";
-
-			dataSource.setDriverClassName(driver);
-			dataSource.setUrl(url);
-			dataSource.setUsername(login);
-			dataSource.setPassword(password);
-
+		if (USE_POOL) {
+			
+			if(pool == null) {
+				pool = new GuideMeConnectionPool();
+				try {
+					dataSource = pool.setUp();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
 			try {
 				conn = dataSource.getConnection();
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
-			}		
-		
+			}
+			pool.printStatus();
+
+		} else {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if (conn == null) {
+				try {
+					conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+				}
+			}
 		}
-		
-		
-		
+
+		System.out.println("Connect: " + conn);
 		return conn;
-	}
-
-	public static Connection getConnection() {
-		return getInstance();
-	}
-
-	public static void close() {
-		try {
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 }

@@ -24,7 +24,7 @@ public class UserDaoTest {
         roleUser = new UserTypeDao().getByField("name", "user").get(0);
     }
 
-    @Ignore
+ 
     @Test
     public void testGetUsers() throws SQLException {
         System.out.println("userRole = " + roleUser);
@@ -34,7 +34,7 @@ public class UserDaoTest {
         }
     }
 
-    
+    @Ignore
     @Test
     public void saveUser() throws IllegalArgumentException, IllegalAccessException, SQLException {
         User user = new User();

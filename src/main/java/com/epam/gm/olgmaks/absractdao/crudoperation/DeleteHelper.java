@@ -4,8 +4,6 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
@@ -19,14 +17,23 @@ public class DeleteHelper<T> extends AbstractHelper<T> {
     private String whereCondition;
 //    private List<String> conditionFields;
 
-    public DeleteHelper(Connection connection, Class<T> clazz) {
-        super(connection, clazz);
+    //gryn
+    //public DeleteHelper(Connection connection, Class<T> clazz) {
+    public DeleteHelper(Class<T> clazz) {
+        //super(connection, clazz);
+    	super(clazz);
+        
+        
         whereCondition = new String();
 //        conditionFields = new ArrayList<>();
     }
 
-    public PreparedStatement delete(T t) throws SQLException,
-            IllegalAccessException {
+    //gryn
+    //public PreparedStatement delete(T t) throws SQLException,
+    //        IllegalAccessException {
+    public PreparedStatement delete(Connection connection, T t) throws SQLException,
+    	IllegalAccessException {    
+    
         init(t);
         String sql = String.format(AbstractDao.DELETE, tableName, whereCondition);
         System.out.println(sql);
@@ -41,28 +48,22 @@ public class DeleteHelper<T> extends AbstractHelper<T> {
         return statement;
     }
 
-    public PreparedStatement delete(String fieldName, Object fieldValue)
-            throws SQLException, IllegalAccessException {
+    
+//    public PreparedStatement delete(String fieldName, Object fieldValue)
+//            throws SQLException, IllegalAccessException {
 
-        whereCondition = new String();
-
+   public PreparedStatement delete(Connection connection, String fieldName, Object fieldValue)
+                throws SQLException, IllegalAccessException {
+   	
         whereCondition += fieldName + "=?";
-        System.out.println("where : " + whereCondition);
         String sql = String.format(AbstractDao.DELETE, tableName, whereCondition);
-
         System.out.println(sql);
-
         PreparedStatement statement = connection.prepareStatement(sql);
-
         statement.setObject(1, fieldValue);
-
         return statement;
     }
 
     public void init(T t) {
-
-        whereCondition = new String();
-
         for (Field field : fields) {
             whereCondition += field.getAnnotation(Column.class).value() + "=? AND ";
         }

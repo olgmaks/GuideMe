@@ -12,11 +12,15 @@ public class GetHelper<T> extends AbstractHelper<T> {
 
 	// private T t;
 
-	public GetHelper(Connection connection, Class<T> clazz) {
-		super(connection, clazz);
+	//gryn
+	//public GetHelper(Connection connection, Class<T> clazz) {
+	public GetHelper(Class<T> clazz) {
+		//super(connection, clazz);
+		super(clazz);
 	}
 
-	public PreparedStatement getByFieldName(String fieldName, Object fieldValue)
+	//gryn - adding Connection connection to signature
+	public PreparedStatement getByFieldName(Connection connection, String fieldName, Object fieldValue)
 			throws SQLException {
 		String sql = String.format(AbstractDao.SELECT + " where %S=?", tableName,
 				fieldName);
@@ -26,7 +30,9 @@ public class GetHelper<T> extends AbstractHelper<T> {
 	}
 
 	// Query should start with "join ... on ... where ... " statement
-	public PreparedStatement customQuery(String sqlWithRestrictions)
+	
+	//gryn - adding Connection connection to signature
+	public PreparedStatement customQuery(Connection connection, String sqlWithRestrictions)
 			throws SQLException {
 		String baseSelect = AbstractDao.SELECT;
 		String sql = String.format(baseSelect,
