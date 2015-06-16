@@ -1,23 +1,31 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: OLEG
-  Date: 14.06.2015
-  Time: 16:41
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>User Cabinet</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-    <title>Guide ME</title>
+
+
+<!-- tag start -->
+    
+    <link rel="StyleSheet" href="css/ui-lightness/jquery-ui-1.9.2.custom.min.css" type="text/css" media="all"/>
+    <link rel="StyleSheet" href="css/jquery.tagedit.css" type="text/css" media="all"/>
+    
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.autoGrowInput.js"></script>
+    <script type="text/javascript" src="js/jquery.tagedit.js"></script>
+    
+<!-- tag end     -->
+    
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+<!--     <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+<!--     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
     <script src="js/materialize.js"></script>
     <script src="js/init.js"></script>
     <script type="text/javascript">
@@ -25,13 +33,54 @@
             $('.modal-trigger').leanModal();
         });
     </script>
+
+
+    
+    <script type="text/javascript">
+	$(function() {
+		
+		// Edit only
+		$( "#tagform-editonly" ).find('input.tag').tagedit({
+			autocompleteURL: 'autocompleteUserTags.do',
+			autocompleteOptions: {minLength: 0},
+			allowEdit: false,
+			allowAdd: false
+	
+		});
+	});
+	</script>
+
+	<script>
+	$(document).ready(function() {
+		
+		$("#tagform-editonly").submit(function () {
+			
+        	$.ajax({
+            	
+        		
+                url: 'submitUserTags.do',
+                type: 'post',
+                dataType: 'json',
+                data: $("#tagform-editonly").serialize(),
+                success: function (data) {
+                	alert(data.valid);
+                    
+                }
+            });
+            return false;
+       	 });
+	
+		
+		
+	 });
+	</script>
+
 </head>
 <body>
-
-<jsp:include page="../home/logoutmodal.jsp"/>
-<jsp:include page="usercabinetheader.jsp"/>
-
-
+	<jsp:include page="../home/logoutmodal.jsp"/>
+	<jsp:include page="usercabinetheader.jsp"/>
+	
+	
 <table>
     <tr >
         <td style=" width:20%; vertical-align: top;">
@@ -63,8 +112,31 @@
                 <div class="col s12" style="margin-top:10px;">
                     <ul class="collection z-depth-2 ">
                         <li class="collection-item" >
-                            User modification panel
+                            
+                            
+    					<form action="submitUserTags.do" method="post" id="tagform-editonly" >
+							<p>
+<%-- 							    <c:if test="${requestScope.tags.isEmpty()}"> --%>
+							    <input type="text" name="tag[]" value="" class="tag"/>
+<%-- 							    </c:if> --%>
+							    
+   								<c:forEach items="${requestScope.tags}" var = "tag">
+   									<input type="text" name="tag[3-a]" value="${tag.name}" class="tag" />
+   								</c:forEach>
+   											
+<!-- 								<input type="text" name="tag[3-a]" value="Haze"  class="tag" /> -->
+        
+								<input type="submit" name="save" value="Save"/>
+							</p>
+    					</form>                            
+                            
+                            
+                            
                         </li>
+                        
+                        <li class="collection-item" >
+                            User modification panel 2
+                        </li>                        
                     </ul>
                     <ul class="collection z-depth-2 ">
                         <li class="collection-item" >
@@ -114,6 +186,7 @@
         </td>
     </tr>
 </table>
+
 
 
 

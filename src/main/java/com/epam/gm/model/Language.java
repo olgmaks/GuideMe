@@ -15,7 +15,10 @@ public class Language {
 	private String name;
 	@Column("localized")
 	private Boolean localized;
-
+	
+	@Column("deleted")
+	private Boolean deleted;
+	
 	@Override
 	public String toString() {
 		return "Language [id=" + id + ", key=" + key + ", name=" + name
@@ -53,5 +56,15 @@ public class Language {
 	public void setLocalized(Boolean localized) {
 		this.localized = localized;
 	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+	
+	
 
 }
