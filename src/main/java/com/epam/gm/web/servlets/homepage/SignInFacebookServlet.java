@@ -7,6 +7,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,7 +21,9 @@ import org.json.JSONObject;
 
 import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.model.User;
+import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
+import com.google.gson.Gson;
 
 public class SignInFacebookServlet extends HttpServlet implements
 		HttpRequestHandler {
@@ -84,13 +88,14 @@ public class SignInFacebookServlet extends HttpServlet implements
 		String email;
 
 		try {
-			System.out.println(graph);
 			JSONObject json = new JSONObject(graph);
 			facebookId = json.getString("id");
 			firstName = (String) json.get("first_name");
 			lastName = (String) json.get("last_name");
 			email = (String) json.get("email");
 			UserDao userDao = new UserDao();
+			boolean isValid = false;
+			Map<String, Object> map = new HashMap<>();
 			if (userDao.getUserByFacebookId(facebookId) == null) {
 				User user = new User();
 				user.setFacebookId(facebookId);
@@ -102,12 +107,23 @@ public class SignInFacebookServlet extends HttpServlet implements
 				user.setLangId(2);
 				user.setIsActive(true);
 				user.setPassword("");
+
 				try {
 					userDao.saveUser(user);
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 					e.printStackTrace();
 				}
+			} else {
+				User user = userDao.getUserByFacebookId(facebookId);
+				SessionRepository.setSessionUser(req, user);
+				isValid = true;
+				map.put("userEmail", user.getEmail());
+				map.put("sessionUser", user);
 			}
+			res.setContentType("application/json");
+			map.put("isValid", isValid);
+			res.getWriter().write(new Gson().toJson(map));
+
 			System.out.println("Id " + facebookId);
 			System.out.println("name " + firstName);
 
@@ -122,5 +138,4 @@ public class SignInFacebookServlet extends HttpServlet implements
 		}
 
 	}
-
 }

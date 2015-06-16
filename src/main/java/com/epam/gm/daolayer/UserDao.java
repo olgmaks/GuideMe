@@ -40,7 +40,6 @@ public class UserDao extends AbstractDao<User> {
 
 	public User getUserByFacebookId(String id) throws SQLException {
 		List<User> result = getByField(USER_FB_ID, id);
-
 		if (result.isEmpty()) {
 			return null;
 		} else {
