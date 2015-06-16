@@ -18,6 +18,7 @@ public class AdminUserProfileServlet implements HttpRequestHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
 		int id = Integer.parseInt(request.getParameter("id"));
+		System.out.println( new UserDao().getByField("id", id).get(0));
 		request.setAttribute("user", new UserDao().getByField("id", id).get(0));
 		request.getRequestDispatcher("pages/adminUserDetail.jsp").forward(request,
 				response);

@@ -184,7 +184,7 @@ $(document).ready(function() {
 			                    <tr>
 			                        <td>${user.id}</td>
 			                        <td>${user.firstName}</td>
-			                        <td>${user.lastName}</td>
+			                        <td><a href="adminUserProfile.do?id=${user.id}">   ${user.lastName}</a></td>
 			                        <td>${user.email}</td>
 			                        <td>${user.userTypeId}</td>
 			                        <td><input type="checkbox" class="style2" id = "activeUser" ${user.userTypeId == '2' ? 'checked' : ''}/></td> 

@@ -31,11 +31,12 @@
       </nav>
       
       <section id="bio">
-        <p>Various content snippets courtesy of <a href="http://bluthipsum.com/">Bluth Ipsum</a>.</p>
-        
-        <p>Can't a guy call his mother pretty without it seeming strange? Amen. I think that's one of Mom's little fibs, you know, like I'll sacrifice anything for my children.</p>
-        
-        <p>She's always got to wedge herself in the middle of us so that she can control everything. Yeah. Mom's awesome. I run a pretty tight ship around here. With a pool table.</p>
+       <h2>email   <c:out value="${requestScope.user['email']} "/></h2>
+       <h2>userType   <c:out value="${requestScope.user.userType['name']} "/></h2>
+       <h2>cell Number    <c:out value="${requestScope.user['cellNumber']} "/></h2>
+       <h2>facebookId   <c:out value="${requestScope.user['facebookId']} "/></h2>
+       <h2>vkId   <c:out value="${requestScope.user['vkId']} "/></h2>
+       <br>
       </section>
       
       <section id="activity" class="hidden">
