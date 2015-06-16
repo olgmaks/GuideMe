@@ -51,7 +51,8 @@
                 <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">Friends<i class="mdi-social-group right"></i></button>
                 <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">Find friends<i class="mdi-social-group-add right"></i></button>
                 <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">Comments<i class="mdi-communication-comment right"></i></button>
-
+                <h6><a href="modaleLanguages">Languages</a>: ua, en, fr</h6>
+                <h6><a href="modaleInterests">Interests</a>: music, sport, tourism</h6>
                 </li>
                 </ul>
             </div>
@@ -68,10 +69,11 @@
                     </ul>
                     <ul class="collection z-depth-2 ">
                         <li class="collection-item" >
-                            <ul class="collection z-depth-2 ">
+
                                 <c:forEach var="userInEvent" items="${userInEvents}">
-                                <li class="collection-item" >
-                                    <table>
+                                    <ul class="collection z-depth-2 ">
+                                <li class="collection-item"  style="margin-top: 10px; vertical-align: top"  >
+                                    <table >
                                         <tr>
                                         <td width="20%;">
 
@@ -88,9 +90,9 @@
                                         </td>
                                         </tr>
                                     </table>
-                                </li>
+                                </li>                 </ul>
                                 </c:forEach>
-                            </ul>
+
                         </li>
                     </ul>
                 </div>

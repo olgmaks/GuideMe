@@ -14,7 +14,7 @@ import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
  */
 public class DeleteHelper<T> extends AbstractHelper<T> {
 
-    private String whereCondition;
+//    private String whereCondition;
 //    private List<String> conditionFields;
 
     //gryn
@@ -24,7 +24,7 @@ public class DeleteHelper<T> extends AbstractHelper<T> {
     	super(clazz);
         
         
-        whereCondition = new String();
+//        whereCondition = new String();
 //        conditionFields = new ArrayList<>();
     }
 
@@ -33,8 +33,8 @@ public class DeleteHelper<T> extends AbstractHelper<T> {
     //        IllegalAccessException {
     public PreparedStatement delete(Connection connection, T t) throws SQLException,
     	IllegalAccessException {    
-    
-        init(t);
+     String whereCondition = new String();
+        init(t, whereCondition);
         String sql = String.format(AbstractDao.DELETE, tableName, whereCondition);
         System.out.println(sql);
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -54,7 +54,7 @@ public class DeleteHelper<T> extends AbstractHelper<T> {
 
    public PreparedStatement delete(Connection connection, String fieldName, Object fieldValue)
                 throws SQLException, IllegalAccessException {
-   	
+       String whereCondition = new String();
         whereCondition += fieldName + "=?";
         String sql = String.format(AbstractDao.DELETE, tableName, whereCondition);
         System.out.println(sql);
@@ -63,7 +63,7 @@ public class DeleteHelper<T> extends AbstractHelper<T> {
         return statement;
     }
 
-    public void init(T t) {
+    public void init(T t, String whereCondition) {
         for (Field field : fields) {
             whereCondition += field.getAnnotation(Column.class).value() + "=? AND ";
         }
