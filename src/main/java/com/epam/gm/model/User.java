@@ -41,7 +41,7 @@ public class User {
 	@Column("facebook_id")
 	private String facebookId;
 	@Column("vk_id")
-	private Integer vkId;
+	private String vkId;
 	@Column("is_active")
 	private Boolean isActive;
 	@Column("address_id")
@@ -93,11 +93,11 @@ public class User {
 		this.facebookId = facebookId;
 	}
 
-	public Integer getVkId() {
+	public String getVkId() {
 		return vkId;
 	}
 
-	public void setVkId(Integer vkId) {
+	public void setVkId(String vkId) {
 		this.vkId = vkId;
 	}
 
@@ -156,6 +156,7 @@ public class User {
 	public void setUserTypeId(Integer userTypeId) {
 		this.userTypeId = userTypeId;
 	}
+
 	public UserType getUserType() {
 		return userType;
 	}
@@ -179,6 +180,7 @@ public class User {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
 	@Override
 	public String toString() {
 		return "User [Id=" + Id + ", lastName=" + lastName + ", firstName="

@@ -103,13 +103,18 @@ public class SignInFacebookServlet extends HttpServlet implements
 				user.setLastName(lastName);
 				user.setEmail(email);
 				user.setAddressId(1);
-				user.setUserTypeId(2);
-				user.setLangId(2);
+				user.setUserTypeId(8);
+				user.setLangId(3);
 				user.setIsActive(true);
 				user.setPassword("");
 
 				try {
 					userDao.saveUser(user);
+					User user2 = userDao.getUserByFacebookId(facebookId);
+					SessionRepository.setSessionUser(req, user);
+					isValid = true;
+					map.put("userEmail", user2.getEmail());
+					map.put("sessionUser", user2);
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 					e.printStackTrace();
 				}
@@ -123,12 +128,6 @@ public class SignInFacebookServlet extends HttpServlet implements
 			res.setContentType("application/json");
 			map.put("isValid", isValid);
 			res.getWriter().write(new Gson().toJson(map));
-
-			System.out.println("Id " + facebookId);
-			System.out.println("name " + firstName);
-
-			System.out.println("email " + email);
-			System.out.println("name " + lastName);
 
 			RequestDispatcher requestDispatcher = req
 					.getRequestDispatcher("pages/index.jsp");

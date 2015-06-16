@@ -12,7 +12,8 @@ public class UserDao extends AbstractDao<User> {
 
 	private static final String USER_EMAIL_FIELD = "email";
 	private static final String USER_TYPE_FIELD = "user_type_id";
-	private static final String USER_FB_ID = "facebook_id";
+	private static final String USER_FACEBOOK_ID = "facebook_id";
+	private static final String USER_VK_ID = "vk_id";
 	private static final String GET_USER_BY_CITY_NAME_SQL = "JOIN address ON user.address_id = address.id "
 			+ "JOIN city ON address.city_id = city.id WHERE name = '%S'";
 	@SuppressWarnings("unused")
@@ -39,12 +40,22 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	public User getUserByFacebookId(String id) throws SQLException {
-		List<User> result = getByField(USER_FB_ID, id);
+		List<User> result = getByField(USER_FACEBOOK_ID, id);
 		if (result.isEmpty()) {
 			return null;
 		} else {
 			return result.get(0);
 		}
+	}
+
+	public User getUserByVkId(String Id) throws SQLException {
+		List<User> result = getByField(USER_VK_ID, Id);
+		if (result.isEmpty()) {
+			return null;
+		} else {
+			return result.get(0);
+		}
+
 	}
 
 	public List<User> getUsersByCityName(String cityName) throws SQLException {
@@ -80,25 +91,28 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	public static void main(String[] args) {
-		UserDao userDao;
+		UserDao userDao = new UserDao();
 		UserType roleUser;
-
 		try {
-
-			userDao = new UserDao();
-			roleUser = new UserTypeDao().getByField("name", "user").get(0);
-
-			System.out.println("userRole = " + roleUser);
-			List<User> users = userDao.getAllUsers();
-			for (User user : users) {
-				System.out.println(user);
-			}
-
-	
-
+			System.out.println(userDao.getUserByVkId("121342775"));
+			// System.out.println(userDao.getUserByFacebookId("1643249359244458"));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
+
+		/*
+		 * try {
+		 * 
+		 * userDao = new UserDao(); roleUser = new
+		 * UserTypeDao().getByField("name", "user").get(0);
+		 * 
+		 * System.out.println("userRole = " + roleUser); List<User> users =
+		 * userDao.getAllUsers(); for (User user : users) {
+		 * System.out.println(user); }
+		 * 
+		 * } catch (SQLException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
 	}
 }

@@ -22,15 +22,14 @@
 					self</a> <br> <font color="red" id="errorMessage"
 					style="margin-left: 5%;"></font>
 				<%@page import="java.net.URLEncoder"%>
-				<%
-					String fbURL = "http://www.facebook.com/dialog/oauth?client_id=1638969026318216&redirect_uri="
-							+ URLEncoder
-									.encode("http://localhost:8080/GuideMe/loginfb.do")
-							+ "&scope=email";
-				%>
 				<p>
-					<a href="<%=fbURL%>"><img src="icons/facebook_logo.png"
-						border="0" /></a>
+					<a
+						href="http://www.facebook.com/dialog/oauth?client_id=1638969026318216&redirect_uri=http://localhost:8080/GuideMe/loginfb.do&scope=email"><img
+						src="icons/facebook_logo.png" border="0" /></a>
+				<p>
+					<a
+						href="https://oauth.vk.com/authorize?client_id=4955136&%20scope=41943044194304&redirect_uri=http://localhost:8080/GuideMe/loginvk.do&%20response_type=codev=5.34"><img
+						src="icons/vk_logo.png" border="0" /></a>
 			</div>
 		</div>
 
