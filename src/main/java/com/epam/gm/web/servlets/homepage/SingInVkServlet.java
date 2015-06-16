@@ -98,14 +98,19 @@ public class SingInVkServlet extends HttpServlet implements HttpRequestHandler {
 				user.setVkId(userId.toString());
 				user.setFirstName(first_name_encoded);
 				user.setLastName(last_name_encoded);
-				user.setEmail("");
+				user.setEmail(first_name_encoded + " " + last_name_encoded);
+				user.setAddressId(1);
 				user.setUserTypeId(8);
 				user.setLangId(3);
 				user.setIsActive(true);
 				user.setPassword("");
 				try {
 					userDao.saveUser(user);
-
+					User user2 = userDao.getUserByVkId(userId);
+					SessionRepository.setSessionUser(req, user);
+					isValid = true;
+					map.put("userEmail", user2.getEmail());
+					map.put("sessionUser", user2);
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 					e.printStackTrace();
 				}
@@ -113,9 +118,7 @@ public class SingInVkServlet extends HttpServlet implements HttpRequestHandler {
 				User user = userDao.getUserByVkId(userId);
 				SessionRepository.setSessionUser(req, user);
 				isValid = true;
-				System.out.println(user.getFirstName() + " " + user.getLastName());
-				map.put("userEmail",
-						user.getFirstName() + " " + user.getLastName());
+				map.put("userEmail", user.getEmail());
 				map.put("sessionUser", user);
 			}
 			res.setContentType("application/json");
