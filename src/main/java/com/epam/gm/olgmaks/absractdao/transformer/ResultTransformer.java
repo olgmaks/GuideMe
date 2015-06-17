@@ -1,5 +1,10 @@
 package com.epam.gm.olgmaks.absractdao.transformer;
 
+import com.epam.gm.olgmaks.absractdao.annotation.Column;
+import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
+import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
+import com.epam.gm.olgmaks.absractdao.crudoperation.GetHelper;
+
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,18 +13,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.epam.gm.olgmaks.absractdao.annotation.Column;
-import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
-import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
-import com.epam.gm.olgmaks.absractdao.crudoperation.GetHelper;
-
 public class ResultTransformer<T> {
 
     private T t;
-    
+
     //gryn
     //private Connection connection;
-    
+
     private Field[] fields;
     private Class<T> clazz;
 
@@ -31,17 +31,17 @@ public class ResultTransformer<T> {
      * with annotation "Column" in com.epam.lab.annotation. Annotation value
      * describe exactly name of current field in DB.
      */
-    
+
     //gryn
     //public ResultTransformer(Connection connection, Class<T> clazz) {
     public ResultTransformer(Class<T> clazz) {
 
         this.clazz = clazz;
         fields = clazz.getDeclaredFields();
-        
+
         //gryn
         //this.connection = connection;
-        
+
         referencedFields = new ArrayList<>();
         for (Field field : fields) {
             if (field.isAnnotationPresent(OneToMany.class)) {
@@ -52,13 +52,13 @@ public class ResultTransformer<T> {
 
     //gryn
     //public T getOneInstance(ResultSet rs) {
-    public T getOneInstance(Connection connection,  ResultSet rs) {
+    public T getOneInstance(Connection connection, ResultSet rs) {
         try {
             rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         //return toInstance(rs);
         return toInstance(connection, rs);
     }
@@ -71,7 +71,7 @@ public class ResultTransformer<T> {
         try {
             while (rs.next()) {
                 //result.add(toInstance(rs));
-            	result.add(toInstance(connection, rs));
+                result.add(toInstance(connection, rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -101,13 +101,15 @@ public class ResultTransformer<T> {
 
                 }
             }
-    
+
             for (Field referencedField : referencedFields) {
-        	
+                if (referencedField.get(t) == null) {
+                    continue;
+                }
                 referencedField.setAccessible(true);
 
 //                String id = referencedField.getAnnotation(Column.class).value();
-		
+
                 String mappedBy = referencedField.getAnnotation(ForeignKey.class).value();
                 String foreignKey = referencedField.getAnnotation(OneToMany.class).field();
 
@@ -118,22 +120,22 @@ public class ResultTransformer<T> {
 //                System.out.println(clazz + "  currentKey=" + currentKey);
 
                 Class<?> referencedFieldClass = referencedField.getType();
-                
+
                 //gryn
                 //GetHelper<?> getHelper = new GetHelper<>(connection, referencedFieldClass);
                 GetHelper<?> getHelper = new GetHelper<>(referencedFieldClass);
-                
+
                 PreparedStatement preparedStatement = getHelper.
                         //getByFieldName(mappedBy, currentKey);
-                		getByFieldName(connection, mappedBy, currentKey);
+                                getByFieldName(connection, mappedBy, currentKey);
                 ResultTransformer<?> resultTransformer =
                         //gryn
-                		//new ResultTransformer<>(connection, referencedFieldClass);
-                		new ResultTransformer<>(referencedFieldClass);
-                
+                        //new ResultTransformer<>(connection, referencedFieldClass);
+                        new ResultTransformer<>(referencedFieldClass);
+
                 referencedField.set(t, resultTransformer.
                         //getOneInstance(preparedStatement.executeQuery()));
-                		getOneInstance(connection, preparedStatement.executeQuery()));
+                                getOneInstance(connection, preparedStatement.executeQuery()));
             }
         } catch (InstantiationException | IllegalAccessException e1) {
             e1.printStackTrace();
