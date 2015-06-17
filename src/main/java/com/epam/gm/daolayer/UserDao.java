@@ -65,7 +65,6 @@ public class UserDao extends AbstractDao<User> {
 		} else {
 			return result.get(0);
 		}
-
 	}
 
 	public List<User> getUsersByCityName(String cityName) throws SQLException {
@@ -101,6 +100,7 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	private List<User> friends;
+
 	public List<User> getFriends(){
 		return friends;
 	}

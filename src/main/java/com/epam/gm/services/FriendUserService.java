@@ -14,6 +14,7 @@ public class FriendUserService {
     private FriendUserDao friendUserDao;
 
     public FriendUserService() {
+        friendUserDao = new FriendUserDao();
     }
 
     public List<FriendUser> getUserFriends(int userId) throws SQLException {

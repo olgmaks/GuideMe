@@ -24,7 +24,12 @@ public class UserDaoTest {
         roleUser = new UserTypeDao().getByField("name", "user").get(0);
     }
 
- 
+    @Test
+    public void getUserByVkId () throws SQLException {
+        System.out.println(userDao.getUserByVkId("xxx"));
+    }
+
+ @Ignore
     @Test
     public void testGetUsers() throws SQLException {
         System.out.println("userRole = " + roleUser);
@@ -38,8 +43,8 @@ public class UserDaoTest {
     @Test
     public void saveUser() throws IllegalArgumentException, IllegalAccessException, SQLException {
         User user = new User();
-        user.setFirstName("Сергій");
-        user.setLastName("Журба");
+        user.setFirstName("пїЅпїЅпїЅпїЅпїЅ");
+        user.setLastName("пїЅпїЅпїЅпїЅпїЅ");
         user.setEmail("serg@gmail.com");
         user.setUserTypeId(roleUser.getId());
         user.setSex("male");

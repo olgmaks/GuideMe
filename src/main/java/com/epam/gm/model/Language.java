@@ -18,7 +18,7 @@ public class Language {
 	
 	@Column("deleted")
 	private Boolean deleted;
-	
+
 	@Override
 	public String toString() {
 		return "Language [id=" + id + ", key=" + key + ", name=" + name

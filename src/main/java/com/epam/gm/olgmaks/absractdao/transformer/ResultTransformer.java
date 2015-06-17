@@ -103,9 +103,9 @@ public class ResultTransformer<T> {
             }
 
             for (Field referencedField : referencedFields) {
-                if (referencedField.get(t) == null) {
-                    continue;
-                }
+//                if (referencedField.get(t) == null) {
+//                    continue;
+//                }
                 referencedField.setAccessible(true);
 
 //                String id = referencedField.getAnnotation(Column.class).value();
@@ -124,6 +124,8 @@ public class ResultTransformer<T> {
                 //gryn
                 //GetHelper<?> getHelper = new GetHelper<>(connection, referencedFieldClass);
                 GetHelper<?> getHelper = new GetHelper<>(referencedFieldClass);
+
+                if (mappedBy==null||currentKey==null) {continue;}
 
                 PreparedStatement preparedStatement = getHelper.
                         //getByFieldName(mappedBy, currentKey);
