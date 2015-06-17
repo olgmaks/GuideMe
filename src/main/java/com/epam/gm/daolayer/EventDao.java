@@ -1,7 +1,7 @@
 package com.epam.gm.daolayer;
 
 import com.epam.gm.model.Event;
-
+import com.epam.gm.model.User;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 import java.sql.SQLException;
@@ -9,18 +9,24 @@ import java.util.List;
 
 public class EventDao extends AbstractDao<Event> {
 
-    public EventDao() {
-    	//gryn
-    	//super(ConnectionManager.getConnection(), Event.class);
-    	super(Event.class);
-    }
+	public EventDao() {
+		// gryn
+		// super(ConnectionManager.getConnection(), Event.class);
+		super(Event.class);
+	}
 
+	public void saveEvent(Event event) throws IllegalArgumentException,
+			IllegalAccessException, SQLException {
+		super.save(event);
+	}
 
-    public List<Event> getAllEvents() throws SQLException {
-        return super.getAll();
-    }
-    public void deleteById(int eventId) throws IllegalAccessException, SQLException{
-    	deleteByField("id", eventId);
-    }
+	public List<Event> getAllEvents() throws SQLException {
+		return super.getAll();
+	}
+
+	public void deleteById(int eventId) throws IllegalAccessException,
+			SQLException {
+		deleteByField("id", eventId);
+	}
 
 }
