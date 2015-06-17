@@ -38,6 +38,7 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 
         Map<String, Object> map = new HashMap<>();
         boolean isValid = false;
+        
         if (user != null) {
             if (user.getPassword().equals(password)) {
                 System.out.println("logination has been successful");

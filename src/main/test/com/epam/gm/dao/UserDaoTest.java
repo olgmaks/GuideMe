@@ -25,11 +25,17 @@ public class UserDaoTest {
     }
 
     @Test
-    public void getUserByVkId () throws SQLException {
+    public void testGetUserById() throws SQLException {
+        System.out.println(userDao.getByField("id", 8));
+    }
+
+    @Ignore
+    @Test
+    public void getUserByVkId() throws SQLException {
         System.out.println(userDao.getUserByVkId("xxx"));
     }
 
- @Ignore
+    @Ignore
     @Test
     public void testGetUsers() throws SQLException {
         System.out.println("userRole = " + roleUser);
@@ -85,7 +91,6 @@ public class UserDaoTest {
         updates.put("facebook_id", 265);
         userDao.updateWithCustomQuery(updates, joined, where);
     }
-    
 
 
 }

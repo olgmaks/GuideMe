@@ -26,8 +26,10 @@ public class UserFriendsServlet implements HttpRequestHandler {
 
         request.setAttribute("userFriends", friendUserService.getUserFriends(
                 SessionRepository.getSessionUser(request).getId()));
+
+
         request.setAttribute("centralContent", "friends");
-        request.getRequestDispatcher("pages/user/userfriends.jsp").forward(request, response);
+        request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(request, response);
     }
 
 

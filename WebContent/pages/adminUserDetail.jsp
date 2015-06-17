@@ -19,7 +19,7 @@
   
   <div id="w">
     <div id="content" class="clearfix">
-      <div id="userphoto"><img src="img/avatar.png" alt="default avatar"></div>
+      <div id="userphoto"><img src="${requestScope.user.avatar.path}" alt="default avatar"></div>
       <h1><c:out value="${requestScope.user['lastName']} "/><c:out value="${requestScope.user['firstName']}"/></h1> 
       <nav id="profiletabs">
         <ul class="clearfix">
@@ -54,7 +54,7 @@
           <c:forEach items="${requestScope.friends}" var="friends">
           		${friends.lastName} ${friends.firstName}
           		<li><a href="adminUserProfile.do?id=${friends.id}">
-          			<img src="img/avatar.png" width="22" height="22"> 
+          			<img src="${friends.avatar.path}" width="22" height="22">
           		${friends.lastName} ${friends.firstName}</a></li>
       		</c:forEach>
       	</ul>

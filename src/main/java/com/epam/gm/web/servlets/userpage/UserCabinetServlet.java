@@ -56,14 +56,6 @@ public class UserCabinetServlet implements HttpRequestHandler {
             request.setAttribute("userInEvents", userInEvents);
             request.setAttribute("eventPhotosPathMap", eventPhotosPathMap);
 
-
-            if (userPhoto != null) {
-                request.setAttribute("userPhoto", userPhoto);
-            } else {
-                Photo photo = new Photo();
-                photo.setPath("img/unknownuserphoto.png");
-                request.setAttribute("userPhoto", photo);
-            }
         }
 
         request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(request, response);

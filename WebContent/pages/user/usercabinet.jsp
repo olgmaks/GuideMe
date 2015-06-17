@@ -25,6 +25,11 @@
             $('.modal-trigger').leanModal();
         });
     </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#tabs").tabs();
+        });
+    </script>
 </head>
 <body>
 

@@ -1,6 +1,7 @@
 package com.epam.gm.sessionrepository;
 
 import com.epam.gm.model.Language;
+import com.epam.gm.model.Photo;
 import com.epam.gm.model.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 public class SessionRepository {
 
     public static final String SESSION_USER = "sessionUser";
+    public static final String SESSION_USER_AVATAR = "sessionUserAvatar";
     public static final String SESSION_LANGUAGE = "sessionLanguage";
+
+    public static void setSessionUserAvatar(HttpServletRequest request, Photo avatar) {
+        request.setAttribute("sessionUserAvatar", avatar);
+    }
 
     public static User getSessionUser(HttpServletRequest request) {
         return (User) request.getSession(true).getAttribute(SESSION_USER);
