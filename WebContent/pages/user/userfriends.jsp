@@ -7,10 +7,8 @@
     <div class="col s12" style="margin-top:10px;">
 
 
-        <ul class="collection z-depth-2 tabs" id="tabs1">
-            <li class="collection-item" id="tabs">
-                User modification panel
-            </li>
+        <ul class="collection z-depth-2">
+            <li class="collection-item"></li>
         </ul>
 
         <ul class="collection z-depth-2 ">
