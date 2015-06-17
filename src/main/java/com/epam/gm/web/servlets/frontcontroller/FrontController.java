@@ -49,6 +49,7 @@ public class FrontController extends HttpServlet {
 			key = "home";
 		}
 
+		System.out.println("froncontroller key : "+ key);
 		handler = handlers.get(key);
 
 		if (handler != null) {
