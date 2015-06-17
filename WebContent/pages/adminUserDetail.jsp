@@ -31,6 +31,7 @@
       </nav>
       
       <section id="bio">
+      <p><span>E-mail Address</span><c:out value="${requestScope.user['email']} "/></p>      
        <h2>email   <c:out value="${requestScope.user['email']} "/></h2>
        <h2>userType   <c:out value="${requestScope.user.userType['name']} "/></h2>
        <h2>cell Number    <c:out value="${requestScope.user['cellNumber']} "/></h2>
@@ -48,25 +49,24 @@
       
       <section id="friends" class="hidden">
         <p>Friends list:</p>
-        
         <ul id="friendslist" class="clearfix">
-          <li><a href="#"><img src="img/avatar.png" width="22" height="22"> Username</a></li>
-          <li><a href="#"><img src="img/avatar.png" width="22" height="22"> SomeGuy123</a></li>
-          <li><a href="#"><img src="img/avatar.png" width="22" height="22"> PurpleGiraffe</a></li>
-        </ul>
+          <c:forEach items="${requestScope.friends}" var="friends">
+          		${friends.lastName} ${friends.firstName}
+          		<li><a href="adminUserProfile.do?id=${friends.id}">
+          			<img src="img/avatar.png" width="22" height="22"> 
+          		${friends.lastName} ${friends.firstName}</a></li>
+      		</c:forEach>
+      	</ul>
       </section>
       
       <section id="settings" class="hidden">
         <p>Edit your user settings:</p>
-        
-        <p class="setting"><span>E-mail Address <img src="img/edit.png" alt="*Edit*"></span> lolno@gmail.com</p>
-        
-        <p class="setting"><span>Language <img src="img/edit.png" alt="*Edit*"></span> English(US)</p>
-        
+        <p class="setting"><span>E-mail Address <img src="img/edit.png" alt="*Edit*"></span><c:out value="${requestScope.user['email']} "/></p>       
+        <p class="setting"><span>Language <img src="img/edit.png" alt="*Edit*"></span><c:out value="${requestScope.user['email']} "/></p>
         <p class="setting"><span>Profile Status <img src="img/edit.png" alt="*Edit*"></span> Public</p>
-        
-        <p class="setting"><span>Update Frequency <img src="img/edit.png" alt="*Edit*"></span> Weekly</p>
-        
+        <p class="setting"><span>Update Frequency <img src="img/edit.png" alt="*Edit*"></span> Weekly</p>   
+        <p class="setting"><span>FirstName<img src="img/edit.png" alt="*Edit*"></span>${requestScope.user['firstName']} </p>   
+        <p class="setting"><span>Last name<img src="img/edit.png" alt="*Edit*"></span> ${requestScope.user['lastName']} </p>    
         <p class="setting"><span>Connected Accounts <img src="img/edit.png" alt="*Edit*"></span> None</p>
       </section>
     </div><!-- @end #content -->

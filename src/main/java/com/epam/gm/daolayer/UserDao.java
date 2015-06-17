@@ -6,9 +6,9 @@ import com.epam.gm.model.UserType;
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
-
-
-
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -97,27 +97,45 @@ public class UserDao extends AbstractDao<User> {
 			IllegalAccessException {
 		callStoredProcedure("{call confirmUnconfirmUser(?)}",
 				String.valueOf(userId));
-		
 
 	}
-	
+
+	private List<User> friends;
+	public List<User> getFriends(){
+		return friends;
+	}
 	public List<UserActivity> userActivity(int userId) throws SQLException,
-	IllegalAccessException {
-		List<UserActivity> list = new ArrayList<UserActivity>();
+			IllegalAccessException {
+		List<UserActivity> listActivity = new ArrayList<UserActivity>();
+		List<User> listUser = new ArrayList<User>();
 		Connection connection = ConnectionManager.getConnection();
 		CallableStatement cs = connection.prepareCall("{call userActivity(?)}");
 		cs.setInt(1, userId);
 		boolean hadResult = cs.execute();
 		ResultSet rs = cs.getResultSet();
-		while(rs.next()){
+		while (rs.next()) {
 			UserActivity ua = new UserActivity();
 			ua.setActivity(rs.getString("activity"));
 			ua.setName(rs.getString("name"));
-			list.add(ua);
+			listActivity.add(ua);
 		}
+		rs.close();
+		if (cs.getMoreResults()) {
+			rs = cs.getResultSet();
+			while (rs.next()) {
+				User user = new User();
+				user.setLastName(rs.getString("lastName"));
+				user.setFirstName(rs.getString("firstName"));
+				user.setId(rs.getInt("id"));
+				listUser.add(user);
+			}
+			friends = listUser;
+		}
+		rs.close();
+		cs.close();
 		ConnectionManager.closeConnection(connection);
-		return list;
-}
+		return listActivity;
+	}
 
 	public static void main(String[] args) {
 		UserDao userDao = new UserDao();

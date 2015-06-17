@@ -21,6 +21,8 @@ public class AdminUserProfileServlet implements HttpRequestHandler {
 		int id = Integer.parseInt(request.getParameter("id"));
 		try {
 			request.setAttribute("userActivity",userDao.userActivity(id));
+			request.setAttribute("friends",userDao.getFriends());
+			System.out.println(userDao.getFriends() + "friends");
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -28,16 +30,5 @@ public class AdminUserProfileServlet implements HttpRequestHandler {
 		request.setAttribute("user", userDao.getByField("id", id).get(0));
 		request.getRequestDispatcher("pages/adminUserDetail.jsp").forward(request,
 				response);
-	}
-	public static void main(String[] args) {
-		try {
-			System.out.println(new UserDao().userActivity(2));
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }
