@@ -1,10 +1,20 @@
 package com.epam.gm.daolayer;
 
 import com.epam.gm.model.User;
+import com.epam.gm.model.UserActivity;
 import com.epam.gm.model.UserType;
+import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
+
+
+
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -87,8 +97,27 @@ public class UserDao extends AbstractDao<User> {
 			IllegalAccessException {
 		callStoredProcedure("{call confirmUnconfirmUser(?)}",
 				String.valueOf(userId));
+		
 
 	}
+	
+	public List<UserActivity> userActivity(int userId) throws SQLException,
+	IllegalAccessException {
+		List<UserActivity> list = new ArrayList<UserActivity>();
+		Connection connection = ConnectionManager.getConnection();
+		CallableStatement cs = connection.prepareCall("{call userActivity(?)}");
+		cs.setInt(1, userId);
+		boolean hadResult = cs.execute();
+		ResultSet rs = cs.getResultSet();
+		while(rs.next()){
+			UserActivity ua = new UserActivity();
+			ua.setActivity(rs.getString("activity"));
+			ua.setName(rs.getString("name"));
+			list.add(ua);
+		}
+		ConnectionManager.closeConnection(connection);
+		return list;
+}
 
 	public static void main(String[] args) {
 		UserDao userDao = new UserDao();

@@ -208,8 +208,9 @@ public class AbstractDao<T> {
 	// cs.execute();
 	// }
 
-	public void callStoredProcedure(String procedureName, String... parameters)
+	public CallableStatement callStoredProcedure(String procedureName, String... parameters)
 			throws SQLException {
+		
 		Connection connection = ConnectionManager.getConnection();
 
 		CallableStatement cs = connection.prepareCall(procedureName);
@@ -217,5 +218,6 @@ public class AbstractDao<T> {
 		cs.execute();
 
 		ConnectionManager.closeConnection(connection);
+		return cs;
 	}
 }
