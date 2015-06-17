@@ -31,13 +31,14 @@
       </nav>
       
       <section id="bio">
-      <p><span>E-mail Address</span><c:out value="${requestScope.user['email']} "/></p>      
-       <h2>email   <c:out value="${requestScope.user['email']} "/></h2>
-       <h2>userType   <c:out value="${requestScope.user.userType['name']} "/></h2>
-       <h2>cell Number    <c:out value="${requestScope.user['cellNumber']} "/></h2>
-       <h2>facebookId   <c:out value="${requestScope.user['facebookId']} "/></h2>
-       <h2>vkId   <c:out value="${requestScope.user['vkId']} "/></h2>
-       <br>
+       <p><span>E-mail Address</span><c:out value="${requestScope.user['email']} "/></p>  
+       <p><span>First name</span><c:out value="${requestScope.user['firstName']} "/></p>  
+       <p><span>last Name</span><c:out value="${requestScope.user['lastName']} "/></p>  
+       <p><span>facebookId</span><c:out value="${requestScope.user['facebookId']} "/></p>  
+       <p><span>vkID</span><c:out value="${requestScope.user['vkId']} "/></p>      
+       <p><span>cell number</span><c:out value="${requestScope.user['cellNumber']} "/></p> 
+       <p><span>user type</span><c:out value="${requestScope.user.userType['name']} "/></p>   
+             
       </section>
       
       <section id="activity" class="hidden">
@@ -61,17 +62,20 @@
       
       <section id="settings" class="hidden">
         <p>Edit your user settings:</p>
-        <p class="setting"><span>E-mail Address <img src="img/edit.png" alt="*Edit*"></span><c:out value="${requestScope.user['email']} "/></p>       
-        <p class="setting"><span>Language <img src="img/edit.png" alt="*Edit*"></span><c:out value="${requestScope.user['email']} "/></p>
-        <p class="setting"><span>Profile Status <img src="img/edit.png" alt="*Edit*"></span> Public</p>
-        <p class="setting"><span>Update Frequency <img src="img/edit.png" alt="*Edit*"></span> Weekly</p>   
-        <p class="setting"><span>FirstName<img src="img/edit.png" alt="*Edit*"></span>${requestScope.user['firstName']} </p>   
+        <p class="setting"><span>E-mail Address <img src="img/edit.png" alt="*Edit*" onclick="imgWindow()" id = "email"></span><c:out value="${requestScope.user['email']} "/></p>       
+        <p class="setting"><span>Language <img src="img/edit.png" alt="*Edit*" onclick="imgWindow()" id = "language"></span><c:out value="${requestScope.user['email']} "/></p>
+        <p class="setting"><span>Profile Status <img src="img/edit.png" alt="*Edit*" onclick="window.open(this.src)" id = ""></span> Public</p>
+        <p class="setting"><span>Update Frequency <img src="img/edit.png" alt="*Edit*"onclick="window.open(this.src)" id = ""></span> Weekly</p>   
+        <p class="setting"><span>FirstName<img src="img/edit.png" alt="*Edit*"onclick="window.open(this.src)"></span>${requestScope.user['firstName']} </p>   
         <p class="setting"><span>Last name<img src="img/edit.png" alt="*Edit*"></span> ${requestScope.user['lastName']} </p>    
-        <p class="setting"><span>Connected Accounts <img src="img/edit.png" alt="*Edit*"></span> None</p>
+
       </section>
     </div><!-- @end #content -->
   </div><!-- @end #w -->
 <script type="text/javascript">
+function imgWindow() {
+	alert($(this).attr('id'))
+}
 $(function(){
   $('#profiletabs ul li a').on('click', function(e){
     e.preventDefault();
