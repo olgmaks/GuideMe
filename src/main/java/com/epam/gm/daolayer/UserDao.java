@@ -1,5 +1,6 @@
 package com.epam.gm.daolayer;
 
+import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserActivity;
 import com.epam.gm.model.UserType;
@@ -92,47 +93,34 @@ public class UserDao extends AbstractDao<User> {
             IllegalAccessException {
         callStoredProcedure("{call confirmUnconfirmUser(?)}",
                 String.valueOf(userId));
-
     }
 
-    private List<User> friends;
 
-    public List<User> getFriends() {
-        return friends;
-    }
+	public List<FriendUser> getFriends(int userId) throws SQLException{
+		FriendUserDao fuDao = new FriendUserDao();
+		return fuDao.getUserFriends(userId);
+	}
+	public List<UserActivity> userActivity(int userId) throws SQLException,
+			IllegalAccessException {
+		List<UserActivity> listActivity = new ArrayList<UserActivity>();
+		Connection connection = ConnectionManager.getConnection();
+		CallableStatement cs = connection.prepareCall("{call userActivity(?)}");
+		cs.setInt(1, userId);
+		boolean hadResult = cs.execute();
+		ResultSet rs = cs.getResultSet();
+		while (rs.next()) {
+			UserActivity ua = new UserActivity();
+			ua.setActivity(rs.getString("activity"));
+			ua.setName(rs.getString("name"));
+			listActivity.add(ua);
+		}
+		rs.close();
+		cs.close();
+		ConnectionManager.closeConnection(connection);
+		return listActivity;
+	}
 
-    public List<UserActivity> userActivity(int userId) throws SQLException,
-            IllegalAccessException {
-        List<UserActivity> listActivity = new ArrayList<UserActivity>();
-        List<User> listUser = new ArrayList<User>();
-        Connection connection = ConnectionManager.getConnection();
-        CallableStatement cs = connection.prepareCall("{call userActivity(?)}");
-        cs.setInt(1, userId);
-        boolean hadResult = cs.execute();
-        ResultSet rs = cs.getResultSet();
-        while (rs.next()) {
-            UserActivity ua = new UserActivity();
-            ua.setActivity(rs.getString("activity"));
-            ua.setName(rs.getString("name"));
-            listActivity.add(ua);
-        }
-        rs.close();
-        if (cs.getMoreResults()) {
-            rs = cs.getResultSet();
-            while (rs.next()) {
-                User user = new User();
-                user.setLastName(rs.getString("lastName"));
-                user.setFirstName(rs.getString("firstName"));
-                user.setId(rs.getInt("id"));
-                listUser.add(user);
-            }
-            friends = listUser;
-        }
-        rs.close();
-        cs.close();
-        ConnectionManager.closeConnection(connection);
-        return listActivity;
-    }
+    
 
     public static void main(String[] args) {
         UserDao userDao = new UserDao();

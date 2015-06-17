@@ -51,11 +51,13 @@
       <section id="friends" class="hidden">
         <p>Friends list:</p>
         <ul id="friendslist" class="clearfix">
-          <c:forEach items="${requestScope.friends}" var="friends">
-          		${friends.lastName} ${friends.firstName}
-          		<li><a href="adminUserProfile.do?id=${friends.id}">
-          			<img src="${friends.avatar.path}" width="22" height="22">
-          		${friends.lastName} ${friends.firstName}</a></li>
+          <c:forEach items="${requestScope.friends}" var="friend">
+          		${friend.friend.lastName} ${friend.friend.firstName}
+          		<li>
+          		<a href="adminUserProfile.do?id=${friend.id}">
+          			<img src="${friend.friend.avatar.path}" width="22" height="22">
+          		</a>
+          		</li>
       		</c:forEach>
       	</ul>
       </section>
