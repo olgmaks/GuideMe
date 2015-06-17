@@ -33,90 +33,42 @@
 
 
 <table>
-    <tr >
+    <tr>
+
+
+
         <td style=" width:20%; vertical-align: top;">
-
-            <%--User controls panel - left side of a page--%>
-            <div class="row" >
-                <div class="col s12" style="margin-top:10px; ">
-                    <ul class="collection z-depth-2 " style="height: 100%;">
-                        <li class="collection-item"  >
-                <div class="" align="center"  >  <img class="circle" style="height: 120px; width: 120px; object-fit: cover" src="${userPhoto.path}"></div><br>
-                <h7>${sessionUser.firstName} ${sessionUser.lastName}</h7><br><br>
-
-                <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;text-align: left;font-size: 100%;text-transform: capitalize">Events<i class="mdi-action-extension right" ></i></button>
-                <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">New event<i class="mdi-content-add-circle-outline right" ></i></button>
-                <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">Find event<i class="mdi-action-search right"></i></button>
-                <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">Messages<i class="mdi-content-mail right"></i></button>
-                <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">Friends<i class="mdi-social-group right"></i></button>
-                <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">Find friends<i class="mdi-social-group-add right"></i></button>
-                <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">Comments<i class="mdi-communication-comment right"></i></button>
-                <h6><a href="modaleLanguages">Languages</a>: ua, en, fr</h6>
-                <h6><a href="modaleInterests">Interests</a>: music, sport, tourism</h6>
-                </li>
-                </ul>
-            </div>
-            </div>
-
+            <jsp:include page="usercabinetpanelleft.jsp"/>
         </td>
+
+
+
+
         <td style=" width:60%;vertical-align: top;">
-            <div class="row" >
-                <div class="col s12" style="margin-top:10px;">
-                    <ul class="collection z-depth-2 ">
-                        <li class="collection-item" >
-                            User modification panel
-                        </li>
-                    </ul>
-                    <ul class="collection z-depth-2 ">
-                        <li class="collection-item" >
+            <c:choose>
 
-                                <c:forEach var="userInEvent" items="${userInEvents}">
-                                    <ul class="collection z-depth-2 ">
-                                <li class="collection-item"  style="margin-top: 10px; vertical-align: top"  >
-                                    <table >
-                                        <tr>
-                                        <td width="20%;">
+                <c:when test="${centralContent == 'central'}">
+                    <jsp:include page="usercabinetpanelcentral.jsp"/>
+                </c:when>
 
-                                <img class="" style="height: 120px; width: 120px; object-fit: cover" src="${eventPhotosPathMap.get(userInEvent.eventId)}">
-                                        </td>
-                                        <td width="70%;">
-                                            ${userInEvent.event.name}<br><br>
-                                            ${userInEvent.event.description}<br><br>
-                                            ${userInEvent.status}<br>
-                                        </td>
-                                        <td width="10%;">
-                                            <a class="btn-floating btn-large waves-effect waves-light green" style="transform: scaleY(0.7) scaleX(0.7)"><i class="mdi-image-remove-red-eye"></i></a>
-                                            <br><a class="btn-floating btn-large waves-effect waves-light red" style="transform: scaleY(0.7) scaleX(0.7)"><i class="mdi-content-remove"></i></a>
-                                        </td>
-                                        </tr>
-                                    </table>
-                                </li>                 </ul>
-                                </c:forEach>
+                <c:when test="${centralContent == 'friends'}">
+                    <jsp:include page="userfriends.jsp"/>
+                </c:when>
 
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            </c:choose>
         </td>
+
+
+
         <td style=" width:20%;vertical-align: top;">
-            <div class="row" >
-                <div class="col s12" style="margin-top:10px;">
-                    <ul class="collection z-depth-2 ">
-                        <li class="collection-item" >
-                            Recommended
-                        </li>
-                    </ul>
-                    <ul class="collection z-depth-2 ">
-                        <li class="collection-item" >
-                            Events
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <jsp:include page="usercabinetpanelright.jsp"/>
         </td>
+
+
+
+
     </tr>
 </table>
-
 
 
 </body>

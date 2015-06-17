@@ -47,11 +47,12 @@ public class UserCabinetServlet implements HttpRequestHandler {
             Map<Integer,String> eventPhotosPathMap= new HashMap<>();
 
             for (UserInEvent iter : userInEvents) {
+                System.out.println(iter);
                 int eventId= iter.getEventId();
                 String pathToEventPhoto = photoService.getEventPhoto(eventId).getPath();
                 eventPhotosPathMap.put(eventId, pathToEventPhoto);
             }
-
+            request.setAttribute("centralContent","central");
             request.setAttribute("userInEvents", userInEvents);
             request.setAttribute("eventPhotosPathMap", eventPhotosPathMap);
 
@@ -64,6 +65,7 @@ public class UserCabinetServlet implements HttpRequestHandler {
                 request.setAttribute("userPhoto", photo);
             }
         }
+
         request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(request, response);
     }
 }
