@@ -16,10 +16,10 @@
   <div id="topbar">
   <a href="http://designshack.net">Back to Design Shack</a>
   </div>
-  
+  ${requestScope.user}
   <div id="w">
     <div id="content" class="clearfix">
-      <div id="userphoto"><img src="${requestScope.user.avatar.path}" alt="default avatar"></div>
+      <div id="userphoto"><img  src="${user.avatar.path}" alt="default avatar"></div>
       <h1><c:out value="${requestScope.user['lastName']} "/><c:out value="${requestScope.user['firstName']}"/></h1> 
       <nav id="profiletabs">
         <ul class="clearfix">
@@ -51,11 +51,11 @@
       <section id="friends" class="hidden">
         <p>Friends list:</p>
         <ul id="friendslist" class="clearfix">
-          <c:forEach items="${requestScope.friends}" var="friend">
-          		${friend.friend.lastName} ${friend.friend.firstName}
+          <c:forEach items="${requestScope.friends}" var="f">
           		<li>
-          		<a href="adminUserProfile.do?id=${friend.id}">
-          			<img src="${friend.friend.avatar.path}" width="22" height="22">
+          		${f.friend.lastName}   ${f.friend.firstName}
+          		<a href="adminUserProfile.do?id=${f.friend.id}">
+          			<img src="${f.friend.avatar.path}" width="22" height="22">
           		</a>
           		</li>
       		</c:forEach>
@@ -64,19 +64,22 @@
       
       <section id="settings" class="hidden">
         <p>Edit your user settings:</p>
-        <p class="setting"><span>E-mail Address <img src="img/edit.png" alt="*Edit*" onclick="imgWindow()" id = "email"></span><c:out value="${requestScope.user['email']} "/></p>       
-        <p class="setting"><span>Language <img src="img/edit.png" alt="*Edit*" onclick="imgWindow()" id = "language"></span><c:out value="${requestScope.user['email']} "/></p>
-        <p class="setting"><span>Profile Status <img src="img/edit.png" alt="*Edit*" onclick="window.open(this.src)" id = ""></span> Public</p>
-        <p class="setting"><span>Update Frequency <img src="img/edit.png" alt="*Edit*"onclick="window.open(this.src)" id = ""></span> Weekly</p>   
-        <p class="setting"><span>FirstName<img src="img/edit.png" alt="*Edit*"onclick="window.open(this.src)"></span>${requestScope.user['firstName']} </p>   
-        <p class="setting"><span>Last name<img src="img/edit.png" alt="*Edit*"></span> ${requestScope.user['lastName']} </p>    
-
+        <form action="AdminServletPost?action=edit" method="POST">
+        <input type=text hidden name = "userId" value ="${user.id}">
+        <p class="setting"><span>E-mail Address <img src="img/edit.png" alt="*Edit*" onclick="editField('email')"></span><input type =text value = "${requestScope.user.email}"></p>       
+        <p class="setting"><span>Language <img src="img/edit.png" alt="*Edit*" onclick="editField()"></span><input type =text value = "${requestScope.user.firstName}"></p>
+        <p class="setting"><span>Profile Status <img src="img/edit.png" alt="*Edit*" onclick="editField()"></span> Public</p>
+        <p class="setting"><span>Update Frequency <img src="img/edit.png" alt="*Edit*"onclick="editField()"></span> Weekly</p>   
+        <p class="setting"><span>FirstName<img src="img/edit.png" alt="*Edit*"onclick="editField('firstName')"></span><input type =text value = "${requestScope.user.firstName}"name = "firstName"></p>   
+        <p class="setting"><span>Last name<img src="img/edit.png" alt="*Edit*"onclick="editField('lastName')"></span> <input type =text value = "${requestScope.user.lastName}" name = "lastName"></p>    
+		<input type="submit" value="Submit">
+		</form>
       </section>
     </div><!-- @end #content -->
   </div><!-- @end #w -->
 <script type="text/javascript">
-function imgWindow() {
-	alert($(this).attr('id'))
+function editField(field) {
+	alert(field)
 }
 $(function(){
   $('#profiletabs ul li a').on('click', function(e){

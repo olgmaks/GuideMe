@@ -10,10 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Servlet implementation class AdminServletPost
@@ -80,6 +83,15 @@ public class AdminServletPost extends HttpServlet {
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 out.write(json);
+            } else if (action.equalsIgnoreCase("edit")) {
+            	System.out.println("edit user");
+            	Map<String, Object> map = new HashMap<>();
+            	Integer userId = Integer.parseInt(request.getParameter("userId"));
+                map.put("last_name",request.getParameter("lastName"));
+                map.put("first_name", request.getParameter("firstName"));
+                UserDao userDao = new UserDao();
+                userDao.updateById(userId, map);
+                response.sendRedirect("adminUserProfile.do?id=" + userId);
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
