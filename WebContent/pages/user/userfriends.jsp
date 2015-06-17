@@ -1,16 +1,28 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: OLEG
-  Date: 16.06.2015
-  Time: 16:08
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<div class="row">
+    <div class="col s12" style="margin-top:10px;">
 
-</body>
-</html>
+
+
+        <ul class="collection z-depth-2 ">
+            <li class="collection-item">
+                User modification panel
+            </li>
+        </ul>
+
+
+
+
+        <ul class="collection z-depth-2 ">
+            <li class="collection-item">
+
+            <c:forEach var="userFriend" items="${userFriends}">
+
+            </c:forEach>
+
+            </li>
+        </ul>
+
+
+    </div>
+</div>
