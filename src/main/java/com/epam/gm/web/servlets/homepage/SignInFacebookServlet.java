@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,6 +30,8 @@ public class SignInFacebookServlet extends HttpServlet implements
 		HttpRequestHandler {
 
 	private static final long serialVersionUID = -3125745730541824547L;
+	private static final Logger logger = Logger
+			.getLogger(SignInFacebookServlet.class);
 
 	@Override
 	public void handle(HttpServletRequest req, HttpServletResponse res)
@@ -95,6 +98,7 @@ public class SignInFacebookServlet extends HttpServlet implements
 			email = (String) json.get("email");
 			UserDao userDao = new UserDao();
 			boolean isValid = false;
+			logger.info(email + " signed with facebook");
 			Map<String, Object> map = new HashMap<>();
 			if (userDao.getUserByFacebookId(facebookId) == null) {
 				User user = new User();

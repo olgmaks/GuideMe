@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +31,8 @@ public class SingInVkServlet extends HttpServlet implements HttpRequestHandler {
 	private final String REDIRECT_URI = "http://localhost:8080/GuideMe/loginvk.do";
 	private final String APP_ID = "4955136";
 	private final String APP_SECRET = "woAtcmEdvhP9Llc4WNnd";
+	private static final Logger logger = Logger
+			.getLogger(SingInVkServlet.class);
 	/**
 	 * 
 	 */
@@ -90,6 +93,8 @@ public class SingInVkServlet extends HttpServlet implements HttpRequestHandler {
 			String last_name = (String) jsonObject.get("last_name");
 			String last_name_encoded = new String(last_name.getBytes("Cp1251"),
 					"UTF-8");
+			logger.info(first_name_encoded + " " + last_name_encoded
+					+ " signed with vk");
 			UserDao userDao = new UserDao();
 			boolean isValid = false;
 			Map<String, Object> map = new HashMap<>();
