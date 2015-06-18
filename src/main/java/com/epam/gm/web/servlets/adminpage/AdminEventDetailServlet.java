@@ -7,11 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epam.gm.daolayer.UserDao;
+
+
+import com.epam.gm.services.CommentEventService;
 import com.epam.gm.services.EventService;
-import com.epam.gm.services.FriendUserService;
 import com.epam.gm.services.PhotoService;
-import com.epam.gm.services.UserTypeService;
+import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class AdminEventDetailServlet implements HttpRequestHandler{
@@ -23,6 +24,8 @@ public class AdminEventDetailServlet implements HttpRequestHandler{
 		EventService eventService = new EventService();
 		int id = Integer.parseInt(request.getParameter("id"));
 		request.setAttribute("event", eventService.getById(id));
+		request.setAttribute("userLogined", SessionRepository.getSessionUser(request));
+		request.setAttribute("commentEvent", new CommentEventService().getByEventId(id));
 		request.setAttribute("photos", new PhotoService().getEventPhotos(id));
 		System.out.println(new PhotoService().getEventPhotos(id));
 		request.getRequestDispatcher("pages/admin/adminEventDetail.jsp").forward(request,

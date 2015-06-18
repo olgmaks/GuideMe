@@ -15,7 +15,7 @@ public class CommentEvent {
     @Column("date")
     private Date date;
     @Column("commentator_id")
-    private Integer comentatorId;
+    private Integer commentatorId;
 
     @ForeignKey
     @OneToMany(field = "commentator_id", value = User.class)
@@ -47,12 +47,12 @@ public class CommentEvent {
 	this.date = date;
     }
 
-    public Integer getComentatorId() {
-	return comentatorId;
+    public Integer getCommentatorId() {
+	return commentatorId;
     }
 
-    public void setComentatorId(Integer comentatorId) {
-	this.comentatorId = comentatorId;
+    public void setCommentatorId(Integer commentatorId) {
+	this.commentatorId = commentatorId;
     }
 
     public Integer getEventId() {
@@ -70,13 +70,30 @@ public class CommentEvent {
     public void setComment(String comment) {
 	this.comment = comment;
     }
+    
 
-    @Override
+    public User getCommentator() {
+		return commentator;
+	}
+
+	public void setCommentator(User commentator) {
+		this.commentator = commentator;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
+
+	@Override
     public String toString() {
 	return "CommentEvent ["
 		+ (id != null ? "id=" + id + ", " : "")
 		+ (date != null ? "date=" + date + ", " : "")
-		+ (comentatorId != null ? "comentatorId=" + comentatorId + ", "
+		+ (commentatorId != null ? "comentatorId=" + commentatorId + ", "
 			: "")
 		+ (commentator != null ? "commentator=" + commentator + ", "
 			: "")

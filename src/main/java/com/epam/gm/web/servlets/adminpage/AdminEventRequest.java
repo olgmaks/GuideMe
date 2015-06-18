@@ -8,14 +8,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.gm.daolayer.EventDao;
-import com.epam.gm.model.Address;
+import com.epam.gm.model.CommentEvent;
 import com.epam.gm.model.Event;
+import com.epam.gm.services.CommentEventService;
+import com.epam.gm.sessionrepository.SessionRepository;
+import com.epam.gm.utf8uncoder.StringHelper;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -132,6 +135,8 @@ EventDao dao;
 						response.setCharacterEncoding("UTF-8");
 						response.getWriter().print(jsonArray);
 					}
+				}else if(action.equals("commentEvent")){
+					commentEvent(request, response);
 				}
 			} catch (Exception ex) {
 				JSONROOT.put("Result", "ERROR");
@@ -143,5 +148,29 @@ EventDao dao;
 			}
 		}
 	}
+	public void commentEvent(HttpServletRequest request, HttpServletResponse response){
+	CommentEventService ceService = new CommentEventService();
+    	int eventId = Integer.parseInt(request.getParameter("eventId"));
+    	CommentEvent cu = new CommentEvent();
+    	cu.setComment(StringHelper.convertFromUTF8(request.getParameter("comment")));
+    	cu.setCommentatorId(SessionRepository.getSessionUser(request).getId());
+    	cu.setEventId(eventId);
+    	try {
+			ceService.save(cu);
+			response.sendRedirect("eventDetail.do?id=" + eventId);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
+}

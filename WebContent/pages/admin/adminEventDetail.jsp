@@ -31,15 +31,43 @@
        <p><span>from date</span><c:out value="${event.dateFrom}"/></p>
        <p><span>to Date</span><c:out value="${event.dateTo}"/></p>
        <p><span>address</span><c:out value="${event.address.address}"/></p>
-       <p><span>city</span><c:out value="${event.address.city.name}"/></p>     
+       <p><span>city</span><c:out value="${event.address.city.name}"/></p>   
+       <c:choose>
+		    <c:when test="${not empty userLogined}">
+		       <form action="adminEventRequest.do?action=commentEvent" method="POST" >
+		       <div class="row">
+				        <div class="input-field col s6">
+				        <input type="hidden" name = "eventId" value ="${event.id}">
+				        </div>
+				        	<div class="input-field col s12">       
+				       	 	<p><span>Comment</span>
+				       	 	<input required type ="text" name="comment"></p>
+				  		</div>
+			   </div>
+		   	<input type="submit" value="Submit">
+			   </form>
+			
+	          
+	      <ul id="friendslist" class="clearfix">
+            <c:forEach items="${requestScope.commentEvent}" var="ce">
+          		${ce.commentator.lastName}   ${ce.commentator.firstName}
+          		<li>
+          		<a href="adminUserProfile.do?id=${ce.commentator.id}">
+          			<img src="${ce.commentator.avatar.path}" style="height: 50px; width: 50px; object-fit: cover">
+          		</a>
+          		 ${ce.comment} 
+          		</li>
+      		</c:forEach>
+      	</ul>
+		 </c:when>
+	</c:choose>  
       </section>
       
       <section id="photos" class="hidden">
         <p>Fhotos:</p>
         <ul id="photolist" class="clearfix">
           <c:forEach items="${photos}" var="p">
-          		<li>
-          		${p.path}   
+          		<li>   
           		<a href="">
           			<img src="${p.path}" style="height: 120px; width: 120px; object-fit: cover">>
           		</a>

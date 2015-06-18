@@ -86,7 +86,6 @@ public class AdminServletPost implements HttpRequestHandler{
     }
     public void commentUser(HttpServletRequest request, HttpServletResponse response){
     	CommentUserService cuService = new CommentUserService();
-    	System.out.println("commentasd" + SessionRepository.getSessionUser(request));
     	int userId = Integer.parseInt(request.getParameter("userId"));
     	CommentUser cu = new CommentUser();
     	cu.setComment(StringHelper.convertFromUTF8(request.getParameter("comment")));

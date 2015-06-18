@@ -41,24 +41,28 @@
        <p><span>vkID</span><c:out value="${requestScope.user['vkId']} "/></p>      
        <p><span>cell number</span><c:out value="${requestScope.user['cellNumber']} "/></p> 
        <p><span>user type</span><c:out value="${requestScope.user.userType['name']} "/></p>   
+       <c:choose>
+		    <c:when test="${not empty userLogined}">
+		       <form action="adminUserRequest.do?action=commentUser" method="POST" >
+		       <div class="row">
+				        <div class="input-field col s6">
+				        <input type="hidden" name = "userId" value ="${user.id}">
+				        </div>
+				        	<div class="input-field col s12">       
+				       	 	<p><span>Comment</span>
+				       	 	<input required type ="text" name="comment"></p>
+				  		</div>
+			   </div>
+		   	<input type="submit" value="Submit">
+			   </form>
+			   <c:forEach items="${requestScope.commentUser}" var="cu">
+	          <p class = "activity">${cu.comment} </p>
+	      	</c:forEach>  
+		 </c:when>
+	</c:choose>
+
+       
            
-           Коментары_---------------  
-       <br>
-       <form action="adminUserRequest.do?action=commentUser" method="POST" >
-       <div class="row">
-		        <div class="input-field col s6">
-		        <input type="hidden" name = "userId" value ="${user.id}">
-		        </div>
-		        	<div class="input-field col s12">       
-		       	 	<p><span>Comment</span>
-		       	 	<input required type ="text" name="comment"></p>
-		  		</div>
-	   </div>
-	   <input type="submit" value="Submit">
-	   </form>
-       <c:forEach items="${requestScope.commentUser}" var="cu">
-          <p class = "activity">${cu.comment} </p>
-      	</c:forEach>      
       </section>
       
       <section id="activity" class="hidden">
