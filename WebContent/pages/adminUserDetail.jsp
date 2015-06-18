@@ -8,6 +8,7 @@
   <link rel="shortcut icon" href="http://designshack.net/favicon.ico">
   <link rel="icon" href="http://designshack.net/favicon.ico">
   <link rel="stylesheet" type="text/css" media="all" href="css/styleUserProfile.css">
+   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 </head>
@@ -16,20 +17,22 @@
   <div id="topbar">
   <a href="http://designshack.net">Back to Design Shack</a>
   </div>
-  ${requestScope.user}
   <div id="w">
-    <div id="content" class="clearfix">
+    <div id="content" >
       <div id="userphoto"><img  src="${user.avatar.path}" alt="default avatar" style="height: 120px; width: 120px; object-fit: cover"></div>
       <h1><c:out value="${requestScope.user['lastName']} "/><c:out value="${requestScope.user['firstName']}"/></h1> 
+     
       <nav id="profiletabs">
-        <ul class="clearfix">
-          <li><a href="#bio" class="sel">Bio</a></li>
+      <div class="nav-wrapper">
+        <ul>
+          <li><a href="#bio">Bio</a></li>
           <li><a href="#activity">Activity</a></li>
           <li><a href="#friends">Friends</a></li>
           <li><a href="#settings">Settings</a></li>
         </ul>
+        </div>
       </nav>
-      
+
       <section id="bio">
        <p><span>E-mail Address</span><c:out value="${requestScope.user['email']} "/></p>  
        <p><span>First name</span><c:out value="${requestScope.user['firstName']} "/></p>  
@@ -38,7 +41,12 @@
        <p><span>vkID</span><c:out value="${requestScope.user['vkId']} "/></p>      
        <p><span>cell number</span><c:out value="${requestScope.user['cellNumber']} "/></p> 
        <p><span>user type</span><c:out value="${requestScope.user.userType['name']} "/></p>   
-             
+           
+           Коментары_---------------  
+       <br>
+       <c:forEach items="${requestScope.commentUser}" var="cu">
+          <p class = "activity">${cu.comment} </p>
+      	</c:forEach>      
       </section>
       
       <section id="activity" class="hidden">
@@ -63,21 +71,33 @@
       </section>
       <section id="settings" class="hidden">
         <p>Edit your user settings:</p>
+        <div class="row">        
         <form action="adminUserRequest.do?action=edit" method="POST" >
-        <input type="text" name ="firstName"value ="фыыв">
-        <input type="hidden" name = "userId" value ="${user.id}">
-        <p class="setting"><span>E-mail Address </span><input type ="text" value = "${requestScope.user.email}"></p>       
-        <p class="setting"><span>Language </span><input type ="text" value = "${requestScope.user.firstName}"></p>
-        <p class="setting"><span>FirstName</span><input type ="text" value = "${requestScope.user.firstName}"name = "firstName1"></p>   
-        <p class="setting"><span>Last name</span> <input type ="text" value = "${requestScope.user.lastName}" name = "lastName"></p>  
-        <p class="setting"><span>user Type</span> 
+	       <div class="row">
+		        <div class="input-field col s6">
+		        <input type="hidden" name = "userId" value ="${user.id}">
+		        <p><span>E-mail Address </span><input type ="text" value = "${requestScope.user.email}"></p>
+		        </div>
+		        	<div class="input-field col s6">       
+		       	 	<p><span>Language </span><input type ="text" value = "${requestScope.user.firstName}"></p>
+		  		</div>
+		   </div>
+        	<div class="row">
+		        <div class="input-field col s6">
+		        	<p><span>First name</span><input type ="text" value = "${requestScope.user.firstName}" name="firstName"></p>
+		        </div>
+		        	<div class="input-field col s6">       
+		       	 	<p><span>Last name</span><input type ="text" value = "${requestScope.user.lastName}" name = "lastName"></p>
+		  		</div>
+		   </div>  
+        <p><span>user Type</span> 
        			<select name="userTypeId" id = "userTypeId">
 					<c:forEach items="${userType}" var="userType">
 						<option value="${userType.id}">${userType.name}</option>
 					</c:forEach>
 				</select>
 		</p>  
-		<p class="setting"><span>sex</span> 
+		<p><span>sex</span> 
        			<select name="sex" id = "sex">
 							<option value="male">male</option>
 							<option value="female">female</option>
@@ -85,6 +105,7 @@
 		</p>  
 		<input type="submit" value="Submit">
 		</form>
+		</div>
       </section>
     </div><!-- @end #content -->
   </div><!-- @end #w -->

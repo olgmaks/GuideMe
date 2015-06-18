@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.gm.daolayer.UserDao;
+import com.epam.gm.services.CommentUserService;
 import com.epam.gm.services.FriendUserService;
 import com.epam.gm.services.UserTypeService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
@@ -22,6 +23,7 @@ public class AdminUserProfileServlet implements HttpRequestHandler {
 		UserDao userDao = new UserDao();
 		int id = Integer.parseInt(request.getParameter("id"));
 		try {
+			request.setAttribute("commentUser", new CommentUserService().getByUserId(id));
 			request.setAttribute("userActivity",userDao.userActivity(id));
 			request.setAttribute("friends",friendUserService.getUserFriends(id));
 			System.out.println("friends " + friendUserService.getUserFriends(id));

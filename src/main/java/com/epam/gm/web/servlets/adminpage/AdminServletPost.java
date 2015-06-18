@@ -3,6 +3,7 @@ package com.epam.gm.web.servlets.adminpage;
 import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.model.User;
 import com.epam.gm.services.UserService;
+import com.epam.gm.utf8uncoder.StringHelper;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.google.gson.Gson;
 
@@ -70,14 +71,12 @@ public class AdminServletPost implements HttpRequestHandler{
                 response.setCharacterEncoding("UTF-8");
                 out.write(json);
             } else if (action.equalsIgnoreCase("edit")) {
-            	System.out.println("lastName"+request.getParameter("firstName").toString());
             	Map<String, Object> map = new HashMap<>();
             	Integer userId = Integer.parseInt(request.getParameter("userId"));
-            	
-                //map.put("last_name",request.getParameter("lastName").toString());
-                map.put("first_name", request.getParameter("firstName").toString());
-                //map.put("sex", request.getParameter("sex"));
-                //map.put("user_type_id", request.getParameter("userTypeId"));
+                map.put("last_name",StringHelper.convertFromUTF8(request.getParameter("lastName")));
+                map.put("first_name", StringHelper.convertFromUTF8(request.getParameter("firstName")));
+                map.put("sex", request.getParameter("sex"));
+                map.put("user_type_id", request.getParameter("userTypeId"));
                 UserDao userDao = new UserDao();
                 userDao.updateById(userId, map);
                 response.sendRedirect("adminUserProfile.do?id=" + userId);

@@ -46,7 +46,7 @@ body {
 br { display: block; line-height: 2.2em; } 
 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
-ol, ul { list-style: none; }
+ol { list-style: none; }
 
 input, textarea { 
   -webkit-font-smoothing: antialiased;
@@ -195,37 +195,6 @@ a:hover { text-decoration: underline; }
   margin-bottom: 4px;
   height: 50px;
 }
-
-#profiletabs ul { list-style: none; display: block; width: 70%; height: 50px; }
-#profiletabls ul li { float: left; }
-#profiletabs ul li a { 
-  display: block;
-  float: left;
-  padding: 8px 11px;
-  font-size: 1.2em;
-  font-weight: bold;
-  background: #eae8db;
-  color: #666;
-  margin-right: 7px;
-  border: 1px solid #fff;
-  -webkit-border-radius: 5px;
-  -webkit-border-bottom-left-radius: 0;
-  -moz-border-radius: 5px;
-  -moz-border-radius-bottomleft: 0;
-  border-radius: 5px;
-  border-bottom-left-radius: 0;
-}
-#profiletabs ul li a:hover {
-  text-decoration: none;
-  background: #dad7c2;
-  color: #565656;
-}
-
-#profiletabs ul li a.sel {
-  background: #fff;
-  border-color: #d1cdb5;
-}
-
 
 /** profile content sections **/
 .hidden {

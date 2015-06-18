@@ -28,7 +28,31 @@ public class CommentUser {
     @Column("comment")
     private String comment;
 
-    public Integer getId() {
+    public User getCommentator() {
+		return Commentator;
+	}
+
+	public void setCommentator(User commentator) {
+		Commentator = commentator;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Integer getCommentatorId() {
+		return commentatorId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Integer getId() {
 	return id;
     }
 
