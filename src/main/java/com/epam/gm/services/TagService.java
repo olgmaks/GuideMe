@@ -2,6 +2,7 @@ package com.epam.gm.services;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.epam.gm.daolayer.TagDao;
 import com.epam.gm.model.Tag;
@@ -21,6 +22,9 @@ public class TagService {
 		return dao.getTagByName(name);
 	}	
 	
+	public void update(int id, Map<String, Object>map) throws SQLException{
+		dao.update(id, map);
+	}
 	public void save(Tag tag) throws IllegalArgumentException, IllegalAccessException, SQLException {
 		dao.save(tag);
 	}

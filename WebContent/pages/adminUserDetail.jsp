@@ -74,7 +74,7 @@
       
       <section id="friends" class="hidden">
         <p>Friends list:</p>
-        <ul id="friendslist" class="clearfix">
+        <ul id="friendslist" class="collection z-depth-2 " style="height: 100%;">
           <c:forEach items="${requestScope.friends}" var="f">
           		<li>
           		${f.friend.lastName}   ${f.friend.firstName}

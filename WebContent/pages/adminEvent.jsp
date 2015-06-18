@@ -28,10 +28,12 @@
 					list : true,
 					edit : false				
 					},
+					
 				name : {
-					title : 'name',
-					width : '30%',
-					edit : true
+					 title: 'name',
+						display: function (data) {
+	                     return '<a href="eventDetail.do?id=' + data.record.id + '">'+data.record.name+'</a>';
+	                 }
 				},
 				description : {
 					title : 'description',

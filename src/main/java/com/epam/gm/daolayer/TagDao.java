@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import com.epam.gm.model.Tag;
 import com.epam.gm.model.UserTag;
@@ -45,7 +46,13 @@ public class TagDao extends AbstractDao<Tag> {
 			return result.get(0);
 		}
 	}		
+	public void save(Tag tag) throws IllegalArgumentException, IllegalAccessException, SQLException{
+		super.save(tag);
+	}
 	
+	public void update(int id, Map<String, Object> map) throws SQLException{
+		super.updateById(id, map);
+	}
 	public List<Tag> getAllUserTags(Integer userId) throws SQLException {
 		UserTagDao dao = new UserTagDao();
 		
