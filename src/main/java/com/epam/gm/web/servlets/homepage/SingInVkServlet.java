@@ -104,7 +104,7 @@ public class SingInVkServlet extends HttpServlet implements HttpRequestHandler {
 				user.setFirstName(first_name_encoded);
 				user.setLastName(last_name_encoded);
 				user.setEmail(first_name_encoded + " " + last_name_encoded);
-				user.setAddressId(1);
+
 				user.setUserTypeId(8);
 				user.setLangId(3);
 				user.setIsActive(true);
