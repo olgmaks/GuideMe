@@ -8,13 +8,20 @@ import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 public class CommentUserDao extends AbstractDao<CommentUser> {
 
-    public CommentUserDao() {
-    	//gryn
-    	//super(ConnectionManager.getConnection(), CommentUser.class);
-    	super(CommentUser.class);
-    }
-    public List<CommentUser> getByUserId(int userId) throws SQLException{
-    	return getByField("user_id", userId);
-    }
+	public CommentUserDao() {
+		// gryn
+		// super(ConnectionManager.getConnection(), CommentUser.class);
+		super(CommentUser.class);
+	}
+
+	public List<CommentUser> getByUserId(int userId) throws SQLException {
+		return getByField("user_id", userId);
+	}
+
+	public void saveCommentUser(CommentUser comment)
+			throws IllegalArgumentException, IllegalAccessException,
+			SQLException {
+		super.save(comment);
+	}
 
 }

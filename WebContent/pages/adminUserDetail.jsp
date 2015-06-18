@@ -44,6 +44,18 @@
            
            Коментары_---------------  
        <br>
+       <form action="adminUserRequest.do?action=commentUser" method="POST" >
+       <div class="row">
+		        <div class="input-field col s6">
+		        <input type="hidden" name = "userId" value ="${user.id}">
+		        </div>
+		        	<div class="input-field col s12">       
+		       	 	<p><span>Comment</span>
+		       	 	<input required type ="text" name="comment"></p>
+		  		</div>
+	   </div>
+	   <input type="submit" value="Submit">
+	   </form>
        <c:forEach items="${requestScope.commentUser}" var="cu">
           <p class = "activity">${cu.comment} </p>
       	</c:forEach>      

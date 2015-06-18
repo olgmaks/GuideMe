@@ -1,14 +1,16 @@
 package com.epam.gm.web.servlets.adminpage;
 
 import com.epam.gm.daolayer.UserDao;
+import com.epam.gm.model.CommentUser;
 import com.epam.gm.model.User;
+import com.epam.gm.services.CommentUserService;
 import com.epam.gm.services.UserService;
+import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.utf8uncoder.StringHelper;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,15 +73,9 @@ public class AdminServletPost implements HttpRequestHandler{
                 response.setCharacterEncoding("UTF-8");
                 out.write(json);
             } else if (action.equalsIgnoreCase("edit")) {
-            	Map<String, Object> map = new HashMap<>();
-            	Integer userId = Integer.parseInt(request.getParameter("userId"));
-                map.put("last_name",StringHelper.convertFromUTF8(request.getParameter("lastName")));
-                map.put("first_name", StringHelper.convertFromUTF8(request.getParameter("firstName")));
-                map.put("sex", request.getParameter("sex"));
-                map.put("user_type_id", request.getParameter("userTypeId"));
-                UserDao userDao = new UserDao();
-                userDao.updateById(userId, map);
-                response.sendRedirect("adminUserProfile.do?id=" + userId);
+            	editUser(request, response);
+            }else if (action.equalsIgnoreCase("commentUser")) {
+            	commentUser(request, response);
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -87,6 +83,52 @@ public class AdminServletPost implements HttpRequestHandler{
             e.printStackTrace();
         }
 
+    }
+    public void commentUser(HttpServletRequest request, HttpServletResponse response){
+    	CommentUserService cuService = new CommentUserService();
+    	System.out.println("commentasd" + SessionRepository.getSessionUser(request));
+    	int userId = Integer.parseInt(request.getParameter("userId"));
+    	CommentUser cu = new CommentUser();
+    	cu.setComment(StringHelper.convertFromUTF8(request.getParameter("comment")));
+    	cu.setCommentatorId(SessionRepository.getSessionUser(request).getId());
+    	cu.setUserId(userId);
+    	try {
+			cuService.save(cu);
+			response.sendRedirect("adminUserProfile.do?id=" + userId);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    public void editUser(HttpServletRequest request, HttpServletResponse response){
+    	Map<String, Object> map = new HashMap<>();
+    	Integer userId = Integer.parseInt(request.getParameter("userId"));
+        map.put("last_name",StringHelper.convertFromUTF8(request.getParameter("lastName")));
+        map.put("first_name", StringHelper.convertFromUTF8(request.getParameter("firstName")));
+        map.put("sex", request.getParameter("sex"));
+        map.put("user_type_id", request.getParameter("userTypeId"));
+        UserDao userDao = new UserDao();
+        try {
+			userDao.updateById(userId, map);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        try {
+			response.sendRedirect("adminUserProfile.do?id=" + userId);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 }

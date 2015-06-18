@@ -36,6 +36,14 @@ public class CommentUser {
 		Commentator = commentator;
 	}
 
+	public Integer getCommentatorId() {
+		return commentatorId;
+	}
+
+	public void setCommentatorId(Integer commentatorId) {
+		this.commentatorId = commentatorId;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -44,9 +52,6 @@ public class CommentUser {
 		this.user = user;
 	}
 
-	public Integer getCommentatorId() {
-		return commentatorId;
-	}
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
@@ -68,21 +73,12 @@ public class CommentUser {
 	this.date = date;
     }
 
-    public Integer getCommentatoId() {
-	return userId;
-    }
-
-    public void setCommentatoId(Integer userId) {
-	this.userId = userId;
-    }
 
     public Integer getUserId() {
 	return userId;
     }
 
-    public void setCommentatorId(Integer commentatorId) {
-	this.commentatorId = commentatorId;
-    }
+ 
 
     public String getComment() {
 	return comment;
