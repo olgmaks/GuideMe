@@ -48,6 +48,18 @@
 	
 		});
 	});
+	
+	$(function() {
+		
+		// Edit only
+		$( "#tagform-editonlyLang" ).find('input.tag').tagedit({
+			autocompleteURL: 'langAutocompleteUserTags.do',
+			autocompleteOptions: {minLength: 0},
+			allowEdit: false,
+			allowAdd: false
+	
+		});
+	});	
 	</script>
 
 	<script>
@@ -69,10 +81,28 @@
             });
             return false;
        	 });
-	
-		
-		
 	 });
+	
+	$(document).ready(function() {
+		
+		$("#tagform-editonlyLang").submit(function () {
+			
+        	$.ajax({
+            	
+        		
+                url: 'langSubmitUserTags.do',
+                type: 'post',
+                dataType: 'json',
+                data: $("#tagform-editonlyLang").serialize(),
+                success: function (data) {
+                	alert(data.valid);
+                    
+                }
+            });
+            return false;
+       	 });
+	 });
+	
 	</script>
 
 </head>
@@ -116,16 +146,12 @@
                             
     					<form action="submitUserTags.do" method="post" id="tagform-editonly" >
 							<p>
-<%-- 							    <c:if test="${requestScope.tags.isEmpty()}"> --%>
 							    <input type="text" name="tag[]" value="" class="tag"/>
-<%-- 							    </c:if> --%>
 							    
    								<c:forEach items="${requestScope.tags}" var = "tag">
    									<input type="text" name="tag[3-a]" value="${tag.name}" class="tag" />
    								</c:forEach>
    											
-<!-- 								<input type="text" name="tag[3-a]" value="Haze"  class="tag" /> -->
-        
 								<input type="submit" name="save" value="Save"/>
 							</p>
     					</form>                            
@@ -135,7 +161,17 @@
                         </li>
                         
                         <li class="collection-item" >
-                            User modification panel 2
+    					<form action="langSubmitUserTags .do" method="post" id="tagform-editonlyLang" >
+							<p>
+							    <input type="text" name="tag[]" value="" class="tag"/>
+							    
+   								<c:forEach items="${requestScope.langs}" var = "lang">
+   									<input type="text" name="tag[3-a]" value="${lang.name}" class="tag" />
+   								</c:forEach>
+   											
+								<input type="submit" name="save" value="Save"/>
+							</p>
+    					</form>                            
                         </li>                        
                     </ul>
                     <ul class="collection z-depth-2 ">

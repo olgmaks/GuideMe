@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.epam.gm.daolayer.LanguageDao;
 import com.epam.gm.model.Language;
+import com.epam.gm.model.UserLanguage;
 
 public class LanguageDaoTest {
 
@@ -28,6 +29,7 @@ public class LanguageDaoTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void test2() throws SQLException {
 		List<Language> languages = languageDao.getLocalizedLangs();
@@ -35,5 +37,15 @@ public class LanguageDaoTest {
 			System.out.println(language);
 		}
 	}
+	
+	@Test
+	public void test3() throws SQLException {
+		List<Language> languages = languageDao.getAllUserLangs(14);
+		for (Language language : languages) {
+			System.out.println(language);
+		}
+		
+		
+	}	
 
 }

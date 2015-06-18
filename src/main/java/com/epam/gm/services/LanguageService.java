@@ -16,4 +16,20 @@ public class LanguageService {
 	public List<Language> getLocalizedLangs() throws SQLException {
 		return languageDao.getLocalizedLangs();
 	}
+	
+	public List<Language> getAllActiveLangs() throws SQLException {
+		return languageDao.getAllActiveLangs();
+	}
+	
+	public Language getLangById(Integer id) throws SQLException {
+		return languageDao.getLangById(id);
+	}
+	
+	public List<Language> getAllUserLangs(Integer userId) throws SQLException {
+		return languageDao.getAllUserLangs(userId);
+	}
+	
+	public Language getlangByName(String name) throws SQLException {
+		return languageDao.getlangByName(name);
+	}
 }

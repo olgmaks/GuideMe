@@ -10,11 +10,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.gm.model.Language;
 import com.epam.gm.model.Photo;
 import com.epam.gm.model.Tag;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
 import com.epam.gm.services.EventService;
+import com.epam.gm.services.LanguageService;
 import com.epam.gm.services.PhotoService;
 import com.epam.gm.services.TagService;
 import com.epam.gm.services.UserInEventService;
@@ -33,12 +35,18 @@ public class UserTagsServlet implements HttpRequestHandler {
 
 		UserInEventService userInEventService = new UserInEventService();
 		TagService tagService = new TagService();
+		LanguageService langService = new LanguageService();
         
         User user = SessionRepository.getSessionUser(request);
 
         if (user != null) {
 
-            Photo userPhoto = photoService.getUserPhoto(user.getId());
+        	Photo userPhoto = null;
+        	try{
+        		userPhoto = photoService.getUserPhoto(user.getId());
+        	} catch(Exception e) {
+        		System.out.println("Handle me, please!");
+        	}
             List<UserInEvent> userInEvents = userInEventService.getEventsByUserId(user.getId());
 
             //Creating map with paths for events photo <eventId, pathToEventPhoto>
@@ -65,6 +73,13 @@ public class UserTagsServlet implements HttpRequestHandler {
             
             List<Tag> tags = tagService.getAllUserTags(user.getId());
             request.setAttribute("tags", tags);
+            
+            
+            List<Language> langs = langService.getAllUserLangs(user.getId());
+            request.setAttribute("langs", langs);
+            
+            System.out.println("++++++++++++++++++User langs");
+            System.out.println(langs);
             
         }
         request.getRequestDispatcher("pages/user/usertags.jsp").forward(request, response);

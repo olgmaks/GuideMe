@@ -5,7 +5,7 @@ import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 
 @Entity("language")
-public class Language {
+public class Language implements Comparable<Language> {
 
     	@Column("id")
 	private Integer id;
@@ -65,6 +65,28 @@ public class Language {
 		this.deleted = deleted;
 	}
 	
+	//gryn
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) 
+			return false;
+		
+		if(obj instanceof Language) {
+			return ((Language) obj).getName().equals(name);
+		}
+		
+		return false;
+	}
+    
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
+
+	@Override
+	public int compareTo(Language other) {
+		return name.compareTo(other.name);
+	}
 	
 
 }
