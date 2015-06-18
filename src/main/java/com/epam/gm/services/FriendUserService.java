@@ -37,7 +37,17 @@ public class FriendUserService {
         friendUserDao.sendFriendRequest(friendUser);
     }
 
-    public void submitFriendRequest(FriendUser friendUser) throws SQLException, IllegalAccessException {
-        friendUserDao.submitFriendRequest(friendUser);
+    public void acceptFriendRequest(FriendUser friendUser) throws SQLException, IllegalAccessException {
+        friendUserDao.acceptFriendRequest(friendUser);
     }
+
+    public void acceptFriendRequest(int requestId) throws SQLException, IllegalAccessException {
+        System.out.println("accept friend request service");
+        friendUserDao.acceptFriendRequest(requestId);
+    }
+
+    public void declineFriendRequest (int requestId) throws SQLException, IllegalAccessException {
+        friendUserDao.declineFriendRequest(requestId);
+    }
+
 }

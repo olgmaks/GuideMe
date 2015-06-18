@@ -24,6 +24,7 @@ public class GetHelper<T> extends AbstractHelper<T> {
 			throws SQLException {
 		String sql = String.format(AbstractDao.SELECT + " where %S=?", tableName,
 				fieldName);
+//		System.out.println(sql);
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setObject(1, fieldValue);
 		return statement;

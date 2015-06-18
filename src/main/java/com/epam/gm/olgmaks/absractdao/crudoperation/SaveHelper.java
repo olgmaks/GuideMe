@@ -44,6 +44,7 @@ public class SaveHelper<T> extends AbstractHelper<T> {
 
         } catch (SQLException e) {
             e.printStackTrace();
+//            System.out.println("exception duringinserting " +sql);
         }
         System.out.println(sql);
         return preparedStatement;

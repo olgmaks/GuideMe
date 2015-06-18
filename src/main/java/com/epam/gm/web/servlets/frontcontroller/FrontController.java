@@ -58,6 +58,8 @@ public class FrontController extends HttpServlet {
 			    handler.handle(request, response);
 			} catch (SQLException e) {
 			    e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
 			}
 
 		} else {
@@ -66,6 +68,8 @@ public class FrontController extends HttpServlet {
 			    handlers.get("404").handle(request, response);
 			} catch (SQLException e) {
 			    e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
 			}
 			// throw new ServletException("No Matching Handler");
 		}

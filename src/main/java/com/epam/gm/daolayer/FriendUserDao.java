@@ -49,9 +49,22 @@ public class FriendUserDao extends AbstractDao<FriendUser> {
         super.save(friendUser);
     }
 
-    public void submitFriendRequest(FriendUser friendUser) throws SQLException, IllegalAccessException {
+    public void acceptFriendRequest(FriendUser friendUser) throws SQLException, IllegalAccessException {
+        System.out.println("acceptFriendRequest(FriendUser friendUser) ");
         int userId = friendUser.getUserId();
         int friendId = friendUser.getFriendId();
-        super.save(new FriendUser(friendId, userId));
+        FriendUser fu = new FriendUser(friendId, userId);
+        System.out.println("prepare saving : " + fu);
+        super.save(fu);
+    }
+
+    public void acceptFriendRequest(int requestId) throws SQLException, IllegalAccessException {
+        System.out.println("acceptFriendRequest(int requestId) ");
+        FriendUser friendUser = super.getByField("id", requestId).get(0);
+        acceptFriendRequest(friendUser);
+    }
+
+    public void declineFriendRequest (int requestId) throws SQLException, IllegalAccessException {
+        super.deleteByField("id", requestId);
     }
 }
