@@ -53,7 +53,7 @@
 </head>
 <body>
 
-<jsp:include page="header.jsp" />
+<jsp:include page="header.jsp"/>
 <jsp:include page="home/loginmodal.jsp"/>
 <jsp:include page="home/logoutmodal.jsp"/>
 
@@ -91,14 +91,35 @@
             <tbody>
             <tr>
                 <th>
+
+
+                    <div class="card small" style="height: 150px; ">
+                        <table>
+                            <tr>
+                                <td style="width: 120px;">
+                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
+                                         src="img/guide1.jpg">
+                                </td>
+                                <td>
+                                <div><a href="#">Maksymuk</a></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+
+                </th>
+                <th>
                     <div class="card small">
                         <div class="card-image waves-effect waves-block waves-light">
                             <img class="activator" src="img/guide1.jpg">
                         </div>
                         <div class="card-content">
-									<span class="card-title activator grey-text text-darken-4">Event
-										Name <i class="mdi-navigation-more-vert right"></i>
-									</span>
+									  <span class="black-text">
+                                          Event Name
+                                          <i class="mdi-navigation-more-vert right"></i>
+                                      </span>
 
                             <p>
                                 <a href="#">Event details</a>
@@ -115,29 +136,6 @@
                 </th>
                 <th>
                     <div class="card small">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="img/guide1.jpg">
-                        </div>
-                        <div class="card-content">
-									<span class="card-title activator grey-text text-darken-4">Event
-										Name <i class="mdi-navigation-more-vert right"></i>
-									</span>
-
-                            <p>
-                                <a href="#">Event details</a>
-                            </p>
-                        </div>
-                        <div class="card-reveal">
-									<span class="card-title grey-text text-darken-4">Card
-										Title <i class="mdi-navigation-close right"></i>
-									</span>
-
-                            <p>Here is event description</p>
-                        </div>
-                    </div>
-                </th>
-                <th>
-                    <div class="card small" >
                         <div class="card-image waves-effect waves-block waves-light">
                             <img class="activator" src="img/guide1.jpg">
                         </div>
@@ -389,7 +387,6 @@
 
     </div>
 </div>
-
 
 
 <div class="parallax-container valign-wrapper">
