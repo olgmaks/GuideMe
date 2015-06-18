@@ -28,7 +28,7 @@ public class AdminUserProfileServlet implements HttpRequestHandler {
 			request.setAttribute("friends",friendUserService.getUserFriends(id));
 			System.out.println("friends " + friendUserService.getUserFriends(id));
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		request.setAttribute("user", userDao.getByField("id", id).get(0));

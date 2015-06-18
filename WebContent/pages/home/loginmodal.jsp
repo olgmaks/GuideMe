@@ -23,8 +23,9 @@
 					Submit <i class="mdi-content-send right"></i>
 				</button>
 				<br> <br> <a href="register.do" style="margin-left: 5%;">Registrate
-					your self</a> <br> <a href="reference.do" style="margin-left: 5%;">
-					<span class="blue-text text-lighten-3">Forgot a password?</span>
+					your self</a> <br> <a href="userforgotpassword.do"
+					style="margin-left: 5%;"> <span
+					class="blue-text text-lighten-3">Forgot a password?</span>
 				</a> <br> <font color="red" id="errorMessage"
 					style="margin-left: 5%;"></font> <br> <span
 					class="black-text text" style="margin-left: 5%;">Sign via :</span>
@@ -32,9 +33,8 @@
 					href="http://www.facebook.com/dialog/oauth?client_id=1638969026318216&redirect_uri=http://localhost:8080/GuideMe/loginfb.do&scope=email"
 					style="margin-left: 5%;"><img src="icons/facebook_logo.png"
 					border="0" /></a> <a
-					href="https://oauth.vk.com/authorize?client_id=4955136&%20scope=41943044194304&redirect_uri=http://localhost:8080/GuideMe/loginvk.do&%20response_type=codev=5.34"
-					><img src="icons/vk_logo.png"
-					border="0" /></a> <br> <br>
+					href="https://oauth.vk.com/authorize?client_id=4955136&%20scope=41943044194304&redirect_uri=http://localhost:8080/GuideMe/loginvk.do&%20response_type=codev=5.34"><img
+					src="icons/vk_logo.png" border="0" /></a> <br> <br>
 			</div>
 		</div>
 </div>
