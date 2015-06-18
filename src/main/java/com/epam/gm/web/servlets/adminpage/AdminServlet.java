@@ -23,8 +23,8 @@ public class AdminServlet implements HttpRequestHandler {
 		List<User> userList = userService.getAll();
 		request.setAttribute("userList", userList);
 		request.setAttribute("userType", new UserTypeService().getAll());
-		request.getRequestDispatcher("pages/admin.jsp").forward(request, response);
-		
+		//request.getRequestDispatcher("pages/admin.jsp").forward(request, response);
+		request.getRequestDispatcher("pages/admin/adminPanel.jsp").forward(request, response);
 	}
 	
 

@@ -1,23 +1,40 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8 "
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>User Profile with Content Tabs - Design Shack Demo</title>
-  <link rel="shortcut icon" href="http://designshack.net/favicon.ico">
+    <title>User Cabinet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <title>Guide ME</title>
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+   	<link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
+	<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
+	<!-- Include jTable script file. -->
+	<link rel="shortcut icon" href="http://designshack.net/favicon.ico">
   <link rel="icon" href="http://designshack.net/favicon.ico">
   <link rel="stylesheet" type="text/css" media="all" href="css/styleUserProfile.css">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+  
 </head>
-
 <body>
-  <div id="w">
+
+
+<jsp:include page="adminHeader.jsp"/>
+
+
+<table>
+    <tr>
+        <td style=" width:20%; vertical-align: top;">
+            <jsp:include page="adminLeftPanel.jsp"/>
+        </td>
+
+
+    <td style=" width:80%;vertical-align: top;">
+	<div id="w">
     <div id="content" class="clearfix">
     <div id="userphoto"><img  src="${event.avatar.path}" alt="default avatar" style="height: 120px; width: 120px; object-fit: cover"></div>
-      <h1><c:out value="${requestScope.event.name} "/></h1> 
+      <h2><c:out value="${requestScope.event.name} "/></h2> 
       <nav id="profiletabs">
         <ul class="clearfix">
           <li><a href="#bio" class="sel">Bio</a></li>
@@ -119,5 +136,11 @@ $(function(){
   });
 });
 </script>
+        </td>
+
+    </tr>
+</table>
+
+
 </body>
 </html>
