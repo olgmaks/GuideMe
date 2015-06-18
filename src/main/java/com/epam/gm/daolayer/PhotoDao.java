@@ -1,10 +1,10 @@
 package com.epam.gm.daolayer;
 
 import com.epam.gm.model.Photo;
-
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class PhotoDao extends AbstractDao<Photo> {
 
@@ -24,6 +24,10 @@ public class PhotoDao extends AbstractDao<Photo> {
 
     public Photo getEventPhoto(int eventId) throws SQLException {
         Photo result = super.getWithCustomQuery(String.format(GET_PHOTO_EVENT, eventId)).get(0);
+        return result;
+    }
+    public List<Photo> getEventPhotos(int eventId) throws SQLException {
+        List<Photo> result = super.getWithCustomQuery(String.format(GET_PHOTO_EVENT, eventId));
         return result;
     }
 

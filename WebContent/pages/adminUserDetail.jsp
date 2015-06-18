@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8 "
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html">
 <html>
@@ -19,7 +19,7 @@
   ${requestScope.user}
   <div id="w">
     <div id="content" class="clearfix">
-      <div id="userphoto"><img  src="${user.avatar.path}" alt="default avatar"></div>
+      <div id="userphoto"><img  src="${user.avatar.path}" alt="default avatar" style="height: 120px; width: 120px; object-fit: cover"></div>
       <h1><c:out value="${requestScope.user['lastName']} "/><c:out value="${requestScope.user['firstName']}"/></h1> 
       <nav id="profiletabs">
         <ul class="clearfix">
@@ -61,26 +61,34 @@
       		</c:forEach>
       	</ul>
       </section>
-      
       <section id="settings" class="hidden">
         <p>Edit your user settings:</p>
-        <form action="AdminServletPost?action=edit" method="POST">
-        <input type=text hidden name = "userId" value ="${user.id}">
-        <p class="setting"><span>E-mail Address <img src="img/edit.png" alt="*Edit*" onclick="editField('email')"></span><input type =text value = "${requestScope.user.email}"></p>       
-        <p class="setting"><span>Language <img src="img/edit.png" alt="*Edit*" onclick="editField()"></span><input type =text value = "${requestScope.user.firstName}"></p>
-        <p class="setting"><span>Profile Status <img src="img/edit.png" alt="*Edit*" onclick="editField()"></span> Public</p>
-        <p class="setting"><span>Update Frequency <img src="img/edit.png" alt="*Edit*"onclick="editField()"></span> Weekly</p>   
-        <p class="setting"><span>FirstName<img src="img/edit.png" alt="*Edit*"onclick="editField('firstName')"></span><input type =text value = "${requestScope.user.firstName}"name = "firstName"></p>   
-        <p class="setting"><span>Last name<img src="img/edit.png" alt="*Edit*"onclick="editField('lastName')"></span> <input type =text value = "${requestScope.user.lastName}" name = "lastName"></p>    
+        <form action="adminUserRequest.do?action=edit" method="POST" >
+        <input type="text" name ="firstName"value ="фыыв">
+        <input type="hidden" name = "userId" value ="${user.id}">
+        <p class="setting"><span>E-mail Address </span><input type ="text" value = "${requestScope.user.email}"></p>       
+        <p class="setting"><span>Language </span><input type ="text" value = "${requestScope.user.firstName}"></p>
+        <p class="setting"><span>FirstName</span><input type ="text" value = "${requestScope.user.firstName}"name = "firstName1"></p>   
+        <p class="setting"><span>Last name</span> <input type ="text" value = "${requestScope.user.lastName}" name = "lastName"></p>  
+        <p class="setting"><span>user Type</span> 
+       			<select name="userTypeId" id = "userTypeId">
+					<c:forEach items="${userType}" var="userType">
+						<option value="${userType.id}">${userType.name}</option>
+					</c:forEach>
+				</select>
+		</p>  
+		<p class="setting"><span>sex</span> 
+       			<select name="sex" id = "sex">
+							<option value="male">male</option>
+							<option value="female">female</option>
+				</select>
+		</p>  
 		<input type="submit" value="Submit">
 		</form>
       </section>
     </div><!-- @end #content -->
   </div><!-- @end #w -->
 <script type="text/javascript">
-function editField(field) {
-	alert(field)
-}
 $(function(){
   $('#profiletabs ul li a').on('click', function(e){
     e.preventDefault();

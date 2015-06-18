@@ -11,18 +11,28 @@ public class EventService {
 
 	private EventDao eventDao;
 
-	public EventService () {
+	public EventService() {
 		eventDao = new EventDao();
 	}
-	public void saveEvent(Event event) throws IllegalArgumentException, IllegalAccessException, SQLException{
-		eventDao.saveEvent(event);
-	    }
 
-	public List<Event> getAll() throws SQLException{
+	public void saveEvent(Event event) throws IllegalArgumentException,
+			IllegalAccessException, SQLException {
+		eventDao.saveEvent(event);
+	}
+
+	public List<Event> getAll() throws SQLException {
 		return new EventDao().getAllEvents();
 	}
 
-//	public List<Event> getUserEvents (int userId) {
-//		return eventDao.getUserEvents(userId);
-//	}
+	public Event getById(int eventId) throws SQLException {
+		List<Event> list = eventDao.getByField("id", eventId);
+		if (list.size() == 1) {
+			return eventDao.getByField("id", eventId).get(0);
+		} else
+			return null;
+	}
+
+	// public List<Event> getUserEvents (int userId) {
+	// return eventDao.getUserEvents(userId);
+	// }
 }

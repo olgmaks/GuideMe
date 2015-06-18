@@ -18,10 +18,11 @@ public class Address {
 	private Integer localId;
 	@Column("pure_id")
 	private Integer pureId;
-	
+
 	@ForeignKey
-	@OneToMany(field="city_id",value=City.class)
+	@OneToMany(field = "city_id", value = City.class)
 	private City city;
+
 	public Integer getId() {
 		return id;
 	}
@@ -45,7 +46,7 @@ public class Address {
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
 	}
-	
+
 	public Integer getLocalId() {
 		return localId;
 	}
@@ -53,7 +54,6 @@ public class Address {
 	public void setLocalId(Integer localId) {
 		this.localId = localId;
 	}
-	
 
 	public Integer getPureId() {
 		return pureId;
@@ -63,14 +63,20 @@ public class Address {
 		this.pureId = pureId;
 	}
 
-	@Override
-	public String toString() {
-	    return "Address [" + (id != null ? "id=" + id + ", " : "")
-		    + (address != null ? "address=" + address + ", " : "")
-		    + (cityId != null ? "cityId=" + cityId + ", " : "")
-		    + (city != null ? "city=" + city : "") + "]";
+	public City getCity() {
+		return city;
 	}
 
+	public void setCity(City city) {
+		this.city = city;
+	}
 
+	@Override
+	public String toString() {
+		return "Address [" + (id != null ? "id=" + id + ", " : "")
+				+ (address != null ? "address=" + address + ", " : "")
+				+ (cityId != null ? "cityId=" + cityId + ", " : "")
+				+ (city != null ? "city=" + city : "") + "]";
+	}
 
 }

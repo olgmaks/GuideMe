@@ -3,6 +3,7 @@ package com.epam.gm.web.servlets.adminpage;
 import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.model.User;
 import com.epam.gm.services.UserService;
+import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
@@ -21,34 +22,19 @@ import java.util.Map;
 /**
  * Servlet implementation class AdminServletPost
  */
-@WebServlet("/AdminServletPost")
-public class AdminServletPost extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+
+public class AdminServletPost implements HttpRequestHandler{
+
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminServletPost() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-     * response)
-     */
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-    }
-
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-     * response)
-     */
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
+    @Override
+	public void handle(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException {
         String action = request.getParameter("action");
+        request.setCharacterEncoding("UTF-8");
         System.out.println(action);
         try {
             if (action.equalsIgnoreCase("activeUser")) {
@@ -84,11 +70,14 @@ public class AdminServletPost extends HttpServlet {
                 response.setCharacterEncoding("UTF-8");
                 out.write(json);
             } else if (action.equalsIgnoreCase("edit")) {
-            	System.out.println("edit user");
+            	System.out.println("lastName"+request.getParameter("firstName").toString());
             	Map<String, Object> map = new HashMap<>();
             	Integer userId = Integer.parseInt(request.getParameter("userId"));
-                map.put("last_name",request.getParameter("lastName"));
-                map.put("first_name", request.getParameter("firstName"));
+            	
+                //map.put("last_name",request.getParameter("lastName").toString());
+                map.put("first_name", request.getParameter("firstName").toString());
+                //map.put("sex", request.getParameter("sex"));
+                //map.put("user_type_id", request.getParameter("userTypeId"));
                 UserDao userDao = new UserDao();
                 userDao.updateById(userId, map);
                 response.sendRedirect("adminUserProfile.do?id=" + userId);

@@ -34,6 +34,29 @@ public class Event {
 	@OneToMany(field = "address_id", value = Address.class)
 	private Address address;
 
+	@Column("avatar_id")
+	private Integer avatarId;
+
+	@ForeignKey
+	@OneToMany(field = "avatar_id", value = Photo.class)
+	private Photo avatar;
+
+	public Integer getAvatarId() {
+		return avatarId;
+	}
+
+	public void setAvatarId(Integer avatarId) {
+		this.avatarId = avatarId;
+	}
+
+	public Photo getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(Photo avatar) {
+		this.avatar = avatar;
+	}
+
 	public Address getAddress() {
 		return address;
 	}
@@ -112,6 +135,14 @@ public class Event {
 
 	public void setParticipants_limit(Integer participants_limit) {
 		this.participants_limit = participants_limit;
+	}
+
+	public User getModerator() {
+		return moderator;
+	}
+
+	public void setModerator(User moderator) {
+		this.moderator = moderator;
 	}
 
 	@Override

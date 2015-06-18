@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.services.FriendUserService;
-
+import com.epam.gm.services.UserTypeService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 
@@ -30,6 +30,7 @@ public class AdminUserProfileServlet implements HttpRequestHandler {
 			e.printStackTrace();
 		}
 		request.setAttribute("user", userDao.getByField("id", id).get(0));
+		request.setAttribute("userType", new UserTypeService().getAll());
 		request.getRequestDispatcher("pages/adminUserDetail.jsp").forward(request,
 				response);
 	}
