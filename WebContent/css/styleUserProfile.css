@@ -1,5 +1,11 @@
 
-
+#w {
+  display: block;
+  width: 750px;
+  margin: 0 auto;
+  padding-top: 30px;
+  padding-bottom: 45px;
+}
 #content {
   display: block;
   width: 100%;

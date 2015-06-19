@@ -47,9 +47,9 @@ public class User {
     private Address address;
     @Column("password")
     private String password;
-
+    
     @Column("avatar_id")
-    private Integer avatarId;
+    private Integer avatarId = 10;
 
     @ForeignKey
     @OneToMany(field = "avatar_id", value = Photo.class)

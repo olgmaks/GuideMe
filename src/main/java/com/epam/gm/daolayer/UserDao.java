@@ -3,7 +3,6 @@ package com.epam.gm.daolayer;
 import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserActivity;
-import com.epam.gm.model.UserType;
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
@@ -113,6 +112,8 @@ public class UserDao extends AbstractDao<User> {
 			UserActivity ua = new UserActivity();
 			ua.setActivity(rs.getString("activity"));
 			ua.setName(rs.getString("name"));
+			ua.setAct(rs.getString("act"));
+			ua.setIdAct(rs.getInt("idAct"));
 			listActivity.add(ua);
 		}
 		rs.close();

@@ -67,9 +67,28 @@
       
       <section id="activity" class="hidden">
         <p>Most recent actions:</p>
+        <ul class="collection z-depth-2 ">
         <c:forEach items="${requestScope.userActivity}" var="ua">
-          <p class = "activity">${ua.activity}  ${ua.name}</p>
+        <c:choose>
+		    <c:when test="${ua.act=='user'}">    
+		    	<li class="collection-item">
+		    	${ua.activity}      		
+          		<a href="adminUserProfile.do?id=${ua.idAct}">
+         			  ${ua.name}
+          		</a>
+          		</li>
+          	</c:when>
+          	 <c:when test="${ua.act=='event'}">  
+          	 		<li class="collection-item">
+          	 		${ua.activity}        		
+          		<a href="eventDetail.do?id=${ua.idAct}">
+         			  ${ua.name}
+          		</a>
+          		</li>
+          	</c:when>
+         </c:choose>
       	</c:forEach>
+      	</ul>
       </section>
       
       <section id="friends" class="hidden">

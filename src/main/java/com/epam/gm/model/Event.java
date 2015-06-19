@@ -35,7 +35,7 @@ public class Event {
 	private Address address;
 
 	@Column("avatar_id")
-	private Integer avatarId;
+	private Integer avatarId = 11;
 
 	@ForeignKey
 	@OneToMany(field = "avatar_id", value = Photo.class)
