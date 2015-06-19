@@ -22,9 +22,9 @@ public class CallBackFriendRequestServlet implements HttpRequestHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, IllegalAccessException {
-        System.out.println("call back friend request servlet");
+//        System.out.println("call back friend request servlet");
         Integer friendUserRequestId = Integer.valueOf(request.getParameter("userFriendId"));
-            System.out.println("friendUserRequestId : "+friendUserRequestId);
+//            System.out.println("friendUserRequestId : "+friendUserRequestId);
         friendUserService.callBackFriendUserRequest(friendUserRequestId);
 
         request.setAttribute("userFriendRequestType", "sent");

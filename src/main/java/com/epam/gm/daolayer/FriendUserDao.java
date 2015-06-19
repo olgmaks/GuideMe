@@ -71,4 +71,8 @@ public class FriendUserDao extends AbstractDao<FriendUser> {
     public void callBackFriendUserRequest(int friendUserRequestId) throws SQLException, IllegalAccessException {
         super.deleteByField("id", friendUserRequestId);
     }
+
+    public void removeFriend(int friendId) throws SQLException, IllegalAccessException {
+        super.deleteByField("id", friendId);
+    }
 }

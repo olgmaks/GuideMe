@@ -63,6 +63,12 @@ public class DeleteHelper<T> extends AbstractHelper<T> {
         return statement;
     }
 
+    public PreparedStatement deleteWithCustomQuery(Connection connection, String where) throws SQLException {
+        String sql = String.format(AbstractDao.DELETE, tableName, where);
+        System.out.println(sql);
+        return connection.prepareStatement(sql);
+    }
+
     public void init(T t, String whereCondition) {
         for (Field field : fields) {
             whereCondition += field.getAnnotation(Column.class).value() + "=? AND ";

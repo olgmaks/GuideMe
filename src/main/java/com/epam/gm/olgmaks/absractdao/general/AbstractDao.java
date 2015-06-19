@@ -131,6 +131,11 @@ public class AbstractDao<T> {
 		ConnectionManager.closeConnection(connection);
 	}
 
+	public void deleteWithCustomQuery (String customWhere) throws SQLException {
+		Connection connection = ConnectionManager.getConnection();
+		deleteHelper.deleteWithCustomQuery(connection,customWhere);
+	}
+
 	public List<T> getAll() throws SQLException {
 		// gryn
 		Connection connection = ConnectionManager.getConnection();

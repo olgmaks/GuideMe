@@ -53,4 +53,8 @@ public class FriendUserService {
     public void callBackFriendUserRequest(int friendUserRequestId) throws SQLException, IllegalAccessException {
         friendUserDao.callBackFriendUserRequest(friendUserRequestId);
     }
+
+    public void removeFriend (int  friendUserId) throws SQLException, IllegalAccessException {
+        friendUserDao.removeFriend(friendUserId);
+    }
 }
