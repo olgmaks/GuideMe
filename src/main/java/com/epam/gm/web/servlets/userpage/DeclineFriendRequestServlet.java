@@ -22,9 +22,12 @@ public class DeclineFriendRequestServlet implements HttpRequestHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, IllegalAccessException {
-        System.out.println("decline friend-user-id : " + request.getParameter("userFriendId"));
+//        System.out.println("decline friend-user-id : " + request.getParameter("userFriendId"));
         Integer friendUserRequestId = Integer.valueOf(request.getParameter("userFriendId"));
+//        System.out.println("friendUserRequestId : " +friendUserRequestId);
+
         friendUserService.declineFriendRequest(friendUserRequestId);
+
         request.setAttribute("userFriendRequestType", "incoming");
         request.setAttribute("centralContent", "friends");
         request.getRequestDispatcher("userfriends.do").forward(request, response);

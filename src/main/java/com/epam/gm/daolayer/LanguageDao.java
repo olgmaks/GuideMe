@@ -84,7 +84,9 @@ public class LanguageDao extends AbstractDao<Language> {
 		
 		
 		List<Language> list = new LanguageDao().getAllUserLangs(14);
-		list.forEach(System.out::println);
+		for (Language language : list) {
+			System.out.println(list);
+		}
 		
 	}
 

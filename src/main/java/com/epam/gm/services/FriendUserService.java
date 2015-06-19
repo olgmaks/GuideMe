@@ -50,4 +50,7 @@ public class FriendUserService {
         friendUserDao.declineFriendRequest(requestId);
     }
 
+    public void callBackFriendUserRequest(int friendUserRequestId) throws SQLException, IllegalAccessException {
+        friendUserDao.callBackFriendUserRequest(friendUserRequestId);
+    }
 }

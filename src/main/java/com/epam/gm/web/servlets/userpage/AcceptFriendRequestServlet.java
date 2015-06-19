@@ -16,16 +16,18 @@ public class AcceptFriendRequestServlet implements HttpRequestHandler {
 
     private FriendUserService friendUserService;
 
-    public AcceptFriendRequestServlet(){
+    public AcceptFriendRequestServlet() {
         friendUserService = new FriendUserService();
     }
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, IllegalAccessException {
-        System.out.println("accept friend request serlet");
-        Integer friendUserRequestId = Integer.valueOf(request.getParameter("userFriendId"));
+//        System.out.println("accept friend request serlet");
 
+        Integer friendUserRequestId = Integer.valueOf(request.getParameter("userFriendId"));
+//            System.out.println("friendUserRequestId : "+friendUserRequestId);
         friendUserService.acceptFriendRequest(friendUserRequestId);
+
 
         request.setAttribute("userFriendRequestType", "incoming");
         request.setAttribute("centralContent", "friends");

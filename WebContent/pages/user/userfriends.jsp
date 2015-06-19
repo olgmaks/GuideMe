@@ -1,23 +1,50 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script>
     $(document).ready(function () {
-        $("#acceptfriendrequest").click(function () {
+
+        $(".acceptfriendrequest").click(function () {
             console.log("acceptfriendrequest ajax call");
+            var value = $(this).data('id');
+            var strSelector = "#userFriendCard" + value;
+            var formSelector = "#userFriendFormWithId" + value;
             $.ajax({
                 url: "acceptfriendrequest.do",
                 type: "post",
                 dataType: "json",
-                data: $("#userFriendFormWithId").serialize()
+                data: $(formSelector).serialize()
             });
+            console.log(strSelector);
+            $(strSelector).remove();
         });
-        $("#declinefriendrequest").click(function () {
+
+        $(".declinefriendrequest").click(function () {
             console.log("declinefriendrequest ajax call");
+            var value = $(this).data('id');
+            var strSelector = "#userFriendCard" + value;
+            var formSelector = "#userFriendFormWithId" + value;
             $.ajax({
                 url: "declinefriendrequest.do",
                 type: "post",
                 dataType: "json",
-                data: $("#userFriendFormWithId").serialize()
+                data: $(formSelector).serialize()
             });
+            console.log(strSelector);
+            $(strSelector).remove();
+        });
+
+        $(".callbackfriendrequest").click(function(){
+            console.log("call back request ajax call");
+            var value = $(this).data('id');
+            var strSelector = "#userFriendCard" + value;
+            var formSelector = "#userFriendFormWithId" + value;
+            $.ajax({
+                url: "callbackfriendrequest.do",
+                type: "post",
+                dataType: "json",
+                data: $(formSelector).serialize()
+            });
+            console.log(strSelector);
+            $(strSelector).remove();
         });
     });
 </script>
@@ -42,12 +69,12 @@
             <li class="collection-item">
 
                 <c:forEach var="userFriend" items="${userFriends}">
-                    <form id="userFriendFormWithId">
-                        <input type="hidden" id="userFriendId" name="userFriendId" value="${userFriend.id}">
+                    <form id="userFriendFormWithId${userFriend.id}">
+                        <input type="hidden" id="userFriendId" class="userFriendId" name="userFriendId" value="${userFriend.id}">
                     </form>
                     <c:choose>
                         <c:when test="${userFriendRequestType=='incoming'}">
-                            <div class="card" style="height: 150px; width: 330px; float: left; margin-left: 10px;">
+                            <div class="card" style="height: 150px; width: 330px; float: left; margin-left: 10px;" id="userFriendCard${userFriend.id}">
                                 <table>
                                     <tr>
                                         <td style="width: 120px;">
@@ -61,10 +88,10 @@
 
                                                 <div>
                                                     <br><a href="#" id="acceptfriendrequest"
-                                                           class="btn-floating light-blue"><i
+                                                           class="btn-floating light-blue acceptfriendrequest" data-id="${userFriend.id}"><i
                                                         class="mdi-navigation-check"></i></a>
                                                     <a href="#" id="declinefriendrequest"
-                                                       class="btn-floating light-blue"><i
+                                                       class="btn-floating light-blue declinefriendrequest" data-id="${userFriend.id}"><i
                                                             class="mdi-navigation-close"></i></a>
                                                 </div>
                                             </div>
@@ -75,7 +102,7 @@
                         </c:when>
 
                         <c:when test="${userFriendRequestType=='sent'}">
-                            <div class="card" style="height: 150px; width: 330px; float: left; margin-left: 10px;">
+                            <div class="card" style="height: 150px; width: 330px; float: left; margin-left: 10px;" id="userFriendCard${userFriend.id}">
                                 <table>
                                     <tr>
                                         <td style="width: 120px;">
@@ -93,8 +120,8 @@
 
                                                     <div style="float: right; margin-right: 10px;">
                                                         <span style="margin-right: 10px;">Call Back</span>
-                                                        <a href="callbackfriendrequest.do"
-                                                           class="btn-floating light-blue">
+                                                        <a href="#"
+                                                           class="btn-floating light-blue callbackfriendrequest" data-id="${userFriend.id}">
                                                             <i class="mdi-navigation-close"></i>
                                                         </a>
                                                     </div>
@@ -107,7 +134,7 @@
                         </c:when>
 
                         <c:otherwise>
-                            <div class="card" style="height: 150px; width: 330px; float: left; margin-left: 10px;">
+                            <div class="card" style="height: 150px; width: 330px; float: left; margin-left: 10px;" id="userFriendCard${userFriend.id}">
                                 <table>
                                     <tr>
                                         <td style="width: 120px;">
@@ -133,6 +160,7 @@
                             </div>
                         </c:otherwise>
                     </c:choose>
+
                 </c:forEach>
 
             </li>
