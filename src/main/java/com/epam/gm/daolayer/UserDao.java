@@ -36,6 +36,16 @@ public class UserDao extends AbstractDao<User> {
             IllegalAccessException, SQLException {
         super.save(user);
     }
+    
+	public User getUserById(Integer id) throws SQLException {
+		List<User> result = getByField("id", id);
+		if (result.isEmpty()) {
+			return null;
+		} else {
+			return result.get(0);
+		}
+		
+	}	
 
     public User getUserByEmail(String email) throws SQLException {
         List<User> result = getByField(USER_EMAIL_FIELD, email);
