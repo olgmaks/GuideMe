@@ -144,7 +144,7 @@ public class UserDao extends AbstractDao<User> {
     public static void main(String[] args) {
         UserDao userDao = new UserDao();
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("first_name", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+        map.put("first_name", "Вовка");
         try {
             userDao.updateById(1, map);
         } catch (SQLException e) {

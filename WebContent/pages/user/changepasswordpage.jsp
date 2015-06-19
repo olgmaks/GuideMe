@@ -1,12 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>User Cabinet</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
-<title>Guide ME</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="css/materialize.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet"
@@ -27,45 +24,39 @@
 		$("#tabs").tabs();
 	});
 </script>
+<title>Forgot Password page</title>
 </head>
 <body>
-
 	<jsp:include page="/pages/header.jsp" />
-	<jsp:include page="../home/loginmodal.jsp" />
+	<jsp:include page="../home/loginmodal.jsp" /><br>
 	<br>
 	<br>
-	<div>
-		<h5 class="center-align">Please type your email</h5>
-	</div>
-
+	<br>
 	<div class="valign-wrapper">
 		<br>
 		<div class="row">
 			<div class="row">
-				<form class="col s12" action="sendlinktoresetpass.do" method="post">
+				<form class="col s12" action="changepassword.do" method="post">
 					<div class="row">
 						<div class="input-field col s12">
-							<input id="email" type="email" class="validate" name="email"
-								required> <label for="email">Email</label>
+							<input id="password" type="password" class="validate"> <label
+								for="password">Password</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input id="password" type="password" class="validate"> <label
+								for="password">Repeat Password</label>
 						</div>
 					</div>
 					<button class="btn waves-effect waves-light" type="submit"
 						name="action">
-						Email me a link to reset a password <i
-							class="mdi-content-send right"></i>
+						Change <i class="mdi-content-send right"></i>
 					</button>
 				</form>
 			</div>
 		</div>
 	</div>
-	
-	
-	<c:if test="${isWrong && isWrong != null }">
-		<div>
-			<h5 class="center-align">Wrong email</h5>
-		</div>
-	</c:if>
+
 </body>
 </html>
-
-
