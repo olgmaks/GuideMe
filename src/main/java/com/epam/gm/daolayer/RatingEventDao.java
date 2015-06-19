@@ -1,7 +1,9 @@
 package com.epam.gm.daolayer;
 
-import com.epam.gm.model.RatingEvent;
+import java.sql.SQLException;
+import java.util.List;
 
+import com.epam.gm.model.RatingEvent;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 public class RatingEventDao extends AbstractDao<RatingEvent>{
@@ -10,6 +12,10 @@ public class RatingEventDao extends AbstractDao<RatingEvent>{
     	//gryn
     	//super(ConnectionManager.getConnection(), RatingEvent.class);
     	super(RatingEvent.class);
+    }
+    
+    public List<RatingEvent> RatingByEvent(Integer eventId) throws SQLException {
+    	return getByField("event_id", eventId);
     }
 
 }

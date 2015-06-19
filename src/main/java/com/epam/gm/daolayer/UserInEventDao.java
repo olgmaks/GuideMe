@@ -1,3 +1,4 @@
+
 package com.epam.gm.daolayer;
 
 import com.epam.gm.model.UserInEvent;
@@ -26,5 +27,7 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
     public List<UserInEvent> getUsersByEventId(int eventId) throws SQLException {
         return super.getByField("event_id", eventId);
     }
+    
+    
 
 }

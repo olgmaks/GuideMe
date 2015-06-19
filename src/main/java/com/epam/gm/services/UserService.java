@@ -42,6 +42,10 @@ public class UserService {
     public void deleteById(int userId) throws IllegalAccessException, SQLException {
         userDao.deleteById(userId);
     }
+    
+    public User getUserById(Integer id) throws SQLException {
+    	return userDao.getUserById(id);
+    }
 
     public void updateWithCustomQuery(Map<String, Object> updates, String joined, String where) throws SQLException {
         userDao.updateWithCustomQuery(updates, joined, where);
