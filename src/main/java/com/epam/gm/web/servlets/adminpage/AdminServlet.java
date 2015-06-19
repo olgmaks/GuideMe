@@ -8,8 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
 import com.epam.gm.model.User;
 import com.epam.gm.services.UserService;
 import com.epam.gm.services.UserTypeService;
@@ -19,6 +17,7 @@ public class AdminServlet implements HttpRequestHandler {
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	
 		UserService userService = new UserService();
 		List<User> userList = userService.getAll();
 		request.setAttribute("userList", userList);

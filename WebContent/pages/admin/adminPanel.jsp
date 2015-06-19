@@ -104,7 +104,10 @@
 <jsp:include page="../home/logoutmodal.jsp"/>
 <jsp:include page="adminHeader.jsp"/>
 
-
+<form action="LoadPhoto?action=saveFile" method="post" enctype="multipart/form-data">
+            <input type="file" size="50" accept="image/*" name="browseButton">
+            <input style="width: 7em" type=submit value="Upload" name="uploadButton">
+</form>
 <table>
     <tr>
         <td style=" width:20%; vertical-align: top;">

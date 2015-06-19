@@ -1,6 +1,13 @@
 package com.epam.gm.web.servlets.adminpage;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +17,15 @@ import java.util.List;
 
 
 
+
+
+
+
+
+
+
+
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -137,6 +153,8 @@ EventDao dao;
 					}
 				}else if(action.equals("commentEvent")){
 					commentEvent(request, response);
+				}else if (action.equals("saveFile")){
+					
 				}
 			} catch (Exception ex) {
 				JSONROOT.put("Result", "ERROR");

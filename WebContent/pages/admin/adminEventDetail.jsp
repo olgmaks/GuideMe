@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>User Cabinet</title>
+    <title>Admin event</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
     <title>Guide ME</title>
@@ -11,17 +11,32 @@
    	<link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
 	<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
 	<!-- Include jTable script file. -->
-	<link rel="shortcut icon" href="http://designshack.net/favicon.ico">
+	
+  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+  <link rel="shortcut icon" href="http://designshack.net/favicon.ico">
   <link rel="icon" href="http://designshack.net/favicon.ico">
   <link rel="stylesheet" type="text/css" media="all" href="css/styleUserProfile.css">
-  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
   
+  <link href="css/star.css" rel="stylesheet" type="text/css" media="all"/>
+   <script type="text/javascript" src="js/jquery-1.2.1.js"></script>
+		<script type="text/javascript">
+		function rate(rate){
+			alert(rate)
+		}
+		$(function(){
+			$( ".star-rate li a" ).each(function(i){
+				$(this).hover(function(){
+					$("#remark").append("<div id=\"core\">"+$(this).html()+"</p>");
+				},function(){
+					$("#core").remove();
+				});
+			});
+		});
+		</script>
+   
 </head>
 <body>
-
-
 <jsp:include page="adminHeader.jsp"/>
-
 
 <table>
     <tr>
@@ -49,6 +64,19 @@
        <p><span>to Date</span><c:out value="${event.dateTo}"/></p>
        <p><span>address</span><c:out value="${event.address.address}"/></p>
        <p><span>city</span><c:out value="${event.address.city.name}"/></p>   
+      
+      <div id ="stars-container">		
+			<ul class='star-rate'>	  
+				<li><a href='' title='' class="star-one" onclick="rate(1)">mmmm</a></li>
+				<li><a href='' title='' class="star-two" onclick="rate(2)">try again</a></li>
+				<li><a href='' title='' class="star-three" onclick="rate(3)">mmm not bad</a></li>  
+				<li><a href='' title='' class="star-four" onclick="rate(4)">this is cool ya!</a></li>
+				<li><a href='' title='' class="star-five" onclick="rate(5)">very good</a></li>
+			</ul>
+		</div>
+		
+		<div id ="remark"></div>
+       
        <c:choose>
 		    <c:when test="${not empty userLogined}">
 		       <form action="adminEventRequest.do?action=commentEvent" method="POST" >

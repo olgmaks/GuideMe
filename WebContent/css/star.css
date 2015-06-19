@@ -1,0 +1,81 @@
+	body { 
+		font: 80% 'trebuchet ms',helvetica,sans-serif;
+	}
+	
+	.star-rate{
+		width: 150px;
+		height: 30px;
+		margin: 0px;
+		padding:0px;
+		list-style:none;
+		position: relative;
+		background: url(images/stars.gif) top left repeat-x;		
+	}
+	.star-rate li{
+		float: left;
+	}
+	.star-rate li a{
+		width:30px;
+		height: 30px;
+		padding: 0px;
+		display:block;
+		text-decoration: none;
+		text-indent: -8000px;
+		z-index: 10;
+		position: absolute;
+	}
+	.star-rate li a:hover{
+		background: url(images/stars.gif) left;
+		z-index: 1;
+		left: 0px;
+		border:none;
+		background-position:30px 60px;
+	}
+	.star-rate a.star-one{
+		left: 0px;
+	}
+	.star-rate a.star-one:hover{
+		width:30px;
+	}
+	.star-rate a.star-two{
+		left:30px;
+	}
+	.star-rate a.star-two:hover{
+		width: 60px;
+	}
+	.star-rate a.star-three{
+		left: 60px;
+	}
+	.star-rate a.star-three:hover{
+		width: 90px;
+	}
+
+	.star-rate a.star-four{
+		left: 90px;
+	}	
+	.star-rate a.star-four:hover{
+		width: 120px;
+	}
+	.star-rate a.star-five{
+		left: 120px;
+	}
+	.star-rate a.star-five:hover{
+		width: 150px;
+	}
+	
+	
+	#stars-container {
+		margin: 5px; 
+		padding: 1px; 
+		background: #fff;
+		float: left;
+   }
+	
+	#remark{
+		float: left;
+		margin-left: 10px;
+		margin-top:50px;
+		font-weight: bold;
+		color: #8C8D91;
+		font-size: 15px;
+   }
