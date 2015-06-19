@@ -29,8 +29,8 @@ public class AcceptFriendRequestServlet implements HttpRequestHandler {
         friendUserService.acceptFriendRequest(friendUserRequestId);
 
 
-        request.setAttribute("userFriendRequestType", "incoming");
-        request.setAttribute("centralContent", "friends");
-        request.getRequestDispatcher("userfriends.do").forward(request, response);
+//        request.setAttribute("userFriendRequestType", "incoming");
+//        request.setAttribute("centralContent", "friends");
+//        request.getRequestDispatcher("userfriends.do").forward(request, response);
     }
 }

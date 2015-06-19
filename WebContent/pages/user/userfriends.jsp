@@ -46,6 +46,21 @@
             console.log(strSelector);
             $(strSelector).remove();
         });
+
+        $(".removefriend").click(function(){
+            console.log("removefriend ajax call");
+            var value = $(this).data('id');
+            var strSelector = "#userFriendCard" + value;
+            var formSelector = "#userFriendFormWithId" + value;
+            $.ajax({
+                url: "removefriend.do",
+                type: "post",
+                dataType: "json",
+                data: $(formSelector).serialize()
+            });
+            console.log(strSelector);
+            $(strSelector).remove();
+        });
     });
 </script>
 
@@ -87,10 +102,10 @@
                                                    class="black-text">${userFriend.user.firstName} ${userFriend.user.lastName}</a>
 
                                                 <div>
-                                                    <br><a href="#" id="acceptfriendrequest"
+                                                    <br><a href="#_" id="acceptfriendrequest"
                                                            class="btn-floating light-blue acceptfriendrequest" data-id="${userFriend.id}"><i
                                                         class="mdi-navigation-check"></i></a>
-                                                    <a href="#" id="declinefriendrequest"
+                                                    <a href="#_" id="declinefriendrequest"
                                                        class="btn-floating light-blue declinefriendrequest" data-id="${userFriend.id}"><i
                                                             class="mdi-navigation-close"></i></a>
                                                 </div>
@@ -120,7 +135,7 @@
 
                                                     <div style="float: right; margin-right: 10px;">
                                                         <span style="margin-right: 10px;">Call Back</span>
-                                                        <a href="#"
+                                                        <a href="#_"
                                                            class="btn-floating light-blue callbackfriendrequest" data-id="${userFriend.id}">
                                                             <i class="mdi-navigation-close"></i>
                                                         </a>
@@ -149,7 +164,7 @@
 
                                                 <div style="float: right; margin-right: 10px;">
                                                     <span style="margin-right: 10px;">Remove friend</span>
-                                                    <a href="removefriend.do" class="btn-floating light-blue">
+                                                    <a href="#_" class="btn-floating light-blue removefriend" data-id="${userFriend.id}">
                                                         <i class="mdi-navigation-close"></i>
                                                     </a>
                                                 </div>

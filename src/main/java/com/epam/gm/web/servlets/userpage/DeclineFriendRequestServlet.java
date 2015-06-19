@@ -28,8 +28,8 @@ public class DeclineFriendRequestServlet implements HttpRequestHandler {
 
         friendUserService.declineFriendRequest(friendUserRequestId);
 
-        request.setAttribute("userFriendRequestType", "incoming");
-        request.setAttribute("centralContent", "friends");
-        request.getRequestDispatcher("userfriends.do").forward(request, response);
+//        request.setAttribute("userFriendRequestType", "incoming");
+//        request.setAttribute("centralContent", "friends");
+//        request.getRequestDispatcher("userfriends.do").forward(request, response);
     }
 }

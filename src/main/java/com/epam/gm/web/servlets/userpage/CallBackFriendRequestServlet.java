@@ -27,8 +27,8 @@ public class CallBackFriendRequestServlet implements HttpRequestHandler {
 //            System.out.println("friendUserRequestId : "+friendUserRequestId);
         friendUserService.callBackFriendUserRequest(friendUserRequestId);
 
-        request.setAttribute("userFriendRequestType", "sent");
-        request.setAttribute("centralContent", "friends");
-        request.getRequestDispatcher("userfriends.do").forward(request, response);
+//        request.setAttribute("userFriendRequestType", "sent");
+//        request.setAttribute("centralContent", "friends");
+//        request.getRequestDispatcher("userfriends.do").forward(request, response);
     }
 }

@@ -21,7 +21,16 @@ public class RemoveFriendServlet implements HttpRequestHandler {
     }
 
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+    public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, IllegalAccessException {
+
+        System.out.println("remove  friend request servlet");
+
+        Integer friendUserRequestId = Integer.valueOf(request.getParameter("userFriendId"));
+
+            System.out.println("friendUserRequestId : "+friendUserRequestId);
+
+        friendUserService.removeFriend(friendUserRequestId);
+
 
     }
 }
