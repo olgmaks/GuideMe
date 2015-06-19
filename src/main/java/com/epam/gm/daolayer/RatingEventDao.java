@@ -14,7 +14,7 @@ public class RatingEventDao extends AbstractDao<RatingEvent>{
     	super(RatingEvent.class);
     }
     
-    public List<RatingEvent> RatingByEvent(Integer eventId) throws SQLException {
+    public List<RatingEvent> getRatingByEvent(Integer eventId) throws SQLException {
     	return getByField("event_id", eventId);
     }
 
