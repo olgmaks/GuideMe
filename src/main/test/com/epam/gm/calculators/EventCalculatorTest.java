@@ -26,7 +26,7 @@ public class EventCalculatorTest {
 		System.out.println("Our event: " + event);
 		System.out.println("+++++++++++++++++++++++++++++++++++++");
 		
-		eventCalc = new EventCalculator(1);
+		//eventCalc = new EventCalculator(1);
 	}
 
 	@Test

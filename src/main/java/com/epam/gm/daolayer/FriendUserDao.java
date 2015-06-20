@@ -75,4 +75,9 @@ public class FriendUserDao extends AbstractDao<FriendUser> {
     public void removeFriend(int friendId) throws SQLException, IllegalAccessException {
         super.deleteByField("id", friendId);
     }
+    
+    //gryn
+    public List<FriendUser> getUserFavorites(Integer userId) throws SQLException {
+    	return getByField("user_id", userId);
+    }
 }

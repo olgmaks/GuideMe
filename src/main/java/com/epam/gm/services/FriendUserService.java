@@ -57,4 +57,9 @@ public class FriendUserService {
     public void removeFriend (int  friendUserId) throws SQLException, IllegalAccessException {
         friendUserDao.removeFriend(friendUserId);
     }
+    
+    //gryn
+    public List<FriendUser> getUserFavorites(Integer userId) throws SQLException {
+    	return friendUserDao.getUserFavorites(userId);
+    }
 }
