@@ -29,7 +29,8 @@ public class ChangePasswordServlet extends HttpServlet implements
 			request.getRequestDispatcher("pages/user/changepasswordpage.jsp")
 					.forward(request, response);
 		} else {
-			System.out.println("not available");
+			request.getRequestDispatcher("pages/user/pagenotexist.jsp")
+			.forward(request, response);
 		}
 	}
 }

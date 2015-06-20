@@ -27,6 +27,7 @@ public class ForgotPasswordDao extends AbstractDao<ForgotPassword> {
 		return getAll();
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean isAvailableCode(String code) {
 		boolean newBoolean = false;
 		ForgotPassword newForgotPassword = null;

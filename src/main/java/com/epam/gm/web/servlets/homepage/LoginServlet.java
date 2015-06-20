@@ -1,5 +1,6 @@
 package com.epam.gm.web.servlets.homepage;
 
+import com.epam.gm.hashpassword.MD5HashPassword;
 import com.epam.gm.model.User;
 import com.epam.gm.services.UserService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
@@ -10,53 +11,63 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 
-    private static final long serialVersionUID = 1L;
-    private UserService userService;
+	private static final long serialVersionUID = 1L;
+	private UserService userService;
 
-    public LoginServlet() {
-        userService = new UserService();
-    }
+	public LoginServlet() {
+		userService = new UserService();
+	}
 
-    @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+	@Override
+	public void handle(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException {
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
 
-        User user = userService.getUserByEmail(email);
+		User user = userService.getUserByEmail(email);
 
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println("ajax query has been parsed !");
+		System.out.println(email);
+		System.out.println(password);
+		System.out.println("ajax query has been parsed !");
 
-        Map<String, Object> map = new HashMap<>();
-        boolean isValid = false;
-        
-        if (user != null) {
-            if (user.getPassword().equals(password)) {
-                System.out.println("logination has been successful");
-                SessionRepository.setSessionUser(request, user);
-                isValid = true;
-                map.put("userEmail", user.getEmail());
-                map.put("sessionUser", user);
-            } else {
-                isValid = false;
-            }
-        }
-        response.setContentType("application/json");
-        map.put("isValid", isValid);
-        response.getWriter().write(new Gson().toJson(map));
+		Map<String, Object> map = new HashMap<>();
+		boolean isValid = false;
 
-//	RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-//	requestDispatcher.forward(request, response);
+		if (user != null) {
+			try {
+				if (user.getPassword().equals(
+						MD5HashPassword.getHashPassword(password,
+								user.getEmail()))) {
+					System.out.println("logination has been successful");
+					SessionRepository.setSessionUser(request, user);
+					isValid = true;
+					map.put("userEmail", user.getEmail());
+					map.put("sessionUser", user);
+				} else {
+					isValid = false;
+				}
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		response.setContentType("application/json");
+		map.put("isValid", isValid);
+		response.getWriter().write(new Gson().toJson(map));
 
-    }
+		// RequestDispatcher requestDispatcher =
+		// request.getRequestDispatcher("index.jsp");
+		// requestDispatcher.forward(request, response);
+
+	}
 
 }

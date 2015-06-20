@@ -29,53 +29,14 @@
 </script>
 </head>
 <body>
-<!-- 	<script type="text/javascript">
-		function showDiv() {
-			document.getElementById('sec').style.display = "block";
-			document.getElementById("sub").style.display = "none";
-			document.getElementById("inp").style.display = "none";
-		}
-	</script> -->
+
 	<jsp:include page="/pages/header.jsp" />
 	<jsp:include page="../home/loginmodal.jsp" />
 	<br>
 	<br>
 	<div>
-		<h5 class="center-align">Please type your email</h5>
+		<h2 class="center-align">Page Not Exist</h2>
 	</div>
 
-	<div class="valign-wrapper">
-		<br>
-		<div class="row">
-			<div class="row">
-				<form class="col s12" action="sendlinktoresetpass.do" method="post">
-					<div class="row">
-						<div class="input-field col s12" id="inp" style="display: block">
-							<input id="email" type="email" class="validate" name="email"
-								required> <label for="email">Email</label>
-						</div>
-					</div>
-					<button class="btn waves-effect waves-light" type="submit"
-						name="action" onclick="showDiv()" id="sub" style="display: block">
-						Email me a link to reset a password <i
-							class="mdi-content-send right"></i>
-					</button>
-
-
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<div class="progress" id="sec" style="display: none">
-		<div class="indeterminate"></div>
-	</div>
-	<c:if test="${isWrong && isWrong != null }">
-		<div>
-			<h5 class="center-align">Wrong email</h5>
-		</div>
-	</c:if>
 </body>
 </html>
-
-
