@@ -13,4 +13,6 @@ public class RatingEventService {
 		return dao.getRatingByEvent(eventId);
 	}
 	
+	
+	
 }
