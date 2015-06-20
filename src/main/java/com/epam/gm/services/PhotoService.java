@@ -27,4 +27,8 @@ public class PhotoService {
     public List<Photo> getEventPhotos(int eventId) throws SQLException {
         return  photoDao.getEventPhotos(eventId);
     }
+    
+    public List<Photo> getUserPhotos(int userId) throws SQLException {
+    	return photoDao.getUserPhotos(userId);
+    }
 }

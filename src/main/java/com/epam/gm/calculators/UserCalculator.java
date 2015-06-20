@@ -5,15 +5,19 @@ import java.util.List;
 
 import com.epam.gm.model.Event;
 import com.epam.gm.model.FriendUser;
+import com.epam.gm.model.Language;
 import com.epam.gm.model.Photo;
 import com.epam.gm.model.RatingEvent;
 import com.epam.gm.model.RatingUser;
+import com.epam.gm.model.Tag;
 import com.epam.gm.model.User;
 import com.epam.gm.services.EventService;
 import com.epam.gm.services.FriendUserService;
+import com.epam.gm.services.LanguageService;
 import com.epam.gm.services.PhotoService;
 import com.epam.gm.services.RatingEventService;
 import com.epam.gm.services.RatingUserService;
+import com.epam.gm.services.TagService;
 import com.epam.gm.services.UserService;
 
 public class UserCalculator {
@@ -23,8 +27,9 @@ public class UserCalculator {
 	private List<RatingUser> allRatingUser;
 	private List<FriendUser> favorites;
 	private List<Event> allEvents;
-	
-	
+	private List<Tag> allTags;
+	private List<Language> allLangs;
+	private List<Photo> allPhotos;
 	
 	//Dao
 	private UserService userService = new UserService();
@@ -32,11 +37,19 @@ public class UserCalculator {
 	private FriendUserService friendService = new FriendUserService();
 	private EventService eventService = new EventService();
 	private RatingEventService ratingEventService = new RatingEventService();
+	private TagService tagService = new TagService();
+	private LanguageService langService = new LanguageService();
+	private PhotoService photoService = new PhotoService();
+	
+	
 	
 	public UserCalculator(Integer userId, Integer clientId) throws SQLException {
 		user = userService.getUserById(userId);
 		allRatingUser = ratingUserService.getRatingByUser(userId);
 		allEvents = eventService.getUserEvents(userId);
+		allTags = tagService.getAllUserTags(userId);
+		allLangs = langService.getAllUserLangs(userId);
+		allPhotos = photoService.getUserPhotos(userId);
 		
 		
 		if(clientId != null) {
@@ -146,14 +159,53 @@ public class UserCalculator {
 		return getRates().average;
 	}
 	
+	public int getTags() {
+		if(allTags.isEmpty()) return 0;
+		
+		return 1;
+	}
+	
+	public int getLangs() {
+		if(allLangs.isEmpty()) return 0;
+		
+		return 1;
+	}	
+	
+	public int countOfPhotos() {
+		return allPhotos.size();
+	}
+	
+	public int getLastName() {
+		String lastname = user.getLastName();
+		
+		if(lastname != null && lastname.trim().length() > 0) 
+			return 1;
+		
+		return 0;
+	}
+	
+	public int getCellNumber() {
+		String cellNumber = user.getCellNumber();
+		
+		if(cellNumber != null && cellNumber.trim().length() > 0) 
+			return 1;
+		
+		return 0;
+		
+	}
+	
 	public double calculate() {
 		double res = (double) getAverageRate() * 200.0 + 
 					 (double)getSummaryRate() * 5.0 + 
 				     getSummaryEventsRate() + 
 				     (double) getAverageEventsRate() * 10.0 + 
 				     (double) getClientRate() * 20.0 + 
-				     (double) countOfFriends() * 2.5
-				     ;
+				     (double) countOfFriends() * 2.5 +
+				     (double) getTags() * 300.0 + 
+				     (double) getLangs() * 300.0 +
+				     (double) getLastName() * 350.0 +
+				     (double) getCellNumber() * 400.0 +
+				     (double) countOfPhotos() * 20.0;
 		
 		if(isClientFavorite()) {
 			res *= 2.0;
@@ -174,7 +226,9 @@ public class UserCalculator {
 //			System.out.println(f.getFriendId());
 //		}
 		
-		UserCalculator c = new UserCalculator(2, 8);
+		//UserCalculator c = new UserCalculator(2, 8);
+		UserCalculator c = new UserCalculator(2, null);
+		
 //		System.out.println(c.getSummaryRate());
 //		System.out.println(c.getAverageRate());
 //		System.out.println(c.getClientRate());

@@ -14,6 +14,10 @@ public class TagService {
 		return dao.getAllUserTags(userId);
 	}
 	
+	public List<Tag> getAllEventTags(Integer eventId) throws SQLException {
+		return dao.getAllEventTags(eventId);
+	}
+	
 	public List<Tag> getAllActiveTags() throws SQLException {
 		return dao.getAllActiveTags();
 	}

@@ -10,6 +10,7 @@ import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.Photo;
 import com.epam.gm.model.RatingEvent;
 import com.epam.gm.model.RatingUser;
+import com.epam.gm.model.Tag;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
 import com.epam.gm.services.EventService;
@@ -17,6 +18,7 @@ import com.epam.gm.services.FriendUserService;
 import com.epam.gm.services.PhotoService;
 import com.epam.gm.services.RatingEventService;
 import com.epam.gm.services.RatingUserService;
+import com.epam.gm.services.TagService;
 import com.epam.gm.services.UserInEventService;
 import com.epam.gm.services.UserService;
 import com.epam.gm.util.Constants;
@@ -33,7 +35,7 @@ public class EventCalculator {
 	private User user = null;
 	private List<FriendUser> favorites;
 	UserCalculator userCalculator;
-	
+	private List<Tag> allTags;
 	
 	
 	//Dao
@@ -43,6 +45,7 @@ public class EventCalculator {
 	private RatingEventService ratingEventService = new RatingEventService();
 	private PhotoService photoService = new PhotoService();
 	private FriendUserService friendService = new FriendUserService();
+	private TagService tagService = new TagService();
 	
 	
 	
@@ -52,6 +55,7 @@ public class EventCalculator {
 		moderator = userService.getUserById(event.getModeratorId());
 		allRatingEvent = ratingEventService.getRatingByEvent(id);
 		allPhotos = photoService.getEventPhotos(id);
+		allTags = tagService.getAllEventTags(id);
 		
 		userCalculator = new UserCalculator(moderator.getId(), userId);
 		
@@ -126,14 +130,21 @@ public class EventCalculator {
 		}
 	}
 	
+	public int getTags() {
+		if(allTags.isEmpty()) return 0;
+		
+		return 1;
+	}
+	
 	public double calculate() {
 		double res = (double) getAverageRate() * 200.0 + 
 				     getSummaryRate() * 5.0 + 
-				     countOfPhotos()  +
+				     (double) countOfPhotos() * 20.0  +
 				     (double) countOfParticipants() * 0.5 +
 				     (double) countOfApprovedParticipants() * 0.2 +
 				     (double) countOfModeratorFriends() * 2.5 + 
-				     (double) userCalculator.getSummaryRate() * 2.5 + 
+				     (double) userCalculator.getSummaryRate() * 2.5 +
+				     (double) getTags() * 300 +
 				     userCalculator.getAverageRate() * 100;
 		
 		if(isModeratorFavorite()) {
@@ -162,7 +173,8 @@ public class EventCalculator {
 	
 	
 	public static void main(String[] args) throws SQLException {
-		EventCalculator e = new EventCalculator(1, 8);
+		//EventCalculator e = new EventCalculator(1, 8);
+		EventCalculator e = new EventCalculator(1, null);
 		System.out.println(e.isModeratorFavorite());
 		
 		
