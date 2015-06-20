@@ -25,13 +25,17 @@ import java.util.List;
 
 
 
+
+
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.gm.daolayer.EventDao;
+import com.epam.gm.daolayer.RatingEventDao;
 import com.epam.gm.model.CommentEvent;
 import com.epam.gm.model.Event;
+import com.epam.gm.model.RatingEvent;
 import com.epam.gm.services.CommentEventService;
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.utf8uncoder.StringHelper;
@@ -155,6 +159,13 @@ EventDao dao;
 					commentEvent(request, response);
 				}else if (action.equals("saveFile")){
 					
+				}else if(action.equals("ratingEvent")){
+					RatingEvent re = new RatingEvent();
+					re.setEstimatorId(SessionRepository.getSessionUser(request).getId());
+					re.setEventId(Integer.parseInt(request.getParameter("eventId")));
+					re.setMark(Integer.parseInt(request.getParameter("mark")));
+					RatingEventDao reDao = new RatingEventDao();
+					reDao.save(re);
 				}
 			} catch (Exception ex) {
 				JSONROOT.put("Result", "ERROR");

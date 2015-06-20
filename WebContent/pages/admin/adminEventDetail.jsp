@@ -20,8 +20,15 @@
   <link href="css/star.css" rel="stylesheet" type="text/css" media="all"/>
    <script type="text/javascript" src="js/jquery-1.2.1.js"></script>
 		<script type="text/javascript">
-		function rate(rate){
-			alert(rate)
+		function rate(mark){
+			 $.ajax({
+                url: "adminEventRequest.do?action=ratingEvent&mark=" + mark + "&eventId=" + '${event.id}',
+                type: "post",
+                dataType: "json",
+                data: $("#cityId").serialize(),
+                success: function (data) {
+                }
+            });
 		}
 		$(function(){
 			$( ".star-rate li a" ).each(function(i){
@@ -65,20 +72,20 @@
        <p><span>address</span><c:out value="${event.address.address}"/></p>
        <p><span>city</span><c:out value="${event.address.city.name}"/></p>   
       
-      <div id ="stars-container">		
-			<ul class='star-rate'>	  
-				<li><a href='' title='' class="star-one" onclick="rate(1)">mmmm</a></li>
-				<li><a href='' title='' class="star-two" onclick="rate(2)">try again</a></li>
-				<li><a href='' title='' class="star-three" onclick="rate(3)">mmm not bad</a></li>  
-				<li><a href='' title='' class="star-four" onclick="rate(4)">this is cool ya!</a></li>
-				<li><a href='' title='' class="star-five" onclick="rate(5)">very good</a></li>
-			</ul>
-		</div>
-		
-		<div id ="remark"></div>
        
        <c:choose>
 		    <c:when test="${not empty userLogined}">
+		    <div id ="stars-container">		
+				<ul class='star-rate'>	  
+					<li><a href='' title='' class="star-one" onclick="rate(1)">mmmm</a></li>
+					<li><a href='' title='' class="star-two" onclick="rate(2)">try again</a></li>
+					<li><a href='' title='' class="star-three" onclick="rate(3)">mmm not bad</a></li>  
+					<li><a href='' title='' class="star-four" onclick="rate(4)">this is cool ya!</a></li>
+					<li><a href='' title='' class="star-five" onclick="rate(5)">very good</a></li>
+				</ul>
+			</div>
+		
+		<div id ="remark"></div>
 		       <form action="adminEventRequest.do?action=commentEvent" method="POST" >
 		       <div class="row">
 				        <div class="input-field col s6">
