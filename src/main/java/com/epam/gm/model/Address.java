@@ -73,10 +73,10 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return "Address [" + (id != null ? "id=" + id + ", " : "")
-				+ (address != null ? "address=" + address + ", " : "")
-				+ (cityId != null ? "cityId=" + cityId + ", " : "")
-				+ (city != null ? "city=" + city : "") + "]";
+		return "Address [id=" + id + ", address=" + address + ", cityId="
+				+ cityId + ", localId=" + localId + ", pureId=" + pureId
+				+ ", city=" + city + "]";
 	}
 
+	
 }

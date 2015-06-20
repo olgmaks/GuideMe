@@ -1,10 +1,12 @@
 package com.epam.gm.calculators;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.epam.gm.daolayer.RatingEventDao;
+import com.epam.gm.model.Address;
 import com.epam.gm.model.Event;
 import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.Photo;
@@ -13,6 +15,7 @@ import com.epam.gm.model.RatingUser;
 import com.epam.gm.model.Tag;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
+import com.epam.gm.services.AddressService;
 import com.epam.gm.services.EventService;
 import com.epam.gm.services.FriendUserService;
 import com.epam.gm.services.PhotoService;
@@ -36,6 +39,7 @@ public class EventCalculator {
 	private List<FriendUser> favorites;
 	UserCalculator userCalculator;
 	private List<Tag> allTags;
+	private List<Address> allAddress;
 	
 	
 	//Dao
@@ -46,6 +50,7 @@ public class EventCalculator {
 	private PhotoService photoService = new PhotoService();
 	private FriendUserService friendService = new FriendUserService();
 	private TagService tagService = new TagService();
+	private AddressService addressService = new AddressService();
 	
 	
 	
@@ -56,6 +61,10 @@ public class EventCalculator {
 		allRatingEvent = ratingEventService.getRatingByEvent(id);
 		allPhotos = photoService.getEventPhotos(id);
 		allTags = tagService.getAllEventTags(id);
+		allAddress = new ArrayList<Address>();
+		if(event.getAddress() != null)
+			if(event.getAddress().getId() != null)
+					allAddress = addressService.getAddressByPureId(event.getAddress().getPureId());		
 		
 		userCalculator = new UserCalculator(moderator.getId(), userId);
 		
@@ -136,6 +145,18 @@ public class EventCalculator {
 		return 1;
 	}
 	
+	public int getAddress() {
+		int res = 0;
+		
+		
+		for(Address a: allAddress) {
+			if(a.getAddress() != null && a.getAddress().trim().length() > 0)
+				res++;
+		}
+		
+		return res;
+	}
+	
 	public double calculate() {
 		double res = (double) getAverageRate() * 200.0 + 
 				     getSummaryRate() * 5.0 + 
@@ -145,7 +166,8 @@ public class EventCalculator {
 				     (double) countOfModeratorFriends() * 2.5 + 
 				     (double) userCalculator.getSummaryRate() * 2.5 +
 				     (double) getTags() * 300 +
-				     userCalculator.getAverageRate() * 100;
+				     userCalculator.getAverageRate() * 100 + 
+				     (double) getAddress() * 150.0;
 		
 		if(isModeratorFavorite()) {
 			res *= 2.0;
@@ -189,6 +211,8 @@ public class EventCalculator {
 //		for(Event event: events) {
 //			//System.out.println(event.getName() + ": " + new EventCalculator(event.getId(), 8).calculate() );
 //		}
+		
+		System.out.println(e.getAddress());
 	}
 	
 }

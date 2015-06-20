@@ -9,7 +9,7 @@ public class ConnectionManager {
 	// Database credentials
 	public static final String DB_URL = "jdbc:mysql://localhost/guideme";
 	public static final String USER = "root";
-	public static final String PASS = "";
+	public static final String PASS = "root";
 	public static final String DRIVER = "com.mysql.jdbc.Driver";
 	public static final boolean USE_POOL = true;
 	

@@ -1,8 +1,10 @@
 package com.epam.gm.calculators;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.epam.gm.model.Address;
 import com.epam.gm.model.Event;
 import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.Language;
@@ -11,6 +13,7 @@ import com.epam.gm.model.RatingEvent;
 import com.epam.gm.model.RatingUser;
 import com.epam.gm.model.Tag;
 import com.epam.gm.model.User;
+import com.epam.gm.services.AddressService;
 import com.epam.gm.services.EventService;
 import com.epam.gm.services.FriendUserService;
 import com.epam.gm.services.LanguageService;
@@ -30,6 +33,7 @@ public class UserCalculator {
 	private List<Tag> allTags;
 	private List<Language> allLangs;
 	private List<Photo> allPhotos;
+	private List<Address> allAddress;
 	
 	//Dao
 	private UserService userService = new UserService();
@@ -40,8 +44,7 @@ public class UserCalculator {
 	private TagService tagService = new TagService();
 	private LanguageService langService = new LanguageService();
 	private PhotoService photoService = new PhotoService();
-	
-	
+	private AddressService addressService = new AddressService();
 	
 	public UserCalculator(Integer userId, Integer clientId) throws SQLException {
 		user = userService.getUserById(userId);
@@ -50,6 +53,10 @@ public class UserCalculator {
 		allTags = tagService.getAllUserTags(userId);
 		allLangs = langService.getAllUserLangs(userId);
 		allPhotos = photoService.getUserPhotos(userId);
+		allAddress = new ArrayList<Address>();
+		if(user.getAddress() != null)
+			if(user.getAddress().getId() != null)
+					allAddress = addressService.getAddressByPureId(user.getAddress().getPureId());
 		
 		
 		if(clientId != null) {
@@ -194,6 +201,18 @@ public class UserCalculator {
 		
 	}
 	
+	public int getAddress() {
+		int res = 0;
+		
+		
+		for(Address a: allAddress) {
+			if(a.getAddress() != null && a.getAddress().trim().length() > 0)
+				res++;
+		}
+		
+		return res;
+	}
+	
 	public double calculate() {
 		double res = (double) getAverageRate() * 200.0 + 
 					 (double)getSummaryRate() * 5.0 + 
@@ -205,7 +224,8 @@ public class UserCalculator {
 				     (double) getLangs() * 300.0 +
 				     (double) getLastName() * 350.0 +
 				     (double) getCellNumber() * 400.0 +
-				     (double) countOfPhotos() * 20.0;
+				     (double) countOfPhotos() * 20.0 + 
+					 (double) getAddress() * 150.0;
 		
 		if(isClientFavorite()) {
 			res *= 2.0;
@@ -239,6 +259,7 @@ public class UserCalculator {
 		System.out.println("summary:" + c.getSummaryEventsRate());
 		System.out.println("aver:" + c.getAverageEventsRate());
 		System.out.println("final: " + c.calculate());
+		
 		
 	}
 }
