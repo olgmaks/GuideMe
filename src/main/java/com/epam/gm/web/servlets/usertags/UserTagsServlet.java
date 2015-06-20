@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.gm.calculators.UserCalculator;
 import com.epam.gm.model.Language;
 import com.epam.gm.model.Photo;
 import com.epam.gm.model.Tag;
@@ -80,6 +81,9 @@ public class UserTagsServlet implements HttpRequestHandler {
             
             System.out.println("++++++++++++++++++User langs");
             System.out.println(langs);
+            
+            UserCalculator userCalc = new UserCalculator(user.getId(), null);
+            request.setAttribute("userCalc", userCalc);
             
         }
         request.getRequestDispatcher("pages/user/usertags.jsp").forward(request, response);

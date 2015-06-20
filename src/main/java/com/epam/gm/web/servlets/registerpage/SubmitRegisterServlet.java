@@ -1,6 +1,7 @@
 package com.epam.gm.web.servlets.registerpage;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.gm.hashpassword.MD5HashPassword;
 import com.epam.gm.model.Address;
 import com.epam.gm.model.City;
 import com.epam.gm.model.User;
@@ -155,7 +157,12 @@ public class SubmitRegisterServlet implements HttpRequestHandler {
 	        user.setCellNumber(cellNumber);
 	        user.setIsActive(true);
 	        user.setAddressId(newAddress.getId());
-	        user.setPassword(password);
+	        try {
+				user.setPassword(MD5HashPassword.getHashPassword(password, email.toLowerCase()));
+			} catch (NoSuchAlgorithmException e1) {
+				
+				e1.printStackTrace();
+			}
 	        
 	        UserService userService = new UserService();
 	        try {
