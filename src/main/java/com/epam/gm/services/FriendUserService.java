@@ -66,6 +66,11 @@ public class FriendUserService {
 
     public Collection<FriendUser> filterFriends(int userId, String fiterInput) throws SQLException {
         Collection<FriendUser> results = new LinkedHashSet<>();
+
+        if (fiterInput.isEmpty()) {
+            return friendUserDao.filterUserFriends(userId, fiterInput);
+        }
+
         String space = " ";
 
         if (fiterInput.contains(space)) {
