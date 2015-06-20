@@ -4,7 +4,7 @@ import com.epam.gm.daolayer.FriendUserDao;
 import com.epam.gm.model.FriendUser;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by OLEG on 16.06.2015.
@@ -46,7 +46,7 @@ public class FriendUserService {
         friendUserDao.acceptFriendRequest(requestId);
     }
 
-    public void declineFriendRequest (int requestId) throws SQLException, IllegalAccessException {
+    public void declineFriendRequest(int requestId) throws SQLException, IllegalAccessException {
         friendUserDao.declineFriendRequest(requestId);
     }
 
@@ -54,7 +54,7 @@ public class FriendUserService {
         friendUserDao.callBackFriendUserRequest(friendUserRequestId);
     }
 
-    public void removeFriend (int  friendUserId) throws SQLException, IllegalAccessException {
+    public void removeFriend(int friendUserId) throws SQLException, IllegalAccessException {
         friendUserDao.removeFriend(friendUserId);
     }
     
@@ -62,4 +62,25 @@ public class FriendUserService {
     public List<FriendUser> getUserFavorites(Integer userId) throws SQLException {
     	return friendUserDao.getUserFavorites(userId);
     }
+
+
+    public Collection<FriendUser> filterFriends(int userId, String fiterInput) throws SQLException {
+        Collection<FriendUser> results = new LinkedHashSet<>();
+        String space = " ";
+
+        if (fiterInput.contains(space)) {
+            String[] restrictions = fiterInput.split(space);
+            results.addAll(friendUserDao.filterUserFriends(userId, restrictions[0]));
+            int i=1;
+            while(i<restrictions.length){
+                results.retainAll(friendUserDao.filterUserFriends(userId, restrictions[i]));
+                i++;
+            }
+        } else {
+            results = friendUserDao.filterUserFriends(userId, fiterInput);
+        }
+
+        return results;
+    }
+
 }
