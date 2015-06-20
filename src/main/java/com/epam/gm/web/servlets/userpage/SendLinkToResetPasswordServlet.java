@@ -32,7 +32,6 @@ public class SendLinkToResetPasswordServlet extends HttpServlet implements
 			IllegalAccessException {
 		response.setContentType("text/html");
 		String email = request.getParameter("email");
-		System.out.println(email);
 		if (new UserDao().getUserByEmail(email) != null) {
 			request.getRequestDispatcher("pages/user/successfulsent.jsp")
 					.forward(request, response);

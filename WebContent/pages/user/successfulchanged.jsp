@@ -24,16 +24,15 @@
 		$("#tabs").tabs();
 	});
 </script>
-<title>Successful changed</title>
+<title>Successful Changed</title>
 </head>
 <body>
-
 	<jsp:include page="/pages/header.jsp" />
 	<jsp:include page="../home/loginmodal.jsp" />
 	<br>
 	<br>
 	<div>
-		<h4 class="center-align">Successfuly sent</h4>
+		<h4 class="center-align">Successfuly changed</h4>
 	</div>
 </body>
 </html>

@@ -9,35 +9,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.epam.gm.daolayer.ForgotPasswordDao;
+import com.epam.gm.daolayer.UserDao;
+import com.epam.gm.model.ForgotPassword;
 import com.epam.gm.model.User;
-import com.epam.gm.utf8uncoder.StringHelper;
-import com.epam.gm.util.StringChecker;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
-public class ChangePasswordServlet extends HttpServlet implements
+public class AcceptToChangePasswordPage extends HttpServlet implements
 		HttpRequestHandler {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5039180753657448522L;
+	private static final long serialVersionUID = 5854834661058077682L;
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException,
 			IllegalAccessException {
 		HttpSession session = request.getSession();
-		User u = (User) session.getAttribute("currentUser");
-		String password = request.getParameter("password");
-		String repeatedPassword = request.getParameter("repeatedpassword");
-		System.out.println(password + "/n" + repeatedPassword);
-		if (password.equals(repeatedPassword) && password.length() >= 4) {
-			request.getRequestDispatcher("pages/user/successfulchanged.jsp")
-					.forward(request, response);
-		}
-
-		else {
-			request.setAttribute("trouble", true);
+		String code = request.getParameter("ctcp");
+		ForgotPasswordDao forgotPasswordDao = new ForgotPasswordDao();
+		if (forgotPasswordDao.isAvailableCode(code)) {
 			request.getRequestDispatcher("pages/user/changepasswordpage.jsp")
+					.forward(request, response);
+			ForgotPassword forgotPassword = forgotPasswordDao
+					.getForgotPasswordByCode(code);
+
+			User user = new UserDao().getUserByEmail(forgotPassword.getEmail());
+			session.setAttribute("currentUser", user);
+		} else {
+			request.setAttribute("trouble", true);
+			request.getRequestDispatcher("pages/user/pagenotexist.jsp")
 					.forward(request, response);
 		}
 	}

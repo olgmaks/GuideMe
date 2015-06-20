@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%><%@ taglib
+	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -36,17 +37,18 @@
 		<br>
 		<div class="row">
 			<div class="row">
-				<form class="col s12" action="changepassword.do" method="post">
+				<form class="col s12" action="changingpassword.do" method="post">
 					<div class="row">
 						<div class="input-field col s12">
-							<input id="password" type="password" class="validate"> <label
-								for="password">Password</label>
+							<input id="password" type="password" class="validate"
+								name="password"> <label for="password">Password</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<input id="password" type="password" class="validate"> <label
-								for="password">Repeat Password</label>
+							<input id="password" type="password" class="validate"
+								name="repeatedpassword"> <label for="password">Repeat
+								Password</label>
 						</div>
 					</div>
 					<button class="btn waves-effect waves-light" type="submit"
@@ -57,6 +59,10 @@
 			</div>
 		</div>
 	</div>
-
+	<c:if test="${trouble && trouble !=null }">
+		<div>
+			<h2 class="center-align">Trouble</h2>
+		</div>
+	</c:if>
 </body>
 </html>
