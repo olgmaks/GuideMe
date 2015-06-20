@@ -9,12 +9,14 @@ import com.epam.gm.model.Event;
 import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.Photo;
 import com.epam.gm.model.RatingEvent;
+import com.epam.gm.model.RatingUser;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
 import com.epam.gm.services.EventService;
 import com.epam.gm.services.FriendUserService;
 import com.epam.gm.services.PhotoService;
 import com.epam.gm.services.RatingEventService;
+import com.epam.gm.services.RatingUserService;
 import com.epam.gm.services.UserInEventService;
 import com.epam.gm.services.UserService;
 import com.epam.gm.util.Constants;
@@ -30,6 +32,8 @@ public class EventCalculator {
 	private List<Photo> allPhotos;
 	private User user = null;
 	private List<FriendUser> favorites;
+	UserCalculator userCalculator;
+	
 	
 	
 	//Dao
@@ -41,12 +45,15 @@ public class EventCalculator {
 	private FriendUserService friendService = new FriendUserService();
 	
 	
+	
 	public EventCalculator(Integer id, Integer userId) throws SQLException {
 		event = eventService.getById(id);
 		allUserInEvent = userInEventService.getUsersByEventId(id);
 		moderator = userService.getUserById(event.getModeratorId());
 		allRatingEvent = ratingEventService.getRatingByEvent(id);
-		allPhotos = photoService.getEventPhotos(1);
+		allPhotos = photoService.getEventPhotos(id);
+		
+		userCalculator = new UserCalculator(moderator.getId(), userId);
 		
 		if(userId != null) {
 			user = userService.getUserById(userId);
@@ -120,16 +127,17 @@ public class EventCalculator {
 	}
 	
 	public double calculate() {
-		double res = getAverageRate() * 200 + 
-				     getSummaryRate() + 
+		double res = (double) getAverageRate() * 200.0 + 
+				     getSummaryRate() * 5.0 + 
 				     countOfPhotos()  +
-				     countOfParticipants() * 0.5 +
-				     countOfApprovedParticipants() * 0.2 +
-				     countOfModeratorFriends() * 0.5
-				     ;
+				     (double) countOfParticipants() * 0.5 +
+				     (double) countOfApprovedParticipants() * 0.2 +
+				     (double) countOfModeratorFriends() * 2.5 + 
+				     (double) userCalculator.getSummaryRate() * 2.5 + 
+				     userCalculator.getAverageRate() * 100;
 		
 		if(isModeratorFavorite()) {
-			res *= 2;
+			res *= 2.0;
 		}
 		
 		return res;

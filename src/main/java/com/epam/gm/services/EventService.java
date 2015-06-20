@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.epam.gm.daolayer.EventDao;
 import com.epam.gm.model.Event;
-import com.epam.gm.model.User;
+
 
 public class EventService {
 
@@ -32,7 +32,11 @@ public class EventService {
 			return null;
 	}
 
-	// public List<Event> getUserEvents (int userId) {
-	// return eventDao.getUserEvents(userId);
-	// }
+	 public List<Event> getUserEvents (Integer moderatorId) throws SQLException {
+		  return eventDao.getByField("moderator_id", moderatorId);	 
+	 }
+	 
+//	public static void main(String[] args) throws SQLException {
+//		new EventService().getUserEvents(2).forEach(System.out::println);
+//	}
 }
