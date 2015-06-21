@@ -4,6 +4,8 @@ import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.daolayer.UserTypeDao;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserType;
+import com.epam.gm.services.UserService;
+
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -90,6 +92,15 @@ public class UserDaoTest {
         updates.put("first_name", "Bogdan");
         updates.put("facebook_id", 265);
         userDao.updateWithCustomQuery(updates, joined, where);
+    }
+    
+    @Test
+    public void test() throws SQLException {
+    	User user = userDao.getUserById(8);
+    	
+    	System.out.println("hjhjhjhj");
+    	
+    	System.out.println(user.getAddress().getCity());
     }
 
 

@@ -2,6 +2,7 @@ package com.epam.gm.web.servlets.homepage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -30,18 +31,42 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 		
 		User user =  SessionRepository.getSessionUser(request);
 		Integer userId = null;
+		Integer cityId = null;
 		if(user != null) {
 			userId = user.getId();
+			if(user.getAddress() != null && user.getAddress().getCity() != null)
+				cityId = user.getAddress().getCity().getId();
+				
 		}
 		
 		//gryn - top user's events
 		
 		try {
-			List<Event> topUserEvents = eventService.getAllActiveNotDeletedEvents();
+			//user events
+			List<Event> topUserEvents = eventService.getAllActiveNotDeletedUserEvents();
 			EventCalculator.sortEventsByPoints(topUserEvents, userId);
 			
+			if(topUserEvents.size() > Constants.TOP_NUMBER) {
+				topUserEvents = new ArrayList<Event>(topUserEvents.subList(0, Constants.TOP_NUMBER));
+			}
 			request.setAttribute("topUserEvents", topUserEvents);
-			request.setAttribute("topSize", Integer.min(topUserEvents.size(), Constants.TOP_NUMBER));
+
+			
+			//guide events
+			List<Event> topGuideEvents = null;
+			if(cityId == null) 
+				topGuideEvents = eventService.getAllActiveNotDeletedGuideEvents();
+			else
+				topGuideEvents = eventService.getAllActiveNotDeletedGuideEventsInTheCity(cityId);
+			
+			EventCalculator.sortEventsByPoints(topGuideEvents, userId);
+			
+			if(topGuideEvents.size() > Constants.TOP_NUMBER) {
+				topGuideEvents = new ArrayList<Event>(topGuideEvents.subList(0, Constants.TOP_NUMBER));
+			}
+			request.setAttribute("topGuideEvents", topGuideEvents);
+	
+			
 			
 		
 		} catch (SQLException e) {

@@ -83,14 +83,19 @@
         <table>
             <thead>
             <tr>
-                <th style="width: 20%; margin-left: 0%;">Recomended</th>
-                <th style="width: 60%; margin-left: 20%;">Top rated</th>
-                <th style="width: 20%; margin-left: 80%;">Popular</th>
+                <th style="width: 20%; margin-left: 0%;">Top  events</th>
+                <th style="width: 60%; margin-left: 20%;">Events</th>
+                <th style="width: 20%; margin-left: 80%;">Guide events</th>
             </tr>
             </thead>
             <tbody>
             <tr>
+            
+            
+            
                 <th style = "vertical-align: top;">
+                <c:forEach items="${requestScope.topUserEvents}" var = "event">
+                
                     <div class="card small" style="height: 150px; ">
                         <table>
                             <tr>
@@ -99,68 +104,14 @@
                                          src="img/guide1.jpg">
                                 </td>
                                 <td>
-                                <div><a href="#">Maksymuk1</a></div>
+                                <div><a href="#">"${event.getEventNameAndCity()}"</a></div>
                                 </td>
                             </tr>
                         </table>
                     </div>
+                </c:forEach>    
                     
-                    <div class="card small" style="height: 150px; ">
-                        <table>
-                            <tr>
-                                <td style="width: 120px;">
-                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                         src="img/guide1.jpg">
-                                </td>
-                                <td>
-                                <div><a href="#">Maksymuk2</a></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>         
-                    
-                    <div class="card small" style="height: 150px; ">
-                        <table>
-                            <tr>
-                                <td style="width: 120px;">
-                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                         src="img/guide1.jpg">
-                                </td>
-                                <td>
-                                <div><a href="#">Maksymuk3</a></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>    
-                    
-                    <div class="card small" style="height: 150px; ">
-                        <table>
-                            <tr>
-                                <td style="width: 120px;">
-                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                         src="img/guide1.jpg">
-                                </td>
-                                <td>
-                                <div><a href="#">Maksymuk2</a></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>         
-                    
-                    <div class="card small" style="height: 150px; ">
-                        <table>
-                            <tr>
-                                <td style="width: 120px;">
-                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                         src="img/guide1.jpg">
-                                </td>
-                                <td>
-                                <div><a href="#">Maksymuk3</a></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>                      
-                                        
+             
                                
                 </th>
                 <th style = "width: 60%; vertical-align: top">
@@ -270,6 +221,7 @@
                 
                 
                 <th style = "vertical-align: top;">
+                    <c:forEach items="${requestScope.topGuideEvents}" var = "event">
                     <div class="card small" style="height: 150px; ">
                         <table>
                             <tr>
@@ -278,68 +230,12 @@
                                          src="img/guide1.jpg">
                                 </td>
                                 <td>
-                                <div><a href="#">Maksymuk1</a></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    
-                    <div class="card small" style="height: 150px; ">
-                        <table>
-                            <tr>
-                                <td style="width: 120px;">
-                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                         src="img/guide1.jpg">
-                                </td>
-                                <td>
-                                <div><a href="#">Maksymuk2</a></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>         
-                    
-                    <div class="card small" style="height: 150px; ">
-                        <table>
-                            <tr>
-                                <td style="width: 120px;">
-                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                         src="img/guide1.jpg">
-                                </td>
-                                <td>
-                                <div><a href="#">Maksymuk3</a></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>    
-                    
-                    <div class="card small" style="height: 150px; ">
-                        <table>
-                            <tr>
-                                <td style="width: 120px;">
-                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                         src="img/guide1.jpg">
-                                </td>
-                                <td>
-                                <div><a href="#">Maksymuk2</a></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>         
-                    
-                    <div class="card small" style="height: 150px; ">
-                        <table>
-                            <tr>
-                                <td style="width: 120px;">
-                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                         src="img/guide1.jpg">
-                                </td>
-                                <td>
-                                <div><a href="#">Maksymuk3</a></div>
+                                <div><a href="#">${event.getEventNameAndCity()}</a></div>
                                 </td>
                             </tr>
                         </table>
                     </div>                      
-                                        
+                    </c:forEach>                    
                                
                 </th>                
                 

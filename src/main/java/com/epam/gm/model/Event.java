@@ -42,8 +42,10 @@ public class Event {
 	@OneToMany(field = "avatar_id", value = Photo.class)
 	private Photo avatar;
 	
+	//gryn
 	private Double points;
 
+	
 	public Integer getAvatarId() {
 		return avatarId;
 	}
@@ -155,6 +157,16 @@ public class Event {
 	public void setPoints(Double points) {
 		this.points = points;
 	}
+	
+	//gryn
+	public String getEventNameAndCity() {
+		 StringBuilder res = new StringBuilder(name); 
+		
+		 if(getAddress() != null && getAddress().getCity() != null)
+			 res.append(", ").append(getAddress().getCity().getName());
+		 
+		 return res.toString();
+	 }
 	
 	
 	//gryn  

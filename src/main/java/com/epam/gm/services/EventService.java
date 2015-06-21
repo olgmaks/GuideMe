@@ -42,10 +42,24 @@ public class EventService {
 		return eventDao.getAllActiveNotDeletedEvents(); 
 	 }
 	 
-//	 public static void main(String[] args) throws SQLException {
-//		// new EventService().getUserEvents(2).forEach(System.out::println);
-//		 
-//		 List<Event> events =  new EventService().getAllActiveNotDeletedEvents();
+	 public List<Event> getAllActiveNotDeletedUserEvents() throws SQLException {
+		 return eventDao.getAllActiveNotDeletedUserEvents();
+	 }
+	 
+	 public List<Event> getAllActiveNotDeletedGuideEvents() throws SQLException {
+		 return eventDao.getAllActiveNotDeletedGuideEvents();
+	 }
+	 
+	 public List<Event> getAllActiveNotDeletedGuideEventsInTheCity(Integer cityId) throws SQLException {
+		 return eventDao.getAllActiveNotDeletedGuideEventsInTheCity(cityId);
+	 }
+	 
+	  
+	 
+	 public static void main(String[] args) throws SQLException {
+		// new EventService().getUserEvents(2).forEach(System.out::println);
+		 
+		 List<Event> events =  new EventService().getAllActiveNotDeletedGuideEventsInTheCity(9);
 //		 System.out.println("before sort:");
 //		 events.forEach(System.out::println);
 //		 
@@ -53,10 +67,10 @@ public class EventService {
 //		 
 //		 //EventCalculator.sortEventsByPoints(events, null);
 //		 EventCalculator.sortEventsByPoints(events, 1);
-//		 
-//		 for(Event e: events) {
-//			 System.out.println("" + e.getId() + " " + e.getName() + " : " + e.getPoints());
-//		 }
-//		 
-//	 }
+		 
+		 for(Event e: events) {
+			 System.out.println("" + e.getId() + " " + e.getName() + " : " + e.getPoints());
+		 }
+		 
+	 }
 }

@@ -21,9 +21,6 @@ public class CityDao extends AbstractDao<City> {
 		
 		
 		List<City> result = getByField("country_id", country_id);
-		
-		
-		
 		return result;
 	}
 	
@@ -63,6 +60,11 @@ public class CityDao extends AbstractDao<City> {
     	
     	return max;
     }	
+    
+
+    
+
+    
     
     
 }
