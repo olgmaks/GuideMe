@@ -7,6 +7,7 @@ import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.google.gson.Gson;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -64,9 +65,9 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 		map.put("isValid", isValid);
 		response.getWriter().write(new Gson().toJson(map));
 
-		// RequestDispatcher requestDispatcher =
-		// request.getRequestDispatcher("index.jsp");
-		// requestDispatcher.forward(request, response);
+	/*	RequestDispatcher requestDispatcher = request
+				.getRequestDispatcher("index.jsp");
+		requestDispatcher.forward(request, response);*/
 
 	}
 

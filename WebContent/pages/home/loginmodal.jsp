@@ -22,6 +22,8 @@
 					type="submit" name="action" style="margin-left: 5%;">
 					Submit <i class="mdi-content-send right"></i>
 				</button>
+
+
 				<br> <br> <a href="register.do" style="margin-left: 5%;">Registrate
 					your self</a> <br> <a href="userforgotpassword.do"
 					style="margin-left: 5%;"> <span
@@ -37,7 +39,8 @@
 					src="icons/vk_logo.png" border="0" /></a> <br> <br>
 			</div>
 		</div>
+	</form>
 </div>
-</form>
-</div>
+
+
 
