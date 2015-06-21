@@ -47,7 +47,7 @@ public class AdminUserProfileServlet implements HttpRequestHandler {
 		}
 		request.setAttribute("user", userDao.getByField("id", id).get(0));
 		request.setAttribute("userType", new UserTypeService().getAll());
-		request.getRequestDispatcher("pages/adminUserDetail.jsp").forward(request,
-				response);
+		request.setAttribute("centralContent", "adminUserDetail");
+			request.getRequestDispatcher("pages/admin/adminPanel.jsp").forward(request, response);
 	}
 }
