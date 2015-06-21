@@ -1,7 +1,11 @@
 package com.epam.gm.web.servlets.adminpage;
 
+import com.epam.gm.daolayer.RatingEventDao;
+import com.epam.gm.daolayer.RatingUserDao;
 import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.model.CommentUser;
+import com.epam.gm.model.RatingEvent;
+import com.epam.gm.model.RatingUser;
 import com.epam.gm.model.User;
 import com.epam.gm.services.CommentUserService;
 import com.epam.gm.services.UserService;
@@ -76,6 +80,8 @@ public class AdminServletPost implements HttpRequestHandler{
             	editUser(request, response);
             }else if (action.equalsIgnoreCase("commentUser")) {
             	commentUser(request, response);
+            }else if(action.equals("ratingUser")){
+            	ratingUser(request, response);
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -95,19 +101,34 @@ public class AdminServletPost implements HttpRequestHandler{
 			cuService.save(cu);
 			response.sendRedirect("adminUserProfile.do?id=" + userId);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
+    private void ratingUser(HttpServletRequest request,
+			HttpServletResponse response) throws IllegalArgumentException, IllegalAccessException, SQLException{
+		RatingUser ru = new RatingUser();
+		User user = SessionRepository.getSessionUser(request);
+		Integer userId = Integer.parseInt(request
+				.getParameter("id"));
+		ru.setEstimatorId(user.getId());
+		ru.setUserId(userId);
+		ru.setMark(Integer.parseInt(request.getParameter("mark")));
+		RatingUserDao ruDao = new RatingUserDao();
+		RatingUser ruFromDB = ruDao.getMarkByEvent(userId, user.getId());
+		if (ruFromDB == null){
+			ruDao.save(ru);
+		}else {
+			Map<String, Object> map = new HashMap<>();
+			map.put("mark", Integer.parseInt(request.getParameter("mark")));
+			ruDao.updateById(ruFromDB.getId(), map);
+		}
+	}
     public void editUser(HttpServletRequest request, HttpServletResponse response){
     	Map<String, Object> map = new HashMap<>();
     	Integer userId = Integer.parseInt(request.getParameter("userId"));
@@ -125,7 +146,6 @@ public class AdminServletPost implements HttpRequestHandler{
         try {
 			response.sendRedirect("adminUserProfile.do?id=" + userId);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

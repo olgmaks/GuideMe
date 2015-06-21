@@ -25,8 +25,8 @@ public class AdminEventDetailServlet implements HttpRequestHandler{
 			user = SessionRepository.getSessionUser(request);
 		EventService eventService = new EventService();
 		int id = Integer.parseInt(request.getParameter("id"));
-		Integer mark = null;
 		request.setAttribute("event", eventService.getById(id));
+		Integer mark = null;
 		if (user != null){
 			if (reDao.getMarkByEvent(id, user.getId()) != null){
 				mark =  reDao.getMarkByEvent(id, user.getId()).getMark();

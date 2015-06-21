@@ -1,13 +1,6 @@
 package com.epam.gm.web.servlets.adminpage;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -153,24 +145,9 @@ public class AdminEventRequest implements HttpRequestHandler {
 				} else if (action.equals("commentEvent")) {
 					commentEvent(request, response);
 				} else if (action.equals("saveFile")) {
-
+						ratingEvent(request, response);
 				} else if (action.equals("ratingEvent")) {
-					RatingEvent re = new RatingEvent();
-					User user = SessionRepository.getSessionUser(request);
-					Integer eventId = Integer.parseInt(request
-							.getParameter("eventId"));
-					re.setEstimatorId(user.getId());
-					re.setEventId(eventId);
-					re.setMark(Integer.parseInt(request.getParameter("mark")));
-					RatingEventDao reDao = new RatingEventDao();
-					RatingEvent reFromDB = reDao.getMarkByEvent(eventId, user.getId());
-					if (re.getMark() == null){
-						reDao.save(re);
-					}else {
-						Map<String, Object> map = new HashMap<>();
-						map.put("mark", Integer.parseInt(request.getParameter("mark")));
-						reDao.updateById(reFromDB.getId(), map);
-					}
+					ratingEvent(request, response);
 				}
 			} catch (Exception ex) {
 				JSONROOT.put("Result", "ERROR");
@@ -182,7 +159,25 @@ public class AdminEventRequest implements HttpRequestHandler {
 			}
 		}
 	}
-
+	private void ratingEvent(HttpServletRequest request,
+			HttpServletResponse response) throws IllegalArgumentException, IllegalAccessException, SQLException{
+		RatingEvent re = new RatingEvent();
+		User user = SessionRepository.getSessionUser(request);
+		Integer eventId = Integer.parseInt(request
+				.getParameter("eventId"));
+		re.setEstimatorId(user.getId());
+		re.setEventId(eventId);
+		re.setMark(Integer.parseInt(request.getParameter("mark")));
+		RatingEventDao reDao = new RatingEventDao();
+		RatingEvent reFromDB = reDao.getMarkByEvent(eventId, user.getId());
+		if (reFromDB == null){
+			reDao.save(re);
+		}else {
+			Map<String, Object> map = new HashMap<>();
+			map.put("mark", Integer.parseInt(request.getParameter("mark")));
+			reDao.updateById(reFromDB.getId(), map);
+		}
+	}
 	public void commentEvent(HttpServletRequest request,
 			HttpServletResponse response) {
 		CommentEventService ceService = new CommentEventService();

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
 <!DOCTYPE html">
 <html>
 <head>
@@ -10,13 +11,35 @@
   <link rel="stylesheet" type="text/css" media="all" href="css/styleUserProfile.css">
    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+  
+  <link type="text/css" rel="stylesheet" href="css/jquery.ratings.css" />
+
+    <script src="js/jquery.ratings.js"></script>
+   <script type="text/javascript">
+    $(document).ready(function() {
+    	
+    	  $('#example-1').ratings(10,'${mark}').bind('ratingchanged', function(event, data) {
+    	      rate(data.rating)
+    		  $('#example-rating-1').text(data.rating);
+    	  });
+    	});
+    </script>
+	
+	<script type="text/javascript">
+		function rate(mark){
+			 $.ajax({
+                url: "adminUserRequest.do?action=ratingUser&mark=" + mark + "&id=" + "${user.id}",
+                type: "post",
+                success: function () {
+                }
+            });
+		}
+	
+		</script>
 </head>
 
 <body>
-  <div id="topbar">
-  <a href="http://designshack.net">Back to Design Shack</a>
-  </div>
+
   <div id="w">
     <div id="content" >
       <div id="userphoto"><img  src="${user.avatar.path}" alt="default avatar" style="height: 120px; width: 120px; object-fit: cover"></div>
@@ -32,7 +55,6 @@
         </ul>
         </div>
       </nav>
-
       <section id="bio">
        <p><span>E-mail Address</span><c:out value="${requestScope.user['email']} "/></p>  
        <p><span>First name</span><c:out value="${requestScope.user['firstName']} "/></p>  
@@ -43,6 +65,7 @@
        <p><span>user type</span><c:out value="${requestScope.user.userType['name']} "/></p>   
        <c:choose>
 		    <c:when test="${not empty userLogined}">
+		      <div id="example-1"></div> <br />
 		       <form action="adminUserRequest.do?action=commentUser" method="POST" >
 		       <div class="row">
 				        <div class="input-field col s6">

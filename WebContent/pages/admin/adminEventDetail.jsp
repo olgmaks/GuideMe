@@ -21,7 +21,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
     	
-    	  $('#example-1').ratings(10,'${mark}').bind('ratingchanged', function(event, data) {
+    	  $('#ratingEvent').ratings(10,'${mark}').bind('ratingchanged', function(event, data) {
     	      rate(data.rating)
     		  $('#example-rating-1').text(data.rating);
     	  });
@@ -73,7 +73,7 @@
        
        <c:choose>
 		    <c:when test="${not empty userLogined}">
-		     <div id="example-1"></div> <br />
+		     <div id="ratingEvent"></div> <br />
 		       <form action="adminEventRequest.do?action=commentEvent" method="POST" >
 		       <div class="row">
 				        <div class="input-field col s6">
