@@ -1,5 +1,6 @@
 package com.epam.gm.model;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import com.epam.gm.olgmaks.absractdao.annotation.*;
@@ -40,6 +41,8 @@ public class Event {
 	@ForeignKey
 	@OneToMany(field = "avatar_id", value = Photo.class)
 	private Photo avatar;
+	
+	private Double points;
 
 	public Integer getAvatarId() {
 		return avatarId;
@@ -144,6 +147,22 @@ public class Event {
 	public void setModerator(User moderator) {
 		this.moderator = moderator;
 	}
+	
+	public Double getPoints() {
+		return points;
+	}
+
+	public void setPoints(Double points) {
+		this.points = points;
+	}
+	
+	
+	//gryn  
+	//Compare events by points in desc. order
+	public static final Comparator<Event> BY_POINTS = 
+			(first, second) -> {
+				return second.points.compareTo(first.points);
+			}; 
 
 	@Override
 	public String toString() {

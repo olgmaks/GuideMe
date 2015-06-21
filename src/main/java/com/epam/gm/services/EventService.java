@@ -1,8 +1,10 @@
 package com.epam.gm.services;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
+import com.epam.gm.calculators.EventCalculator;
 import com.epam.gm.daolayer.EventDao;
 import com.epam.gm.model.Event;
 
@@ -36,7 +38,25 @@ public class EventService {
 		  return eventDao.getByField("moderator_id", moderatorId);	 
 	 }
 	 
-//	public static void main(String[] args) throws SQLException {
-//		new EventService().getUserEvents(2).forEach(System.out::println);
-//	}
+	 public List<Event> getAllActiveNotDeletedEvents() throws SQLException {
+		return eventDao.getAllActiveNotDeletedEvents(); 
+	 }
+	 
+	 public static void main(String[] args) throws SQLException {
+		// new EventService().getUserEvents(2).forEach(System.out::println);
+		 
+		 List<Event> events =  new EventService().getAllActiveNotDeletedEvents();
+		 System.out.println("before sort:");
+		 events.forEach(System.out::println);
+		 
+		 System.out.println("After:");
+		 
+		 //EventCalculator.sortEventsByPoints(events, null);
+		 EventCalculator.sortEventsByPoints(events, 1);
+		 
+		 for(Event e: events) {
+			 System.out.println("" + e.getId() + " " + e.getName() + " : " + e.getPoints());
+		 }
+		 
+	 }
 }

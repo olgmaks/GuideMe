@@ -75,7 +75,7 @@
     <div class="col s6">This div is 6-columns wide</div>
     <div class="col s6">This div is 6-columns wide</div>
 </div>
-<div class="container" style="width: 80%; margin-left: 10%;">
+<div class="container" style="width: 100%; margin-left: 0%;">
     <div class="section">
 
         <p class="light">Events</p>
@@ -83,16 +83,14 @@
         <table>
             <thead>
             <tr>
-                <th style="width: 33%; margin-left: 0%;">Recomended</th>
-                <th style="width: 33%; margin-left: 33.3%;">Top rated</th>
-                <th style="width: 33%; margin-left: 66.6%;">Popular</th>
+                <th style="width: 20%; margin-left: 0%;">Recomended</th>
+                <th style="width: 60%; margin-left: 20%;">Top rated</th>
+                <th style="width: 20%; margin-left: 80%;">Popular</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <th>
-
-
+                <th style = "vertical-align: top;">
                     <div class="card small" style="height: 150px; ">
                         <table>
                             <tr>
@@ -101,16 +99,72 @@
                                          src="img/guide1.jpg">
                                 </td>
                                 <td>
-                                <div><a href="#">Maksymuk</a></div>
+                                <div><a href="#">Maksymuk1</a></div>
                                 </td>
                             </tr>
                         </table>
                     </div>
-
-
-
+                    
+                    <div class="card small" style="height: 150px; ">
+                        <table>
+                            <tr>
+                                <td style="width: 120px;">
+                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
+                                         src="img/guide1.jpg">
+                                </td>
+                                <td>
+                                <div><a href="#">Maksymuk2</a></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>         
+                    
+                    <div class="card small" style="height: 150px; ">
+                        <table>
+                            <tr>
+                                <td style="width: 120px;">
+                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
+                                         src="img/guide1.jpg">
+                                </td>
+                                <td>
+                                <div><a href="#">Maksymuk3</a></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>    
+                    
+                    <div class="card small" style="height: 150px; ">
+                        <table>
+                            <tr>
+                                <td style="width: 120px;">
+                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
+                                         src="img/guide1.jpg">
+                                </td>
+                                <td>
+                                <div><a href="#">Maksymuk2</a></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>         
+                    
+                    <div class="card small" style="height: 150px; ">
+                        <table>
+                            <tr>
+                                <td style="width: 120px;">
+                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
+                                         src="img/guide1.jpg">
+                                </td>
+                                <td>
+                                <div><a href="#">Maksymuk3</a></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>                      
+                                        
+                               
                 </th>
-                <th>
+                <th style = "width: 60%; vertical-align: top">
+                <div style="display:inline; width: 45%; float: left; margin-left: 10px">
                     <div class="card small">
                         <div class="card-image waves-effect waves-block waves-light">
                             <img class="activator" src="img/guide1.jpg">
@@ -133,16 +187,18 @@
                             <p>Here is event description</p>
                         </div>
                     </div>
-                </th>
-                <th>
-                    <div class="card small">
+                 </div>   
+                    
+                   <div style="display:inline; width: 45%; float: left; margin-left: 10px"> 
+                   <div class="card small" >
                         <div class="card-image waves-effect waves-block waves-light">
                             <img class="activator" src="img/guide1.jpg">
                         </div>
                         <div class="card-content">
-									<span class="card-title activator grey-text text-darken-4">Event
-										Name <i class="mdi-navigation-more-vert right"></i>
-									</span>
+									  <span class="black-text">
+                                          Event Name
+                                          <i class="mdi-navigation-more-vert right"></i>
+                                      </span>
 
                             <p>
                                 <a href="#">Event details</a>
@@ -156,151 +212,140 @@
                             <p>Here is event description</p>
                         </div>
                     </div>
+                    </div>  
+                    
+                 
+               <div style="display:inline; width: 45%; float: left; margin-left: 10px">
+                    <div class="card small">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="img/guide1.jpg">
+                        </div>
+                        <div class="card-content">
+									  <span class="black-text">
+                                          Event Name
+                                          <i class="mdi-navigation-more-vert right"></i>
+                                      </span>
+
+                            <p>
+                                <a href="#">Event details</a>
+                            </p>
+                        </div>
+                        <div class="card-reveal">
+									<span class="card-title grey-text text-darken-4">Card
+										Title <i class="mdi-navigation-close right"></i>
+									</span>
+
+                            <p>Here is event description</p>
+                        </div>
+                    </div>
+                 </div>   
+                    
+                   <div style="display:inline; width: 45%; float: left; margin-left: 10px"> 
+                   <div class="card small" >
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="img/guide1.jpg">
+                        </div>
+                        <div class="card-content">
+									  <span class="black-text">
+                                          Event Name
+                                          <i class="mdi-navigation-more-vert right"></i>
+                                      </span>
+
+                            <p>
+                                <a href="#">Event details</a>
+                            </p>
+                        </div>
+                        <div class="card-reveal">
+									<span class="card-title grey-text text-darken-4">Card
+										Title <i class="mdi-navigation-close right"></i>
+									</span>
+
+                            <p>Here is event description</p>
+                        </div>
+                    </div>
+                    </div>                      
+
+                    
                 </th>
+                
+                
+                <th style = "vertical-align: top;">
+                    <div class="card small" style="height: 150px; ">
+                        <table>
+                            <tr>
+                                <td style="width: 120px;">
+                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
+                                         src="img/guide1.jpg">
+                                </td>
+                                <td>
+                                <div><a href="#">Maksymuk1</a></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="card small" style="height: 150px; ">
+                        <table>
+                            <tr>
+                                <td style="width: 120px;">
+                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
+                                         src="img/guide1.jpg">
+                                </td>
+                                <td>
+                                <div><a href="#">Maksymuk2</a></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>         
+                    
+                    <div class="card small" style="height: 150px; ">
+                        <table>
+                            <tr>
+                                <td style="width: 120px;">
+                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
+                                         src="img/guide1.jpg">
+                                </td>
+                                <td>
+                                <div><a href="#">Maksymuk3</a></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>    
+                    
+                    <div class="card small" style="height: 150px; ">
+                        <table>
+                            <tr>
+                                <td style="width: 120px;">
+                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
+                                         src="img/guide1.jpg">
+                                </td>
+                                <td>
+                                <div><a href="#">Maksymuk2</a></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>         
+                    
+                    <div class="card small" style="height: 150px; ">
+                        <table>
+                            <tr>
+                                <td style="width: 120px;">
+                                    <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
+                                         src="img/guide1.jpg">
+                                </td>
+                                <td>
+                                <div><a href="#">Maksymuk3</a></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>                      
+                                        
+                               
+                </th>                
+                
+                
+                
             </tr>
-            <tr>
-                <th>
-                    <div class="card small">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="img/guide1.jpg">
-                        </div>
-                        <div class="card-content">
-									<span class="card-title activator grey-text text-darken-4">Event
-										Name <i class="mdi-navigation-more-vert right"></i>
-									</span>
-
-                            <p>
-                                <a href="#">Event details</a>
-                            </p>
-                        </div>
-                        <div class="card-reveal">
-									<span class="card-title grey-text text-darken-4">Card
-										Title <i class="mdi-navigation-close right"></i>
-									</span>
-
-                            <p>Here is event description</p>
-                        </div>
-                    </div>
-                </th>
-                <th>
-                    <div class="card small">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="img/guide1.jpg">
-                        </div>
-                        <div class="card-content">
-									<span class="card-title activator grey-text text-darken-4">Event
-										Name <i class="mdi-navigation-more-vert right"></i>
-									</span>
-
-                            <p>
-                                <a href="#">Event details</a>
-                            </p>
-                        </div>
-                        <div class="card-reveal">
-									<span class="card-title grey-text text-darken-4">Card
-										Title <i class="mdi-navigation-close right"></i>
-									</span>
-
-                            <p>Here is event description</p>
-                        </div>
-                    </div>
-                </th>
-                <th>
-                    <div class="card small">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="img/guide1.jpg">
-                        </div>
-                        <div class="card-content">
-									<span class="card-title activator grey-text text-darken-4">Event
-										Name <i class="mdi-navigation-more-vert right"></i>
-									</span>
-
-                            <p>
-                                <a href="#">Event details</a>
-                            </p>
-                        </div>
-                        <div class="card-reveal">
-									<span class="card-title grey-text text-darken-4">Card
-										Title <i class="mdi-navigation-close right"></i>
-									</span>
-
-                            <p>Here is event description</p>
-                        </div>
-                    </div>
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    <div class="card small">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="img/guide1.jpg">
-                        </div>
-                        <div class="card-content">
-									<span class="card-title activator grey-text text-darken-4">Event
-										Name <i class="mdi-navigation-more-vert right"></i>
-									</span>
-
-                            <p>
-                                <a href="#">Event details</a>
-                            </p>
-                        </div>
-                        <div class="card-reveal">
-									<span class="card-title grey-text text-darken-4">Card
-										Title <i class="mdi-navigation-close right"></i>
-									</span>
-
-                            <p>Here is event description</p>
-                        </div>
-                    </div>
-                </th>
-                <th>
-                    <div class="card small">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="img/guide1.jpg">
-                        </div>
-                        <div class="card-content">
-									<span class="card-title activator grey-text text-darken-4">Event
-										Name <i class="mdi-navigation-more-vert right"></i>
-									</span>
-
-                            <p>
-                                <a href="#">Event details</a>
-                            </p>
-                        </div>
-                        <div class="card-reveal">
-									<span class="card-title grey-text text-darken-4">Card
-										Title <i class="mdi-navigation-close right"></i>
-									</span>
-
-                            <p>Here is event description</p>
-                        </div>
-                    </div>
-                </th>
-                <th>
-                    <div class="card small">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="img/guide1.jpg">
-                        </div>
-                        <div class="card-content">
-									<span class="card-title activator grey-text text-darken-4">Event
-										Name <i class="mdi-navigation-more-vert right"></i>
-									</span>
-
-                            <p>
-                                <a href="#">Event details</a>
-                            </p>
-                        </div>
-                        <div class="card-reveal">
-									<span class="card-title grey-text text-darken-4">Card
-										Title <i class="mdi-navigation-close right"></i>
-									</span>
-
-                            <p>Here is event description</p>
-                        </div>
-                    </div>
-                </th>
-            </tr>
-
 
             </tbody>
         </table>

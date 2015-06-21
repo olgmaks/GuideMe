@@ -2,16 +2,20 @@ package com.epam.gm.calculators;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import com.epam.gm.daolayer.RatingEventDao;
+
+
+
+
 import com.epam.gm.model.Address;
 import com.epam.gm.model.Event;
 import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.Photo;
 import com.epam.gm.model.RatingEvent;
-import com.epam.gm.model.RatingUser;
 import com.epam.gm.model.Tag;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
@@ -20,7 +24,6 @@ import com.epam.gm.services.EventService;
 import com.epam.gm.services.FriendUserService;
 import com.epam.gm.services.PhotoService;
 import com.epam.gm.services.RatingEventService;
-import com.epam.gm.services.RatingUserService;
 import com.epam.gm.services.TagService;
 import com.epam.gm.services.UserInEventService;
 import com.epam.gm.services.UserService;
@@ -30,7 +33,6 @@ public class EventCalculator {
 	
 	//Models
 	private Event event;
-	private UserInEvent userInEvent;
 	private User moderator;
 	private List<UserInEvent> allUserInEvent;
 	private List<RatingEvent> allRatingEvent;
@@ -191,6 +193,16 @@ public class EventCalculator {
 		}
 		
 		return res;
+	}
+	
+	public static void sortEventsByPoints(List<Event> events, Integer userid) throws SQLException {
+		
+		for(Event e: events) {
+			 e.setPoints(new EventCalculator(e.getId(), userid).calculate());
+		}
+		
+		Collections.sort(events, Event.BY_POINTS);
+		
 	}
 	
 	
