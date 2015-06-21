@@ -42,21 +42,21 @@ public class EventService {
 		return eventDao.getAllActiveNotDeletedEvents(); 
 	 }
 	 
-	 public static void main(String[] args) throws SQLException {
-		// new EventService().getUserEvents(2).forEach(System.out::println);
-		 
-		 List<Event> events =  new EventService().getAllActiveNotDeletedEvents();
-		 System.out.println("before sort:");
-		 events.forEach(System.out::println);
-		 
-		 System.out.println("After:");
-		 
-		 //EventCalculator.sortEventsByPoints(events, null);
-		 EventCalculator.sortEventsByPoints(events, 1);
-		 
-		 for(Event e: events) {
-			 System.out.println("" + e.getId() + " " + e.getName() + " : " + e.getPoints());
-		 }
-		 
-	 }
+//	 public static void main(String[] args) throws SQLException {
+//		// new EventService().getUserEvents(2).forEach(System.out::println);
+//		 
+//		 List<Event> events =  new EventService().getAllActiveNotDeletedEvents();
+//		 System.out.println("before sort:");
+//		 events.forEach(System.out::println);
+//		 
+//		 System.out.println("After:");
+//		 
+//		 //EventCalculator.sortEventsByPoints(events, null);
+//		 EventCalculator.sortEventsByPoints(events, 1);
+//		 
+//		 for(Event e: events) {
+//			 System.out.println("" + e.getId() + " " + e.getName() + " : " + e.getPoints());
+//		 }
+//		 
+//	 }
 }

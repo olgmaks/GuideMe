@@ -2,6 +2,7 @@ package com.epam.gm.calculators;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.epam.gm.model.Address;
@@ -234,7 +235,15 @@ public class UserCalculator {
 		return res;
 	}
 	
-	
+	public static void sortUsersByPoints(List<User> users, Integer userid) throws SQLException {
+		
+		for(User e: users) {
+			 e.setPoints(new UserCalculator(e.getId(), userid).calculate());
+		}
+		
+		Collections.sort(users, User.BY_POINTS);
+		
+	}
 	
 	public static void main(String[] args) throws SQLException {
 
@@ -247,7 +256,7 @@ public class UserCalculator {
 //		}
 		
 		//UserCalculator c = new UserCalculator(2, 8);
-		UserCalculator c = new UserCalculator(2, null);
+		//UserCalculator c = new UserCalculator(2, null);
 		
 //		System.out.println(c.getSummaryRate());
 //		System.out.println(c.getAverageRate());
@@ -255,11 +264,28 @@ public class UserCalculator {
 		//System.out.println(c.countOfFriends());
 		//System.out.println(c.isClientFavorite());
 		
-		System.out.println("**********************");
-		System.out.println("summary:" + c.getSummaryEventsRate());
-		System.out.println("aver:" + c.getAverageEventsRate());
-		System.out.println("final: " + c.calculate());
+//		System.out.println("**********************");
+//		System.out.println("summary:" + c.getSummaryEventsRate());
+//		System.out.println("aver:" + c.getAverageEventsRate());
+//		System.out.println("final: " + c.calculate());
 		
+		
+		
+		//get list
+		List<User> users = new UserService().getAll();
+		
+		//sort by points for anonymous user
+		UserCalculator.sortUsersByPoints(users, null);
+		
+		//sort by points for authorized user with id=8
+		//UserCalculator.sortUsersByPoints(users, 8);
+		
+		for(User u: users) {
+			System.out.println(u.getEmail() + ": " + u.getPoints());
+		}
 		
 	}
+	
+	
+	
 }

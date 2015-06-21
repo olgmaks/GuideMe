@@ -1,5 +1,7 @@
 package com.epam.gm.model;
 
+import java.util.Comparator;
+
 import com.epam.gm.olgmaks.absractdao.annotation.*;
 
 /**
@@ -54,6 +56,8 @@ public class User {
     @ForeignKey
     @OneToMany(field = "avatar_id", value = Photo.class)
     private Photo avatar;
+    
+    private Double points;
 
     public Integer getId() {
         return Id;
@@ -198,7 +202,23 @@ public class User {
     public void setAvatar(Photo avatar) {
         this.avatar = avatar;
     }
+    
+	public Double getPoints() {
+		return points;
+	}
 
+	public void setPoints(Double points) {
+		this.points = points;
+	}
+	
+	public static final Comparator<User> BY_POINTS = new Comparator<User>() {
+		@Override
+		public int compare(User first, User second) {
+			return second.points.compareTo(first.points);
+		}
+	};		
+	
+	
     @Override
     public String toString() {
         return "User{" +

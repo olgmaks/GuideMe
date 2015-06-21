@@ -159,10 +159,20 @@ public class Event {
 	
 	//gryn  
 	//Compare events by points in desc. order
-	public static final Comparator<Event> BY_POINTS = 
-			(first, second) -> {
-				return second.points.compareTo(first.points);
-			}; 
+//	public static final Comparator<Event> BY_POINTS = 
+//			(first, second) -> {
+//				return second.points.compareTo(first.points);
+//			}; 
+			
+	public static final Comparator<Event> BY_POINTS = new Comparator<Event>() {
+		@Override
+		public int compare(Event first, Event second) {
+			return second.points.compareTo(first.points);
+		}
+		
+	};		
+			
+			
 
 	@Override
 	public String toString() {
