@@ -21,7 +21,7 @@ public class RatingEventDao extends AbstractDao<RatingEvent>{
     	super.save(re);
     }
     
-    public RatingEvent getEventPhoto(int eventId, int userId) throws SQLException {
+    public RatingEvent getMarkByEvent(int eventId, int userId) throws SQLException {
         RatingEvent result = super.getWithCustomQuery(String.format(GET_RATE_BY_USER,eventId,userId)).get(0);
         return result;
     }

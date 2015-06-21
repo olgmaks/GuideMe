@@ -8,37 +8,34 @@
     <title>Guide ME</title>
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-   	<link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
 	<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
-	<!-- Include jTable script file. -->
 	
   <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
   <link rel="shortcut icon" href="http://designshack.net/favicon.ico">
   <link rel="icon" href="http://designshack.net/favicon.ico">
   <link rel="stylesheet" type="text/css" media="all" href="css/styleUserProfile.css">
   
-  <link href="css/star.css" rel="stylesheet" type="text/css" media="all"/>
-   <script type="text/javascript" src="js/jquery-1.2.1.js"></script>
+  <link type="text/css" rel="stylesheet" href="css/jquery.ratings.css" />
+    <script src="js/jquery-1.3.2.min.js"></script>
+    <script src="js/jquery.ratings.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+    	  $('#example-1').ratings(10).bind('ratingchanged', function(event, data) {
+    	    rate(data.rating)
+    		  $('#example-rating-1').text(data.rating);
+    	  });
+    	});
+    </script>
 		<script type="text/javascript">
 		function rate(mark){
 			 $.ajax({
                 url: "adminEventRequest.do?action=ratingEvent&mark=" + mark + "&eventId=" + '${event.id}',
                 type: "post",
-                dataType: "json",
-                data: $("#cityId").serialize(),
-                success: function (data) {
+                success: function () {
                 }
             });
 		}
-		$(function(){
-			$( ".star-rate li a" ).each(function(i){
-				$(this).hover(function(){
-					$("#remark").append("<div id=\"core\">"+$(this).html()+"</p>");
-				},function(){
-					$("#core").remove();
-				});
-			});
-		});
+	
 		</script>
    
 </head>
@@ -75,17 +72,8 @@
        
        <c:choose>
 		    <c:when test="${not empty userLogined}">
-		    <div id ="stars-container">		
-				<ul class='star-rate'>	  
-					<li><a href='' title='' class="star-one" onclick="rate(1)">mmmm</a></li>
-					<li><a href='' title='' class="star-two" onclick="rate(2)">try again</a></li>
-					<li><a href='' title='' class="star-three" onclick="rate(3)">mmm not bad</a></li>  
-					<li><a href='' title='' class="star-four" onclick="rate(4)">this is cool ya!</a></li>
-					<li><a href='' title='' class="star-five" onclick="rate(5)">very good</a></li>
-				</ul>
-			</div>
-		
-		<div id ="remark"></div>
+		     <div id="example-1"></div> <br />
+   					 Your Rating: <span id="example-rating-1">not set</span>
 		       <form action="adminEventRequest.do?action=commentEvent" method="POST" >
 		       <div class="row">
 				        <div class="input-field col s6">
@@ -154,23 +142,7 @@
 <!--       </section> -->
     </div><!-- @end #content -->
   </div><!-- @end #w -->
-<script type="text/javascript">
-$(function(){
-  $('#profiletabs ul li a').on('click', function(e){
-    e.preventDefault();
-    var newcontent = $(this).attr('href');
-    
-    $('#profiletabs ul li a').removeClass('sel');
-    $(this).addClass('sel');
-    
-    $('#content section').each(function(){
-      if(!$(this).hasClass('hidden')) { $(this).addClass('hidden'); }
-    });
-    
-    $(newcontent).removeClass('hidden');
-  });
-});
-</script>
+
         </td>
 
     </tr>

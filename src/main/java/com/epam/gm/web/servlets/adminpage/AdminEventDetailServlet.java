@@ -6,9 +6,8 @@ import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
-
+import com.epam.gm.daolayer.RatingEventDao;
+import com.epam.gm.model.User;
 import com.epam.gm.services.CommentEventService;
 import com.epam.gm.services.EventService;
 import com.epam.gm.services.PhotoService;
@@ -19,12 +18,22 @@ public class AdminEventDetailServlet implements HttpRequestHandler{
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
+		RatingEventDao reDao = new RatingEventDao();
 		System.out.println("eventDetailservlet");
 		try{
+			User user = new User();
+			user = SessionRepository.getSessionUser(request);
 		EventService eventService = new EventService();
 		int id = Integer.parseInt(request.getParameter("id"));
+		Integer mark = null;
 		request.setAttribute("event", eventService.getById(id));
-		request.setAttribute("userLogined", SessionRepository.getSessionUser(request));
+		if (user != null){
+			if (reDao.getMarkByEvent(id, user.getId()) != null){
+				mark =  reDao.getMarkByEvent(id, user.getId()).getMark();
+			}
+		}
+		request.setAttribute("mark", mark);
+		request.setAttribute("userLogined", user);
 		request.setAttribute("commentEvent", new CommentEventService().getByEventId(id));
 		request.setAttribute("photos", new PhotoService().getEventPhotos(id));
 		System.out.println(new PhotoService().getEventPhotos(id));
