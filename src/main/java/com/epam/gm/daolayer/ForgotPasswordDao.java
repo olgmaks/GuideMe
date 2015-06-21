@@ -23,6 +23,18 @@ public class ForgotPasswordDao extends AbstractDao<ForgotPassword> {
 		super.save(forgotPassword);
 	}
 
+	
+	public static void main(String[] args) {
+		ForgotPassword forgotPassword = new ForgotPassword();
+		forgotPassword.setCode("ss");
+		forgotPassword.setIsAvailable(true);
+		try {
+			new ForgotPasswordDao().saveForgotPassword(forgotPassword);
+		} catch (IllegalArgumentException | IllegalAccessException
+				| SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	public List<ForgotPassword> getAllForgotPassword() throws SQLException {
 		return getAll();
 	}
@@ -36,7 +48,7 @@ public class ForgotPasswordDao extends AbstractDao<ForgotPassword> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if (newForgotPassword != null) {
+		if (newForgotPassword != null && newForgotPassword.getIsAvailable()) {
 			Timestamp timestamp = newForgotPassword.getTimestamp();
 			timestamp.setHours(timestamp.getHours() + 1);
 			Date newDate = new Date();
@@ -66,4 +78,19 @@ public class ForgotPasswordDao extends AbstractDao<ForgotPassword> {
 		}
 	}
 
+	public void updateAvailability(int id, boolean availability) {
+		int a = 0;
+		if (availability == true) {
+			a = 1;
+		}
+		Map<String, Object> value = new HashMap<String, Object>();
+		value.put("is_available", a);
+		try {
+			updateById(id, value);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
 }

@@ -51,6 +51,7 @@
 								Password</label>
 						</div>
 					</div>
+			
 					<button class="btn waves-effect waves-light" type="submit"
 						name="action">
 						Change <i class="mdi-content-send right"></i>

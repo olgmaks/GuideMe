@@ -55,8 +55,9 @@ public class SendLinkToResetPasswordServlet extends HttpServlet implements
 			ForgotPassword forgotPassword = new ForgotPassword();
 			forgotPassword.setCode(code);
 			forgotPassword.setEmail(email);
+			forgotPassword.setIsAvailable(true);
 			forgotPassword.setTimestamp(new Timestamp(new Date().getTime()));
-			new ForgotPasswordDao().save(forgotPassword);
+			new ForgotPasswordDao().saveForgotPassword(forgotPassword);
 
 		} else {
 			request.setAttribute("isWrong", true);

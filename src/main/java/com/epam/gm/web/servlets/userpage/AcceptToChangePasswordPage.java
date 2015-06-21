@@ -36,6 +36,7 @@ public class AcceptToChangePasswordPage extends HttpServlet implements
 					.getForgotPasswordByCode(code);
 
 			User user = new UserDao().getUserByEmail(forgotPassword.getEmail());
+			session.setAttribute("currentForgotPassword", forgotPassword);
 			session.setAttribute("currentUser", user);
 		} else {
 			request.setAttribute("trouble", true);
