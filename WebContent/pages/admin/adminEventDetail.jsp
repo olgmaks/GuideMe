@@ -20,8 +20,9 @@
     <script src="js/jquery.ratings.js"></script>
     <script type="text/javascript">
     $(document).ready(function() {
-    	  $('#example-1').ratings(10).bind('ratingchanged', function(event, data) {
-    	    rate(data.rating)
+    	
+    	  $('#example-1').ratings(10,'${mark}').bind('ratingchanged', function(event, data) {
+    	      rate(data.rating)
     		  $('#example-rating-1').text(data.rating);
     	  });
     	});
@@ -73,7 +74,6 @@
        <c:choose>
 		    <c:when test="${not empty userLogined}">
 		     <div id="example-1"></div> <br />
-   					 Your Rating: <span id="example-rating-1">not set</span>
 		       <form action="adminEventRequest.do?action=commentEvent" method="POST" >
 		       <div class="row">
 				        <div class="input-field col s6">

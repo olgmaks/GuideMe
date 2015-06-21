@@ -14,18 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
-
-
-
-
-
-
-
-
-
-
-
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +25,7 @@ import com.epam.gm.daolayer.RatingEventDao;
 import com.epam.gm.model.CommentEvent;
 import com.epam.gm.model.Event;
 import com.epam.gm.model.RatingEvent;
+import com.epam.gm.model.User;
 import com.epam.gm.services.CommentEventService;
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.utf8uncoder.StringHelper;
@@ -43,18 +33,19 @@ import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-
-public class AdminEventRequest  implements HttpRequestHandler {
+public class AdminEventRequest implements HttpRequestHandler {
 	private static final long serialVersionUID = 1L;
 	private HashMap<String, Object> JSONROOT = new HashMap<String, Object>();
 
-EventDao dao;
+	EventDao dao;
+
 	public AdminEventRequest() {
 		dao = new EventDao();
 	}
 
 	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	public void handle(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		String action = request.getParameter("action");
 		System.out.println(action);
 		List<Event> studentList = new ArrayList<Event>();
@@ -74,13 +65,13 @@ EventDao dao;
 
 					// Convert Java Object to Json
 					String jsonArray = gson.toJson(JSONROOT);
-					//request.setAttribute("",jsonArray);
+					// request.setAttribute("",jsonArray);
 					response.setCharacterEncoding("UTF-8");
 					response.getWriter().print(jsonArray);
 				} else if (action.equals("create") || action.equals("update")) {
-				
+
 					Event event = new Event();
-					
+
 					if (request.getParameter("id") != null) {
 						int id = Integer.parseInt(request.getParameter("id"));
 						event.setId(id);
@@ -92,22 +83,24 @@ EventDao dao;
 					}
 
 					if (request.getParameter("description") != null) {
-						String description = request.getParameter("description");
-						event.setDescription(description); 
+						String description = request
+								.getParameter("description");
+						event.setDescription(description);
 					}
 
 					if (request.getParameter("dateFrom") != null) {
-						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"dd/MM/yyyy HH:mm:ss a");
 						String dateFrom = request.getParameter("dateFrom");
-						System.out.println("dATE FROM" + dateFrom) ;
+						System.out.println("dATE FROM" + dateFrom);
 						event.setDateFrom(new Date(dateFrom));
 					}
-					
+
 					if (request.getParameter("dateTo") != null) {
 						String dateTo = request.getParameter("dateTo");
 						event.setDateTo(new Date(dateTo));
 					}
-					
+
 					if (request.getParameter("status") != null) {
 						String statusId = request.getParameter("status");
 						event.setStatus(statusId);
@@ -117,7 +110,8 @@ EventDao dao;
 						event.setAddressId(Integer.parseInt(addressId));
 					}
 					if (request.getParameter("moderatorId") != null) {
-						int moderatorId = Integer.parseInt(request.getParameter("moderatorId"));
+						int moderatorId = Integer.parseInt(request
+								.getParameter("moderatorId"));
 						event.setModeratorId(moderatorId);
 					}
 
@@ -141,9 +135,10 @@ EventDao dao;
 				} else if (action.equals("delete")) {
 					// Delete record
 					if (request.getParameter("id") != null) {
-						int eventId = Integer.parseInt(request.getParameter("id"));
+						int eventId = Integer.parseInt(request
+								.getParameter("id"));
 
-						System.out.println("event id " +eventId);
+						System.out.println("event id " + eventId);
 
 						dao.deleteById(eventId);
 
@@ -155,17 +150,27 @@ EventDao dao;
 						response.setCharacterEncoding("UTF-8");
 						response.getWriter().print(jsonArray);
 					}
-				}else if(action.equals("commentEvent")){
+				} else if (action.equals("commentEvent")) {
 					commentEvent(request, response);
-				}else if (action.equals("saveFile")){
-					
-				}else if(action.equals("ratingEvent")){
+				} else if (action.equals("saveFile")) {
+
+				} else if (action.equals("ratingEvent")) {
 					RatingEvent re = new RatingEvent();
-					re.setEstimatorId(SessionRepository.getSessionUser(request).getId());
-					re.setEventId(Integer.parseInt(request.getParameter("eventId")));
+					User user = SessionRepository.getSessionUser(request);
+					Integer eventId = Integer.parseInt(request
+							.getParameter("eventId"));
+					re.setEstimatorId(user.getId());
+					re.setEventId(eventId);
 					re.setMark(Integer.parseInt(request.getParameter("mark")));
 					RatingEventDao reDao = new RatingEventDao();
-					reDao.save(re);
+					RatingEvent reFromDB = reDao.getMarkByEvent(eventId, user.getId());
+					if (re.getMark() == null){
+						reDao.save(re);
+					}else {
+						Map<String, Object> map = new HashMap<>();
+						map.put("mark", Integer.parseInt(request.getParameter("mark")));
+						reDao.updateById(reFromDB.getId(), map);
+					}
 				}
 			} catch (Exception ex) {
 				JSONROOT.put("Result", "ERROR");
@@ -177,14 +182,17 @@ EventDao dao;
 			}
 		}
 	}
-	public void commentEvent(HttpServletRequest request, HttpServletResponse response){
-	CommentEventService ceService = new CommentEventService();
-    	int eventId = Integer.parseInt(request.getParameter("eventId"));
-    	CommentEvent cu = new CommentEvent();
-    	cu.setComment(StringHelper.convertFromUTF8(request.getParameter("comment")));
-    	cu.setCommentatorId(SessionRepository.getSessionUser(request).getId());
-    	cu.setEventId(eventId);
-    	try {
+
+	public void commentEvent(HttpServletRequest request,
+			HttpServletResponse response) {
+		CommentEventService ceService = new CommentEventService();
+		int eventId = Integer.parseInt(request.getParameter("eventId"));
+		CommentEvent cu = new CommentEvent();
+		cu.setComment(StringHelper.convertFromUTF8(request
+				.getParameter("comment")));
+		cu.setCommentatorId(SessionRepository.getSessionUser(request).getId());
+		cu.setEventId(eventId);
+		try {
 			ceService.save(cu);
 			response.sendRedirect("eventDetail.do?id=" + eventId);
 		} catch (IllegalArgumentException e) {

@@ -68,6 +68,12 @@ jQuery.fn.ratings = function(stars, initialRating) {
         }
       });
       
+      function setStart(starts){
+    	  for(var index = 0; index < starts; index++) {
+              starsCollection[index].addClass('jquery-ratings-full');
+            }
+      }
+      
       container.mouseleave(function() {
         //Highlight selected stars.
         for(var index = 0; index < containerElement.rating; index++) {
