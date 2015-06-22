@@ -47,7 +47,7 @@ public class SendLinkToResetPasswordServlet extends HttpServlet implements
 			}
 			SendMailTLS
 					.sendMessage(
-							"horodetskyyv@gmail.com",
+							email,
 							"Request to change password",
 							"Click the link for change password : \nhttp://localhost:8080/GuideMe/changepassword.do?ctcp="
 									+ code

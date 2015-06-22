@@ -29,7 +29,7 @@
 </script>
 </head>
 <body>
-<!-- 	<script type="text/javascript">
+	<!-- 	<script type="text/javascript">
 		function showDiv() {
 			document.getElementById('sec').style.display = "block";
 			document.getElementById("sub").style.display = "none";
