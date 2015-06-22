@@ -65,7 +65,6 @@ public class UserDao extends AbstractDao<User> {
         return super.getWithCustomQuery(String.format(SEARCH_USER_BY_CITY_NAME, cityName));
     }
 
-    public List<User>
 
     public User getUserById(Integer id) throws SQLException {
         List<User> result = getByField("id", id);
