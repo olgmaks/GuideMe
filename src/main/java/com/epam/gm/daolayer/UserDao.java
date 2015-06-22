@@ -31,10 +31,20 @@ public class UserDao extends AbstractDao<User> {
 
     private static final String SEARCH_USER_BY_CITY_NAME = "u " +
             "JOIN address a ON u.address_id = a.id JOIN city c ON a.city_id = c.pure_id " +
-            "WHERE c.name LIKE '%s'";
+            "WHERE c.name LIKE '%s' GROUP BY u.id";
 
-    private static final String SEARCH_USER_BY_TAGS = "";
+    private static final String SEARCH_USER_BY_TAGS =
+            "SELECT *  FROM user cusrrentUser WHERE EXISTS(" +
+            "SELECT ut.user_id , COUNT(*) AS tag_count" +
+            "  FROM user_tag ut" +
+            "  JOIN user u ON ut.user_id = u.id" +
+            "  JOIN tag t ON ut.tag_id = t.id" +
+            "  WHERE cusrrentUser.id = ut.user_id and t.name  IN (%S)" +
+            "  GROUP BY ut.user_id, u.first_name" +
+            "  HAVING tag_count >= %S" +
+            ")";
 
+    private static final String SEARCH_USER_AGE_RANGE = "";
 
     public UserDao() {
         // gryn
@@ -54,6 +64,8 @@ public class UserDao extends AbstractDao<User> {
     public List<User> searchUserByCityName (String cityName) throws SQLException {
         return super.getWithCustomQuery(String.format(SEARCH_USER_BY_CITY_NAME, cityName));
     }
+
+    public List<User>
 
     public User getUserById(Integer id) throws SQLException {
         List<User> result = getByField("id", id);
