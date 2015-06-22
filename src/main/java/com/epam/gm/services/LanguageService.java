@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.epam.gm.daolayer.LanguageDao;
 import com.epam.gm.model.Language;
+import com.epam.gm.model.User;
 
 public class LanguageService {
 	private LanguageDao languageDao;
@@ -31,5 +32,9 @@ public class LanguageService {
 	
 	public Language getlangByName(String name) throws SQLException {
 		return languageDao.getlangByName(name);
+	}
+	
+	public List<Language> getUserLangsForLocal(User user) throws SQLException {
+		return languageDao.getUserLangsForLocal(user);
 	}
 }

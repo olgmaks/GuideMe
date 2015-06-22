@@ -50,6 +50,69 @@
             });
         });
     </script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#searchform").submit(function () {
+                $.ajax({
+                    url: 'searchindexpage.do',
+                    type: 'post',
+                    dataType: 'json',
+                    data: $("#searchform").serialize(),
+                    success: function (data) {
+						
+                    	var resultCollenction = $("#collectionResults");
+                        resultCollenction.find("li").empty();   
+                        resultCollenction = $("#inner-row");
+                        
+                        
+                        $.each(data.results, function (counts, currentEvent) {
+                      resultCollenction.append(
+                    		  "<form id='eventFormWithId"
+                              + currentEvent.id
+                              + "'><input type='hidden' id='eventId' class='eventId' name='eventId' value='"
+                              + currentEvent.id
+                              + "'></form> " +                   		  
+
+                              
+                              "<div style='display:inline; width: 45%; float: left; margin-left: 10px'> " +
+                              "<div class='card small'  id='eventCard" + currentEvent.id  + "'> " + 
+                                  "<div class='card-image waves-effect waves-block waves-light'>" +
+                                      "<img class='activator' src='" + currentEvent.avatar.path + "'>" +
+                                  "</div>" +
+                                  "<div class='card-content'>" + 
+                                  
+								  "<span class='black-text'>" + 
+								  currentEvent.name +
+                                  "<i class='mdi-navigation-more-vert right'></i>" + 
+                                  "</span>" + 
+
+                                      "<p>" +
+                                          "<a href='#'>" + currentEvent.dateFrom + " - " + currentEvent.dateTo  + "</a>" +
+                                      "</p>" +
+                                  "</div>" + 
+                                  "<div class='card-reveal'>" +
+          									"<span class='card-title grey-text text-darken-4'>" + currentEvent.name  +
+          										"<i class='mdi-navigation-close right'></i>" +
+          									"</span>" +
+
+                                      "<p>" + currentEvent.description + "</p>" +
+                                  "</div>" +
+                              "</div>" +
+                           "</div>"                               
+                      );
+                  });
+                  resultCollenction.append("</li>");
+                  resultCollenction.append("</ul>");                        
+                        
+                  //alert(data.Valid);
+                    	
+                    }
+                });
+                return false;
+            });
+        });
+    </script>    
 </head>
 <body>
 
@@ -59,16 +122,167 @@
 
 <div class="row">
     <div class="col s12" style="margin-top: 20px;">
+        
+        <form action="searchindexpage.do" method="post" id="searchform" name="searchform">
         <ul class="collection">
             <li class="collection-item" style="margin-left: 30%;">
                 <div class="input-field col s6">
-                    <i class="mdi-action-search prefix"></i> <input id="icon_prefix"
-                                                                    type="text" class="ligth-blue"> <label
-                        for="icon_prefix">Search</label>
+                    <i class="mdi-action-search prefix"></i> 
+                    <input id="icon_prefix" name = "icon_prefix" type="text" class="ligth-blue"> <label for="icon_prefix">Search</label>
+                    <input id="selCountryId" name="selCountryId" type = "hidden">
+                    <input id="cityId" name="cityId" type = "hidden">
                 </div>
 
             </li>
+            
+            <li class="collection-item" style="margin-left: 30%;">
+                <div class="input-field col s6">
+                    
+   
+                                <br>
+
+                                <div>
+                                    <c:forEach items="${requestScope.languageList}" var="lang">
+
+                                        <table style="width: 100%;">
+                                            <tr>
+
+                                                <td style="width:30%;">
+                                                    Country
+                                                    <select id="countryByLang_${lang.id}" class="browser-default">
+                                                        <option selected value="choose"  selected>
+                                                            loginpage.country.choose
+                                                        </option>
+
+                                                        <c:forEach items="${requestScope.countryList}" var="country">
+                                                            <c:if test="${country.localId == lang.id}">
+                                                                <option value="${country.id}">${country.name}</option>
+                                                            </c:if>
+                                                        </c:forEach>
+
+                                                        <script>
+                                                            $('#countryByLang_${lang.id}').change(function () {
+
+                                                                var destination = $('#cityByLang_${lang.id}').val();
+                                                                var selectedValue = $(this).val();
+                                                                $("#selCountryId").val(selectedValue);
+                                                                
+                                                                
+                                                                if(selectedValue == "choose") {
+                                                                	$('#cityByLang_${lang.id}').val('choose');
+                                                                	$('#cityId').val('choose');
+                                                                }
+                                                                
+                                                                
+ 
+                                                              //  $(countryId).val(country);
+																
+                                                                //change other countries
+                                                                $.ajax({
+                                                                    type: "post",
+                                                                    url: 'getLocalCountryAnalogs.do?value=' + selectedValue,
+                                                                    success: function (originCountryId) { //we're calling the response json array 'cities'
+                                                                    	
+                                                                    
+                                                                        $.each(originCountryId, function (countryId, country) { //here we're doing a foeach loop round each city with id as the key and city as the value
+                                                                        	
+                                                                        			
+                                                                            
+                                                                        	//$(countryId).val(country);
+                                                                        	//alert(country);
+
+                                                                            $('#countryByLang_' + countryId).val(country);
+
+                                                                            //fill city list
+                                                                            $('#cityByLang_' + countryId + " > option").remove(); //first of all clear select items
+
+                                                                            $.ajax({
+                                                                                type: "post",
+                                                                                url: 'getCitiesByCountry.do?value=' + country,
+                                                                                success: function (originCityId) { //we're calling the response json array 'cities'
+
+                                                                                    var optFirst = $('<option selected />'); // here we're creating a new select option with for each city
+                                                                                    optFirst.val('choose');
+                                                                                    
+                                                                                    $('#countryId').val('choose');
+                                                                                    $('#cityId').val('choose');
+
+                                                                                    optFirst.text('loginpage.city.choose');
+                                                                                    $('#cityByLang_' + countryId).append(optFirst);
+
+                                                                                    $.each(originCityId, function (id, city) { //here we're doing a foeach loop round each city with id as the key and city as the value
+
+
+                                                                                        var opt = $('<option />'); // here we're creating a new select option with for each city
+                                                                                        opt.val(id);
+                                                                                        opt.text(city);
+
+                                                                                        $('#cityByLang_' + countryId).append(opt); //here we will append these new select options to a dropdown with the id 'cities'
+                                                                                    });
+                                                                                }
+                                                                            });
+
+
+                                                                        });
+                                                                    }
+                                                                });
+
+                                                            });
+                                                        </script>
+
+                                                    </select>
+                                                </td>
+
+
+                                                <td style="width:30%;">
+                                                    City
+                                                    <select id="cityByLang_${lang.id}" class="browser-default">
+                                                        <option selected value="choose">
+                                                            loginpage.city.choosecountryfirst
+                                                        </option>
+                                                        
+                                                    <script>
+                                                        $('#cityByLang_${lang.id}').change(function () {
+                                                            var selectedValue = $(this).val();
+                                                            $('#cityId').val(selectedValue);
+
+                                                        });
+                                                    </script>                                                        
+                                                    </select>
+
+                                                </td>
+
+                                            </tr>
+                                        </table>
+
+                                    </c:forEach>
+
+                                </div>
+                    
+                </div>
+            </li>
+            
+            
+            <li class="collection-item" style="margin-left: 30%;">
+            </li>
+            
+            <li class="collection-item" style="margin-left: 30%;">
+            </li>
+            
+            
+            <li class="collection-itenm" style="margin-left: 30%;">
+
+                <button class="light-blue btn waves-effect waves-light" type="submit"
+                        name="action"  style="  margin-left: auto; margin-right: auto; width: 15%;">
+                 Guide me ! <i class="mdi-content-send right"></i>
+                 </button>
+                 
+            </li>
         </ul>
+        
+
+                         
+        </form>
     </div>
 
 
@@ -101,7 +315,7 @@
                             <tr>
                                 <td style="width: 120px;">
                                     <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                         src="img/guide1.jpg">
+                                         src="${event.avatar.path}">
                                 </td>
                                 <td>
                                 <div><a href="#">"${event.getEventNameAndCity()}"</a></div>
@@ -115,6 +329,10 @@
                                
                 </th>
                 <th style = "width: 60%; vertical-align: top">
+                
+                <ul id="collectionResults">
+                
+                <li id="inner-row">
                 <div style="display:inline; width: 45%; float: left; margin-left: 10px">
                     <div class="card small">
                         <div class="card-image waves-effect waves-block waves-light">
@@ -138,8 +356,10 @@
                             <p>Here is event description</p>
                         </div>
                     </div>
-                 </div>   
-                    
+                 </div> 
+                 </li>  
+                 
+                 <li id="inner-row">   
                    <div style="display:inline; width: 45%; float: left; margin-left: 10px"> 
                    <div class="card small" >
                         <div class="card-image waves-effect waves-block waves-light">
@@ -164,8 +384,9 @@
                         </div>
                     </div>
                     </div>  
-                    
+               </li>     
                  
+               <li id="inner-row">  
                <div style="display:inline; width: 45%; float: left; margin-left: 10px">
                     <div class="card small">
                         <div class="card-image waves-effect waves-block waves-light">
@@ -189,8 +410,10 @@
                             <p>Here is event description</p>
                         </div>
                     </div>
-                 </div>   
+                 </div> 
+                 </li>  
                     
+                 <li id="inner-row">   
                    <div style="display:inline; width: 45%; float: left; margin-left: 10px"> 
                    <div class="card small" >
                         <div class="card-image waves-effect waves-block waves-light">
@@ -214,8 +437,9 @@
                             <p>Here is event description</p>
                         </div>
                     </div>
-                    </div>                      
-
+                    </div> 
+                </li>                         
+				</ul>
                     
                 </th>
                 
@@ -227,7 +451,7 @@
                             <tr>
                                 <td style="width: 120px;">
                                     <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                         src="img/guide1.jpg">
+                                         src="${event.avatar.path}">
                                 </td>
                                 <td>
                                 <div><a href="#">${event.getEventNameAndCity()}</a></div>

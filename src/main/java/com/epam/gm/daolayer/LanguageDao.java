@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.epam.gm.model.*;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
+import com.epam.gm.util.Constants;
 
 public class LanguageDao extends AbstractDao<Language> {
 
@@ -21,6 +22,19 @@ public class LanguageDao extends AbstractDao<Language> {
 		List<Language> result = getByField("localized", true);
 		return result;      
 	}
+	
+	//gryn
+	public List<Language> getUserLangsForLocal(User user) throws SQLException {
+		List<Language> result = null;
+		if(user == null) {
+			result = getByField("id", Constants.EN_LANG_ID);
+		} else {
+			result = new ArrayList<Language>();
+			result.add(user.getLang());
+		}
+		return result;
+	}
+	
 	
     //gryn - all not deleted langs
 	public List<Language> getAllActiveLangs() throws SQLException {
@@ -83,7 +97,7 @@ public class LanguageDao extends AbstractDao<Language> {
 //		all.forEach(x -> System.out.println(x));
 		
 		
-		List<Language> list = new LanguageDao().getAllUserLangs(14);
+		List<Language> list = new LanguageDao().getUserLangsForLocal(null);
 		for (Language language : list) {
 			System.out.println(list);
 		}
@@ -91,4 +105,6 @@ public class LanguageDao extends AbstractDao<Language> {
 	}
 
 
+	
+	
 }

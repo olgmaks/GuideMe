@@ -3,10 +3,12 @@ package com.epam.gm.services;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import com.epam.gm.calculators.EventCalculator;
 import com.epam.gm.daolayer.EventDao;
 import com.epam.gm.model.Event;
+import com.epam.gm.model.User;
 
 
 public class EventService {
@@ -52,6 +54,10 @@ public class EventService {
 	 
 	 public List<Event> getAllActiveNotDeletedGuideEventsInTheCity(Integer cityId) throws SQLException {
 		 return eventDao.getAllActiveNotDeletedGuideEventsInTheCity(cityId);
+	 }
+	 
+	 public List<Event> getBySearchMap(Map<String, String> map, User user) throws SQLException {
+		 return eventDao.getBySearchMap(map, user);
 	 }
 	 
 	  

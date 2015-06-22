@@ -45,4 +45,6 @@ public class CityService {
     public Integer getLastPureId() throws SQLException {
     	return cityDao.getLastPureId();
     }
+    
+    
 }

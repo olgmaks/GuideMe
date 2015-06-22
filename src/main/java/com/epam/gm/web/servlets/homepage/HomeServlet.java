@@ -12,9 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.gm.calculators.EventCalculator;
+import com.epam.gm.model.Country;
 import com.epam.gm.model.Event;
+import com.epam.gm.model.Language;
 import com.epam.gm.model.User;
+import com.epam.gm.services.CountryService;
 import com.epam.gm.services.EventService;
+import com.epam.gm.services.LanguageService;
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.util.Constants;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
@@ -66,6 +70,15 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 			}
 			request.setAttribute("topGuideEvents", topGuideEvents);
 	
+			
+			LanguageService languageService = new LanguageService();
+			List<Language> languageList =  languageService.getUserLangsForLocal(user);  //languageService.getLocalizedLangs();
+			request.setAttribute("languageList", languageList);
+			
+			
+			CountryService countryService = new CountryService();
+			List<Country> countryList = countryService.getAll();
+			request.setAttribute("countryList", countryList);			
 			
 			
 		
