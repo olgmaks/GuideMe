@@ -15,21 +15,35 @@
     <title>Guide ME</title>
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <%--Tag it css--%>
+    <link href="css/jquery.tagit.css" rel="stylesheet" type="text/css">
+    <link href="css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/init.js"></script>
+
+    <%--Tag it Java script--%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/search-user-filter.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.modal-trigger').leanModal();
+            $(".modal-trigger").leanModal();
         });
     </script>
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function () {
             $("#tabs").tabs();
         });
     </script>
+
+
+
 </head>
 <body>
 
@@ -41,12 +55,9 @@
     <tr>
 
 
-
         <td style=" width:20%; vertical-align: top;">
             <jsp:include page="usercabinetpanelleft.jsp"/>
         </td>
-
-
 
 
         <td style=" width:60%;vertical-align: top;">
@@ -60,16 +71,24 @@
                     <jsp:include page="userfriends.jsp"/>
                 </c:when>
 
+                <c:when test="${centralContent == 'searchuser'}">
+                    <jsp:include page="searchuser.jsp"/>
+                </c:when>
+
             </c:choose>
         </td>
 
 
-
         <td style=" width:20%;vertical-align: top;">
-            <jsp:include page="usercabinetpanelright.jsp"/>
+            <c:choose>
+                <c:when test="${centralContent == 'searchuser'}">
+                    <jsp:include page="searchrightpanel.jsp"/>
+                </c:when>
+                <c:otherwise>
+                    <jsp:include page="usercabinetpanelright.jsp"/>
+                </c:otherwise>
+            </c:choose>
         </td>
-
-
 
 
     </tr>

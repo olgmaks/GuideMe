@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
 
         $(".acceptfriendrequest").click(function () {
@@ -68,7 +68,7 @@
 
 
         $("#friendfilter").keyup(function () {
-//            console.log($(this).val());
+            console.log($(this).val());
 
             $.ajax({
                 url: "friendfilter.do",
@@ -148,7 +148,7 @@
                         <td><a class="black-text" href="userreceivedrequests.do">Incoming Requests</a></td>
                         <td><a class="black-text" href="usersentrequests.do">Sent Requests</a></td>
                         <td>
-                            <input placeholder="Filter" name="friendfilter" id="friendfilter"/>
+                            <input placeholder="Filter" name="friendfilter" id="friendfilter" />
                         </td>
                     </tr>
                 </table>

@@ -54,19 +54,20 @@ public class FriendUserDaoTest {
     @Ignore
     @Test
     public void queryBuildingTest() {
-        String GET_USER_FRIENDS_WITH_FILTER = "SELECT * FROM friend_user fu " +
+        String GET_USER_FRIENDS_WITH_FILTER = "fu " +
                 "JOIN user u ON fu.friend_id = u.id " +
                 "JOIN address a ON u.address_id = a.id " +
                 "JOIN city c ON a.city_id = c.id " +
                 "WHERE fu.user_id = %1$s AND EXISTS (" +
                 "SELECT * FROM friend_user fu1 WHERE fu.friend_id = fu1.user_id AND fu.user_id=fu1.friend_id " +
-                "AND u.first_name RLIKE '.*%2$s.*' OR u.last_name RLIKE '.*%2$s.*' OR c.name RLIKE '.*%2$s.*');";
+//            "AND (u.first_name RLIKE '.*%2$s.*' OR u.last_name RLIKE '.*%2$s.*' OR c.name RLIKE '.*%2$s.*'));";
+                "AND (u.First_name LIKE '%%%2$s%%' OR u.Last_name LIKE '%%%2$s%%' OR c.name LIKE '%%%2$s%%'));";
         System.out.println(String.format(GET_USER_FRIENDS_WITH_FILTER, 8, "w"));
     }
 
     @Test
     public void testFiter () throws SQLException {
-        List <FriendUser> friendUsers = friendUserDao.filterUserFriends(8,"e");
+        List <FriendUser> friendUsers = friendUserDao.filterUserFriends(8,"стас");
         for (FriendUser friendUser : friendUsers) {
             System.out.println(friendUser);
         }

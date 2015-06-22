@@ -32,7 +32,8 @@ public class FriendUserDao extends AbstractDao<FriendUser> {
             "JOIN city c ON a.city_id = c.id " +
             "WHERE fu.user_id = %1$s AND EXISTS (" +
             "SELECT * FROM friend_user fu1 WHERE fu.friend_id = fu1.user_id AND fu.user_id=fu1.friend_id " +
-            "AND (u.first_name RLIKE '.*%2$s.*' OR u.last_name RLIKE '.*%2$s.*' OR c.name RLIKE '.*%2$s.*'));";
+//            "AND (u.first_name RLIKE '.*%2$s.*' OR u.last_name RLIKE '.*%2$s.*' OR c.name RLIKE '.*%2$s.*'));";
+            "AND (u.First_name LIKE '%%%2$s%%' OR u.Last_name LIKE '%%%2$s%%' OR c.name LIKE '%%%2$s%%'));";
 
     public FriendUserDao() {
         super(FriendUser.class);

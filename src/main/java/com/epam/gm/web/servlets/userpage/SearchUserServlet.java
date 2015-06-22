@@ -1,5 +1,6 @@
 package com.epam.gm.web.servlets.userpage;
 
+import com.epam.gm.services.UserService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 import javax.servlet.ServletException;
@@ -13,8 +14,20 @@ import java.sql.SQLException;
  */
 public class SearchUserServlet implements HttpRequestHandler {
 
-    @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, IllegalAccessException {
+    private UserService userService;
 
+    public SearchUserServlet(){
+        userService = new UserService();
+    }
+
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException, IllegalAccessException {
+        System.out.println("search user servlet ...");
+
+
+        request.setAttribute("users", userService.getAll());
+        request.setAttribute("centralContent", "searchuser");
+        request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(request, response);
     }
 }

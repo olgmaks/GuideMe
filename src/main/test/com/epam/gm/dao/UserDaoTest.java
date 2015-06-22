@@ -4,8 +4,6 @@ import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.daolayer.UserTypeDao;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserType;
-import com.epam.gm.services.UserService;
-
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -26,9 +24,28 @@ public class UserDaoTest {
         roleUser = new UserTypeDao().getByField("name", "user").get(0);
     }
 
+    @Ignore
     @Test
     public void testGetUserById() throws SQLException {
         System.out.println(userDao.getByField("id", 8));
+    }
+@Ignore
+    @Test
+    public void searchUserByNameTest() throws SQLException {
+        List<User> users = userDao.searchUserByName("тарас");
+        for (User user : users) {
+            System.out.println(user);
+        }
+    }
+
+    @Test
+    public void searchUserByCity () throws SQLException {
+	System.out.println("test start");
+        List<User> users = userDao.searchUserByCityName("варшава");
+        for (User user : users) {
+            System.out.println(user);
+        }
+        System.out.println("test end");
     }
 
     @Ignore
@@ -93,14 +110,15 @@ public class UserDaoTest {
         updates.put("facebook_id", 265);
         userDao.updateWithCustomQuery(updates, joined, where);
     }
-    
+
+    @Ignore
     @Test
     public void test() throws SQLException {
-    	User user = userDao.getUserById(8);
-    	
-    	System.out.println("hjhjhjhj");
-    	
-    	System.out.println(user.getAddress().getCity());
+        User user = userDao.getUserById(8);
+
+        System.out.println("hjhjhjhj");
+
+        System.out.println(user.getAddress().getCity());
     }
 
 
