@@ -66,6 +66,7 @@ public class UserDao extends AbstractDao<User> {
     }
 
 
+
     public User getUserById(Integer id) throws SQLException {
         List<User> result = getByField("id", id);
         if (result.isEmpty()) {
