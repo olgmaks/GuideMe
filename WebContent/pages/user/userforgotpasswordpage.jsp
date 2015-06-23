@@ -60,8 +60,6 @@
 						Email me a link to reset a password <i
 							class="mdi-content-send right"></i>
 					</button>
-
-
 				</form>
 			</div>
 		</div>

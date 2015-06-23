@@ -19,4 +19,14 @@ public class ServiceDao extends AbstractDao<Service> {
 		return super.getByField(GUIDE_ID, guideId);
 	}
 
+	public void deleteServiceById(int id) throws IllegalAccessException,
+			SQLException {
+		super.deleteByField("", id);
+	}
+
+	public void addService(Service s) throws IllegalArgumentException,
+			IllegalAccessException, SQLException {
+		super.save(s);
+	}
+
 }

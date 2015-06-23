@@ -34,8 +34,8 @@ public class ChangePasswordServlet extends HttpServlet implements
 		User u = (User) session.getAttribute("currentUser");
 		ForgotPassword forgotPassword = (ForgotPassword) session
 				.getAttribute("currentForgotPassword");
-		String password = request.getParameter("password");
-		String repeatedPassword = request.getParameter("repeatedpassword");
+		String password = request.getParameter("password1");
+		String repeatedPassword = request.getParameter("repeatedpassword1");
 
 		System.out.println(password + "\n" + repeatedPassword);
 		if (password.equals(repeatedPassword) && password.length() >= 4

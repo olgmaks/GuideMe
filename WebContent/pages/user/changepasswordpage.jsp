@@ -41,13 +41,13 @@
 					<div class="row">
 						<div class="input-field col s12">
 							<input id="password" type="password" class="validate"
-								name="password"> <label for="password">Password</label>
+								name="password1"> <label for="password">Password</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
 							<input id="password" type="password" class="validate"
-								name="repeatedpassword"> <label for="password">Repeat
+								name="repeatedpassword1"> <label for="password">Repeat
 								Password</label>
 						</div>
 					</div>
