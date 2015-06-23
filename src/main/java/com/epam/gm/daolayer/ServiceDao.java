@@ -15,8 +15,8 @@ public class ServiceDao extends AbstractDao<Service> {
 		super(Service.class);
 	}
 
-	public List<Service> getServicesByUserId(int userId) throws SQLException {
-		return super.getByField(GUIDE_ID, userId);
+	public List<Service> getServicesByGuideId(int guideId) throws SQLException {
+		return super.getByField(GUIDE_ID, guideId);
 	}
 
 }

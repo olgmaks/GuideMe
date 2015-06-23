@@ -7,55 +7,65 @@ import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("service")
 public class Service {
-    @Column("id")
-    private Integer id;
-    @Column("guide_id")
-    private Integer guideId;
+	@Column("id")
+	private Integer id;
+	@Column("guide_id")
+	private Integer guideId;
 
-    @ForeignKey
-    @OneToMany(field = "guide_id", value = User.class)
-    private User guide;
-    @Column("name")
-    private String name;
-    @Column("price")
-    private Double price;
+	@ForeignKey
+	@OneToMany(field = "guide_id", value = User.class)
+	private User guide;
+	@Column("name")
+	private String name;
+	@Column("price")
+	private Double price;
+	@Column("description")
+	private String description;
 
-    public Integer getId() {
-	return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-	this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Integer getGuideId() {
-	return guideId;
-    }
+	public Integer getGuideId() {
+		return guideId;
+	}
 
-    public void setGuideId(Integer guideId) {
-	this.guideId = guideId;
-    }
+	public void setGuideId(Integer guideId) {
+		this.guideId = guideId;
+	}
 
-    public String getName() {
-	return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Double getPrice() {
-	return price;
-    }
+	public Double getPrice() {
+		return price;
+	}
 
-    public void setPrice(Double price) {
-	this.price = price;
-    }
+	public void setPrice(Double price) {
+		this.price = price;
+	}
 
-    @Override
-    public String toString() {
-	return "Service [id=" + id + ", guideId=" + guideId + ", name=" + name
-		+ ", price=" + price + "]";
-    }
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Override
+	public String toString() {
+		return "Service [id=" + id + ", guideId=" + guideId + ", name=" + name
+				+ ", price=" + price + "]";
+	}
 
 }

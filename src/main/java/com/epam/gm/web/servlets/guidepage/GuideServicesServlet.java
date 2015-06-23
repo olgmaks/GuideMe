@@ -7,7 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.epam.gm.daolayer.ServiceDao;
+import com.epam.gm.model.User;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class GuideServicesServlet extends HttpServlet implements
@@ -22,9 +25,13 @@ public class GuideServicesServlet extends HttpServlet implements
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException,
 			IllegalAccessException {
+		HttpSession session = request.getSession();
+		User u = (User) session.getAttribute("sessionUser");
 		request.setAttribute("centralContent", "guideservices");
+		request.setAttribute("guideservices",
+				new ServiceDao().getServicesByGuideId(u.getId()));
 		request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(
 				request, response);
-		
+
 	}
 }
