@@ -26,7 +26,8 @@ Add new service
 					<p>One Person Price: ${service.getPrice() }</p>
 				</div>
 				<div class="card-action">
-					<a href="#">Edit</a> <a href="#">delete</a>
+					<a href="deleteeditservice.do?act=edit">Edit</a> <a
+						href="deleteeditservice.do?act=delete&id=${service.getId() }">delete</a>
 				</div>
 			</div>
 		</div>

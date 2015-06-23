@@ -86,19 +86,18 @@ public class SignInFacebookServlet extends HttpServlet implements
 
 		String facebookId;
 		String firstName = null;
-		String middleNames;
 		String lastName;
-		String email;
+		String email = null;
 
 		try {
 			JSONObject json = new JSONObject(graph);
 			facebookId = json.getString("id");
 			firstName = (String) json.get("first_name");
 			lastName = (String) json.get("last_name");
-			email = (String) json.get("email");
+			// email = (String) json.get("email");
 			UserDao userDao = new UserDao();
 			boolean isValid = false;
-			logger.info(email + " signed with facebook");
+			logger.info(facebookId + " signed with facebook");
 			Map<String, Object> map = new HashMap<>();
 			if (userDao.getUserByFacebookId(facebookId) == null) {
 				User user = new User();

@@ -21,7 +21,7 @@ public class ServiceDao extends AbstractDao<Service> {
 
 	public void deleteServiceById(int id) throws IllegalAccessException,
 			SQLException {
-		super.deleteByField("", id);
+		super.deleteByField("id", id);
 	}
 
 	public void addService(Service s) throws IllegalArgumentException,
