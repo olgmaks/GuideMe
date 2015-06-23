@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.gm.dateparser.DateParser;
 import com.epam.gm.model.Address;
 import com.epam.gm.model.City;
 import com.epam.gm.model.Event;
@@ -112,76 +113,87 @@ public class SubmitAddEventServlet implements HttpRequestHandler {
 			Event event = new Event();
 
 			String name = request.getParameter("eventName");
-			String date_from = request.getParameter("dateFrom");
-			String date_to = request.getParameter("dateTo");
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-			Date dateFrom = null;
-			Date dateTo = null;
-			try {
-				dateFrom = format.parse(date_from);
-				System.out.println("dateFrom = " + dateFrom);
-				event.setDateFrom(dateFrom);
-				dateTo = format.parse(date_to);
-				event.setDateTo(dateTo);
+			StringBuilder date_frombuilder = new StringBuilder();
+			date_frombuilder.append(request.getParameter("dateFrom"));
+			date_frombuilder.append(" ");
+			date_frombuilder.append(request.getParameter("hourFrom"));
+			date_frombuilder.append(":");
+			date_frombuilder.append(request.getParameter("minuteFrom"));
+			date_frombuilder.append(":");
+			date_frombuilder.append("00");
+			String date_from = date_frombuilder.toString();
+			Date dateFrom = DateParser.StringToSqlDate(date_from);
 
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			StringBuilder date_tobuilder = new StringBuilder();
+			date_tobuilder.append(request.getParameter("dateTo"));
+			date_tobuilder.append(" ");
+			date_tobuilder.append(request.getParameter("hourTo"));
+			date_tobuilder.append(":");
+			date_tobuilder.append(request.getParameter("minuteTo"));
+			date_tobuilder.append(":");
+			date_tobuilder.append("00");
+			String date_to = date_tobuilder.toString();
+			Date dateTo = DateParser.StringToSqlDate(date_to);
 
-			String hour = request.getParameter("hour");
-			String minute = request.getParameter("minute");
-			String dayparttime = request.getParameter("dayparttime");
 			String description = request.getParameter("description");
-			String participants_limit = request.getParameter("limit");
+			String participants_limit = request.getParameter("partisipant_limit");
 
 			event.setName(name);
 			event.setDescription(description);
 			event.setParticipants_limit(Integer.parseInt(participants_limit));
+			event.setDateFrom(dateFrom);
+			event.setDateTo(dateTo);
 
 			event.setModeratorId(user.getId());
 
-			/*
-			 * Integer cityId =
-			 * Integer.parseInt(request.getParameter("cityId"));
-			 * 
-			 * // get our city CityService cityService = new CityService(); City
-			 * city = cityService.getCityById(cityId);
-			 * 
-			 * Map<Integer, Integer> cityMap = new HashMap<>(); // get analogs
-			 * List<City> cities =
-			 * cityService.getCitiesByPureId(city.getPureId()); for (City c :
-			 * cities) { cityMap.put(c.getLocalId(), c.getId()); } System.out
-			 * .println(
-			 * "saving adress ================================================================"
-			 * ); AddressService addressService = new AddressService(); Integer
-			 * newPureId = addressService.getLastPureId() + 1;
-			 * 
-			 * for (City c : cities) {
-			 * 
-			 * Address address = new Address(); address.setCityId(c.getId());
-			 * address.setLocalId(c.getLocalId()); address.setPureId(newPureId);
-			 * address.setAddress(addressMap.get(c.getLocalId()));
-			 * 
-			 * addressService.save(address); }
-			 * 
-			 * Address newAddress = addressService.getAddressByPureId(newPureId)
-			 * .get(0);
-			 */System.out
-					.println("saving user ================================================================");
+			Integer cityId = Integer.parseInt(request.getParameter("cityId")
+					.trim());
+
+			// get our city
+			CityService cityService = new CityService();
+			City city = cityService.getCityById(cityId);
+
+			Map<Integer, Integer> cityMap = new HashMap<>();
+			// get analogs
+			List<City> cities = cityService.getCitiesByPureId(city.getPureId());
+			for (City c : cities) {
+				cityMap.put(c.getLocalId(), c.getId());
+			}
+			System.out
+					.println("saving adress ================================================================");
+			AddressService addressService = new AddressService();
+			Integer newPureId = addressService.getLastPureId() + 1;
+
+			for (City c : cities) {
+
+				Address address = new Address();
+				address.setCityId(c.getId());
+				address.setLocalId(c.getLocalId());
+				address.setPureId(newPureId);
+				address.setAddress(addressMap.get(c.getLocalId()));
+
+				addressService.save(address);
+			}
+
+			Address newAddress = addressService.getAddressByPureId(newPureId)
+					.get(0);
+
+			System.out
+					.println("saving event ================================================================");
 			System.out.println("name = " + name);
 			System.out.println("dateFrom = " + dateFrom);
 			System.out.println("dateTo = " + dateTo);
-			System.out.println("hour = " + hour);
-			System.out.println("minute = " + minute);
-			System.out.println("dayparttime = " + dayparttime);
+
 			System.out.println("description = " + description);
 			System.out.println("participants_limit = " + participants_limit);
 
-			// System.out.println("adressId = " + newAddress.getId());
+			System.out.println("adressId = " + newAddress.getId());
+
+			event.setAddressId(newAddress.getId());
 
 			EventService eventService = new EventService();
+
 			try {
 				eventService.saveEvent(event);
 			} catch (IllegalArgumentException | IllegalAccessException e) {

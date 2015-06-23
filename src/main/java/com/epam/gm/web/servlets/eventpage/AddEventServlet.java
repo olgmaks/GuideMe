@@ -22,16 +22,14 @@ public class AddEventServlet implements HttpRequestHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
-		CountryService countryService = new CountryService();
-		CityService cityService = new CityService();
+		LanguageService languageService = new LanguageService();
+		List<Language> languageList = languageService.getLocalizedLangs();
+		request.setAttribute("languageList", languageList);
 		
+		
+		CountryService countryService = new CountryService();
 		List<Country> countryList = countryService.getAll();
 		request.setAttribute("countryList", countryList);
-		
-		int country_id=0;
-		
-		List<City> cityList = cityService.getCitiesByCountryId(country_id);
-		request.setAttribute("cityList", cityList);
 
 		RequestDispatcher requestDispatcher = request
 				.getRequestDispatcher("pages/addEvent.jsp");
