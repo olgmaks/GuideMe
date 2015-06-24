@@ -17,6 +17,7 @@
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
+<script src="js/login.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.modal-trigger').leanModal();
@@ -26,6 +27,8 @@
 	$(document).ready(function() {
 		$("#tabs").tabs();
 	});
+</script>
+
 </script>
 </head>
 <body>
@@ -38,6 +41,7 @@
 	</script> -->
 	<jsp:include page="/pages/header.jsp" />
 	<jsp:include page="../home/loginmodal.jsp" />
+	<jsp:include page="../home/logoutmodal.jsp" />
 	<br>
 	<br>
 	<div>

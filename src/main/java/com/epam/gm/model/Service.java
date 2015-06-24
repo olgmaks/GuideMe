@@ -21,6 +21,8 @@ public class Service {
 	private Double price;
 	@Column("description")
 	private String description;
+	@Column("deleted")
+	private int deleted;
 
 	public Integer getId() {
 		return id;
@@ -60,6 +62,21 @@ public class Service {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public boolean isDeleted() {
+		boolean newBoolean = false;
+		if (deleted == 1) {
+			newBoolean = true;
+		}
+		return newBoolean;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = 0;
+		if (deleted == true) {
+			this.deleted = 1;
+		}
 	}
 
 	@Override

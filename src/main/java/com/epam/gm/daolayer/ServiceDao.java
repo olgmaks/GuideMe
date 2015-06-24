@@ -1,7 +1,10 @@
 package com.epam.gm.daolayer;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.epam.gm.model.Service;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
@@ -16,7 +19,14 @@ public class ServiceDao extends AbstractDao<Service> {
 	}
 
 	public List<Service> getServicesByGuideId(int guideId) throws SQLException {
-		return super.getByField(GUIDE_ID, guideId);
+		List<Service> newList = new ArrayList<Service>();
+		for (Service s : super.getByField(GUIDE_ID, guideId)) {
+			if (!s.isDeleted()) {
+				newList.add(s);
+			}
+		}
+
+		return newList;
 	}
 
 	public void deleteServiceById(int id) throws IllegalAccessException,
@@ -27,6 +37,16 @@ public class ServiceDao extends AbstractDao<Service> {
 	public void addService(Service s) throws IllegalArgumentException,
 			IllegalAccessException, SQLException {
 		super.save(s);
+	}
+
+	public void updateServiceToDeletedById(int id) {
+		Map<String, Object> updates = new HashMap<String, Object>();
+		updates.put("deleted", 1);
+		try {
+			updateById(id, updates);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

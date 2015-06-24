@@ -30,9 +30,10 @@ public class DeleteEditServiceServlet extends HttpServlet implements
 		if (act.equals("delete")) {
 			if (request.getParameter("id") != null) {
 				id = Integer.parseInt(request.getParameter("id"));
-				serviceDao.deleteServiceById(id);
+				serviceDao.updateServiceToDeletedById(id);
 			}
 		}
+
 		System.out.println(act + "\n" + id);
 		response.sendRedirect(response.encodeRedirectURL("guideservices.do"));
 

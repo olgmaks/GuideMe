@@ -15,6 +15,7 @@
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
+<script src="js/login.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.modal-trigger').leanModal();
@@ -25,11 +26,13 @@
 		$("#tabs").tabs();
 	});
 </script>
-<title>Forgot Password page</title>
+<title>Successful changed</title>
 </head>
 <body>
+
 	<jsp:include page="/pages/header.jsp" />
-	<jsp:include page="../home/loginmodal.jsp" /><br>
+	<jsp:include page="../home/loginmodal.jsp" />
+	<jsp:include page="../home/logoutmodal.jsp" />
 	<br>
 	<br>
 	<br>
@@ -51,7 +54,7 @@
 								Password</label>
 						</div>
 					</div>
-			
+
 					<button class="btn waves-effect waves-light" type="submit"
 						name="action">
 						Change <i class="mdi-content-send right"></i>

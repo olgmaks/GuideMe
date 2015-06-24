@@ -53,20 +53,23 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 					isValid = true;
 					map.put("userEmail", user.getEmail());
 					map.put("sessionUser", user);
+
 				} else {
 					isValid = false;
 				}
 			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
+		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		map.put("isValid", isValid);
 		response.getWriter().write(new Gson().toJson(map));
-
-	/*	RequestDispatcher requestDispatcher = request
-				.getRequestDispatcher("index.jsp");
+		// System.out.println(SessionRepository.getSessionUser(request));
+/*
+		RequestDispatcher requestDispatcher = request
+				.getRequestDispatcher("home.do");
 		requestDispatcher.forward(request, response);*/
 
 	}

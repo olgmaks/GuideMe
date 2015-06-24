@@ -5,7 +5,7 @@
 	<div class="modal-content">
 		<img class="square"
 			style="height: 120px; width: 120px; object-fit: cover"
-			src="${sessionUser.avatar.path}">
+			src="${sessionUser.avatar.path }" id="userphoto">
 		<p style="margin-left: 40%;" id="helloMessageOnLogoutModal">Hello,
 			${sessionUser.firstName} ${sessionUser.lastName}</p>
 

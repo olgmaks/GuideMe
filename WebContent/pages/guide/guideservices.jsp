@@ -8,6 +8,7 @@
 <br>
 <br>
 <jsp:include page="createservicemodal.jsp" />
+<jsp:include page="createservicemodal.jsp" />
 <a style="margin-left: 2%;"
 	class="modal-trigger btn-floating btn-large waves-effect waves-light red"
 	href="#createservicemodal" id="createserivece"> <i
@@ -26,8 +27,9 @@ Add new service
 					<p>One Person Price: ${service.getPrice() }</p>
 				</div>
 				<div class="card-action">
-					<a href="deleteeditservice.do?act=edit">Edit</a> <a
-						href="deleteeditservice.do?act=delete&id=${service.getId() }">delete</a>
+					<%-- <a class="modal-trigger"
+						href="deleteeditservice.do?act=edit&id=${service.getId() }">Edit</a> --%>
+					<a href="deleteeditservice.do?act=delete&id=${service.getId() }">delete</a>
 				</div>
 			</div>
 		</div>

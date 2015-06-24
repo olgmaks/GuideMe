@@ -1,5 +1,5 @@
 
-<div id="createservicemodal" class="modal"
+<div id="editservicemodal" class="modal"
 	style="margin-right: 55%; width: 25%;">
 
 	<div class="modal-content">
@@ -23,7 +23,7 @@
 					</div>
 				</div>
 				<button class="btn waves-effect waves-light" type="submit"
-					name="action">Add</button>
+					name="action">Save</button>
 			</form>
 		</div>
 		<p style="margin-right: 40%;"></p>

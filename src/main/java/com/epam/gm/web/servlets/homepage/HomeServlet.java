@@ -27,67 +27,67 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 	private static final long serialVersionUID = 1L;
 
 	private EventService eventService = new EventService();
-	
+
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		
-		User user =  SessionRepository.getSessionUser(request);
+	
+		User user = SessionRepository.getSessionUser(request);
 		Integer userId = null;
 		Integer cityId = null;
-		if(user != null) {
+		if (user != null) {
 			userId = user.getId();
-			if(user.getAddress() != null && user.getAddress().getCity() != null)
+			if (user.getAddress() != null
+					&& user.getAddress().getCity() != null)
 				cityId = user.getAddress().getCity().getId();
-				
+
 		}
-		
-		//gryn - top user's events
-		
+
+		// gryn - top user's events
+
 		try {
-			//user events
-			List<Event> topUserEvents = eventService.getAllActiveNotDeletedUserEvents();
+			// user events
+			List<Event> topUserEvents = eventService
+					.getAllActiveNotDeletedUserEvents();
 			EventCalculator.sortEventsByPoints(topUserEvents, userId);
-			
-			if(topUserEvents.size() > Constants.TOP_NUMBER) {
-				topUserEvents = new ArrayList<Event>(topUserEvents.subList(0, Constants.TOP_NUMBER));
+
+			if (topUserEvents.size() > Constants.TOP_NUMBER) {
+				topUserEvents = new ArrayList<Event>(topUserEvents.subList(0,
+						Constants.TOP_NUMBER));
 			}
 			request.setAttribute("topUserEvents", topUserEvents);
 
-			
-			//guide events
+			// guide events
 			List<Event> topGuideEvents = null;
-			if(cityId == null) 
-				topGuideEvents = eventService.getAllActiveNotDeletedGuideEvents();
+			if (cityId == null)
+				topGuideEvents = eventService
+						.getAllActiveNotDeletedGuideEvents();
 			else
-				topGuideEvents = eventService.getAllActiveNotDeletedGuideEventsInTheCity(cityId);
-			
+				topGuideEvents = eventService
+						.getAllActiveNotDeletedGuideEventsInTheCity(cityId);
+
 			EventCalculator.sortEventsByPoints(topGuideEvents, userId);
-			
-			if(topGuideEvents.size() > Constants.TOP_NUMBER) {
-				topGuideEvents = new ArrayList<Event>(topGuideEvents.subList(0, Constants.TOP_NUMBER));
+
+			if (topGuideEvents.size() > Constants.TOP_NUMBER) {
+				topGuideEvents = new ArrayList<Event>(topGuideEvents.subList(0,
+						Constants.TOP_NUMBER));
 			}
 			request.setAttribute("topGuideEvents", topGuideEvents);
-	
-			
+
 			LanguageService languageService = new LanguageService();
-			List<Language> languageList =  languageService.getUserLangsForLocal(user);  //languageService.getLocalizedLangs();
+			List<Language> languageList = languageService
+					.getUserLangsForLocal(user); // languageService.getLocalizedLangs();
 			request.setAttribute("languageList", languageList);
-			
-			
+
 			CountryService countryService = new CountryService();
 			List<Country> countryList = countryService.getAll();
-			request.setAttribute("countryList", countryList);			
-			
-			
-		
+			request.setAttribute("countryList", countryList);
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		RequestDispatcher requestDispatcher = request
 				.getRequestDispatcher("pages/index.jsp");
 		requestDispatcher.forward(request, response);

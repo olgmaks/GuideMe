@@ -30,8 +30,9 @@
                     data: $("#loginform").serialize(),
                     success: function (data) {
 
-                        if (data.isValid) {
+                        if (data.isValid) {                     
                             console.log(data);
+                            $('#userphoto').attr("src", data.sessionUser.avatar.path);
                             $('#signinlabel').text(
                                     data.sessionUser.email);
                             $('#signinlabel').attr("href", "#logoutModal");
@@ -49,8 +50,7 @@
                 return false;
             });
         });
-    </script>
-    
+    </script>    
     <script type="text/javascript">
         $(document).ready(function () {
             $("#searchform").submit(function () {
