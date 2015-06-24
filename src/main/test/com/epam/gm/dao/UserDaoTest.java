@@ -24,12 +24,22 @@ public class UserDaoTest {
         roleUser = new UserTypeDao().getByField("name", "user").get(0);
     }
 
+    @Test
+    public void getByTags() throws SQLException {
+        String tags = "'music'";
+        List<User> users = userDao.searchUserByTags(tags,0);
+        for (User user : users) {
+            System.out.println(user);
+        }
+    }
+
     @Ignore
     @Test
     public void testGetUserById() throws SQLException {
         System.out.println(userDao.getByField("id", 8));
     }
-@Ignore
+
+    @Ignore
     @Test
     public void searchUserByNameTest() throws SQLException {
         List<User> users = userDao.searchUserByName("тарас");
@@ -38,9 +48,10 @@ public class UserDaoTest {
         }
     }
 
+    @Ignore
     @Test
-    public void searchUserByCity () throws SQLException {
-	System.out.println("test start");
+    public void searchUserByCity() throws SQLException {
+        System.out.println("test start");
         List<User> users = userDao.searchUserByCityName("варшава");
         for (User user : users) {
             System.out.println(user);

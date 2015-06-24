@@ -18,10 +18,10 @@
                     <%--<label for="isUser">User</label></div>--%>
                         <label for="user-type-select" style="margin-top: -35px;">User or Guide</label>
                         <select class="browser-default" style="height: 30px;" id="user-type-select">
-                            <option value="" disabled selected>No matter</option>
-                            <option value="1">Guides</option>
-                            <option value="2">Users</option>
-                            <option value="3">No matter</option>
+                            <option value="all" disabled selected>No matter</option>
+                            <option value="guide">Guides</option>
+                            <option value="user">Users</option>
+                            <option value="all">No matter</option>
                         </select>
                 </div>
 
@@ -41,7 +41,7 @@
                 <div class="input-field" style="margin-top: 35px;">
                     <label for="city-select" style="margin-top: -35px;">Specify city</label>
                     <select class="browser-default" style="height: 30px;" id="city-select">
-                        <option value="" disabled selected>City</option>
+
                         <option value="1">Option 1</option>
                         <option value="2">Option 2</option>
                         <option value="3">Option 3</option>

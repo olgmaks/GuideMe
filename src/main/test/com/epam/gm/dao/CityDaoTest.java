@@ -20,7 +20,17 @@ public class CityDaoTest {
 		cityDao = new CityDao();
 	}
 
-	
+
+	@Test
+	public void testCityByLocal() throws SQLException {
+		List<City> cities = cityDao.getCitiesByLocalId(3);
+		for (City city : cities) {
+			System.out.println(city);
+		}
+
+	}
+
+	@Ignore
 	@Test
 	public void test() throws SQLException {
 		List<City> cities = cityDao.getAll();

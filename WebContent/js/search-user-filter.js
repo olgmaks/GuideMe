@@ -36,38 +36,38 @@ $(function () {
         },
         singleField: true,
         afterTagAdded: function (event, ui) {
-            sendAjaxRequest(getSearchOptions());
+            sendAjaxRequest(getSearchUserFilter());
         },
         afterTagRemoved: function (event, ui) {
-            sendAjaxRequest(getSearchOptions());
+            sendAjaxRequest(getSearchUserFilter());
         }
     });
 
 });
 
 
-function getSearchOptions() {
-    var userNameInput = $("#userNameInput").val();
-    var tags = $("[name = 'tags']").val();
-    var searchOptions = {from: "userSearchOptions", userNameInput: userNameInput, tags: tags};
-    console.log(userNameInput);
-    console.log(tags);
-    return searchOptions;
-}
-
-
-function sendAjaxRequest(searchOptions) {
-    $.ajax({
-        url: "searchuserfilter.do",
-        type: "post",
-        dataType: "json",
-        data: searchOptions,
-        //data: $("#searchOptions").serialize(),
-        success: function () {
-            console.log('request success');
-        }
-    });
-}
+//function getSearchOptions() {
+//    var userNameInput = $("#userNameInput").val();
+//    var tags = $("[name = 'tags']").val();
+//    var searchOptions = {from: "userSearchOptions", userNameInput: userNameInput, tags: tags};
+//    console.log(userNameInput);
+//    console.log(tags);
+//    return searchOptions;
+//}
+//
+//
+//function sendAjaxRequest(searchOptions) {
+//    $.ajax({
+//        url: "searchuserfilter.do",
+//        type: "post",
+//        dataType: "json",
+//        data: searchOptions,
+//        //data: $("#searchOptions").serialize(),
+//        success: function () {
+//            console.log('request success');
+//        }
+//    });
+//}
 
 $(document).ready(function () {
     $("#userNameInput").keyup(function () {
@@ -76,6 +76,112 @@ $(document).ready(function () {
         //se
         //userNameHidden.val(userNameInput);
         //console.log(userNameHidden.val());
-        sendAjaxRequest(getSearchOptions());
+        sendAjaxRequest(getSearchUserFilter());
     });
 });
+
+$(document).ready(function () {
+    console.log('call city ajax');
+    $.ajax({
+        url: "getCitiesByCountry.do",
+        type: "post",
+        dataType: "json",
+        data: {cityRequestType: 'getAllCity'},
+        success: function (data) {
+            console.log('request success');
+            console.log(data);
+
+            var citySelect = $("#city-select");
+            citySelect.empty();
+            citySelect.append("<option value='' disabled selected>City</option>");
+
+            $.each(data, function (counts, item) {
+                citySelect.append("<option value='" + item + "'>" + item + "</option>");
+            });
+        }
+    });
+});
+
+$(document).ready(function () {
+    $(".send-friend-request").click(function () {
+        alert('friend-request clicked');
+    });
+});
+
+$(document).ready(function () {
+    $("#city-select").change(function () {
+        sendAjaxRequest(getSearchUserFilter());
+    });
+});
+
+$(document).ready(function () {
+    $("#user-type-select").change(function () {
+        sendAjaxRequest(getSearchUserFilter());
+    });
+});
+
+function getSearchUserFilter() {
+    var userNameInput = $("#userNameInput").val();
+    var tags = $("[name = 'tags']").val();
+    var cityName = $("#city-select").val();
+    var tagsMatches = 0;
+    var searchRole = $("#user-type-select").val();
+
+    if (searchRole === null) {
+        searchRole = "all";
+    }
+
+    var searchUserFilter = {
+        userNameInput: userNameInput,
+        tags: tags,
+        cityName: cityName,
+        tagsMatches: tagsMatches,
+        searchRole: searchRole
+    };
+    console.log(searchUserFilter);
+    return searchUserFilter;
+}
+
+function sendAjaxRequest(searchUserFilter) {
+    console.log('ajax request preparation');
+
+    var sendFriendRequestClass = "send-friend-request";
+
+    function getCard(user) {
+
+        var pathToImage = user.avatar.path;
+        var fName= user.fistName;
+        var lName = user.lastName;
+        var cityName = user.address.city.name;
+        var sendFriendRequestId = "sendFriendRequestId"+user.Id;
+        var sendFriendRequestClass = "send-friend-request";
+
+        return "<div class='card' style='height: 150px; width: 300px; float: left; margin-left: 10px;'>" +
+            "<table><tr><td style='width: 120px; vertical-align: top;'>" +
+            "<img class='circle' style='height: 120px; width: 120px; object-fit: cover' src='" + pathToImage + "'></td><td><div>" +
+            "<div style='height: 40px;'><a href='#_' class='black-text'>" + fName + " " + lName + "</a></div>" +
+            "<div style='height: 40px;'><br><span>" + cityName + "</span></div>" +
+            "<div style='float: right; vertical-align: bottom; margin-bottom: 10px; margin-right: 10px;'>" +
+            "<a href='#_' id='" + sendFriendRequestId + "' class='btn blue waves-effect waves-light " + sendFriendRequestClass + "'>" +
+            "ADD</a></div></div></td></tr></table>" +
+            "</div>";
+    }
+
+    $.ajax({
+        url: "searchuserfilter.do",
+        type: "post",
+        dataType: "json",
+        data: getSearchUserFilter(),
+        success: function (data) {
+            console.log(data);
+
+            var cardCollection = $("#inner-row");
+            cardCollection.empty();
+
+            $.each(data, function (counts, item) {
+                cardCollection.append(getCard(item));
+            });
+
+        }
+    });
+}

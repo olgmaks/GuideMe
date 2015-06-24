@@ -24,26 +24,41 @@ public class UserDao extends AbstractDao<User> {
     private static final String USER_TYPE_FIELD = "user_type_id";
     private static final String USER_FACEBOOK_ID = "facebook_id";
     private static final String USER_VK_ID = "vk_id";
+
     private static final String GET_USER_BY_CITY_NAME_SQL = "JOIN address ON user.address_id = address.id "
-            + "JOIN city ON address.city_id = city.id WHERE name = '%S'";
+            + "JOIN city ON address.city_id = city.id WHERE name = '%S' AND user.is_active=true";
 
     private static final String SEARCH_USER_BY_NAME = "u " +
-            "WHERE (u.First_name LIKE '%%%1$s%%' OR u.Last_name LIKE '%%%1$s%%')";
+            "WHERE (u.First_name LIKE '%%%1$s%%' OR u.Last_name LIKE '%%%1$s%%') AND u.is_active=true";
 
-    private static final String SEARCH_USER_BY_CITY_NAME = "u " +
-            "JOIN address a ON u.address_id = a.id JOIN city c ON a.city_id = c.pure_id " +
-            "WHERE c.name LIKE '%s' GROUP BY u.id";
+    private static final String SEARCH_USER_BY_CITY_NAME = "u" +
+            "  JOIN address a ON u.address_id = a.id" +
+            "  JOIN city c ON a.city_id = c.id  WHERE c.id in (" +
+            "    SELECT c1.id FROM city c1 WHERE c1.pure_id = (" +
+            "    SELECT c2.pure_id FROM city c2 WHERE c2.name LIKE '%%%s%%' GROUP BY a.pure_id)" +
+            "  ) AND u.is_active=true GROUP BY u.id ;";
 
     private static final String SEARCH_USER_BY_TAGS =
-            "SELECT *  FROM user cusrrentUser WHERE EXISTS(" +
+            "currentUser WHERE EXISTS(" +
             "SELECT ut.user_id , COUNT(*) AS tag_count" +
             "  FROM user_tag ut" +
             "  JOIN user u ON ut.user_id = u.id" +
             "  JOIN tag t ON ut.tag_id = t.id" +
-            "  WHERE cusrrentUser.id = ut.user_id and t.name  IN (%S)" +
-            "  GROUP BY ut.user_id, u.first_name" +
-            "  HAVING tag_count >= %S" +
-            ")";
+            "  WHERE currentUser.id = ut.user_id and t.name  IN (%s)" +
+            "  GROUP BY currentUser.id" +
+            "  HAVING tag_count >= %s" +
+            ") AND currentUser.is_active=true";
+
+    private static final String SEARCH_USER_NON_FRIEND = "u WHERE u.id not in (" +
+            "  SELECT fu.friend_id FROM  friend_user fu WHERE fu.user_id = %1$s AND EXISTS (" +
+            "  SELECT * FROM friend_user fu1 WHERE fu.friend_id = fu1.user_id AND fu.user_id=fu1.friend_id)" +
+            "  ) AND not u.id=%1$s AND u.is_active=true";
+
+    private static final String SEARCH_USER_GUIDE = "u JOIN user_type ut ON u.user_type_id = ut.id " +
+            "WHERE ut.name = 'guide' AND u.is_active=true";
+
+    private static final String SEARCH_USER_NON_GUIDE = "u JOIN user_type ut ON u.user_type_id = ut.id " +
+            "WHERE ut.name = 'user' AND u.is_active=true ";
 
     private static final String SEARCH_USER_AGE_RANGE = "";
     
@@ -59,10 +74,15 @@ public class UserDao extends AbstractDao<User> {
         super(User.class);
     }
 
-    public void saveUser(User user) throws IllegalArgumentException,
+    public void saveUser(User  user) throws IllegalArgumentException,
             IllegalAccessException, SQLException {
         super.save(user);
     }
+
+
+    /*
+        Search user methods for future intersection (Maksymuk)
+     */
 
     public List<User> searchUserByName(String filterNameInput) throws SQLException {
         return super.getWithCustomQuery(String.format(SEARCH_USER_BY_NAME, filterNameInput));
@@ -70,6 +90,25 @@ public class UserDao extends AbstractDao<User> {
 
     public List<User> searchUserByCityName (String cityName) throws SQLException {
         return super.getWithCustomQuery(String.format(SEARCH_USER_BY_CITY_NAME, cityName));
+    }
+
+
+    //tags example : String : ['music','photo','camping']
+    public List<User> searchUserByTags (String tags, int matches) throws SQLException {
+        return super.getWithCustomQuery(String.format(SEARCH_USER_BY_TAGS,tags,matches));
+    }
+
+    public List<User> searchNonFriendsUsers(Integer searcherId) throws SQLException {
+        return super.getWithCustomQuery(String.format(SEARCH_USER_NON_FRIEND,searcherId));
+    }
+
+
+    public List<User> searchUserGuide() throws SQLException {
+        return  super.getWithCustomQuery(SEARCH_USER_GUIDE);
+    }
+
+    public List<User> searchUserNonGuide() throws SQLException {
+        return super.getWithCustomQuery(SEARCH_USER_NON_GUIDE);
     }
 
 

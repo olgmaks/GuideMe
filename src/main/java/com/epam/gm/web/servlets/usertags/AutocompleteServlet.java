@@ -35,33 +35,15 @@ public class AutocompleteServlet implements HttpRequestHandler {
 //		}
 
         if (request.getParameter("getTags").equals("userSearchTags")) {
-
             System.out.println("get tags has been called");
-
             List<Tag> tags = tagService.getAllActiveTags();
-
-//            StringBuilder result = new StringBuilder();
             List<String> list = new ArrayList<>();
             for (Tag tag : tags) {
                 list.add(tag.getName());
-//                result.append("'"+tag.getName()+"',");
             }
-
-//            Map<String, Object> responseMap = new HashMap<>();
-
-//            responseMap.put("result", list);
-
             response.setCharacterEncoding("UTF-8");
-
             response.setContentType("application/json");
-
             System.out.println(list);
-
-//                        String s = "";
-//            for (String s1 : list) {
-//                s +="'"+s1+"',";
-//            }
-//            s=s.substring(0,s.length()-1);
             response.getWriter().write(new Gson().toJson(list));
             return;
         }

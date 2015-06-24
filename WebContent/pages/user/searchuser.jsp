@@ -33,12 +33,27 @@
 
 
                 <c:forEach var="user" items="${users}">
-                    <form id="userFriendFormWithId${user.id}">
-                        <input type="hidden" id="userFriendId" class="userFriendId" name="userFriendId"
-                               value="${user.id}"></form>
-                    <span>${user.id} ${user.firstName} ${user.lastName}</span>
-
-                </c:forEach>
+                    <div class='card' style='height: 150px; width: 300px; float: left; margin-left: 10px;'>
+                        <table>
+                            <tr>
+                                <td style='width: 120px; vertical-align: top;'>
+                                    <img class='circle' style='height: 120px; width: 120px; object-fit: cover' src='${user.avatar.path}'></td>
+                                <td>
+                                    <div>
+                                        <div style="height: 40px;"><a href='#_'
+                                                                      class='black-text'>${user.firstName} ${user.lastName}</a>
+                                        </div>
+                                        <div style="height: 40px;"><br><span>${user.address.city.name}</span></div>
+                                        <div style="float: right; vertical-align: bottom; margin-bottom: 10px; margin-right: 10px;">
+                                            <a href='#_' id='{3}' class='btn blue send-friend-request waves-effect waves-light {3}'>
+                                                ADD</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    </c:forEach>
 
 
             </li>

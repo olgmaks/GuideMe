@@ -27,15 +27,24 @@ public class CityService {
 		
 		return map;
 	}
-	
+
+	public List<City> getCitiesByLocalId(int localId) throws SQLException {
+		return cityDao.getCitiesByLocalId(localId);
+	}
+
+	public List<City> getCitiesByEnglishLocal() throws SQLException {
+		//3 correspond to english id location
+		return cityDao.getCitiesByLocalId(3);
+	}
+
     //gryn
     public City getCityById(Integer id) throws SQLException {
     	return cityDao.getCityById(id);
     }
     
     //gryn
-    //Получити міста аналоги в різних мовах:
-    //Lviv - Львів - Львов
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ:
+    //Lviv - пїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅ
     public List<City> getCitiesByPureId(Integer pureId) throws SQLException {
     	return cityDao.getCitiesByPureId(pureId);
     			
