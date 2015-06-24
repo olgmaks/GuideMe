@@ -1,23 +1,26 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Admin event</title>
+    <title>User Cabinet</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
     <title>Guide ME</title>
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+   	<link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
 	<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
-	
-  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-  <link rel="shortcut icon" href="http://designshack.net/favicon.ico">
+	<!-- Include jTable script file. -->
+	<link rel="shortcut icon" href="http://designshack.net/favicon.ico">
   <link rel="icon" href="http://designshack.net/favicon.ico">
   <link rel="stylesheet" type="text/css" media="all" href="css/styleUserProfile.css">
-  
+  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+
   <link type="text/css" rel="stylesheet" href="css/jquery.ratings.css" />
-    <script src="js/jquery-1.3.2.min.js"></script>
+    
     <script src="js/jquery.ratings.js"></script>
+    
     <script type="text/javascript">
     $(document).ready(function() {
     	
@@ -38,10 +41,13 @@
 		}
 	
 		</script>
-   
+  
 </head>
 <body>
+
+
 <jsp:include page="adminHeader.jsp"/>
+
 
 <table>
     <tr>
@@ -69,11 +75,9 @@
        <p><span>to Date</span><c:out value="${event.dateTo}"/></p>
        <p><span>address</span><c:out value="${event.address.address}"/></p>
        <p><span>city</span><c:out value="${event.address.city.name}"/></p>   
-      
-       
        <c:choose>
 		    <c:when test="${not empty userLogined}">
-		     <div id="ratingEvent"></div> <br />
+				  <div id="ratingEvent"></div> <br />
 		       <form action="adminEventRequest.do?action=commentEvent" method="POST" >
 		       <div class="row">
 				        <div class="input-field col s6">
@@ -142,7 +146,23 @@
 <!--       </section> -->
     </div><!-- @end #content -->
   </div><!-- @end #w -->
-
+<script type="text/javascript">
+$(function(){
+  $('#profiletabs ul li a').on('click', function(e){
+    e.preventDefault();
+    var newcontent = $(this).attr('href');
+    
+    $('#profiletabs ul li a').removeClass('sel');
+    $(this).addClass('sel');
+    
+    $('#content section').each(function(){
+      if(!$(this).hasClass('hidden')) { $(this).addClass('hidden'); }
+    });
+    
+    $(newcontent).removeClass('hidden');
+  });
+});
+</script>
         </td>
 
     </tr>
@@ -151,3 +171,5 @@
 
 </body>
 </html>
+
+
