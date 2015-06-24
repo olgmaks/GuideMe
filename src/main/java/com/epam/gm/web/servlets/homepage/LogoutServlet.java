@@ -19,7 +19,8 @@ public class LogoutServlet extends HttpServlet implements HttpRequestHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         request.getSession(true).invalidate();
-        request.getRequestDispatcher("home.do").forward(request, response);
+        //request.getRequestDispatcher("home.do").forward(request, response);
+        response.sendRedirect("home.do");
     }
 
 }

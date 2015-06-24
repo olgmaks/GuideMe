@@ -54,6 +54,7 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 					
 					//gryn
 					CookieUtil.saveLastUser(response, user);
+					System.out.println("**************saved cookie = " + user.getEmail());
 					
 					isValid = true;
 					map.put("userEmail", user.getEmail());

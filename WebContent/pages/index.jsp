@@ -36,6 +36,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#loginform").submit(function () {
+            	
+            	
+            	
                 $.ajax({
                     url: 'login.do',
                     type: 'GET',
@@ -43,7 +46,8 @@
                     data: $("#loginform").serialize(),
                     success: function (data) {
 
-                        if (data.isValid) {                     
+                        if (data.isValid) {      
+                        	
                             console.log(data);
                             $('#userphoto').attr("src", data.sessionUser.avatar.path);
                             $('#signinlabel').text(
@@ -54,17 +58,31 @@
                             var helloMessage = 'Hello, ' + data.sessionUser.firstName + ' ' + data.sessionUser.lastName;
                             console.log(helloMessage);
                             $('#helloMessageOnLogoutModal').text(helloMessage);
+
+                            Materialize.toast('Guide me! :)' , 1000,'',function(){   
+                            	window.location.href = "home.do";
+                            	window.location.reload(true);
+                            });
+                            
                         } else {
+                        	
                             $('#password').val('');
                             $('#errorMessage').text('Email or/and password are not valid. Please try again');
+                            
                         }
                     }
                 });
                 
                 
-                window.location.href = "home.do";
-                window.location.reload();
+                //window.location.href = "home.do";
+                //window.location.reload(true);
                 //alert('Logged!');
+//                 Materialize.toast('Hi!', 3000,'',function(){   
+//                 	window.location.href = "home.do";
+//                 	window.location.reload(true);
+//                 });
+                
+                //$("#homeform").submit();
                 
                 return false;
             });
@@ -155,6 +173,12 @@
 
 <div class="row">
     <div class="col s12" style="margin-top: 20px;">
+    
+    	<input type = "hidden" id="logResult" name="logResult">
+    
+    	<form action="home.do" method="post" id="homeform" name="homeform">
+    	
+    	</form>
         
         <form action="searchindexpage.do" method="post" id="searchform" name="searchform">
         <ul class="collection">
@@ -364,32 +388,35 @@
                 <th style = "width: 60%; vertical-align: top">
                 
                 <ul id="collectionResults">
+                <c:forEach items="${requestScope.lastEvents}" var = "event">
                 
                 <li id="inner-row">
                 <div style="display:inline; width: 45%; float: left; margin-left: 10px">
                     <div class="card small">
                         <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="img/guide1.jpg">
+                            <img class="activator" src="${event.avatar.path}">
                         </div>
                         <div class="card-content">
 									  <span class="black-text">
-                                          Event Name
+                                          ${event.name}, ${event.moderator.firstName}  
                                           <i class="mdi-navigation-more-vert right"></i>
                                       </span>
 
                             <p>
-                                <a href="#">Event details</a>
+                                <a href='eventDetail.do?id=${event.id}'>${event.dateFrom} - ${event.dateTo}, rate: ${Math.round(event.points)}</a>
                             </p>
                         </div>
                         <div class="card-reveal">
-									<span class="card-title grey-text text-darken-4">Card
-										Title <i class="mdi-navigation-close right"></i>
+									<span class="card-title grey-text text-darken-4">${event.name}
+										<i class="mdi-navigation-close right"></i>
 									</span>
 
-                            <p>Here is event description</p>
+                            <p>${event.description}</p>
                         </div>
                     </div>
                  </div> 
+                  </c:forEach>    
+                 
                  </li>  
                 
                 
@@ -437,7 +464,7 @@
                                          src="${usr.avatar.path}">
                                 </td>
                                 <td>
-                                <div><a href="#">${usr.getNameCityPoints()}</a></div>
+                                <div><a href='adminUserProfile.do?id=${usr.id}'>${usr.getNameCityPoints()}</a></div>
                                 </td>
                             </tr>
                         </table>

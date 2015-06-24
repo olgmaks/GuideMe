@@ -51,6 +51,8 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 		//gryn - top user's events
 		try {
 			Integer lastCountryId = CookieUtil.getLastCountryId(request);
+			System.out.println("*************------------------*******************lastCountryId = " + lastCountryId);
+			System.out.println("************* user = " + user);
 			
 			//user events
 			List<Event> topUserEvents = eventService.getAllNotDeletedEventsInTheCountry(lastCountryId);
