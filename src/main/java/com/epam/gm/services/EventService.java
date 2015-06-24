@@ -66,7 +66,9 @@ public class EventService {
 		 return eventDao.getBySearchMap(map, user);
 	 }
 	 
-	  
+	 public void buildTagString(List<Event> list) throws SQLException {
+		 eventDao.buildTagString(list);
+	 }
 	 
 	 public static void main(String[] args) throws SQLException {
 			List<Event> topUserEvents = new EventService().getAllActiveNotDeletedUserEvents();

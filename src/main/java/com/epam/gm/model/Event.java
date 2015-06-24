@@ -48,6 +48,8 @@ public class Event {
 	//gryn
 	private Double points;
 
+	//gryn
+	private String tagString; 
 	
 	public Integer getAvatarId() {
 		return avatarId;
@@ -167,6 +169,14 @@ public class Event {
 
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
+	}
+	
+	public String getTagString() {
+		return tagString;
+	}
+
+	public void setTagString(String tagString) {
+		this.tagString = tagString;
 	}
 
 	//gryn

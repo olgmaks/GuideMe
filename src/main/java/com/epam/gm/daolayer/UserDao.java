@@ -233,6 +233,7 @@ public class UserDao extends AbstractDao<User> {
     	Country country = countryDao.getCountryById(countryId);
     	Integer pureId = country.getPureId();
     	
+    	
     	return getWithCustomQuery(ACTIVE_USERS_AND_GUIDES_IN_COUNTRY.replace("?", pureId.toString()));
     }
 

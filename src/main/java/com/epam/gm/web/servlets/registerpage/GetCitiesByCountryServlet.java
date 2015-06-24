@@ -27,7 +27,7 @@ public class GetCitiesByCountryServlet implements HttpRequestHandler {
 		/**will be executed with ajax query
 		 *
 		 */
-		if (request.getParameter("cityRequestType").equals("getAllCity")){
+		if (("getAllCity").equals(request.getParameter("cityRequestType"))){
 			CityService cityService = new CityService();
 
 			List<String> cities = new ArrayList<>();

@@ -68,6 +68,7 @@ public class SearchIndexPageServlet implements HttpRequestHandler {
         
         
         List<Event> results = eventService.getBySearchMap(searchProps, user);
+        eventService.buildTagString(results);
         		
         Map<String, Object> responseMap = new HashMap<>();
 

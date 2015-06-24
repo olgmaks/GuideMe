@@ -133,6 +133,10 @@
                                   "</div>" +
                                   "<div class='card-content'>" + 
                                   
+                  				"<p><span class='blue-text'>" +
+                  				currentEvent.tagString +
+                				"</span></p>" +                                  
+                                  
 								  "<span class='black-text'>" + 
 								  currentEvent.name + ", " + currentEvent.moderator.firstName + 
                                   "<i class='mdi-navigation-more-vert right'></i>" + 
@@ -397,6 +401,10 @@
                             <img class="activator" src="${event.avatar.path}">
                         </div>
                         <div class="card-content">
+                        				<p><span class="blue-text">
+                        				${event.tagString}
+                        				</span></p>
+                        				
 									  <span class="black-text">
                                           ${event.name}, ${event.moderator.firstName}  
                                           <i class="mdi-navigation-more-vert right"></i>

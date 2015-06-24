@@ -61,6 +61,7 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 			if(topUserEvents.size() > Constants.TOP_NUMBER) {
 				topUserEvents = new ArrayList<Event>(topUserEvents.subList(0, Constants.TOP_NUMBER));
 			}
+			eventService.buildTagString(topUserEvents);
 			request.setAttribute("topUserEvents", topUserEvents);
 			
 			List<Event> lastEvents = new ArrayList<Event>(topUserEvents);
@@ -74,8 +75,6 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 				topUsers = new ArrayList<User>(topUsers.subList(0, Constants.TOP_NUMBER));
 			}			
 			request.setAttribute("topUsers", topUsers);
-			
-			
 			
 			LanguageService languageService = new LanguageService();
 			List<Language> languageList =  languageService.getUserLangsForLocal(user);  //languageService.getLocalizedLangs();
