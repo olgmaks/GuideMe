@@ -1,6 +1,7 @@
 package com.epam.gm.daolayer;
 
 import com.epam.gm.hashpassword.MD5HashPassword;
+import com.epam.gm.model.Country;
 import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserActivity;
@@ -45,6 +46,12 @@ public class UserDao extends AbstractDao<User> {
             ")";
 
     private static final String SEARCH_USER_AGE_RANGE = "";
+    
+    //gryn
+    private static final String  ACTIVE_USERS_AND_GUIDES_IN_COUNTRY = 
+    		  "u JOIN address a ON u.address_id = a.id JOIN city c ON a.city_id = c.id JOIN country c1 ON c.country_id = c1.id " +  
+    		    "WHERE u.is_active = TRUE AND u.user_type_id IN (2, 3) AND c1.pure_id = ? ";
+    
 
     public UserDao() {
         // gryn
@@ -180,15 +187,27 @@ public class UserDao extends AbstractDao<User> {
             e.printStackTrace();
         }
     }
+    
+    //gryn
+    public List<User> getActiveUsersAndGuidesInTheCountry(Integer countryId) throws SQLException {
+    	CountryDao countryDao = new CountryDao();
+    	Country country = countryDao.getCountryById(countryId);
+    	Integer pureId = country.getPureId();
+    	
+    	return getWithCustomQuery(ACTIVE_USERS_AND_GUIDES_IN_COUNTRY.replace("?", pureId.toString()));
+    }
 
-    public static void main(String[] args) {
-        UserDao userDao = new UserDao();
-        try {
-            userDao.updateUserPasswordById(2, MD5HashPassword.getHashPassword(
-                    "21212", "neutron80@list.ru"));
-        } catch (NoSuchAlgorithmException e) {
-
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws SQLException {
+//        UserDao userDao = new UserDao();
+//        userDao.getActiveUsersAndGuidesInTheCountry(9).forEach(x -> System.out.println(x.getFirstName()));
+//        
+        
+//        try {
+//            userDao.updateUserPasswordById(2, MD5HashPassword.getHashPassword(
+//                    "21212", "neutron80@list.ru"));
+//        } catch (NoSuchAlgorithmException e) {
+//
+//            e.printStackTrace();
+//        }
     }
 }

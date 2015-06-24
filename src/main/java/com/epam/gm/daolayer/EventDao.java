@@ -10,6 +10,8 @@ import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -225,7 +227,10 @@ public class EventDao extends AbstractDao<Event> {
 		//new EventDao().getAllActiveNotDeletedGuideEventsInTheCity(1).forEach(x -> System.out.println(x.getId()));
 		
 		
-		//new EventDao().getAllNotDeletedEventsInTheCity(1).forEach(x -> System.out.println(x.getName()));
+		List<Event> list = new EventDao().getAllNotDeletedEventsInTheCity(1);
+		Collections.sort(list, Event.BY_CREATED_DATE);
+		
+		//list.forEach(x -> System.out.println(x.getName() + "  " +  x.getCreatedOn()));
 		
 		//new EventDao().getAllNotDeletedEventsByPattern("²×").forEach(x -> System.out.println(x.getName()));
 		

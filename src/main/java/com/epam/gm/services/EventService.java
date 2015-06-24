@@ -1,6 +1,7 @@
 package com.epam.gm.services;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import com.epam.gm.calculators.EventCalculator;
 import com.epam.gm.daolayer.EventDao;
 import com.epam.gm.model.Event;
 import com.epam.gm.model.User;
+import com.epam.gm.util.Constants;
 
 
 public class EventService {
@@ -56,6 +58,10 @@ public class EventService {
 		 return eventDao.getAllActiveNotDeletedGuideEventsInTheCity(cityId);
 	 }
 	 
+	 public List<Event> getAllNotDeletedEventsInTheCountry(Integer countryId) throws SQLException {
+		 return eventDao.getAllNotDeletedEventsInTheCountry(countryId);
+	 }
+	 
 	 public List<Event> getBySearchMap(Map<String, String> map, User user) throws SQLException {
 		 return eventDao.getBySearchMap(map, user);
 	 }
@@ -63,18 +69,14 @@ public class EventService {
 	  
 	 
 	 public static void main(String[] args) throws SQLException {
-		// new EventService().getUserEvents(2).forEach(System.out::println);
+			List<Event> topUserEvents = new EventService().getAllActiveNotDeletedUserEvents();
+			//EventCalculator.sortEventsByPoints(topUserEvents, null);
+			
+//			if(topUserEvents.size() > Constants.TOP_NUMBER) {
+//				topUserEvents = new ArrayList<Event>(topUserEvents.subList(0, Constants.TOP_NUMBER));
+//			}
 		 
-		 List<Event> events =  new EventService().getAllActiveNotDeletedGuideEventsInTheCity(9);
-//		 System.out.println("before sort:");
-//		 events.forEach(System.out::println);
-//		 
-//		 System.out.println("After:");
-//		 
-//		 //EventCalculator.sortEventsByPoints(events, null);
-//		 EventCalculator.sortEventsByPoints(events, 1);
-		 
-		 for(Event e: events) {
+		 for(Event e: topUserEvents) {
 			 System.out.println("" + e.getId() + " " + e.getName() + " : " + e.getPoints());
 		 }
 		 

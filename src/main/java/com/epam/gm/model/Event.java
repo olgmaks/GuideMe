@@ -42,6 +42,9 @@ public class Event {
 	@OneToMany(field = "avatar_id", value = Photo.class)
 	private Photo avatar;
 	
+	@Column("created_on")
+	private Date createdOn;	
+	
 	//gryn
 	private Double points;
 
@@ -158,6 +161,14 @@ public class Event {
 		this.points = points;
 	}
 	
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+
 	//gryn
 	public String getEventNameAndCity() {
 		 StringBuilder res = new StringBuilder(name); 
@@ -167,6 +178,12 @@ public class Event {
 		 
 		 return res.toString();
 	 }
+	
+	//gryn
+	public String getNameCityPoints() {
+		return new StringBuilder(getEventNameAndCity()).append(", rate: ").append(Math.round(getPoints())).toString();
+	}	
+	
 	
 	
 	//gryn  
@@ -180,6 +197,14 @@ public class Event {
 		@Override
 		public int compare(Event first, Event second) {
 			return second.points.compareTo(first.points);
+		}
+		
+	};		
+	
+	public static final Comparator<Event> BY_CREATED_DATE = new Comparator<Event>() {
+		@Override
+		public int compare(Event first, Event second) {
+			return second.createdOn.compareTo(first.createdOn);
 		}
 		
 	};		

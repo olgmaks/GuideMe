@@ -50,5 +50,10 @@ public class UserService {
     public void updateWithCustomQuery(Map<String, Object> updates, String joined, String where) throws SQLException {
         userDao.updateWithCustomQuery(updates, joined, where);
     }
+    
+    //gryn
+    public List<User> getActiveUsersAndGuidesInTheCountry(Integer countryId) throws SQLException {
+    	return userDao.getActiveUsersAndGuidesInTheCountry(countryId); 
+    }
 
 }

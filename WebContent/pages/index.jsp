@@ -15,7 +15,20 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/init.js"></script>
+
     <script type="text/javascript">
+        $(document).ready(function () {
+        	window.onload = function () {
+ //       		$("#searchform").submit();
+//             	var countryVal = $("#selCountryId").val();
+//             	countryVal = "choose";        		
+        		
+        	}
+        });
+	</script>
+
+    <script type="text/javascript">
+    
         $(document).ready(function () {
             $('.modal-trigger').leanModal();
         });
@@ -47,6 +60,12 @@
                         }
                     }
                 });
+                
+                
+                window.location.href = "home.do";
+                window.location.reload();
+                //alert('Logged!');
+                
                 return false;
             });
         });
@@ -54,6 +73,16 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#searchform").submit(function () {
+            	
+            	var countryVal = $("#selCountryId").val();
+            	
+            	
+            	if(countryVal == "" || countryVal == "choose") {
+            		
+            		Materialize.toast('Choose country first !', 3000,'',function(){})
+            		return false;
+            	}
+            	
                 $.ajax({
                     url: 'searchindexpage.do',
                     type: 'post',
@@ -64,6 +93,10 @@
                     	var resultCollenction = $("#collectionResults");
                         resultCollenction.find("li").empty();   
                         resultCollenction = $("#inner-row");
+                        
+                        if(data.isEmpty)  {
+                        	Materialize.toast('No results !', 3000,'',function(){})
+                        }
                         
                         
                         $.each(data.results, function (counts, currentEvent) {
@@ -83,12 +116,12 @@
                                   "<div class='card-content'>" + 
                                   
 								  "<span class='black-text'>" + 
-								  currentEvent.name +
+								  currentEvent.name + ", " + currentEvent.moderator.firstName + 
                                   "<i class='mdi-navigation-more-vert right'></i>" + 
                                   "</span>" + 
 
                                       "<p>" +
-                                          "<a href='#'>" + currentEvent.dateFrom + " - " + currentEvent.dateTo  + "</a>" +
+                                          "<a href='eventDetail.do?id=" + currentEvent.id +"'>" + currentEvent.dateFrom + " - " + currentEvent.dateTo   + ", rate: " + Math.round(currentEvent.points) + "</a>" +
                                       "</p>" +
                                   "</div>" + 
                                   "<div class='card-reveal'>" +
@@ -297,9 +330,9 @@
         <table>
             <thead>
             <tr>
-                <th style="width: 20%; margin-left: 0%;">Top  events</th>
+                <th style="width: 20%; margin-left: 0%;">Recommended</th>
                 <th style="width: 60%; margin-left: 20%;">Events</th>
-                <th style="width: 20%; margin-left: 80%;">Guide events</th>
+                <th style="width: 20%; margin-left: 80%;">Top users</th>
             </tr>
             </thead>
             <tbody>
@@ -318,7 +351,7 @@
                                          src="${event.avatar.path}">
                                 </td>
                                 <td>
-                                <div><a href="#">"${event.getEventNameAndCity()}"</a></div>
+                                <div><a href='eventDetail.do?id=${event.id}'>${event.getNameCityPoints()}</a></div>
                                 </td>
                             </tr>
                         </table>
@@ -358,111 +391,60 @@
                     </div>
                  </div> 
                  </li>  
-                 
-                 <li id="inner-row">   
-                   <div style="display:inline; width: 45%; float: left; margin-left: 10px"> 
-                   <div class="card small" >
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="img/guide1.jpg">
-                        </div>
-                        <div class="card-content">
-									  <span class="black-text">
-                                          Event Name
-                                          <i class="mdi-navigation-more-vert right"></i>
-                                      </span>
+                
+                
+                
+<!--                 <li id="inner-row"> -->
+<!--                 <div style="display:inline; width: 45%; float: left; margin-left: 10px"> -->
+<!--                     <div class="card small"> -->
+<!--                         <div class="card-image waves-effect waves-block waves-light"> -->
+<!--                             <img class="activator" src="img/guide1.jpg"> -->
+<!--                         </div> -->
+<!--                         <div class="card-content"> -->
+<!-- 									  <span class="black-text"> -->
+<!--                                           Event Name -->
+<!--                                           <i class="mdi-navigation-more-vert right"></i> -->
+<!--                                       </span> -->
 
-                            <p>
-                                <a href="#">Event details</a>
-                            </p>
-                        </div>
-                        <div class="card-reveal">
-									<span class="card-title grey-text text-darken-4">Card
-										Title <i class="mdi-navigation-close right"></i>
-									</span>
+<!--                             <p> -->
+<!--                                 <a href="#">Event details</a> -->
+<!--                             </p> -->
+<!--                         </div> -->
+<!--                         <div class="card-reveal"> -->
+<!-- 									<span class="card-title grey-text text-darken-4">Card -->
+<!-- 										Title <i class="mdi-navigation-close right"></i> -->
+<!-- 									</span> -->
 
-                            <p>Here is event description</p>
-                        </div>
-                    </div>
-                    </div>  
-               </li>     
-                 
-               <li id="inner-row">  
-               <div style="display:inline; width: 45%; float: left; margin-left: 10px">
-                    <div class="card small">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="img/guide1.jpg">
-                        </div>
-                        <div class="card-content">
-									  <span class="black-text">
-                                          Event Name
-                                          <i class="mdi-navigation-more-vert right"></i>
-                                      </span>
-
-                            <p>
-                                <a href="#">Event details</a>
-                            </p>
-                        </div>
-                        <div class="card-reveal">
-									<span class="card-title grey-text text-darken-4">Card
-										Title <i class="mdi-navigation-close right"></i>
-									</span>
-
-                            <p>Here is event description</p>
+<!--                             <p>Here is event description</p> -->
                         </div>
                     </div>
                  </div> 
-                 </li>  
-                    
-                 <li id="inner-row">   
-                   <div style="display:inline; width: 45%; float: left; margin-left: 10px"> 
-                   <div class="card small" >
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="img/guide1.jpg">
-                        </div>
-                        <div class="card-content">
-									  <span class="black-text">
-                                          Event Name
-                                          <i class="mdi-navigation-more-vert right"></i>
-                                      </span>
-
-                            <p>
-                                <a href="#">Event details</a>
-                            </p>
-                        </div>
-                        <div class="card-reveal">
-									<span class="card-title grey-text text-darken-4">Card
-										Title <i class="mdi-navigation-close right"></i>
-									</span>
-
-                            <p>Here is event description</p>
-                        </div>
-                    </div>
-                    </div> 
-                </li>                         
+                 </li>                  
+                
+                 
+        
 				</ul>
                     
                 </th>
                 
-                
                 <th style = "vertical-align: top;">
-                    <c:forEach items="${requestScope.topGuideEvents}" var = "event">
+                    <c:forEach items="${requestScope.topUsers}" var = "usr">
                     <div class="card small" style="height: 150px; ">
                         <table>
                             <tr>
                                 <td style="width: 120px;">
                                     <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                         src="${event.avatar.path}">
+                                         src="${usr.avatar.path}">
                                 </td>
                                 <td>
-                                <div><a href="#">${event.getEventNameAndCity()}</a></div>
+                                <div><a href="#">${usr.getNameCityPoints()}</a></div>
                                 </td>
                             </tr>
                         </table>
                     </div>                      
                     </c:forEach>                    
                                
-                </th>                
-                
+                </th>                  
                 
                 
             </tr>

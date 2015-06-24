@@ -219,7 +219,22 @@ public class User {
 		return newBoolean;
 
 	}
-
+	
+	//gryn
+	public String getNameAndCity() {
+		 StringBuilder res = new StringBuilder(firstName); 
+		
+		 if(getAddress() != null && getAddress().getCity() != null)
+			 res.append(", ").append(getAddress().getCity().getName());
+		 
+		 return res.toString();
+	 }
+	
+	//gryn
+	public String getNameCityPoints() {
+		return new StringBuilder(getNameAndCity()).append(", rate: ").append(Math.round(getPoints())).toString();
+	}
+	
 	public static final Comparator<User> BY_POINTS = new Comparator<User>() {
 		@Override
 		public int compare(User first, User second) {

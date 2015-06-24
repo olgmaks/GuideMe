@@ -235,6 +235,9 @@ public class UserCalculator {
 		return res;
 	}
 	
+
+	
+	
 	public static void sortUsersByPoints(List<User> users, Integer userid) throws SQLException {
 		
 		for(User e: users) {

@@ -108,6 +108,9 @@ public class SubmitRegisterServlet implements HttpRequestHandler {
 			String sex = request.getParameter("sex").trim();
 			String cellNumber = request.getParameter("cellNumber").trim();
 			String password = request.getParameter("password").trim();
+			String isGuide = request.getParameter("isGuide");
+			System.out.println("$$$$$$$$$$$$$$$$$$$ isGuide = " + isGuide);
+			
 			
 			Integer cityId = Integer.parseInt(request.getParameter("cityId").trim());
 			
@@ -151,7 +154,9 @@ public class SubmitRegisterServlet implements HttpRequestHandler {
 	        user.setFirstName(firstName);
 	        user.setLastName(lastName);
 	        user.setEmail(email.toLowerCase());
-	        user.setUserTypeId(8);
+	        
+	        if("on".equals(isGuide)) user.setUserTypeId(7); 
+	        else user.setUserTypeId(2);
 	        user.setSex(sex);
 	        user.setLangId(3);
 	        user.setCellNumber(cellNumber);

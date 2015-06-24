@@ -5,6 +5,7 @@ import com.epam.gm.model.User;
 import com.epam.gm.services.UserService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.epam.gm.sessionrepository.SessionRepository;
+import com.epam.gm.util.CookieUtil;
 import com.google.gson.Gson;
 
 import javax.servlet.RequestDispatcher;
@@ -50,6 +51,10 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 								user.getEmail()))) {
 					System.out.println("logination has been successful");
 					SessionRepository.setSessionUser(request, user);
+					
+					//gryn
+					CookieUtil.saveLastUser(response, user);
+					
 					isValid = true;
 					map.put("userEmail", user.getEmail());
 					map.put("sessionUser", user);

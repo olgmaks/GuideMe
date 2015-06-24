@@ -1,5 +1,7 @@
 package com.epam.gm.model;
 
+import java.util.StringJoiner;
+
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
@@ -73,9 +75,14 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return "Address [id=" + id + ", address=" + address + ", cityId="
-				+ cityId + ", localId=" + localId + ", pureId=" + pureId
-				+ ", city=" + city + "]";
+		StringJoiner res = new StringJoiner(", ");
+		if(city != null) {
+			res.add(city.getName());
+		}
+		if(address != null && address.trim().length() > 0)
+			res.add(address);
+		
+		return res.toString();			
 	}
 
 	
