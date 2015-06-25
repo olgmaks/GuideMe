@@ -34,7 +34,7 @@ public class UserDao extends AbstractDao<User> {
     private static final String SEARCH_USER_BY_CITY_NAME = "u" +
             "  JOIN address a ON u.address_id = a.id" +
             "  JOIN city c ON a.city_id = c.id  WHERE c.id in (" +
-            "    SELECT c1.id FROM city c1 WHERE c1.pure_id = (" +
+            "    SELECT c1.id FROM city c1 WHERE c1.pure_id in (" +
             "    SELECT c2.pure_id FROM city c2 WHERE c2.name LIKE '%%%s%%' GROUP BY a.pure_id)" +
             "  ) AND u.is_active=true GROUP BY u.id ;";
 

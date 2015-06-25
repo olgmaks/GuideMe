@@ -18,10 +18,9 @@
                     <%--<label for="isUser">User</label></div>--%>
                         <label for="user-type-select" style="margin-top: -35px;">User or Guide</label>
                         <select class="browser-default" style="height: 30px;" id="user-type-select">
-                            <option value="all" disabled selected>No matter</option>
+                            <option value="all">All</option>
                             <option value="guide">Guides</option>
                             <option value="user">Users</option>
-                            <option value="all">No matter</option>
                         </select>
                 </div>
 

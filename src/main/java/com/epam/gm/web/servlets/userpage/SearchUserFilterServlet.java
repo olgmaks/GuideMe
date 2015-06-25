@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * Created by OLEG on 21.06.2015.
@@ -21,7 +20,8 @@ public class SearchUserFilterServlet implements HttpRequestHandler {
 
 
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, IllegalAccessException {
+    public void handle(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException, IllegalAccessException {
         System.out.println("SearchUserFilterServlet servlet");
         System.out.println(request);
         Integer searcherId = SessionRepository.getSessionUser(request).getId();

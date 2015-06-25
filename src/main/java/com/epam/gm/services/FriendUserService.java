@@ -17,6 +17,10 @@ public class FriendUserService {
         friendUserDao = new FriendUserDao();
     }
 
+    public static FriendUserService serve() {
+        return new FriendUserService();
+    }
+
     public List<FriendUser> getUserFriends(int userId) throws SQLException {
         return friendUserDao.getUserFriends(userId);
     }

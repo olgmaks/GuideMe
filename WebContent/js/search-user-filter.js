@@ -46,36 +46,8 @@ $(function () {
 });
 
 
-//function getSearchOptions() {
-//    var userNameInput = $("#userNameInput").val();
-//    var tags = $("[name = 'tags']").val();
-//    var searchOptions = {from: "userSearchOptions", userNameInput: userNameInput, tags: tags};
-//    console.log(userNameInput);
-//    console.log(tags);
-//    return searchOptions;
-//}
-//
-//
-//function sendAjaxRequest(searchOptions) {
-//    $.ajax({
-//        url: "searchuserfilter.do",
-//        type: "post",
-//        dataType: "json",
-//        data: searchOptions,
-//        //data: $("#searchOptions").serialize(),
-//        success: function () {
-//            console.log('request success');
-//        }
-//    });
-//}
-
 $(document).ready(function () {
     $("#userNameInput").keyup(function () {
-
-        //var userNameHidden = $("#userNameHidden");
-        //se
-        //userNameHidden.val(userNameInput);
-        //console.log(userNameHidden.val());
         sendAjaxRequest(getSearchUserFilter());
     });
 });
@@ -93,7 +65,7 @@ $(document).ready(function () {
 
             var citySelect = $("#city-select");
             citySelect.empty();
-            citySelect.append("<option value='' disabled selected>City</option>");
+            citySelect.append("<option value=''>City</option>");
 
             $.each(data, function (counts, item) {
                 citySelect.append("<option value='" + item + "'>" + item + "</option>");
@@ -102,11 +74,11 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
-    $(".send-friend-request").click(function () {
-        alert('friend-request clicked');
-    });
-});
+//$(document).ready(function () {
+//    $(".send-friend-request").click(function () {
+//        alert('friend-request clicked');
+//    });
+//});
 
 $(document).ready(function () {
     $("#city-select").change(function () {
@@ -118,6 +90,10 @@ $(document).ready(function () {
     $("#user-type-select").change(function () {
         sendAjaxRequest(getSearchUserFilter());
     });
+});
+
+$(document).ready(function(){
+    updateAddFriendAnchors();
 });
 
 function getSearchUserFilter() {
@@ -142,30 +118,46 @@ function getSearchUserFilter() {
     return searchUserFilter;
 }
 
+
+function getCard(user) {
+    var userId = user.Id;
+    var pathToImage = user.avatar.path;
+    var fName = user.firstName;
+    var lName = user.lastName;
+    var cityName = user.address.city.name;
+    var sendFriendRequestId = "sendFriendRequestId" + user.Id;
+    var sendFriendRequestClass = "send-friend-request";
+
+    return "<div class='card' style='height: 150px; width: 300px; float: left; margin-left: 10px;'>" +
+        "<table><tr><td style='width: 120px; vertical-align: top;'>" +
+        "<img class='circle' style='height: 120px; width: 120px; object-fit: cover' src='" + pathToImage + "'></td><td><div>" +
+        "<div style='height: 40px;'><a href='#_' class='black-text'>" + fName + " " + lName + "</a></div>" +
+        "<div style='height: 40px;'><br><span>" + cityName + "</span></div>" +
+        "<div style='float: right; vertical-align: bottom; margin-bottom: 10px; margin-right: 10px;'>" +
+        "<a href='#_' id='" + sendFriendRequestId + "' data-userid='"+userId+"' class='btn blue waves-effect waves-light " + sendFriendRequestClass + "'>" +
+        "ADD</a></div></div></td></tr></table>" +
+        "</div>";
+}
+
+function updateAddFriendAnchors() {
+    $(".send-friend-request").click(function () {
+        var friendId = $(this).data('userid');
+        $.ajax({
+            url: "sendfriendrequest.do",
+            type: "post",
+            dataType: "json",
+            data: {friendId:friendId},
+            success: function () {
+                console.log('friend request has been sent on server userId='+friendId);
+            }
+        });
+    });
+}
+
 function sendAjaxRequest(searchUserFilter) {
     console.log('ajax request preparation');
 
     var sendFriendRequestClass = "send-friend-request";
-
-    function getCard(user) {
-
-        var pathToImage = user.avatar.path;
-        var fName= user.fistName;
-        var lName = user.lastName;
-        var cityName = user.address.city.name;
-        var sendFriendRequestId = "sendFriendRequestId"+user.Id;
-        var sendFriendRequestClass = "send-friend-request";
-
-        return "<div class='card' style='height: 150px; width: 300px; float: left; margin-left: 10px;'>" +
-            "<table><tr><td style='width: 120px; vertical-align: top;'>" +
-            "<img class='circle' style='height: 120px; width: 120px; object-fit: cover' src='" + pathToImage + "'></td><td><div>" +
-            "<div style='height: 40px;'><a href='#_' class='black-text'>" + fName + " " + lName + "</a></div>" +
-            "<div style='height: 40px;'><br><span>" + cityName + "</span></div>" +
-            "<div style='float: right; vertical-align: bottom; margin-bottom: 10px; margin-right: 10px;'>" +
-            "<a href='#_' id='" + sendFriendRequestId + "' class='btn blue waves-effect waves-light " + sendFriendRequestClass + "'>" +
-            "ADD</a></div></div></td></tr></table>" +
-            "</div>";
-    }
 
     $.ajax({
         url: "searchuserfilter.do",
@@ -179,9 +171,11 @@ function sendAjaxRequest(searchUserFilter) {
             cardCollection.empty();
 
             $.each(data, function (counts, item) {
+                console.log(item);
                 cardCollection.append(getCard(item));
             });
-
         }
     });
+
+    updateAddFriendAnchors();
 }

@@ -8,6 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class UserService {
 
@@ -31,10 +32,11 @@ public class UserService {
         return new UserService();
     }
 
-    public Set<User> searchUsers(Integer searcherId, String nameFilterInput, String cityName, String tags, Integer tagsMatches,
-                                 SearchRole searchRole) throws SQLException {
+    public Set<User> searchUsers(Integer searcherId, String nameFilterInput, String cityName,
+                                 String tags, Integer tagsMatches, SearchRole searchRole) throws SQLException {
 
         System.out.println("****user search started****");
+        long time = System.currentTimeMillis();
         System.out.println("searcherId : " + searcherId);
         System.out.println("nameFilterInput : " + nameFilterInput);
         System.out.println("cityName : " + cityName);
@@ -44,7 +46,7 @@ public class UserService {
 
 
         String tagWrapper = "'";
-        if (!tags.contains(tagWrapper)) {
+        if (!tags.contains(tagWrapper) && !tags.isEmpty()) {
             String[] tagList = tags.split(",");
             if (tagList.length == 1) {
                 tags = "'" + tagList + "'";
@@ -119,67 +121,71 @@ public class UserService {
             System.out.println("results by resultsNonFriend : " + resultsNonFriend.size());
         }
 
-
+        System.out.println("Union");
         /*
             Union operations
          */
         if (resultsByName != null && !resultsByName.isEmpty()) {
             results.addAll(resultsByName);
-            System.out.println("results was not produced added by name : " + results.size());
+            System.out.print("name : +" + results.size());
         }
 
         if (resultsByCity != null && !resultsByCity.isEmpty()) {
             results.addAll(resultsByCity);
-            System.out.println("results was produced added by city : " + results.size());
+            System.out.print(" | city : +" + results.size());
         }
 
         if (resultsByTags != null && !resultsByTags.isEmpty()) {
             results.addAll(resultsByTags);
-            System.out.println("results was produced added by tags : " + results.size());
+            System.out.print(" | tags : +" + results.size());
         }
 
         if (resultsByGuide != null && !resultsByGuide.isEmpty()) {
             results.addAll(resultsByGuide);
-            System.out.println("results was produced added by guide : " + results.size());
+            System.out.print(" | guide : +" + results.size());
         }
 
         if (resultsNonFriend != null && !resultsNonFriend.isEmpty()) {
             results.addAll(resultsNonFriend);
-            System.out.println("results was produced added by resultsNonFriend : " + results.size());
+            System.out.println(" | nonFriend : +" + results.size());
         }
-
+        System.out.println("Intersection");
         /*
             Intersection operations
          */
-        if (resultsByName != null && !resultsByName.isEmpty()) {
+        if (resultsByName != null && !nameFilterInput.isEmpty()) {
             results.retainAll(resultsByName);
-            System.out.println("intersection with name reduced to : " + results.size());
+            System.out.println("name : -" + results.size() + " nameFilterInput: " + nameFilterInput);
         }
 
-        if (resultsByCity != null && !resultsByCity.isEmpty()) {
+        if (resultsByCity != null && !cityName.isEmpty()) {
             results.retainAll(resultsByCity);
-            System.out.println("intersection with city reduced to : " + results.size());
+            System.out.println(" | city: -" + results.size() + " cityName: " + cityName);
         }
 
-        if (resultsByTags != null && !resultsByTags.isEmpty()) {
+        if (resultsByTags != null && !tags.isEmpty()) {
             results.retainAll(resultsByTags);
-            System.out.println("intersection with tags reduced to : " + results.size());
+            System.out.println(" | tags: -" + results.size() + " tags: " + tags);
         }
 
         if (resultsByGuide != null && !resultsByGuide.isEmpty()) {
             results.retainAll(resultsByGuide);
-            System.out.println("intersection with guide reduced to : " + results.size());
+            System.out.println(" | guide: -" + results.size() + " searchRole: " + searchRole);
         }
 
-        if (resultsNonFriend != null && !resultsNonFriend.isEmpty()) {
+        if (resultsNonFriend != null) {
             results.retainAll(resultsNonFriend);
-            System.out.println("intersection with non friends reduced to : " + results.size());
+            System.out.println(" | nonFriends: -" + results.size());
         }
 
-        System.out.println("****user search ended****");
+        System.out.println("****user search ended**** with time = " + TimeUnit.MILLISECONDS.toMillis(System.currentTimeMillis() - time));
         return results;
     }
 
+
+    public List<User> searchNonFriendsUsers(Integer searcherId) throws SQLException {
+        return userDao.searchNonFriendsUsers(searcherId);
+    }
 
     public User getUserByEmail(String email) throws SQLException {
         return userDao.getUserByEmail(email);
@@ -212,10 +218,10 @@ public class UserService {
     public void updateWithCustomQuery(Map<String, Object> updates, String joined, String where) throws SQLException {
         userDao.updateWithCustomQuery(updates, joined, where);
     }
-    
+
     //gryn
     public List<User> getActiveUsersAndGuidesInTheCountry(Integer countryId) throws SQLException {
-    	return userDao.getActiveUsersAndGuidesInTheCountry(countryId); 
+        return userDao.getActiveUsersAndGuidesInTheCountry(countryId);
     }
 
 }

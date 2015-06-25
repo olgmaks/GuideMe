@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<script src="js/search-user-filter.js"></script>
 <div class="row">
     <div class="col s12" style="margin-top:10px;">
         <ul class="collection z-depth-2">
@@ -45,7 +46,7 @@
                                         </div>
                                         <div style="height: 40px;"><br><span>${user.address.city.name}</span></div>
                                         <div style="float: right; vertical-align: bottom; margin-bottom: 10px; margin-right: 10px;">
-                                            <a href='#_' id='{3}' class='btn blue send-friend-request waves-effect waves-light {3}'>
+                                            <a href='#_' id='sendFriendRequestId${user.id}' data-userid='${user.id}' class='btn blue send-friend-request waves-effect waves-light {3}'>
                                                 ADD</a>
                                         </div>
                                     </div>

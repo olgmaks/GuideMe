@@ -1,6 +1,7 @@
 package com.epam.gm.web.servlets.userpage;
 
 import com.epam.gm.services.UserService;
+import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 import javax.servlet.ServletException;
@@ -26,7 +27,8 @@ public class SearchUserServlet implements HttpRequestHandler {
         System.out.println("search user servlet ...");
 
 
-        request.setAttribute("users", userService.getAll());
+        request.setAttribute("users", userService.searchNonFriendsUsers(SessionRepository.
+                getSessionUser(request).getId()));
         request.setAttribute("centralContent", "searchuser");
         request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(request, response);
     }
