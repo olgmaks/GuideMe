@@ -12,7 +12,7 @@
 						style="height: 40%; width: 40%; object-fit: cover"
 						src="${sessionUser.avatar.path}"></a>
 				</div> <br> <h7>${sessionUser.firstName} ${sessionUser.lastName}</h7>
-				<br> <br> <a href="userCabinet.do">
+				<br> <br> <a href="eventsincabinet.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; text-align: left; font-size: 100%; text-transform: capitalize">
@@ -55,7 +55,7 @@
 						<button class="btn light-blue waves-effect waves-light"
 							type="submit" name="action"
 							style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-							Add Services</button>
+							Services</button>
 					</a>
 				</c:if>
 

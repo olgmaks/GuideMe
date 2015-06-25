@@ -82,6 +82,9 @@
 					<c:when test="${centralContent == 'guideservices'}">
 						<jsp:include page="../guide/guideservices.jsp" />
 					</c:when>
+					<c:when test="${centralContent == 'eventsincabinet' }">
+						<jsp:include page="../eventsincabinet/allevents.jsp" />
+					</c:when>
 				</c:choose></td>
 
 
