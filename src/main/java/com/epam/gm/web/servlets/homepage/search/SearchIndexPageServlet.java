@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,8 @@ public class SearchIndexPageServlet implements HttpRequestHandler {
 		
 		Map<String, String> searchProps = new HashMap<String, String>();
 		
+		StringJoiner statusJoiner = new StringJoiner(",", "(", ")"); 
+		statusJoiner.setEmptyValue("('active')");
 		
 		System.out.println("SearchIndexPageServlet");
 		Map<String, String[]> params = request.getParameterMap();
@@ -49,11 +52,21 @@ public class SearchIndexPageServlet implements HttpRequestHandler {
 				searchProps.put("cityId", val);
 			} else if("selCountryId".equals(key) && DataValidator.isPositiveNumber(val)) {
 				searchProps.put("countryId", val);
-				
+			} else if(key.startsWith("status_") && "on".equals(val)) {
+				statusJoiner.add("'" + key.replace("status_", "") + "'") ;
+			} else if("moderator_type".equals(key)) {
+				searchProps.put("moderator_type", val);
+			} else if("max_members".equals(key)) {
+				searchProps.put("max_members", val);
 			}
 			
 		}
 		
+		//System.out.println("statusJoiner:" + statusJoiner.toString());
+		//System.out.println("Len:" + statusJoiner.length());
+		
+		searchProps.put("status", statusJoiner.toString());
+			
 		
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");

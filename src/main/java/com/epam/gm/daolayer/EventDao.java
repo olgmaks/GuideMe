@@ -42,6 +42,24 @@ public class EventDao extends AbstractDao<Event> {
 			+ "FROM event e JOIN event_tag et ON e.id = et.event_id "
 			+ " JOIN tag t ON et.tag_id = t.id " + " WHERE e.id IN (?) "
 			+ " ORDER BY e.id, e.name, t.name ";
+	
+	private static final String ADDITIONAL_EVENTS_FILTER =
+			" e  WHERE e.id IN " + 
+					" (SELECT e1.id FROM event e1 WHERE e.status IN ?status) " +
+					" AND e.id IN " +
+					" ( " +
+					"  SELECT e2.id FROM EVENT e2 JOIN USER u ON e2.MODERATOR_ID = u.id " +  
+					"  WHERE u.USER_TYPE_ID in ?moderator_type " +
+					"  ) " +
+					" AND e.id IN ( " +
+					" SELECT e3.id FROM event e3 WHERE e3.id NOT IN ( " +
+					"    SELECT uie.event_id FROM user_in_event uie " +
+					"    WHERE uie.is_member = TRUE " +
+					"    GROUP BY uie.event_id " +
+					"    HAVING COUNT(uie.event_id) > ?max_members " +
+					") " +
+					" ) ";
+	
     
 	public EventDao() {
 		// gryn
@@ -194,10 +212,48 @@ public class EventDao extends AbstractDao<Event> {
 	}	
 	
 	
-	
 	public List<Event> getAllNotDeletedEvents() throws SQLException {
 		List<Event> res = getByField("deleted", false);
 		return res;
+	}
+	
+	public String getStringOfIds(List<Event> list) {
+		StringJoiner joiner = new StringJoiner(",", "(", ")");
+		joiner.setEmptyValue("");
+		
+		for(Event e: list)
+			joiner.add(e.getId().toString());
+		
+		return joiner.toString();
+	}
+	
+	public List<Event> excludeByAdditionalFilter(Map<String, String> map, List<Event> list) throws SQLException {
+		if(list == null || list.isEmpty()) 
+			return new ArrayList<Event>(); 
+		
+		String sql = ADDITIONAL_EVENTS_FILTER.replace("?status", map.get("status"))
+				.replace("?max_members", map.get("max_members")).replace("?moderator_type", map.get("moderator_type"));
+
+		
+		String tail = getStringOfIds(list);
+		if(tail.length() > 0) {
+			sql = sql + " AND e.id IN " + tail;
+		}
+		
+		List<Event> result = new ArrayList<Event>();
+		
+		System.out.println("Query :");
+		System.out.println(sql);
+		
+		List<Event> filter = getWithCustomQuery(sql);
+		
+		for(Event e: list) {
+			if(filter.contains(e)) {
+				result.add(e);
+			}
+		}
+		
+		return result;
 	}
 	
 	public List<Event> getBySearchMap(Map<String, String> map, User user) throws SQLException {
@@ -218,6 +274,8 @@ public class EventDao extends AbstractDao<Event> {
 					res = getAllNotDeletedEventsInTheCountry(Integer.parseInt(map.get("countryId")), res);
 			}
 		}
+		
+		res = excludeByAdditionalFilter(map, res);
 		
 		EventCalculator.sortEventsByPoints(res, user == null ? null : user.getId());
 		

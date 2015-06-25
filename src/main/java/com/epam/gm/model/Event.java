@@ -230,5 +230,40 @@ public class Event {
 				+ moderator + ", status=" + status + ", address=" + address
 				+ "]";
 	}
+	
+	@Override
+	public int hashCode() {
+		if(id == null) return 0;
+		
+		return id.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) return false;
+		
+		if(obj instanceof Event) {
+			return id.equals(((Event) obj).getId());
+		}
+		
+		return false;
+	}
+	
+	public static void main(String[] args) {
+		Event e1 = new Event();
+		Event e2 = new Event();
+		Event e3 = new Event();
+		
+		e1.setId(5);
+		e2.setId(5);
+		e3.setId(7);
+		System.out.println(e1.equals(e2));
+		System.out.println(e2.equals(e2));
+		System.out.println(e2.equals(e1));
+		System.out.println(e2.equals(e3));
+		
+		System.out.println(e3.equals(null));
+		System.out.println(e3.equals(new User()));
+	}
 
 }

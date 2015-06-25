@@ -34,7 +34,7 @@ public class AutocompleteServlet implements HttpRequestHandler {
 //			System.out.println("val:" + entry.getValue()[0]);
 //		}
 
-        if (request.getParameter("getTags").equals("userSearchTags")) {
+        if ("userSearchTags".equals(request.getParameter("getTags"))) {
             System.out.println("get tags has been called");
             List<Tag> tags = tagService.getAllActiveTags();
             List<String> list = new ArrayList<>();

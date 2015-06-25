@@ -15,6 +15,8 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/init.js"></script>
+    
+
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -196,11 +198,13 @@
 
             </li>
             
+            
             <li class="collection-item" style="margin-left: 30%;">
+            <p>
                 <div class="input-field col s6">
                     
    
-                                <br>
+<!--                                 <br> -->
 
                                 <div>
                                     <c:forEach items="${requestScope.languageList}" var="lang">
@@ -321,15 +325,51 @@
                                 </div>
                     
                 </div>
+               </p>
             </li>
+             
             
             
             <li class="collection-item" style="margin-left: 30%;">
+            
+    		<p>
+    		
+    		<p>Status:</p>  
+    		
+      		<input type="checkbox" id="status_active" name = "status_active" checked="checked" />
+      		<label for="status_active">Active</label>
+    		    		
+             <input type="checkbox" id="status_filled" name="status_filled" />
+      		<label for="status_filled">Filled</label> 		
+    		
+    		<input type="checkbox" id="status_done" name="status_done"  />
+      		<label for="status_done">Done</label> 
+      		
+    		<input type="checkbox" id="status_cancelled" name="status_cancelled"   />
+      		<label for="status_cancelled">Cancelled</label> 
+    		</p>            
             </li>
             
             <li class="collection-item" style="margin-left: 30%;">
+    		<p>
+    		Event type:
+    		<select class="browser-default" id= "moderator_type" name= "moderator_type">
+      		<option selected value="(2,3)" selected>Events and Excursions</option>
+      		<option value="(2)">Events</option>
+      		<option value="(3)">Excursions</option>
+    		</select>            
+            </p>
             </li>
             
+            <li class="collection-item" style="margin-left: 30%;">
+    		<p>
+    		Max. number of members:
+    		<p class="range-field">
+      		<input type="range" id="max_members" name="max_members" min="0"   max="100"  value = "100"  />
+    		</p>
+            </p>
+            </li>
+ 
             
             <li class="collection-itenm" style="margin-left: 30%;">
 
