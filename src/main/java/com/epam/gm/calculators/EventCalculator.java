@@ -38,6 +38,8 @@ public class EventCalculator {
 	UserCalculator userCalculator;
 	private List<Tag> allTags;
 	private List<Address> allAddress;
+	private List<UserInEvent> userInEvent;
+	
 
 	// Dao
 	private EventService eventService = new EventService();
@@ -72,6 +74,14 @@ public class EventCalculator {
 			favorites = friendService.getUserFavorites(userId);
 
 		}
+	}
+	
+	public String getUserInEvent() {
+		String res = "";
+	
+		
+		
+		return res;
 	}
 
 	public boolean isActiveAndNotOutOfDate() {

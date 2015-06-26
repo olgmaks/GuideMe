@@ -60,6 +60,13 @@ public class EventDao extends AbstractDao<Event> {
 					") " +
 					" ) ";
 	
+	
+	private static final String TAG_NAME_EVENTS_FILTER =
+			" e JOIN event_tag et ON e.id = et.event_id " + 
+			" JOIN tag t ON et.tag_id = t.id " +
+			" WHERE e.deleted = FALSE AND  e.status = 'active' AND  t.name = '?' "
+			;
+	
     
 	public EventDao() {
 		// gryn
@@ -282,6 +289,15 @@ public class EventDao extends AbstractDao<Event> {
 		return res;
 	}
 	
+	public List<Event> getByTagName(String tagName) throws SQLException {
+		List<Event> res = null;
+		
+		res = getWithCustomQuery(TAG_NAME_EVENTS_FILTER.replace("?", tagName));
+		
+		
+		return res;
+	}
+	
 	public List<Event> getAllNotDeletedEventsByPattern(String text) throws SQLException {
 		
         List<Event> results = new ArrayList<>();
@@ -303,6 +319,8 @@ public class EventDao extends AbstractDao<Event> {
 			map.put(e.getId(), e);
 			
 			e.setTagString("");
+			
+			e.setTagList(new ArrayList<String>());
 		}
 			
 		Connection connection = ConnectionManager.getConnection();
@@ -318,6 +336,8 @@ public class EventDao extends AbstractDao<Event> {
 
 			event.setTagString(sb.append(event.getTagString()).append("#").append(rs.getString("tag_name")).append(" ").toString());
 			
+			event.getTagList().add(rs.getString("tag_name"));
+			
 			sb.setLength(0);
 		}
 		rs.close();
@@ -325,13 +345,15 @@ public class EventDao extends AbstractDao<Event> {
 		ConnectionManager.closeConnection(connection);
 		
 	}
+	
+	
 
 	public static void main(String[] args) throws SQLException, IllegalAccessException {
 		
 		EventDao dao = new EventDao();
-		List<Event> list = new EventDao().getAllNotDeletedEventsInTheCity(1);
+		//List<Event> list = new EventDao().getAllNotDeletedEventsInsTheCity(1);
 		
-		dao.buildTagString(list);
+		//dao.buildTagString(list);
 		//list.forEach(x -> System.out.println(x.getName() + "  " +  x.getTagString()));
 		
 		

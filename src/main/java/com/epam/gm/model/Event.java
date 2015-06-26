@@ -2,6 +2,7 @@ package com.epam.gm.model;
 
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import com.epam.gm.olgmaks.absractdao.annotation.*;
 
@@ -50,6 +51,8 @@ public class Event {
 
 	//gryn
 	private String tagString; 
+	
+	private List<String> tagList;
 	
 	public Integer getAvatarId() {
 		return avatarId;
@@ -177,6 +180,15 @@ public class Event {
 
 	public void setTagString(String tagString) {
 		this.tagString = tagString;
+	}
+	
+
+	public List<String> getTagList() {
+		return tagList;
+	}
+
+	public void setTagList(List<String> tagList) {
+		this.tagList = tagList;
 	}
 
 	//gryn

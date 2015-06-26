@@ -32,6 +32,7 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 
 	private EventService eventService = new EventService();
 	private UserService userService = new UserService();
+	private CountryService countryService = new CountryService();
 	
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
@@ -64,8 +65,26 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 			eventService.buildTagString(topUserEvents);
 			request.setAttribute("topUserEvents", topUserEvents);
 			
-			List<Event> lastEvents = new ArrayList<Event>(topUserEvents);
-			Collections.sort(lastEvents, Event.BY_CREATED_DATE);
+			List<Event> lastEvents = null;
+			
+			String byTag = request.getParameter("tag");
+			if(byTag == null || byTag.trim().length() == 0) {
+				lastEvents = new ArrayList<Event>(topUserEvents);
+				Collections.sort(lastEvents, Event.BY_CREATED_DATE);
+				
+				Country country = countryService.getCountryById(lastCountryId);
+				request.setAttribute("searchEventTitle", "Latest events in: " + country.getName());
+				
+			} else {
+				lastEvents = eventService.getByTagName(byTag.trim());
+				eventService.buildTagString(lastEvents);
+				EventCalculator.sortEventsByPoints(lastEvents, userId);
+				
+				request.setAttribute("searchEventTitle", "All active events by: #" + byTag);
+			}
+				
+			
+			
 			request.setAttribute("lastEvents", lastEvents);
 			
 			

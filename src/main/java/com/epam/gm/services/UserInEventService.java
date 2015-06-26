@@ -24,5 +24,9 @@ public class UserInEventService {
     public List<UserInEvent> getUsersByEventId(int eventId) throws SQLException {
         return  userInEventDao.getUsersByEventId(eventId);
     }
+    
+    public List<UserInEvent> getByEventAndUser(Integer eventId, Integer userId) throws SQLException {
+    	return getByEventAndUser(eventId, userId);
+    }
 
 }

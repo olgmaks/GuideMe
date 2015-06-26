@@ -66,6 +66,10 @@ public class EventService {
 		 return eventDao.getBySearchMap(map, user);
 	 }
 	 
+	 public List<Event> getByTagName(String tagName) throws SQLException {
+		 return eventDao.getByTagName(tagName);
+	 }
+	 
 	 public void buildTagString(List<Event> list) throws SQLException {
 		 eventDao.buildTagString(list);
 	 }

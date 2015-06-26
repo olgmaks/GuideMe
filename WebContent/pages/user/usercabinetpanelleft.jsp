@@ -8,9 +8,18 @@
 		<ul class="collection z-depth-2 " style="height: 100%;">
 			<li class="collection-item">
 				<div class="" align="center">
-					<a href="userCabinet.do"> <img class="responsive-img"
-						style="height: 40%; width: 40%; object-fit: cover"
-						src="${sessionUser.avatar.path}"></a>
+					<a href="userCabinet.do"> 
+					
+					
+<!-- 					<img class="responsive-img" -->
+<!-- 						style="height: 40%; width: 40%; object-fit: cover" -->
+<%-- 						src="${sessionUser.avatar.path}"> --%>
+						
+					<img class="circle" style="height: 120px; width: 120px; object-fit: cover"
+                                                 src="${sessionUser.avatar.path}">						
+						
+						
+						</a>
 				</div> <br> <h7>${sessionUser.firstName} ${sessionUser.lastName}</h7>
 				<br> <br> <a href="eventsincabinet.do">
 					<button class="btn light-blue waves-effect waves-light"
