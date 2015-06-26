@@ -14,8 +14,9 @@
 		<ul class="right hide-on-med-and-down">
 			<li><a class="modal-trigger"
 				href=${sessionUser==null ? "#signInModal" : "#logoutModal"}
-				id="signinlabel"> ${sessionUser==null ? "Sign In" :  sessionUser.getEmail()}
-			</a></li>
+				id="signinlabel"> ${sessionUser==null ? "Sign In" :
+					sessionUser.getEmail()=='' ? sessionUser.getFirstNameAndLastName()
+					: sessionUser.getEmail()} </a></li>
 		</ul>
 
 	</div>
