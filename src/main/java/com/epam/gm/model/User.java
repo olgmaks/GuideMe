@@ -59,6 +59,17 @@ public class User implements  Comparable<User>{
 
 	private Double points;
 
+
+	//simple marker for indicate if user is friend of some other user
+	private Enum friendCriteria;
+
+	public enum FriendCriteria {
+		sentRequest,
+		receivedRequest,
+		notFriend,
+		friend
+	}
+
 	public Integer getId() {
 		return Id;
 	}
@@ -211,6 +222,15 @@ public class User implements  Comparable<User>{
 		this.points = points;
 	}
 
+	public Enum getFriendCriteria() {
+		return friendCriteria;
+	}
+
+	public User setFriendCriteria(Enum userCriteria) {
+		this.friendCriteria = userCriteria;
+		return this;
+	}
+
 	private boolean isGuide() {
 		boolean newBoolean = false;
 		if (getUserTypeId() == 3) {
@@ -257,37 +277,22 @@ public class User implements  Comparable<User>{
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		User user = (User) o;
 
-		if (Id != null ? !Id.equals(user.Id) : user.Id != null)
-			return false;
-		if (email != null ? !email.equals(user.email) : user.email != null)
-			return false;
-		if (firstName != null ? !firstName.equals(user.firstName)
-				: user.firstName != null)
-			return false;
-		if (lastName != null ? !lastName.equals(user.lastName)
-				: user.lastName != null)
-			return false;
+		if (!Id.equals(user.Id)) return false;
 
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = Id != null ? Id.hashCode() : 0;
-		result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-		result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-		result = 31 * result + (email != null ? email.hashCode() : 0);
-		return result;
+		return Id.hashCode();
 	}
 
-    @Override
+	@Override
     public int compareTo(User o) {
         if (!this.lastName.equals(o.lastName))  {
             return this.lastName.compareTo(o.lastName);

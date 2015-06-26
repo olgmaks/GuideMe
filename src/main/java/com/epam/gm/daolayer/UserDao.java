@@ -49,10 +49,14 @@ public class UserDao extends AbstractDao<User> {
             "  HAVING tag_count >= %s" +
             ") AND currentUser.is_active=true";
 
-    private static final String SEARCH_USER_NON_FRIEND = "u WHERE u.id not in (" +
-            "  SELECT fu.friend_id FROM  friend_user fu WHERE fu.user_id = %1$s AND EXISTS (" +
-            "  SELECT * FROM friend_user fu1 WHERE fu.friend_id = fu1.user_id AND fu.user_id=fu1.friend_id)" +
-            "  ) AND not u.id=%1$s AND u.is_active=true";
+    private static final String SEARCH_USER_NON_FRIEND="u WHERE (not u.id=%1$s)" +
+            "  AND (u.is_active=true)  AND (u.id not in (" +
+            "select fu.friend_id from friend_user fu WHERE fu.user_id =%1$s AND NOT EXISTS (" +
+            "SELECT fu1.friend_id FROM friend_user fu1 WHERE fu.friend_id = fu1.user_id AND fu.user_id=fu1.friend_id)" +
+            "  union  SELECT fu.user_id from friend_user fu WHERE fu.friend_id = %1$s AND NOT EXISTS (" +
+            "SELECT * FROM friend_user fu1 WHERE fu.friend_id = fu1.user_id AND fu.user_id=fu1.friend_id)" +
+            "    union  SELECT fu.friend_id from friend_user  fu WHERE fu.user_id = %1$s AND EXISTS (" +
+            "SELECT * FROM friend_user fu1 WHERE fu.friend_id = fu1.user_id AND fu.user_id=fu1.friend_id)))";
 
     private static final String SEARCH_USER_GUIDE = "u JOIN user_type ut ON u.user_type_id = ut.id " +
             "WHERE ut.name = 'guide' AND u.is_active=true";
@@ -99,7 +103,9 @@ public class UserDao extends AbstractDao<User> {
     }
 
     public List<User> searchNonFriendsUsers(Integer searcherId) throws SQLException {
-        return super.getWithCustomQuery(String.format(SEARCH_USER_NON_FRIEND,searcherId));
+        String sql = String.format(SEARCH_USER_NON_FRIEND,searcherId);
+        System.out.println(sql);
+        return super.getWithCustomQuery(sql);
     }
 
 

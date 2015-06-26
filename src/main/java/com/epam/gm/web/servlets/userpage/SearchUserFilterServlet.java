@@ -1,6 +1,8 @@
 package com.epam.gm.web.servlets.userpage;
 
+import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.User;
+import com.epam.gm.services.FriendUserService;
 import com.epam.gm.services.UserService;
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
@@ -12,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by OLEG on 21.06.2015.
@@ -53,6 +58,7 @@ public class SearchUserFilterServlet implements HttpRequestHandler {
         System.out.print(" / tags : " + tags);
         System.out.println(" / tagsMatches : " + tagsMatches);
         System.out.print("/ searchRole : " + searchRole);
+
 
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");

@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,11 +26,14 @@ public class SendLinkToResetPasswordServlet extends HttpServlet implements
 	 * 
 	 */
 	private static final long serialVersionUID = -6730484476601633673L;
+	private static ExecutorService executorService;
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException,
 			IllegalAccessException {
+
+
 		response.setContentType("text/html");
 		String email = request.getParameter("email");
 		if (new UserDao().getUserByEmail(email) != null) {
