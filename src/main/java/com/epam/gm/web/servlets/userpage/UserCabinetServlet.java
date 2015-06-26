@@ -52,7 +52,7 @@ public class UserCabinetServlet implements HttpRequestHandler {
                 String pathToEventPhoto = photoService.getEventPhoto(eventId).getPath();
                 eventPhotosPathMap.put(eventId, pathToEventPhoto);
             }
-            request.setAttribute("centralContent","central");
+            request.setAttribute("centralContent","eventsincabinet");
             request.setAttribute("userInEvents", userInEvents);
             request.setAttribute("eventPhotosPathMap", eventPhotosPathMap);
 

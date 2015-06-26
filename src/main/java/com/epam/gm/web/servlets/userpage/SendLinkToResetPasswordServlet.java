@@ -16,6 +16,7 @@ import com.epam.gm.daolayer.ForgotPasswordDao;
 import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.hashpassword.MD5HashPassword;
 import com.epam.gm.model.ForgotPassword;
+import com.epam.gm.model.User;
 import com.epam.gm.util.RandomIntegerOnRange;
 import com.epam.gm.util.SendMailTLS;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
@@ -33,9 +34,9 @@ public class SendLinkToResetPasswordServlet extends HttpServlet implements
 			throws ServletException, IOException, SQLException,
 			IllegalAccessException {
 
-
 		response.setContentType("text/html");
 		String email = request.getParameter("email");
+		User u = new UserDao().getUserByEmail(email);
 		if (new UserDao().getUserByEmail(email) != null) {
 			request.getRequestDispatcher("pages/user/successfulsent.jsp")
 					.forward(request, response);
