@@ -16,6 +16,9 @@
 <title>Guide ME</title>
 <link href="css/materialize.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
+
+
+
 <link href="css/style.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
 
@@ -91,6 +94,9 @@
 			<td style="width: 20%; vertical-align: top;"><c:choose>
 					<c:when test="${centralContent == 'searchuser'}">
 						<jsp:include page="searchrightpanel.jsp" />
+					</c:when>
+					<c:when test="${centralContent == 'eventsincabinet'}">
+						<jsp:include page="../eventsincabinet/leftpanel.jsp" />
 					</c:when>
 					<c:otherwise>
 						<jsp:include page="usercabinetpanelright.jsp" />

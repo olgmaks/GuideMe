@@ -24,6 +24,7 @@ public class EventsInCabinetServlet extends HttpServlet implements
 			throws ServletException, IOException, SQLException,
 			IllegalAccessException {
 		request.setAttribute("centralContent", "eventsincabinet");
+		
 		request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(
 				request, response);
 	}
