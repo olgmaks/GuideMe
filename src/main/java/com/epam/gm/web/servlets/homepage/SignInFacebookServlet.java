@@ -133,7 +133,7 @@ public class SignInFacebookServlet extends HttpServlet implements
 			res.getWriter().write(new Gson().toJson(map));
 
 			RequestDispatcher requestDispatcher = req
-					.getRequestDispatcher("pages/index.jsp");
+					.getRequestDispatcher("home.do");
 			requestDispatcher.forward(req, res);
 		} catch (JSONException e) {
 

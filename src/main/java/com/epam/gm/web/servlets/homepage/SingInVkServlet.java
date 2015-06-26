@@ -131,7 +131,7 @@ public class SingInVkServlet extends HttpServlet implements HttpRequestHandler {
 			res.getWriter().write(new Gson().toJson(map));
 
 			RequestDispatcher requestDispatcher = req
-					.getRequestDispatcher("pages/index.jsp");
+					.getRequestDispatcher("home.do");
 			requestDispatcher.forward(req, res);
 		} catch (JSONException e) {
 			e.printStackTrace();
