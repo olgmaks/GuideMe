@@ -96,7 +96,7 @@
             <c:forEach items="${requestScope.commentEvent}" var="ce">
           		${ce.commentator.lastName}   ${ce.commentator.firstName}
           		<li class="collection-item">
-          		<a href="adminUserProfile.do?id=${ce.commentator.id}">
+          		<a href="userProfile.do?id=${ce.commentator.id}">
           			<img src="${ce.commentator.avatar.path}" style="height: 50px; width: 50px; object-fit: cover">
           		</a>
           		 ${ce.comment} 

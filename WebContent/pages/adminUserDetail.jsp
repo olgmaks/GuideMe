@@ -96,7 +96,7 @@
 		    <c:when test="${ua.act=='user'}">    
 		    	<li class="collection-item">
 		    	${ua.activity}      		
-          		<a href="adminUserProfile.do?id=${ua.idAct}">
+          		<a href="userProfile.do?id=${ua.idAct}">
          			  ${ua.name}
           		</a>
           		</li>
@@ -120,7 +120,7 @@
           <c:forEach items="${requestScope.friends}" var="f">
           		<li>
           		${f.friend.lastName}   ${f.friend.firstName}
-          		<a href="adminUserProfile.do?id=${f.friend.id}">
+          		<a href="userProfile.do?id=${f.friend.id}">
           			<img src="${f.friend.avatar.path}" width="22" height="22">
           		</a>
           		</li>

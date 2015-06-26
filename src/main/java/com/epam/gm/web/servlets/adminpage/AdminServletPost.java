@@ -144,7 +144,7 @@ public class AdminServletPost implements HttpRequestHandler{
 			e.printStackTrace();
 		}
         try {
-			response.sendRedirect("adminUserProfile.do?id=" + userId);
+			response.sendRedirect("userProfile.do?id=" + userId);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

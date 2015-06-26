@@ -66,7 +66,7 @@
 				moderator: {
 			        title: 'moderator1',
 					display: function (data) {
-                     return '<a href="adminUserProfile.do?id=' + data.record.moderatorId + '">'+data.record.moderator.lastName+'</a>';
+                     return '<a href="userProfile.do?id=' + data.record.moderatorId + '">'+data.record.moderator.lastName+'</a>';
                  }
 				}
 			}
