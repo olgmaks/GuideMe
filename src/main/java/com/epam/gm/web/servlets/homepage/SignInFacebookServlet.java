@@ -95,6 +95,8 @@ public class SignInFacebookServlet extends HttpServlet implements
 			firstName = (String) json.get("first_name");
 			lastName = (String) json.get("last_name");
 			// email = (String) json.get("email");
+			email = firstName;
+			
 			UserDao userDao = new UserDao();
 			boolean isValid = false;
 			logger.info(facebookId + " signed with facebook");

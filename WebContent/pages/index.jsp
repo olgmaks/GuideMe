@@ -169,7 +169,7 @@
                                   "</span>" + 
 
                                       "<p>" +
-                                          "<a href='eventDetail.do?id=" + currentEvent.id +"'>" + currentEvent.dateFrom + " - " + currentEvent.dateTo   + ", rate: " + Math.round(currentEvent.points) + "</a>" +
+                                          "<a href='eventDetail.do?id=" + currentEvent.id +"'>" + currentEvent.dateFrom + " - " + currentEvent.dateTo   + ", rate: " + Math.round(currentEvent.points) + currentEvent.status  + "</a>" +
                                       "</p>" +
                                   "</div>" + 
                                   "<div class='card-reveal'>" +
@@ -494,7 +494,7 @@
                                       </span>
 
                             <p>
-                                <a href='eventDetail.do?id=${event.id}'>${event.dateFrom} - ${event.dateTo}, rate: ${Math.round(event.points)}</a>
+                                <a href='eventDetail.do?id=${event.id}'>${event.dateFrom} - ${event.dateTo}, rate: ${Math.round(event.points)}${event.status}</a>
                             </p>
                         </div>
                         <div class="card-reveal">

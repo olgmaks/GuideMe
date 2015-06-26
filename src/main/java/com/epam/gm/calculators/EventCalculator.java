@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.StringJoiner;
 
 import com.epam.gm.model.Address;
 import com.epam.gm.model.Event;
@@ -39,7 +40,6 @@ public class EventCalculator {
 	private List<Tag> allTags;
 	private List<Address> allAddress;
 	private List<UserInEvent> userInEvent;
-	
 
 	// Dao
 	private EventService eventService = new EventService();
@@ -72,16 +72,38 @@ public class EventCalculator {
 		if (userId != null) {
 			user = userService.getUserById(userId);
 			favorites = friendService.getUserFavorites(userId);
+			
+			userInEvent = userInEventService.getByEventAndUser(id, userId);
 
 		}
 	}
 	
-	public String getUserInEvent() {
-		String res = "";
-	
+	public String getUserInEventStatus() {
+		StringBuilder status = new StringBuilder();
+		StringJoiner joiner = new StringJoiner(", ", " , ", "");
+		joiner.setEmptyValue("");
+		
+		if((userInEvent != null) && (!userInEvent.isEmpty())) {
+			UserInEvent first = userInEvent.get(0);
+			
+			if(!first.getIsMember()) status.append("unconfirmed ");
+			
+			status.append(first.getStatus());
+			
+			joiner.add(status).toString();
+			
+		} else {
+			//
+		}
 		
 		
-		return res;
+		if(user != null && user.getId().equals(moderator.getId())) {
+			joiner.add("moderator");
+		}
+		
+		
+		
+		return joiner.toString();
 	}
 
 	public boolean isActiveAndNotOutOfDate() {
@@ -218,7 +240,10 @@ public class EventCalculator {
 			throws SQLException {
 
 		for (Event e : events) {
-			e.setPoints(new EventCalculator(e.getId(), userid).calculate());
+			EventCalculator calc = new EventCalculator(e.getId(), userid);
+			
+			e.setPoints(calc.calculate());
+			e.setStatus(calc.getUserInEventStatus());
 		}
 
 		Collections.sort(events, Event.BY_POINTS);

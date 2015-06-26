@@ -15,7 +15,8 @@ public class PageNotFoundServlet extends HttpServlet implements HttpRequestHandl
        
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Error 404");
+		//response.getWriter().append("Error 404");
+		request.getRequestDispatcher("pages/404.jsp").forward(request, response);
 	}
 
 }
