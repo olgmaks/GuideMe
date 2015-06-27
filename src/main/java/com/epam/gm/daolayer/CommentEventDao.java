@@ -23,4 +23,5 @@ public class CommentEventDao extends AbstractDao<CommentEvent> {
 			SQLException {
 		super.save(comment);
 	}
+	
 }

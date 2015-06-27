@@ -1,16 +1,21 @@
 
 package com.epam.gm.daolayer;
 
+import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
-
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
+import com.epam.gm.services.UserService;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserInEventDao extends AbstractDao<UserInEvent> {
 	private static final String GET_BY_EVENT_AND_USER = 
 			" uie WHERE uie.event_id = ?eventId AND uie.user_id = ?userId";
+	
+	private static final String GET_BY_EVENT_ONLY_MEMBERS =
+			" uie WHERE uie.is_member = TRUE AND uie.event_id = ? ";
 	
 
     public UserInEventDao() {
@@ -36,8 +41,26 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
         		 .replace("?userId", userId.toString()));
      }
      
+     public List<UserInEvent> getByEventOnlyMembers(Integer eventId) throws SQLException {
+         return getWithCustomQuery(GET_BY_EVENT_ONLY_MEMBERS.replace("?", eventId.toString()));
+     }
+     
+     public List<User> getByEventOnlyMembersToUsers(Integer eventId) throws SQLException {
+    	 List<UserInEvent> userInEvent = getByEventOnlyMembers(eventId);
+    	 
+    	 List<User> res = new ArrayList<User>();
+    	 
+    	 UserService userService = new UserService();
+    	 for(UserInEvent u: userInEvent) {
+    		 User user = userService.getUserById(u.getUserId());
+    		 res.add(user);
+    	 }
+    	 
+    	 return res;
+     }
+     
      public static void main(String[] args) throws SQLException {
-		//new UserInEventDao().getByEventAndUser(2, 1).forEach(x->System.out.println(x));
+		new UserInEventDao().getByEventOnlyMembers(4).forEach(x->System.out.println(x));
 	}
   
 }

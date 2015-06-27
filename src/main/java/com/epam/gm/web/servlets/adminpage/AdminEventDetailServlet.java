@@ -1,6 +1,7 @@
 package com.epam.gm.web.servlets.adminpage;
 
 import java.io.IOException;
+import java.nio.channels.SeekableByteChannel;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -8,13 +9,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.gm.calculators.EventCalculator;
+import com.epam.gm.calculators.UserCalculator;
 import com.epam.gm.daolayer.RatingEventDao;
 import com.epam.gm.model.Event;
+import com.epam.gm.model.RatingUser;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
 import com.epam.gm.services.CommentEventService;
 import com.epam.gm.services.EventService;
 import com.epam.gm.services.PhotoService;
+import com.epam.gm.services.RatingUserService;
 import com.epam.gm.services.UserInEventService;
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.eventsincabitnet.EventsInCabinetServlet;
@@ -64,22 +69,27 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 						.getByEventAndUser(event.getId(), user.getId());
 
 				UserInEvent details = null;
-				boolean forbidden = false;
+				boolean isMember = true;
 				if (userInEvent == null || userInEvent.isEmpty()) {
-					forbidden = true;
+					isMember = false;
 
 				} else {
 					details = userInEvent.get(0);
 					if (!details.getIsMember())
-						forbidden = true;
+						isMember = false;
 				}
 
-				if (forbidden) {
-					response.sendRedirect("403.do");
-					return;
-				}
+
 				
 				//member
+				request.setAttribute("isMember", isMember);
+				
+				
+				List<UserInEvent> members = userInEventService.getByEventOnlyMembers(event.getId());
+				request.setAttribute("members", members);
+				
+				
+				//System.out.println("++++++members = " + members);
 				
 				request.setAttribute("mark", mark);
 				request.setAttribute("userLogined", user);
@@ -87,6 +97,28 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 						new CommentEventService().getByEventId(id));
 				request.setAttribute("photos",
 						new PhotoService().getEventPhotos(id));
+				
+				request.setAttribute("isAdmin", SessionRepository.isAdmin(request));
+				
+				//List<RatingUser> ratingUser = new RatingUserService().getRatingByUser(event.getModeratorId());
+				
+				UserCalculator userCalc = new UserCalculator(event.getModeratorId(), user.getId());
+				Integer moderatorMark = 0;
+//				if(ratingUser != null && !ratingUser.isEmpty())
+//					moderatorMark = ratingUser.get(0).getMark();
+				
+				request.setAttribute("moderatorMark", "Average user mark: " + Math.round(userCalc.getAverageRate()) + 
+						"  Total points: " + Math.round(userCalc.calculate()));
+				
+				EventCalculator eventCalc = new EventCalculator(event.getId(), user.getId());
+				
+				request.setAttribute("eventMark", Math.round(eventCalc.getAverageRate()));
+				
+				
+				request.setAttribute("eventMark", Math.round(eventCalc.getAverageRate()));
+				request.setAttribute("eventPoints", Math.round(eventCalc.calculate()));
+				
+				
 				System.out.println(new PhotoService().getEventPhotos(id));
 				request.getRequestDispatcher("pages/admin/adminEventDetail.jsp")
 						.forward(request, response);

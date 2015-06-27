@@ -18,4 +18,8 @@ public class CommentEventService {
 	public void save(CommentEvent comment) throws IllegalArgumentException, IllegalAccessException, SQLException{
 		ceDao.save(comment);
 	}
+	
+	public void deleteById(Integer id) throws IllegalAccessException, SQLException {
+		ceDao.deleteByField("id", id);
+	}
 }

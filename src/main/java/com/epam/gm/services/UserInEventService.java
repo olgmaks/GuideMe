@@ -1,6 +1,7 @@
 package com.epam.gm.services;
 
 import com.epam.gm.daolayer.UserInEventDao;
+import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
 
 import java.sql.SQLException;
@@ -28,5 +29,15 @@ public class UserInEventService {
     public List<UserInEvent> getByEventAndUser(Integer eventId, Integer userId) throws SQLException {
     	return userInEventDao.getByEventAndUser(eventId, userId);
     }
+    
+    public List<UserInEvent> getByEventOnlyMembers(Integer eventId) throws SQLException {
+    	return userInEventDao.getByEventOnlyMembers(eventId);
+    }
+    
+    public List<User> getByEventOnlyMembersToUsers(Integer eventId) throws SQLException {
+    	return  userInEventDao.getByEventOnlyMembersToUsers(eventId);
+    }
 
+    
+    
 }

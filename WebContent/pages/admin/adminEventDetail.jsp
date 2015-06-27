@@ -24,7 +24,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
     	
-    	  $('#ratingEvent').ratings(10,'${mark}').bind('ratingchanged', function(event, data) {
+    	  $('#ratingEvent').ratings(5,'${mark}').bind('ratingchanged', function(event, data) {
     	      rate(data.rating)
     		  $('#example-rating-1').text(data.rating);
     	  });
@@ -61,20 +61,50 @@
     <div id="content" class="clearfix">
     <div id="userphoto"><img  src="${event.avatar.path}" alt="default avatar" style="height: 120px; width: 120px; object-fit: cover"></div>
       <h2><c:out value="${requestScope.event.name} "/></h2> 
-      <nav id="profiletabs">
+      
+      
+  <ul class="collection">
+    <li class="collection-item avatar">
+      <img src="${event.moderator.avatar.path}" alt="" class="circle">
+      
+      <span class="title"><a href="userProfile.do?id=${event.moderator.id}">Author: ${event.moderator.firstName} ${event.moderator.lastName}</a></span>
+      
+      <p>
+      <i>${requestScope.moderatorMark}</i>
+ <br>
+      </p>
+<%--       <a  class="secondary-content"><i class="material-icons">${m.status}</i></a> --%>
+    </li>
+    
+  </ul>      
+      
+      
+      <nav  id="profiletabs">
         <ul class="clearfix">
-          <li><a href="#bio" class="sel">Bio</a></li>
+          <li><a href="#bio" class="sel">About</a></li>
           <li><a href="#photos">Fotos</a></li>
+          <li><a href="#members">Members</a></li>
+          
+          <c:if test="${isAdmin}">
           <li><a href="#settings">Settings</a></li>
+          </c:if>
         </ul>
       </nav>
       
       <section id="bio">
-       <p><span>description</span><c:out value="${event.description}"/></p>  
-       <p><span>from date</span><c:out value="${event.dateFrom}"/></p>
-       <p><span>to Date</span><c:out value="${event.dateTo}"/></p>
-       <p><span>address</span><c:out value="${event.address.address}"/></p>
-       <p><span>city</span><c:out value="${event.address.city.name}"/></p>   
+       <p><span><b>Description: </b> </span><c:out value="${event.description}"/></p>  
+       <p><span><b>From: </b></span><c:out value="${event.dateFrom}"/></p>
+       <p><span><b>To: </b></span><c:out value="${event.dateTo}"/></p>
+       <p><span><b>Address: </b></span><c:out value="${event.address.address}"/></p>
+       <p><span><b>City: </b></span><c:out value="${event.address.city.name}"/></p>
+       <p><span><b>Average mark: </b></span><c:out value="${eventMark}"/></p> 
+       <p><span><b>Total points: </b></span><c:out value="${eventPoints}"/></p> 
+       <br>
+       
+       <c:if test="${isMember}">
+       
+       <p><span><b>Your mark: </b></span></p> 
+         
        <c:choose>
 		    <c:when test="${not empty userLogined}">
 				  <div id="ratingEvent"></div> <br />
@@ -84,31 +114,55 @@
 				        <input type="hidden" name = "eventId" value ="${event.id}">
 				        </div>
 				        	<div class="input-field col s12">       
-				       	 	<p><span>Comment</span>
+				       	 	<p><span> <b> <i> Comment</i> </b>  </span>
 				       	 	<input required type ="text" name="comment"></p>
 				  		</div>
 			   </div>
-		   	<input type="submit" value="Submit">
+<!-- 		   	<input type="submit" value="Submit"> -->
+		   	
+			<button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 50%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">
+            Add comment<i class="mdi-content-add-circle-outline right"></i></button>		   	
 			   </form>
 			
 	          
-	      <ul id="friendslist" >
-            <c:forEach items="${requestScope.commentEvent}" var="ce">
-          		${ce.commentator.lastName}   ${ce.commentator.firstName}
-          		<li class="collection-item">
-          		<a href="userProfile.do?id=${ce.commentator.id}">
-          			<img src="${ce.commentator.avatar.path}" style="height: 50px; width: 50px; object-fit: cover">
-          		</a>
-          		 ${ce.comment} 
-          		</li>
-      		</c:forEach>
+	      <ul class="collection" id="friendslist" >
+      		
+  			<c:forEach items="${requestScope.commentEvent}" var="ce">
+    		<li class="collection-item avatar">
+      
+      		<img src="${ce.commentator.avatar.path}" alt="" class="circle">
+      
+      		<span class="title"><a href="userProfile.do?id=${ce.commentator.id}"> ${ce.commentator.firstName} ${ce.commentator.lastName}</a></span>
+      		<p><br> ${ce.comment}
+      		</p>
+    
+      
+      		<c:if test="${ce.commentator.id == userLogined.id}"> 
+       		<form id="deleteForm" action="deleteEventComment.do?id=${ce.id}&eventId=${event.id}" method="POST" > 
+      
+      		 <button type="submit"  class="secondary-content"><i class="material-icons">delete</i></button>
+ 
+       	  </form> 
+ 
+ 	     </c:if>
+    
+    
+    	</li>
+    </c:forEach>      		
+      		
+      		
       	</ul>
 		 </c:when>
 	</c:choose>  
+	</c:if>
+	
+	
+	
+	
       </section>
       
       <section id="photos" class="hidden">
-        <p>Fhotos:</p>
+        <p>Photos:</p>
         <ul id="photolist" class="clearfix">
           <c:forEach items="${photos}" var="p">
           		<li>   
@@ -119,6 +173,31 @@
       		</c:forEach>
       	</ul>
       </section>
+      
+      <section id="members" class="hidden">
+        <p>Members:</p>
+
+      	
+  <ul class="collection">
+  <c:forEach items="${requestScope.members}" var="m">
+    <li class="collection-item avatar">
+      <img src="${m.user.avatar.path}" alt="" class="circle">
+      <span class="title"><a href="userProfile.do?id=${event.moderator.id}">Author: ${event.moderator.firstName} ${event.moderator.lastName}</a></span>
+      <p>
+      <c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
+      <c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
+		
+ <br>
+         
+      </p>
+      <a  class="secondary-content"><i class="material-icons">${m.status}</i></a>
+    </li>
+    </c:forEach>
+    
+  </ul>
+      	
+      </section>      
+      
       
 <!--       <section id="settings" class="hidden"> -->
 <!--         <p>Edit your user settings:</p> -->
