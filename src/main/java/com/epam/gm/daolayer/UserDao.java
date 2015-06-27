@@ -25,6 +25,8 @@ public class UserDao extends AbstractDao<User> {
     private static final String USER_FACEBOOK_ID = "facebook_id";
     private static final String USER_VK_ID = "vk_id";
 
+    
+    
     private static final String GET_USER_BY_CITY_NAME_SQL = "JOIN address ON user.address_id = address.id "
             + "JOIN city ON address.city_id = city.id WHERE name = '%S' AND user.is_active=true";
 

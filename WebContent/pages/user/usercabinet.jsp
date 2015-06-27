@@ -88,6 +88,10 @@
 					<c:when test="${centralContent == 'eventsincabinet' }">
 						<jsp:include page="../eventsincabinet/allevents.jsp" />
 					</c:when>
+					<c:when test="${centralContent == 'moderatorevent' }">
+						<jsp:include page="../eventsincabinet/moderatorevents.jsp" />
+
+					</c:when>
 				</c:choose></td>
 
 
@@ -95,8 +99,9 @@
 					<c:when test="${centralContent == 'searchuser'}">
 						<jsp:include page="searchrightpanel.jsp" />
 					</c:when>
-					<c:when test="${centralContent == 'eventsincabinet'}">
-						<jsp:include page="../eventsincabinet/leftpanel.jsp" />
+					<c:when
+						test="${centralContent == 'eventsincabinet' || centralContent == 'moderatorevent'}">
+						<jsp:include page="../eventsincabinet/rightpanel.jsp" />
 					</c:when>
 					<c:otherwise>
 						<jsp:include page="usercabinetpanelright.jsp" />

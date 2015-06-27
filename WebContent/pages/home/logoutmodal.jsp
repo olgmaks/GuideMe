@@ -24,8 +24,8 @@
 		<br>
 		<div class="row valign-wrapper">
 			<div class="col s6">
-				<img src="${sessionUser.avatar.path }" alt=""
-					class="responsive-img" id="userphoto">
+				<img src="${sessionUser.avatar.path }" alt="" class="responsive-img"
+					id="userphoto">
 				<!-- notice the "circle" class -->
 			</div>
 			<div class="col s10">
@@ -35,7 +35,7 @@
 
 		</div>
 	</div>
-	<a href="userCabinet.do"
+	<a href="eventsincabinet.do"
 		class="light-blue btn waves-effect waves-light"
 		style="margin-left: 5%;">Cabinet</a> <br> <br> <a
 		href="logout.do" class="light-blue btn waves-effect waves-light"
