@@ -38,6 +38,11 @@ public class UserInEventService {
     	return  userInEventDao.getByEventOnlyMembersToUsers(eventId);
     }
 
+    public void deleteUserFromEvent(Integer eventId, Integer userId) throws SQLException{
+    	userInEventDao.deleteUserFromEvent(eventId, userId);
+    }
     
-    
+ 	public void joinToEvent(Integer eventId, Integer userId, Integer bedCount, String status) throws IllegalArgumentException, IllegalAccessException, SQLException {
+ 		userInEventDao.joinToEvent(eventId, userId, bedCount, status);
+ 	}	
 }

@@ -68,21 +68,33 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 				List<UserInEvent> userInEvent = userInEventService
 						.getByEventAndUser(event.getId(), user.getId());
 
+				boolean showJoin = false;
+				boolean showQuit = false;
+				boolean showCancel = false;
+				
 				UserInEvent details = null;
 				boolean isMember = true;
 				if (userInEvent == null || userInEvent.isEmpty()) {
 					isMember = false;
+					
+					showJoin = true;
 
 				} else {
 					details = userInEvent.get(0);
 					if (!details.getIsMember())
 						isMember = false;
+					
+					showQuit = isMember;
+					showCancel = !isMember;
 				}
 
-
-				
 				//member
 				request.setAttribute("isMember", isMember);
+
+				
+				System.out.println("showQuit = " + showQuit);
+				System.out.println("showJoin = " + showJoin);
+				System.out.println("showCancel = " + showCancel);
 				
 				
 				List<UserInEvent> members = userInEventService.getByEventOnlyMembers(event.getId());
@@ -118,10 +130,16 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 				request.setAttribute("eventMark", Math.round(eventCalc.getAverageRate()));
 				request.setAttribute("eventPoints", Math.round(eventCalc.calculate()));
 				
+				request.setAttribute("showQuit", showQuit);
+				request.setAttribute("showJoin", showJoin);
+				request.setAttribute("showCancel", showCancel);	
+				request.setAttribute("type", eventCalc.isModeratorGuide() ? "excursion" : "event");
 				
 				System.out.println(new PhotoService().getEventPhotos(id));
 				request.getRequestDispatcher("pages/admin/adminEventDetail.jsp")
 						.forward(request, response);
+				
+				
 
 			}
 

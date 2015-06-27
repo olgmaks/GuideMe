@@ -133,8 +133,11 @@ public class AbstractDao<T> {
 
     public void deleteWithCustomQuery(String customWhere) throws SQLException {
         Connection connection = ConnectionManager.getConnection();
-        deleteHelper.deleteWithCustomQuery(connection, customWhere);
-    }
+        deleteHelper.deleteWithCustomQuery(connection, customWhere).executeUpdate();
+        
+        // gryn
+        ConnectionManager.closeConnection(connection);
+   }
 
     public List<T> getAll() throws SQLException {
         // gryn

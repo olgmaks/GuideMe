@@ -158,7 +158,83 @@
 	<div id="w">
     <div id="content" class="clearfix">
     <div id="userphoto"><img  src="${event.avatar.path}" alt="default avatar" style="height: 120px; width: 120px; object-fit: cover"></div>
+  
+  <c:if test="${showJoin}">
+      <form action="joinEvent.do" method="POST" >
+      <input type="hidden" name="operation" value="join">
+      <input type="hidden" name="id" value="${requestScope.event.id}">
+      
+      
+      <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 50%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">
+            Join event<i class="mdi-content-add-circle-outline right"></i></button>	
+  
+      
+
+	 <br><br>Status: <select class="browser-default" id="status" name="status" style="width: 50%;text-align: left;font-size: 100%;text-transform: capitalize">
+	 <option selected value="guest">Guest</option>
+  	 <option value="resident">Resident</option>
+	</select>
+	
+    <script>
+        $('#status').change(function () {
+             var selectedValue = $(this).val();
+                                                  
+             if(selectedValue == "guest") {
+                                                                	
+              	$('#bedCountSelect').val('need');
+             } else {
+                                                                	
+                $('#bedCountSelect').val('accept');
+             }
+        });    
+     </script>        
+                                                                
+                                                                
+                                                                
+	 <br>Apartments: <select class="browser-default" id="bedCountSelect" name="bedCountSelect" style="width: 50%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">
+	 <option value="need">Need apartments:</option>
+  	 <option value="accept">Accepting guests:</option>
+  	 </select>
+  	 
+	 <br>Persons: <select class="browser-default" id="bedCount" name="bedCount" style="width: 50%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">
+	 <option selected value="0">No</option>
+	 <option value="1">1</option>
+	 <option value="2">2</option>
+  	 <option value="3">3</option>
+  	 <option value="4">4</option>
+  	 <option value="5">5</option>
+  	 <option value="6">6</option>
+  	 <option value="7">7</option>
+  	 <option value="8">8</option>
+  	 <option value="9">9</option>
+  	 <option value="10">10</option>
+	</select>
+	
+      
+  	  </form> 	
+  </c:if>           
+   
+  <c:if test="${showQuit || showCancel}">
+  	<form action="joinEvent.do" method="POST" >
+  	<input type="hidden" name="operation" value="quit">
+  	<input type="hidden" name="id" value="${requestScope.event.id}">
+  	
+      			<button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 50%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">
+           		 <c:if test="${showCancel}">Cancel request</c:if>
+            	<c:if test="${showQuit}">Quit event</c:if>
+            
+              <i class="mdi-navigation-close right"></i></button>	
+	</form> 
+   </c:if>   
+      
+      
       <h2><c:out value="${requestScope.event.name} "/></h2> 
+     
+<!-- 		       <form action="joinEvent.do" method="POST" > -->
+<%-- 				<input type="hidden" name = "eventId" value ="${event.id}"> --%>
+<!-- 			   </div> -->
+		   	
+<!-- 			   </form>      -->
       
       
   <ul class="collection">
@@ -190,6 +266,7 @@
       </nav>
       
       <section id="bio">
+       <p><span><b>Type: </b> </span><c:out value="${type}"/></p>  
        <p><span><b>Description: </b> </span><c:out value="${event.description}"/></p>  
        <p><span><b>From: </b></span><c:out value="${event.dateFrom}"/></p>
        <p><span><b>To: </b></span><c:out value="${event.dateTo}"/></p>
@@ -289,7 +366,7 @@
   <c:forEach items="${requestScope.members}" var="m">
     <li class="collection-item avatar">
       <img src="${m.user.avatar.path}" alt="" class="circle">
-      <span class="title"><a href="userProfile.do?id=${event.moderator.id}">Author: ${event.moderator.firstName} ${event.moderator.lastName}</a></span>
+      <span class="title"><a href="userProfile.do?id=${m.user.id}"> ${m.user.firstName} ${m.user.lastName}</a></span>
       <p>
       <c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
       <c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>

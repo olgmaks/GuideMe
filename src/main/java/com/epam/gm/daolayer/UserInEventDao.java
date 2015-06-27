@@ -1,14 +1,22 @@
 
 package com.epam.gm.daolayer;
 
+import com.epam.gm.model.Event;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
+import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 import com.epam.gm.services.UserService;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.StringJoiner;
 
 public class UserInEventDao extends AbstractDao<UserInEvent> {
 	private static final String GET_BY_EVENT_AND_USER = 
@@ -66,12 +74,27 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
  	public void deleteUserFromEvent(Integer eventId, Integer userId) throws SQLException{
  		deleteWithCustomQuery(DELETE_BY_EVENT_AND_USER.replace("?eventId", eventId.toString())
        		 .replace("?userId", userId.toString()));
- 		
  	}
+ 	
+ 	
+ 	public void joinToEvent(Integer eventId, Integer userId, Integer bedCount, String status) throws IllegalArgumentException, IllegalAccessException, SQLException {
+ 		UserInEvent temp = new UserInEvent();
+ 		temp.setBedCount(bedCount);
+ 		temp.setCarplaceCount(0);
+ 		temp.setEventId(eventId);
+ 		temp.setFoodCount(0);
+ 		temp.setIsMember(false);
+ 		temp.setStatus(status);
+ 		temp.setUserId(userId);
+ 		
+ 		super.save(temp);
+ 	}
+ 	
      
-     public static void main(String[] args) throws SQLException {
+     public static void main(String[] args) throws SQLException, IllegalArgumentException, IllegalAccessException {
 		//new UserInEventDao().getByEventOnlyMembers(4).forEach(x->System.out.println(x));
-    	 new UserInEventDao().deleteUserFromEvent(4, 10);
+    	 //new UserInEventDao().deleteUserFromEvent(4, 10);
+    	 new UserInEventDao().joinToEvent(4, 5, -3, "guest");
      }
   
 }
