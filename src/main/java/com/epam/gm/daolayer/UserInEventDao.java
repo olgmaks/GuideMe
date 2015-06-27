@@ -17,6 +17,9 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 	private static final String GET_BY_EVENT_ONLY_MEMBERS =
 			" uie WHERE uie.is_member = TRUE AND uie.event_id = ? ";
 	
+	private static final String DELETE_BY_EVENT_AND_USER = 
+			" event_id = ?eventId AND user_id = ?userId";
+	
 
     public UserInEventDao() {
         //gryn
@@ -59,8 +62,16 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
     	 return res;
      }
      
+ 	
+ 	public void deleteUserFromEvent(Integer eventId, Integer userId) throws SQLException{
+ 		deleteWithCustomQuery(DELETE_BY_EVENT_AND_USER.replace("?eventId", eventId.toString())
+       		 .replace("?userId", userId.toString()));
+ 		
+ 	}
+     
      public static void main(String[] args) throws SQLException {
 		//new UserInEventDao().getByEventOnlyMembers(4).forEach(x->System.out.println(x));
-	}
+    	 new UserInEventDao().deleteUserFromEvent(4, 10);
+     }
   
 }

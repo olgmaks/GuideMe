@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.function.IntPredicate;
 
 public class EventDao extends AbstractDao<Event> {
 	
@@ -345,6 +346,9 @@ public class EventDao extends AbstractDao<Event> {
 		ConnectionManager.closeConnection(connection);
 		
 	}
+	
+
+	
 	
 	
 
