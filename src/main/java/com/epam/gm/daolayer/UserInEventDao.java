@@ -60,7 +60,7 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
      }
      
      public static void main(String[] args) throws SQLException {
-		new UserInEventDao().getByEventOnlyMembers(4).forEach(x->System.out.println(x));
+		//new UserInEventDao().getByEventOnlyMembers(4).forEach(x->System.out.println(x));
 	}
   
 }
