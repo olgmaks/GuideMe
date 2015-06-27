@@ -21,4 +21,8 @@ public class MessageEventDao extends AbstractDao<MessageEvent> {
     public void save(MessageEvent me) throws IllegalArgumentException, IllegalAccessException, SQLException {
     	super.save(me);
     }
+    
+    public List<MessageEvent> getByEvent(int eventId) throws SQLException{
+    	return super.getByField("event_id", eventId);
+    }
 }

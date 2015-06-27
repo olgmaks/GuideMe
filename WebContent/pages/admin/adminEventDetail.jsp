@@ -21,16 +21,6 @@
    
     <script src="js/jquery.ratings.js"></script>
 <style>
-* {
-    margin: auto;
-    padding: 0px;
-}
-
-html, body {
-    width:90%;
-    height:90%;
-    background: #eeeeda;
-}
 
 .panel {
     border: 2px solid #0078ae;
@@ -73,11 +63,6 @@ html, body {
     background: yellow;
 }
 
-h1 {
-    font-size: 1.5em;
-    padding: 5px;
-    margin: 5px;
-}
 
 #messageInput {
     min-width: 60%;
@@ -96,11 +81,21 @@ h1 {
     var room = '';
     function connect () {
     	room = '${event.id}';
+    	 $.ajax({
+             url: "chatEventRequest.do?action=getByEvent&eventId=" + '${event.id}',
+             type: "post",
+             success: function(data) {
+                 jQuery.each(data, function(index, item) {
+                	 var messagesArea = document.getElementById("messages");
+                	 var message = item.sender.lastName + ": " + item.message + "\r\n";
+                	 messagesArea.value = messagesArea.value + message;
+                 });
+             },         });
         chatClient = new WebSocket(endPointURL+room);
         chatClient.onmessage = function (event) {
             var messagesArea = document.getElementById("messages");
             var jsonObj = JSON.parse(event.data);
-            var message = jsonObj.user + ": " + jsonObj.message + "\r\n";
+            var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
             messagesArea.value = messagesArea.value + message;
             messagesArea.scrollTop = messagesArea.scrollHeight;
         };
@@ -111,15 +106,12 @@ h1 {
     }
 
     function sendMessage() {
-        var user = '${sessionUser.lastName} ${sessionUser.firstName}';
+        var userName = '${sessionUser.lastName} ${sessionUser.firstName}';
         	//document.getElementById("userName").value.trim();
-        if (user === "")
-            alert ("Please enter your name!");
-        
         var inputElement = document.getElementById("messageInput");
         var message = inputElement.value.trim();
         if (message !== "") {
-            var jsonObj = {"user" : user, "message" : message, "komy":"meni"};
+            var jsonObj = {"userName" : userName, "message" : message, "userId": "${sessionUser.id}" } ;
             chatClient.send(JSON.stringify(jsonObj));
             inputElement.value = "";
         }
@@ -279,20 +271,15 @@ h1 {
       		</c:forEach>
       	</ul>
       </section>
-      
      
-      <section id="chat" class = "hidden">
-        <textarea id="messages" class="panel message-area" readonly ></textarea>
+    <section id="chat" class = "hidden">
+       <textarea id="messages" class="panel message-area" readonly  rows="14"></textarea>
         <div class="panel input-area">
             <input id="messageInput" class="text-field" type="text" placeholder="Message" 
                    onkeydown="if (event.keyCode == 13) sendMessage();" />
             <input class="button" type="submit" value="Send" onclick="sendMessage();" />
         </div>
-			 <select id ="selectId"name ="selectId">
-			  <option value ="1c">1</option>
-			  <option value = "2a">2</option>
-			</select>
-		</section>
+	</section>
       
       <section id="members" class="hidden">
         <p>Members:</p>

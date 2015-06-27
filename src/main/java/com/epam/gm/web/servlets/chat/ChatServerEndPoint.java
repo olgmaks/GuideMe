@@ -1,6 +1,7 @@
 package com.epam.gm.web.servlets.chat;
 
 
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +12,15 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+
+import com.epam.gm.daolayer.MessageEventDao;
+import com.epam.gm.model.MessageEvent;
+import com.epam.gm.sessionrepository.SessionRepository;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
  
 /**
  * ChatServer
@@ -62,5 +72,30 @@ public class ChatServerEndPoint {
             	session.getAsyncRemote().sendText(message);
             }
         }
+        saveMessage(room, message);
+        
+    }
+    public void saveMessage(String room, String messageJSON) {
+    
+        JsonElement jelement = new JsonParser().parse(messageJSON);
+        //System.out.println(jsonLine);
+        JsonObject  jobject = jelement.getAsJsonObject();
+        String userId = jobject.get("userId").toString().replace("\"", "");
+        String message = jobject.get("message").toString();
+        message = message.substring(1, message.length()-1);
+    	MessageEvent me = new MessageEvent();
+        me.setEventId(Integer.parseInt(room));
+        me.setSenderId(Integer.parseInt(userId));
+        me.setMessage(message);
+        MessageEventDao meDao = new MessageEventDao();
+        try {
+			meDao.save(me);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 }

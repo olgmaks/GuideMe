@@ -60,7 +60,23 @@ public class MessageEvent {
 	this.message = message;
     }
 
-    @Override
+    public User getSender() {
+		return sender;
+	}
+
+	public void setSender(User sender) {
+		this.sender = sender;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
+
+	@Override
     public String toString() {
 	return "MessageEvent [id=" + id + ", senderId=" + senderId
 		+ ", sender=" + sender + ", eventId=" + eventId + ", event="
