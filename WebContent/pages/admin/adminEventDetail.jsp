@@ -96,7 +96,6 @@ h1 {
     var room = '';
     function connect () {
     	room = '${event.id}';
-    	alert(room)
         chatClient = new WebSocket(endPointURL+room);
         chatClient.onmessage = function (event) {
             var messagesArea = document.getElementById("messages");
