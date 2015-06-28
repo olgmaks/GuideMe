@@ -20,6 +20,11 @@
   <link type="text/css" rel="stylesheet" href="css/jquery.ratings.css" />
    
     <script src="js/jquery.ratings.js"></script>
+    
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+    
+    
 <style>
 
 .panel {
@@ -240,21 +245,46 @@
 <!-- 			   </form>      -->
       
       
+   <c:if test="${!isModerator}">
+   <br><b> Status: ${event.status} </b>
+   </c:if>   
+      
    <c:if test="${isModerator}">
-   	 <form action="changeEventStatus.do" method="POST" >
+   	 <form action="changeEventStatus.do" method="POST" id = "changeEventForm">
       <input type="hidden" name="id" value="${requestScope.event.id}">
-	 <br>Status: <select class="browser-default" id="status" name="status" style="width: 50%;text-align: left;font-size: 100%;text-transform: capitalize">
+	 <br>Status: <select  class="browser-default" id="status" name="status" style="width: 50%;text-align: left;font-size: 100%;text-transform: capitalize">
 	 
-	 <option selected value="active">Active</option>
-  	 <option value="filled">Filled</option>      
-  	 <option value="cancelled">Cancelled</option> 
-  	 <option value="done">Done</option>      
+	 <option  ${selActive} value="active">Active</option>
+  	 <option ${selFilled}   value="filled">Filled</option>      
+  	 <option ${selCancelled}  value="cancelled">Cancelled</option> 
+  	 <option ${selDone} value="done">Done</option>      
   	 </select>
       
       <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 50%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">
-            Change<i class="mdi-content-add-circle-outline right"></i></button>	
+            Change</i></button>	
             
    	 </form>
+   	 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#changeEventForm").submit(function () {
+            	
+                $.ajax({
+                    url: 'changeEventStatus.do',
+                    type: 'post',
+                    dataType: 'json',
+                    data: $("#changeEventForm").serialize(),
+                    success: function (data) {
+                    	 Materialize.toast('Status changed !', 2000,'',function(){})
+                    }
+                });
+                
+                return false;
+            });
+        });
+    </script>      	 
+   	 
+   	 
    </c:if>    
       
       

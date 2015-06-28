@@ -136,6 +136,11 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 				request.setAttribute("showCancel", showCancel);	
 				request.setAttribute("type", eventCalc.isModeratorGuide() ? "excursion" : "event");
 				
+				request.setAttribute("selActive", "active".equals(event.getStatus()) ? "selected" : "");
+				request.setAttribute("selFilled", "filled".equals(event.getStatus()) ? "selected" : "");
+				request.setAttribute("selCancelled", "cancelled".equals(event.getStatus()) ? "selected" : "");
+				request.setAttribute("selDone", "done".equals(event.getStatus()) ? "selected" : "");
+				
 				System.out.println(new PhotoService().getEventPhotos(id));
 				request.getRequestDispatcher("pages/admin/adminEventDetail.jsp")
 						.forward(request, response);

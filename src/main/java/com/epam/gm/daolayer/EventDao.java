@@ -363,6 +363,13 @@ public class EventDao extends AbstractDao<Event> {
 		ConnectionManager.closeConnection(connection);
 
 	}
+	
+	public void changeEventStatus(Integer id, String status) throws SQLException {
+        Map<String, Object> updates = new HashMap<String, Object>();
+        updates.put("status", status);
+        updateById(id, updates);
+
+	}
 
 	public static void main(String[] args) throws SQLException,
 			IllegalAccessException {

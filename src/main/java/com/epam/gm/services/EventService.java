@@ -74,6 +74,10 @@ public class EventService {
 		 eventDao.buildTagString(list);
 	 }
 	 
+	 public void changeEventStatus(Integer id, String status) throws SQLException {
+		 eventDao.changeEventStatus(id, status);
+	 }
+	 
 	 public static void main(String[] args) throws SQLException {
 			List<Event> topUserEvents = new EventService().getAllActiveNotDeletedUserEvents();
 			//EventCalculator.sortEventsByPoints(topUserEvents, null);
