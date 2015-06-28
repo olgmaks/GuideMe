@@ -120,7 +120,8 @@
 
     function updateAnchors() {
         $(".removefriend").on("click", function () {
-            console.log("removefriend ajax call");
+            
+        	console.log("removefriend ajax call");
             var value = $(this).data('id');
             var strSelector = "#userFriendCard" + value;
             var formSelector = "#userFriendFormWithId" + value;

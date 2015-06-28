@@ -34,6 +34,10 @@ public class UserInEventService {
     	return userInEventDao.getByEventOnlyMembers(eventId);
     }
     
+    public List<UserInEvent> getByEventOnlyRequesters(Integer eventId) throws SQLException {
+    	return userInEventDao.getByEventOnlyRequesters(eventId);
+    }
+    
     public List<User> getByEventOnlyMembersToUsers(Integer eventId) throws SQLException {
     	return  userInEventDao.getByEventOnlyMembersToUsers(eventId);
     }

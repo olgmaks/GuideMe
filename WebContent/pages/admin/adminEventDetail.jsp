@@ -144,6 +144,44 @@
 		}
 	
 		</script>
+		
+<script>		
+$(document).ready(function () {
+        $(".removefriend").on("click", function () {
+        	
+            console.log("removefriend ajax call");
+            var value = $(this).data('id');
+            var strSelector = "#userFriendCard" + value;
+            var formSelector = "#userFriendFormWithId" + value;
+            $.ajax({
+                url: "removeMember.do",
+                type: "post",
+                dataType: "json",
+                data: $(formSelector).serialize()
+            });
+            console.log(strSelector);
+            $(strSelector).remove();
+        });
+        
+        $(".acceptfriendrequest").click(function () {
+            console.log("acceptfriendrequest ajax call");
+            var value = $(this).data('id');
+            var strSelector = "#userFriendCard" + value;
+            var formSelector = "#userFriendFormWithId" + value;
+            $.ajax({
+                url: "acceptEventRequest.do",
+                type: "post",
+                dataType: "json",
+                data: $(formSelector).serialize()
+            });
+            console.log(strSelector);
+            $(strSelector).remove();
+        });        
+        
+        
+        
+});   
+</script>		
   
 </head>
   <body onload="connect();" onunload="disconnect();">
@@ -309,6 +347,9 @@
           <li><a href="#bio" class="sel">About</a></li>
           <li><a href="#photos">Fotos</a></li>
           <li><a href="#members">Members</a></li>
+          <c:if test="${isModerator}">
+          <li><a href="#requests">Requests</a></li>
+          </c:if>
           <li><a href="#chat">Chat</a></li>
           <c:if test="${isAdmin}">
           <li><a href="#settings">Settings</a></li>
@@ -409,29 +450,102 @@
         </div>
 	</section>
       
-      <section id="members" class="hidden">
-        <p>Members:</p>
+  <section id="members" class="hidden">
+  <p>Members:</p>
 
       	
   <ul class="collection">
   <c:forEach items="${requestScope.members}" var="m">
-    <li class="collection-item avatar">
+    
+   <form id="userFriendFormWithId${m.user.id}">
+   <input type="hidden" id="userFriendId" class="userFriendId" name="userFriendId"
+          value="${m.user.id}">
+          
+    <input type="hidden" id="memberEventId" class="memberEventId" name="memberEventId"
+          value="${event.id}">         
+  
+    
+    <li class="collection-item avatar" id="userFriendCard${m.user.id}">
       <img src="${m.user.avatar.path}" alt="" class="circle">
       <span class="title"><a href="userProfile.do?id=${m.user.id}"> ${m.user.firstName} ${m.user.lastName}</a></span>
       <p>
       <c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
       <c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
-		
+
+
+	<c:if test="${isModerator}">
+	
+	<br>
+    <span style="margin-right: 10px;">Remove member</span>
+    <a href="#_" class="btn-floating light-blue removefriend" data-id="${m.user.id}">
+    <i class="mdi-navigation-close"></i>
+    </a>
+    
+    </c:if>
+	  	
  <br>
          
       </p>
       <a  class="secondary-content"><i class="material-icons">${m.status}</i></a>
     </li>
+     </form>
     </c:forEach>
     
   </ul>
       	
-      </section>      
+ </section>      
+ 
+ 
+ <c:if test="${isModerator}">
+  <section id="requests" class="hidden">
+  <p>Requests:</p>
+
+      	
+  <ul class="collection">
+  <c:forEach items="${requestScope.requests}" var="m">
+    
+   <form id="userFriendFormWithId${m.user.id}">
+   <input type="hidden" id="userFriendId" class="userFriendId" name="userFriendId"
+          value="${m.user.id}">
+          
+    <input type="hidden" id="memberEventId" class="memberEventId" name="memberEventId"
+          value="${event.id}">         
+  
+    
+    <li class="collection-item avatar" id="userFriendCard${m.user.id}">
+      <img src="${m.user.avatar.path}" alt="" class="circle">
+      <span class="title"><a href="userProfile.do?id=${m.user.id}"> ${m.user.firstName} ${m.user.lastName}</a></span>
+      <p>
+      <c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
+      <c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
+
+
+	<c:if test="${isModerator}">
+	<br>
+    <span style="margin-right: 10px;">Accept request</span>
+    <a href="#_" class="btn-floating light-blue acceptfriendrequest" data-id="${m.user.id}">
+    <i class="mdi-navigation-check"></i>
+    </a>
+
+    <span style="margin-right: 10px;">Remove request</span>
+    <a href="#_" class="btn-floating light-blue removefriend" data-id="${m.user.id}">
+    <i class="mdi-navigation-close"></i>
+    </a>
+    
+    </c:if>
+	  	
+ <br>
+         
+      </p>
+      <a  class="secondary-content"><i class="material-icons">${m.status}</i></a>
+    </li>
+     </form>
+    </c:forEach>
+    
+  </ul>
+      	
+ </section>
+ </c:if>
       
       
 <!--       <section id="settings" class="hidden"> -->

@@ -103,6 +103,8 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 				List<UserInEvent> members = userInEventService.getByEventOnlyMembers(event.getId());
 				request.setAttribute("members", members);
 				
+				List<UserInEvent> requests = userInEventService.getByEventOnlyRequesters(event.getId());
+				request.setAttribute("requests", requests);				
 				
 				//System.out.println("++++++members = " + members);
 				
