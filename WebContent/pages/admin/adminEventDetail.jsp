@@ -159,6 +159,7 @@
     <div id="content" class="clearfix">
     <div id="userphoto"><img  src="${event.avatar.path}" alt="default avatar" style="height: 120px; width: 120px; object-fit: cover"></div>
   
+  <c:if test="${!isModerator}">
   <c:if test="${showJoin}">
       <form action="joinEvent.do" method="POST" >
       <input type="hidden" name="operation" value="join">
@@ -226,6 +227,8 @@
               <i class="mdi-navigation-close right"></i></button>	
 	</form> 
    </c:if>   
+   </c:if>
+   
       
       
       <h2><c:out value="${requestScope.event.name} "/></h2> 
@@ -235,6 +238,24 @@
 <!-- 			   </div> -->
 		   	
 <!-- 			   </form>      -->
+      
+      
+   <c:if test="${isModerator}">
+   	 <form action="changeEventStatus.do" method="POST" >
+      <input type="hidden" name="id" value="${requestScope.event.id}">
+	 <br>Status: <select class="browser-default" id="status" name="status" style="width: 50%;text-align: left;font-size: 100%;text-transform: capitalize">
+	 
+	 <option selected value="active">Active</option>
+  	 <option value="filled">Filled</option>      
+  	 <option value="cancelled">Cancelled</option> 
+  	 <option value="done">Done</option>      
+  	 </select>
+      
+      <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 50%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">
+            Change<i class="mdi-content-add-circle-outline right"></i></button>	
+            
+   	 </form>
+   </c:if>    
       
       
   <ul class="collection">

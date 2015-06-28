@@ -58,12 +58,15 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 				response.sendRedirect("404.do");
 				return;
 			}
+			
+			boolean isModerator = event.getModeratorId().equals(user.getId());
+			request.setAttribute("isModerator", isModerator);
 
-			if (event.getModeratorId().equals(user.getId())) {
+			//if (isModerator) {
 				// moderator
 				
 
-			} else {
+			//} else {
 				UserInEventService userInEventService = new UserInEventService();
 				List<UserInEvent> userInEvent = userInEventService
 						.getByEventAndUser(event.getId(), user.getId());
@@ -112,12 +115,10 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 				
 				request.setAttribute("isAdmin", SessionRepository.isAdmin(request));
 				
-				//List<RatingUser> ratingUser = new RatingUserService().getRatingByUser(event.getModeratorId());
 				
 				UserCalculator userCalc = new UserCalculator(event.getModeratorId(), user.getId());
 				Integer moderatorMark = 0;
-//				if(ratingUser != null && !ratingUser.isEmpty())
-//					moderatorMark = ratingUser.get(0).getMark();
+
 				
 				request.setAttribute("moderatorMark", "Average user mark: " + Math.round(userCalc.getAverageRate()) + 
 						"  Total points: " + Math.round(userCalc.calculate()));
@@ -141,7 +142,7 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 				
 				
 
-			}
+			//}
 
 		} catch (NumberFormatException nfe) {
 			response.sendRedirect("404.do");
