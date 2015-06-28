@@ -23,11 +23,15 @@
 						src="${moderatorevent.avatar.getPath() }">
 				</div>
 				<div class="card-content">
-					<p>Data from:</p>
-					<p>To</p>
+					<p>${moderatorevent.getName() }</p>
+					<br> <span class="grey-text text-darken-1">Date from: </span>
+					<p>${moderatorevent.getDateFrom() }</p>
+					<br> <span class="grey-text text-darken-2">Date to: </span>
+					<p>${moderatorevent.getDateTo() }</p>
 				</div>
 				<div class="card-action">
-					<a href="#">This is a link</a>
+					<a href="eventDetail.do?id=${moderatorevent.getId() } ">Event
+						Details</a>
 				</div>
 			</div>
 		</div>
@@ -45,21 +49,30 @@
 </table>
 
 <div class="row">
+	<c:forEach items="${listOfUserInEvent }" begin="0" end="3"
+		var="usersevent">
 
-	<div class="col s4 m3">
-		<div class="card">
-			<div class="card-image">
-				<img
-					src="http://hdwallpaperd.com/wp-content/uploads/new-wallpaper-16.jpg">
-				<span class="card-title">Card Title</span>
-			</div>
-			<div class="card-content">
-				<p>Data from:</p>
-				<p>To</p>
-			</div>
-			<div class="card-action">
-				<a href="#">This is a link</a>
+		<div class="col s4 m3">
+			<div class="card">
+				<div class="card-image">
+					<img style="height: 140px; width: 100%;"
+						src="${usersevent.getEvent().avatar.getPath() }">
+				</div>
+				<div class="card-content">
+					<p>${usersevent.getEvent().getName() }</p>
+					<br> <span class="grey-text text-darken-1">Date from: </span>
+					<p>${usersevent.getEvent().getDateFrom() }</p>
+					<br> <span class="grey-text text-darken-2">Date to: </span>
+					<p>${usersevent.getEvent().getDateTo() }</p>
+				</div>
+				<div class="card-action">
+					<a href="eventDetail.do?id=${usersevent.getEvent().getId() } ">Event
+						Details</a>
+				</div>
 			</div>
 		</div>
-	</div>
+
+	</c:forEach>
+
+
 </div>

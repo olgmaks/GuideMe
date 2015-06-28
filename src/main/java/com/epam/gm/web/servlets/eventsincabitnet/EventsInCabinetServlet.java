@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.epam.gm.daolayer.EventDao;
+import com.epam.gm.daolayer.UserInEventDao;
 import com.epam.gm.model.User;
+import com.epam.gm.model.UserInEvent;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class EventsInCabinetServlet extends HttpServlet implements
@@ -30,6 +32,9 @@ public class EventsInCabinetServlet extends HttpServlet implements
 		request.setAttribute("centralContent", "eventsincabinet");
 		User user = (User) session.getAttribute("sessionUser");
 		EventDao eventDao = new EventDao();
+		UserInEventDao userInEventDao = new UserInEventDao();
+		session.setAttribute("listOfUserInEvent", userInEventDao
+				.getAllUserInEventWhereUserNotModeratorByUserId(user.getId()));
 		session.setAttribute("listOfModeratorEvents", eventDao
 				.getActiveAndNotDeletedEventsByModeratorId(user.getId()));
 

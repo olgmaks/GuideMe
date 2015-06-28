@@ -1,11 +1,11 @@
 <!-- events where user moderator -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<br>
 <table>
 	<thead>
 		<tr>
-			<th data-field="id">Your own events. <a href="#"
-				class="indigo-text text-darken-4">More...</a></th>
+			<th data-field="id">Your own events. </th>
 
 		</tr>
 	</thead>
@@ -21,11 +21,15 @@
 						src="${moderatorevent.avatar.getPath() }">
 				</div>
 				<div class="card-content">
-					<p>Data from:</p>
-					<p>To</p>
+					<p>${moderatorevent.getName() }</p>
+					<br> <span class="grey-text text-darken-1">Date from: </span>
+					<p>${moderatorevent.getDateFrom() }</p>
+					<br> <span class="grey-text text-darken-2">Date to: </span>
+					<p>${moderatorevent.getDateTo() }</p>
 				</div>
 				<div class="card-action">
-					<a href="#">This is a link</a>
+					<a href="eventDetail.do?id=${moderatorevent.getId() } ">Event
+						Details</a>
 				</div>
 			</div>
 		</div>
