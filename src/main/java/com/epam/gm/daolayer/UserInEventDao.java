@@ -30,7 +30,9 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 
 	private static final String GET_ACTUAL_EVENTS_BY_USER_ID_WHERE_USER_NOT_MODERATOR = "uie JOIN event e WHERE uie.event_id=e.id AND NOT uie.user_id=e.moderator_id AND e.date_to>NOW() AND uie.user_id=%s;";
 	private static final String GET_OLD_EVENTS_BY_USER_ID_WHERE_USER_NOT_MODERATOR = "uie JOIN event e WHERE uie.event_id=e.id AND NOT uie.user_id=e.moderator_id AND e.date_to<NOW() AND uie.user_id=%s;";
-
+	
+	private static final String IS_MEMBER_OF_EVENT = "select (%s in( SELECT uie.user_id FROM user_in_event uie   WHERE uie.is_member = TRUE AND uie.event_id = %s ))";
+	
 	public UserInEventDao() {
 		// gryn
 		// super(ConnectionManager.getConnection(), UserInEvent.class);
@@ -153,6 +155,9 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 		super.save(userInEvent);
 	}
 
+	public Boolean isMemberOfEvent(Integer userId, Integer eventId) throws SQLException{
+	    return super.getBoolean(String.format(IS_MEMBER_OF_EVENT,userId,eventId));
+	}
 	public static void main(String[] args) throws SQLException,
 			IllegalArgumentException, IllegalAccessException {
 		new UserInEventDao().getAllOldUserInEventWhereUserNotModeratorByUserId(2);

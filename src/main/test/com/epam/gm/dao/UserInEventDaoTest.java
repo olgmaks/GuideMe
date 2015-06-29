@@ -29,7 +29,7 @@ public class UserInEventDaoTest {
         }
 
     }
-
+    @Ignore
     @Test
     public void testGetEventsForUser() throws SQLException {
         List<UserInEvent> usersInEvents = userInEventDao.getEventsByUserId(8);
@@ -37,6 +37,16 @@ public class UserInEventDaoTest {
             System.out.println(userInEvent);
         }
     }
+    @Test
+    public void testIsMemberOfEvent(){
+	try {
+	    System.out.println("test is member of event");
+	    System.out.println(userInEventDao.isMemberOfEvent(8, 5));
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+    
 
     public void testGetUsersOnEvent() {
     }

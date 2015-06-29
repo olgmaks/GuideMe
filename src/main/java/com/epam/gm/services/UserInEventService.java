@@ -17,6 +17,10 @@ public class UserInEventService {
 	public UserInEventService() {
 		userInEventDao = new UserInEventDao();
 	}
+	
+	public static UserInEventService serve(){
+	    return new UserInEventService();
+	}
 
 	public List<UserInEvent> getEventsByUserId(int userId) throws SQLException {
 		return userInEventDao.getEventsByUserId(userId);
@@ -57,4 +61,7 @@ public class UserInEventService {
  		userInEventDao.joinToEvent(eventId, userId, bedCount, status);
  	}	
 
+ 	public Boolean isMemberOfEvent (Integer userId, Integer eventId) throws SQLException {
+ 	    return userInEventDao.isMemberOfEvent(userId, eventId);
+ 	}
 }

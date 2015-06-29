@@ -45,7 +45,8 @@ public class UploadServletHelper {
 	pathIdMap = new HashMap<String, Integer>();
     }
     
-    public UploadServletHelper(String targetFolderPath,String targetUrl, PhotoService photoService,Integer ownerId,String ownerType) {
+    public UploadServletHelper(
+	    String targetFolderPath,String targetUrl, PhotoService photoService,Integer ownerId,String ownerType) {
 	this.targetFolderPath=targetFolderPath;
 	this.targerUrl = targetUrl;
 	this.photoService = photoService;
@@ -53,7 +54,8 @@ public class UploadServletHelper {
 	this.ownerType = ownerType;
     }
     
-    public static UploadServletHelper getInstance(String targetFolderPath,String targetUrl,PhotoService photoService,Integer ownerId,String ownerType){
+    public static UploadServletHelper getInstance(
+	    String targetFolderPath,String targetUrl,PhotoService photoService,Integer ownerId,String ownerType){
 	return new UploadServletHelper(targetFolderPath, targetUrl,photoService,ownerId,ownerType);
     }
     

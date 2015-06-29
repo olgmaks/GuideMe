@@ -11,7 +11,7 @@
 			<li class="collection-item" style="height: 50px;">Gallery</li>
 		</ul>
 
-		<ul class="collection z-depth-2">
+		<ul class="collection z-depth-2" style="min-width: 700px;">
 			<li class="collection-item">
  
 
@@ -30,7 +30,9 @@
 	        <a class="prev"></a>
 	        <a class="next"></a>
 	        <a class="play-pause"></a>
+
 	    </div>
+
 	</div>
 <!-- <script -->
 <!-- 					src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->

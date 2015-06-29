@@ -194,6 +194,46 @@ public class AbstractDao<T> {
 
         return result;
     }
+    
+    protected Boolean getBoolean (String sql) throws SQLException {
+	Connection connection = ConnectionManager.getConnection();
+	PreparedStatement statement = connection.prepareStatement(sql + "as 'value'");
+	System.out.println(statement);
+	ResultSet resultSet = statement.executeQuery();
+	resultSet.next();
+	Boolean res = resultSet.getBoolean("value");
+	return res;
+    }
+    
+    protected Integer getInteger (String sql) throws SQLException {
+	Connection connection = ConnectionManager.getConnection();
+	PreparedStatement statement = connection.prepareStatement(sql + "as 'value'");
+	System.out.println(statement);
+	ResultSet resultSet = statement.executeQuery();
+	resultSet.next();
+	Integer res = resultSet.getInt("value");
+	return res;
+    }
+    
+    protected Double getDouble (String sql) throws SQLException {
+	Connection connection = ConnectionManager.getConnection();
+	PreparedStatement statement = connection.prepareStatement(sql + "as 'value'");
+	System.out.println(statement);
+	ResultSet resultSet = statement.executeQuery();
+	resultSet.next();
+	Double res = resultSet.getDouble("value");
+	return res;
+    }
+    
+    protected Object getObject (String sql) throws SQLException {
+	Connection connection = ConnectionManager.getConnection();
+	PreparedStatement statement = connection.prepareStatement(sql + "as 'value'");
+	System.out.println(statement);
+	ResultSet resultSet = statement.executeQuery();
+	resultSet.next();
+	Object res = resultSet.getObject("value");
+	return res;
+    }
 
     @Deprecated
     public List<T> getWithCustomDistinctQuery(String sqlWithRestrictions) throws SQLException {

@@ -3,7 +3,6 @@ package com.epam.gm.web.servlets.eventsincabitnet;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import com.epam.gm.daolayer.EventDao;
 import com.epam.gm.daolayer.UserInEventDao;
 import com.epam.gm.model.User;
-import com.epam.gm.model.UserInEvent;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class EventsInCabinetServlet extends HttpServlet implements
@@ -41,8 +39,8 @@ public class EventsInCabinetServlet extends HttpServlet implements
 						.getAllOldUserInEventWhereUserNotModeratorByUserId(user
 								.getId()));
 
-		session.setAttribute("listOfOldModeratorEvents",
-				eventDao.getOldAndNotDeletedEventsByModeratorId(user.getId()));
+//		session.setAttribute("listOfOldModeratorEvents",
+//				eventDao.getOldAndNotDeletedEventsByModeratorId(user.getId()));
 		session.setAttribute("listOfModeratorEvents", eventDao
 				.getActiveAndNotDeletedEventsByModeratorId(user.getId()));
 

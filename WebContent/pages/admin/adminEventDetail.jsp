@@ -537,8 +537,10 @@
     </div>
 </div>
         <p>Photos: 
+        <c:if test="${showUploadAnchor}">
         <a  href="upload.do?uploadtype=event" >
         <span style="float: right;">Upload new photo</span></a>
+                </c:if>
         </p>
 <!--         <ul id="photolist" class="clearfix"> -->
 <%--           <c:forEach items="${photos}" var="p"> --%>

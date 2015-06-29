@@ -10,17 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epam.gm.calculators.EventCalculator;
 import com.epam.gm.calculators.UserCalculator;
-
 import com.epam.gm.daolayer.RatingEventDao;
-
 import com.epam.gm.dateparser.DateParser;
 import com.epam.gm.model.Country;
 import com.epam.gm.model.Event;
-
 import com.epam.gm.model.Language;
-import com.epam.gm.model.Event;
-import com.epam.gm.model.RatingUser;
-
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
 import com.epam.gm.services.CommentEventService;
@@ -28,11 +22,7 @@ import com.epam.gm.services.CountryService;
 import com.epam.gm.services.EventService;
 import com.epam.gm.services.LanguageService;
 import com.epam.gm.services.PhotoService;
-
 import com.epam.gm.services.UserInEventService;
-
-import com.epam.gm.services.RatingUserService;
-
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
@@ -55,6 +45,12 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			LanguageService languageService = new LanguageService();
 			List<Language> languageList = languageService.getLocalizedLangs();
 			request.setAttribute("languageList", languageList);
+			
+			request.getSession(true).setAttribute("eventId", id);
+			Integer sessionUserId = SessionRepository.getSessionUser(request).getId();
+			Boolean showUploadAnchor = UserInEventService.serve().isMemberOfEvent(
+				sessionUserId, id);
+			request.setAttribute("showUploadAnchor", showUploadAnchor);
 
 			CountryService countryService = new CountryService();
 			List<Country> countryList = countryService.getAll();
