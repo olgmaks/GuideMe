@@ -32,6 +32,8 @@ public class EventDao extends AbstractDao<Event> {
 
 	private static final String GET_NOT_DELETED_BY_MODERATOR_ID = "e WHERE e.deleted = 0 AND e.date_to>NOW() AND e.status = 'active' and moderator_id = '%S'";
 
+	private static final String GET_NOT_DELETED_AND_OLD_BY_MODERATOR_ID = "e WHERE e.deleted = 0 AND e.date_to<NOW() AND e.status = 'active' and moderator_id = '%S'";
+
 	private static final String GET_TAGS_BY_EVENTS = "SELECT  e.id, e.name, et.tag_id, t.name AS 'tag_name' "
 			+ "FROM event e JOIN event_tag et ON e.id = et.event_id "
 			+ " JOIN tag t ON et.tag_id = t.id "
@@ -64,6 +66,27 @@ public class EventDao extends AbstractDao<Event> {
 			throws SQLException {
 		List<Event> newList = super.getWithCustomQuery(String.format(
 				GET_NOT_DELETED_BY_MODERATOR_ID, id));
+		Collections.sort(newList, new Comparator<Event>() {
+
+			@Override
+			public int compare(Event e1, Event e2) {
+				if (e1.getDateFrom().before(e2.getDateFrom())) {
+					return -1;
+				} else if (e2.getDateFrom().before(e1.getDateFrom())) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		});
+
+		return newList;
+	}
+	
+	public List<Event> getOldAndNotDeletedEventsByModeratorId(int id)
+			throws SQLException {
+		List<Event> newList = super.getWithCustomQuery(String.format(
+				GET_NOT_DELETED_AND_OLD_BY_MODERATOR_ID, id));
 		Collections.sort(newList, new Comparator<Event>() {
 
 			@Override
