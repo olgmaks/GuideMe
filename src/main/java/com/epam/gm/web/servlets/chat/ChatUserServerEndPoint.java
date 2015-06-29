@@ -14,7 +14,9 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import com.epam.gm.daolayer.MessageEventDao;
+import com.epam.gm.daolayer.MessageUserDao;
 import com.epam.gm.model.MessageEvent;
+import com.epam.gm.model.MessageUser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -23,8 +25,8 @@ import com.google.gson.JsonParser;
  * ChatServer
  * @author Jiji_Sasidharan
  */
-@ServerEndpoint(value="/chatevent/{room}", configurator=ChatServerEndPointConfigurator.class)
-public class ChatServerEndPoint {
+@ServerEndpoint(value="/chatuser/{userId}", configurator=ChatUserServerEndPointConfigurator.class)
+public class ChatUserServerEndPoint {
     
     private Set<Session> userSessions = Collections.synchronizedSet(new HashSet<Session>());
 
@@ -34,10 +36,9 @@ public class ChatServerEndPoint {
      * @param userSession the userSession which is opened.
      */
     @OnOpen
-    public void onOpen(Session userSession, @PathParam("room") final String room) {
-    	System.out.println(userSession.getId());
-    	System.out.println("room " + room);
-    	userSession.getUserProperties().put("room", room);
+    public void onOpen(Session userSession, @PathParam("userId") final String userId) {
+    	System.out.println("new user with id " + userId);
+    	userSession.getUserProperties().put("userId", userId);
         userSessions.add(userSession);
     }
      
@@ -60,33 +61,38 @@ public class ChatServerEndPoint {
      */
     @OnMessage
     public void onMessage(String message, Session userSession) {
-        System.out.println("Message Received: " + message);
-        String room = (String) userSession.getUserProperties().get("room");
-		System.out.println(room);
+        JsonElement jelement = new JsonParser().parse(message);
+        JsonObject  jobject = jelement.getAsJsonObject();
+        String userId = jobject.get("userId").toString().replace("\"", "");
+        System.out.println(message);
+        String friendId = jobject.get("friendId").toString();
+        System.out.println("message from " + friendId +" to " + userId);
+        System.out.println("size sesion" + userSessions.size());
         for (Session session : userSessions) {
-            System.out.println("Sending to " + session.getId());
-            if(session.getUserProperties().get("room").equals(room)){
+        	//            System.out.println("Sending to " + session.getId());
+            if(session.getUserProperties().get("userId").equals(friendId)){
             	session.getAsyncRemote().sendText(message);
             }
         }
-        saveMessage(room, message);
+        saveMessage(message);
         
     }
-    public void saveMessage(String room, String messageJSON) {
+    public void saveMessage(String messageJSON) {
     
         JsonElement jelement = new JsonParser().parse(messageJSON);
-        //System.out.println(jsonLine);
         JsonObject  jobject = jelement.getAsJsonObject();
         String userId = jobject.get("userId").toString().replace("\"", "");
         String message = jobject.get("message").toString();
+        
+        String friendId = jobject.get("friendId").toString();
         message = message.substring(1, message.length()-1);
-    	MessageEvent me = new MessageEvent();
-        me.setEventId(Integer.parseInt(room));
-        me.setSenderId(Integer.parseInt(userId));
-        me.setMessage(message);
-        MessageEventDao meDao = new MessageEventDao();
+    	MessageUser mu = new MessageUser();
+        mu.setSenderId(Integer.parseInt(userId));
+        mu.setUserId(Integer.parseInt(friendId));
+        mu.setMessage(message);
+        MessageUserDao muDao = new MessageUserDao();
         try {
-			meDao.save(me);
+			muDao.save(mu);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {

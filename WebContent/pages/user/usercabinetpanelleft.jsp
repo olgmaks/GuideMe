@@ -38,17 +38,21 @@
 					style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
 					Find event<i class="mdi-action-search right"></i>
 				</button>
-				<button class="btn light-blue waves-effect waves-light"
-					type="submit" name="action"
-					style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-					Messages<i class="mdi-content-mail right"></i>
-				</button> <a href="userfriends.do">
+				<a href = "usermessages.do">
+					<button class="btn light-blue waves-effect waves-light"
+						type="submit" name="action"
+						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
+						Messages<i class="mdi-content-mail right"></i>
+					</button> 
+				</a>
+				<a href="userfriends.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
 						Friends<i class="mdi-social-group right"></i>
 					</button>
-			</a> <a href="searchuser.do">
+				</a> 
+				<a href="searchuser.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">

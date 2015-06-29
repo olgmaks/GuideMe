@@ -89,13 +89,17 @@
     	 $.ajax({
              url: "chatEventRequest.do?action=getByEvent&eventId=" + '${event.id}',
              type: "post",
+             dataType: "json",
              success: function(data) {
                  jQuery.each(data, function(index, item) {
                 	 var messagesArea = document.getElementById("messages");
-                	 var message = item.sender.lastName + ": " + item.message + "\r\n";
+                	 console.log(item.sender.lastName);
+                	 var message = item.sender.lastName + ": " + item.message + "\r\n"; 
                 	 messagesArea.value = messagesArea.value + message;
+       
                  });
-             },         });
+             },         
+         });
         chatClient = new WebSocket(endPointURL+room);
         chatClient.onmessage = function (event) {
             var messagesArea = document.getElementById("messages");
@@ -189,13 +193,11 @@ $(document).ready(function () {
 
 <jsp:include page="adminHeader.jsp"/>
 
-
 <table>
     <tr>
         <td style=" width:20%; vertical-align: top;">
             <jsp:include page="adminLeftPanel.jsp"/>
         </td>
-
 
     <td style=" width:80%;vertical-align: top;">
 	<div id="w">

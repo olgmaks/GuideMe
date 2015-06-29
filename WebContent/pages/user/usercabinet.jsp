@@ -54,8 +54,7 @@
 
 
 </head>
-<body>
-
+<body onload="connect();" onunload="disconnect();">
 	<jsp:include page="../home/logoutmodal.jsp" />
 	<jsp:include page="usercabinetheader.jsp" />
 	<%--<jsp:include page="fileupload.jsp"/>--%>
@@ -95,6 +94,9 @@
 					</c:when>
 					<c:when test="${centralContent == 'eventsincabinet' }">
 						<jsp:include page="../eventsincabinet/allevents.jsp" />
+					</c:when>
+					<c:when test="${centralContent == 'usermessages' }">
+						<jsp:include page="usermessages.jsp" />
 					</c:when>
 					<c:when test="${centralContent == 'moderatorevent' }">
 						<jsp:include page="../eventsincabinet/moderatorevents.jsp" />
