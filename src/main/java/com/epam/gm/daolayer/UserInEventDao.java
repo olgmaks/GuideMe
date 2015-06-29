@@ -80,7 +80,6 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 		});
 		return list;
 	}
-	
 
 	public List<UserInEvent> getAllUsersInEvents() throws SQLException {
 		return super.getAll();
@@ -150,7 +149,11 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 
 	public static void main(String[] args) throws SQLException,
 			IllegalArgumentException, IllegalAccessException {
-		new UserInEventDao().getAllOldUserInEventWhereUserNotModeratorByUserId(2);
+		for (UserInEvent uie : new UserInEventDao()
+				.getAllOldUserInEventWhereUserNotModeratorByUserId(2)) {
+			System.out.println(uie.getEvent());
+		}
+
 		// new
 		// UserInEventDao().getByEventOnlyMembers(4).forEach(x->System.out.println(x));
 		// new UserInEventDao().deleteUserFromEvent(4, 10);

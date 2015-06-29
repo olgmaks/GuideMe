@@ -191,6 +191,49 @@ public class Event implements Serializable {
 		this.tagList = tagList;
 	}
 
+	public String test(int to) {
+		String name = null;
+		int newTo = to + 1;
+		if (getName().length() < newTo) {
+			name = getName();
+		} else {
+			name = getName().substring(0, newTo);
+			while (name.charAt(name.length() - 1) != ' ') {
+				name = name.substring(0, name.length() - 2);
+			}
+		}
+
+		return name;
+	}
+
+	public String getCutName(int to) {
+		String name2 = this.name;
+		String name = null;
+		int newTo = to + 1;
+		if (name2.length() < newTo) {
+			name = name2;
+		} else {
+			name = name2.substring(0, newTo);
+
+			while (name.charAt(name.length() - 1) != ' ') {
+				name = deleteLastLetter(name);
+			}
+		}
+
+		return name;
+	}
+
+	public String deleteLastLetter(String string) {
+		if (string.length() > 0) {
+			string = string.substring(0, string.length() - 1);
+		}
+		return string;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(new Event().deleteLastLetter("Some"));
+	}
+
 	// gryn
 	public String getEventNameAndCity() {
 		StringBuilder res = new StringBuilder(name);
@@ -258,23 +301,6 @@ public class Event implements Serializable {
 		}
 
 		return false;
-	}
-
-	public static void main(String[] args) {
-		Event e1 = new Event();
-		Event e2 = new Event();
-		Event e3 = new Event();
-
-		e1.setId(5);
-		e2.setId(5);
-		e3.setId(7);
-		System.out.println(e1.equals(e2));
-		System.out.println(e2.equals(e2));
-		System.out.println(e2.equals(e1));
-		System.out.println(e2.equals(e3));
-
-		System.out.println(e3.equals(null));
-		System.out.println(e3.equals(new User()));
 	}
 
 }

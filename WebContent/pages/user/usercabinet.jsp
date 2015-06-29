@@ -96,13 +96,13 @@
 						<jsp:include page="../eventsincabinet/allevents.jsp" />
 					</c:when>
 					<c:when test="${centralContent == 'usermessages' }">
-<%-- 						<jsp:include page="usermessages.jsp" /> --%>
+						<jsp:include page="usermessages.jsp" />
 					</c:when>
 					<c:when test="${centralContent == 'moderatorevent' }">
-<%-- 						<jsp:include page="../eventsincabinet/moderatorevents.jsp" /> --%>
+						<jsp:include page="../eventsincabinet/moderatorevents.jsp" />
 					</c:when>
 					<c:when test="${centralContent == 'memberevent' }">
-<%-- 						<jsp:include page="../eventsincabinet/memberevents.jsp" /> --%>
+						<jsp:include page="../eventsincabinet/memberevents.jsp" />
 					</c:when>
 				</c:choose></td>
 
@@ -113,7 +113,7 @@
 					</c:when>
 					<c:when
 						test="${centralContent == 'eventsincabinet' || centralContent == 'moderatorevent' ||  centralContent == 'memberevent'}">
-<%-- 						<jsp:include page="../eventsincabinet/rightpanel.jsp" /> --%>
+						<jsp:include page="../eventsincabinet/rightpanel.jsp" />
 					</c:when>
 					<c:when test="${centralContent == 'usergallery'}">
 						<jsp:include page="usergallerypanelright.jsp" />

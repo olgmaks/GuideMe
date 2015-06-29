@@ -23,7 +23,7 @@
 						src="${moderatorevent.avatar.getPath() }">
 				</div>
 				<div class="card-content">
-					<p>${moderatorevent.getName() }</p>
+					<p>${usersevent.getEvent().getCutName(25) }</p>
 					<br> <span class="grey-text text-darken-1">Date from: </span>
 					<p>${moderatorevent.getDateFrom() }</p>
 					<br> <span class="grey-text text-darken-2">Date to: </span>
@@ -35,14 +35,13 @@
 				</div>
 			</div>
 		</div>
-
 	</c:forEach>
 </div>
 <table>
 	<thead>
 		<tr>
-			<th data-field="id">Events where you resident. <a href="#"
-				class="indigo-text text-darken-4">More...</a></th>
+			<th data-field="id">Events where you member. <a
+				href="memberEvents.do" class="indigo-text text-darken-4">More...</a></th>
 
 		</tr>
 	</thead>
@@ -59,7 +58,7 @@
 						src="${usersevent.getEvent().avatar.getPath() }">
 				</div>
 				<div class="card-content">
-					<p>${usersevent.getEvent().getName() }</p>
+					<p>${usersevent.getEvent().getCutName(25) }</p>
 					<br> <span class="grey-text text-darken-1">Date from: </span>
 					<p>${usersevent.getEvent().getDateFrom() }</p>
 					<br> <span class="grey-text text-darken-2">Date to: </span>

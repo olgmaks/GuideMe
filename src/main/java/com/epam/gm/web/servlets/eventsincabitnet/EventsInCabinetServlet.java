@@ -40,6 +40,9 @@ public class EventsInCabinetServlet extends HttpServlet implements
 				userInEventDao
 						.getAllOldUserInEventWhereUserNotModeratorByUserId(user
 								.getId()));
+
+		session.setAttribute("listOfOldModeratorEvents",
+				eventDao.getOldAndNotDeletedEventsByModeratorId(user.getId()));
 		session.setAttribute("listOfModeratorEvents", eventDao
 				.getActiveAndNotDeletedEventsByModeratorId(user.getId()));
 

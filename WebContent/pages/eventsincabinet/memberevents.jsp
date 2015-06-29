@@ -21,7 +21,7 @@
 						src="${usersevent.getEvent().avatar.getPath() }">
 				</div>
 				<div class="card-content">
-					<p>${usersevent.getEvent().getName() }</p>
+					<p>${usersevent.getEvent().getCutName(25) }</p>
 					<br> <span class="grey-text text-darken-1">Date from: </span>
 					<p>${usersevent.getEvent().getDateFrom() }</p>
 					<br> <span class="grey-text text-darken-2">Date to: </span>
@@ -49,11 +49,12 @@
 		<div class="col s4 m3">
 			<div class="card">
 				<div class="card-image">
-					<img style="height: 140px; width: 100%;"
+					<img class="square"
+						style="height: 140px; width: 100%; object-fit: cover"
 						src="${usersevent.getEvent().avatar.getPath() }">
 				</div>
 				<div class="card-content">
-					<p>${usersevent.getEvent().getName() }</p>
+					<p>${usersevent.getEvent().getCutName(25) }</p>
 					<br> <span class="grey-text text-darken-1">Date from: </span>
 					<p>${usersevent.getEvent().getDateFrom() }</p>
 					<br> <span class="grey-text text-darken-2">Date to: </span>
