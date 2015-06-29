@@ -30,7 +30,7 @@ public class EventDao extends AbstractDao<Event> {
 
 	private static final String GET_NOT_DELETED_BY_PATTERN = "e WHERE (e.name LIKE '%TEXT%' OR e.name RLIKE '%TEXT%' OR e.description LIKE '%TEXT%' OR e.description RLIKE '%TEXT%') AND e.deleted = FALSE";
 
-	private static final String GET_NOT_DELETED_BY_MODERATOR_ID = "e WHERE e.deleted = 0 AND e.status = 'active' and moderator_id = '%S'";
+	private static final String GET_NOT_DELETED_BY_MODERATOR_ID = "e WHERE e.deleted = 0 AND e.date_to>NOW() AND e.status = 'active' and moderator_id = '%S'";
 
 	private static final String GET_TAGS_BY_EVENTS = "SELECT  e.id, e.name, et.tag_id, t.name AS 'tag_name' "
 			+ "FROM event e JOIN event_tag et ON e.id = et.event_id "
@@ -363,11 +363,12 @@ public class EventDao extends AbstractDao<Event> {
 		ConnectionManager.closeConnection(connection);
 
 	}
-	
-	public void changeEventStatus(Integer id, String status) throws SQLException {
-        Map<String, Object> updates = new HashMap<String, Object>();
-        updates.put("status", status);
-        updateById(id, updates);
+
+	public void changeEventStatus(Integer id, String status)
+			throws SQLException {
+		Map<String, Object> updates = new HashMap<String, Object>();
+		updates.put("status", status);
+		updateById(id, updates);
 
 	}
 

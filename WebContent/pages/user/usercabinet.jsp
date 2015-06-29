@@ -63,7 +63,7 @@
 		<tr>
 
 
-			<td style="width: 20%; vertical-align: top; "><jsp:include
+			<td style="width: 20%; vertical-align: top;"><jsp:include
 					page="usercabinetpanelleft.jsp" /></td>
 
 
@@ -100,7 +100,9 @@
 					</c:when>
 					<c:when test="${centralContent == 'moderatorevent' }">
 						<jsp:include page="../eventsincabinet/moderatorevents.jsp" />
-
+					</c:when>
+					<c:when test="${centralContent == 'memberevent' }">
+						<jsp:include page="../eventsincabinet/memberevents.jsp" />
 					</c:when>
 				</c:choose></td>
 
@@ -110,7 +112,7 @@
 						<jsp:include page="searchrightpanel.jsp" />
 					</c:when>
 					<c:when
-						test="${centralContent == 'eventsincabinet' || centralContent == 'moderatorevent'}">
+						test="${centralContent == 'eventsincabinet' || centralContent == 'moderatorevent' ||  centralContent == 'memberevent'}">
 						<jsp:include page="../eventsincabinet/rightpanel.jsp" />
 					</c:when>
 					<c:when test="${centralContent == 'usergallery'}">

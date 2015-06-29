@@ -34,7 +34,12 @@ public class EventsInCabinetServlet extends HttpServlet implements
 		EventDao eventDao = new EventDao();
 		UserInEventDao userInEventDao = new UserInEventDao();
 		session.setAttribute("listOfUserInEvent", userInEventDao
-				.getAllUserInEventWhereUserNotModeratorByUserId(user.getId()));
+				.getAllActualUserInEventWhereUserNotModeratorByUserId(user
+						.getId()));
+		session.setAttribute("listOfOldUserInEvent",
+				userInEventDao
+						.getAllOldUserInEventWhereUserNotModeratorByUserId(user
+								.getId()));
 		session.setAttribute("listOfModeratorEvents", eventDao
 				.getActiveAndNotDeletedEventsByModeratorId(user.getId()));
 

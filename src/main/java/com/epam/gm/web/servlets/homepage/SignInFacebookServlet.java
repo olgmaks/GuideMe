@@ -106,7 +106,7 @@ public class SignInFacebookServlet extends HttpServlet implements
 				user.setFacebookId(facebookId);
 				user.setFirstName(firstName);
 				user.setLastName(lastName);
-				user.setEmail("");
+			//	user.setEmail("");
 
 				user.setUserTypeId(8);
 				user.setLangId(3);
