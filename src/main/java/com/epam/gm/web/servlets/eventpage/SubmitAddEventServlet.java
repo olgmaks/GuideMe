@@ -2,13 +2,11 @@ package com.epam.gm.web.servlets.eventpage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -19,12 +17,14 @@ import com.epam.gm.dateparser.DateParser;
 import com.epam.gm.model.Address;
 import com.epam.gm.model.City;
 import com.epam.gm.model.Event;
-import com.epam.gm.model.Photo;
+
 import com.epam.gm.model.User;
+import com.epam.gm.model.UserInEvent;
 import com.epam.gm.services.AddressService;
 import com.epam.gm.services.CityService;
 import com.epam.gm.services.EventService;
-import com.epam.gm.services.UserService;
+import com.epam.gm.services.UserInEventService;
+
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.util.ValidateHelper;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
@@ -34,13 +34,10 @@ public class SubmitAddEventServlet implements HttpRequestHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
+		request.setCharacterEncoding("UTF-8");
 		User user = SessionRepository.getSessionUser(request);
 
 		System.out.println("SubmitAddEventServlet");
-		// String email = request.getParameter("email");
-		// String password = request.getParameter("password");
-		// System.out.println(email);
-		// System.out.println(password);
 
 		boolean ok = true;
 
@@ -50,10 +47,6 @@ public class SubmitAddEventServlet implements HttpRequestHandler {
 		for (Map.Entry<String, String[]> entry : params.entrySet()) {
 			if (entry.getKey() == null)
 				continue;
-
-			// System.out.println("key = " + entry.getKey());
-			// System.out.println("value = " + Arrays.toString(entry.getValue())
-			// );
 
 			if (entry.getKey().startsWith("addressByLang_")) {
 
@@ -110,42 +103,119 @@ public class SubmitAddEventServlet implements HttpRequestHandler {
 		System.out.println("ok=" + ok);
 
 		if (ok) {
+			request.setCharacterEncoding("UTF-8");
 			Event event = new Event();
+			UserInEvent userInEvent = new UserInEvent();
 
 			String name = request.getParameter("eventName");
 
 			StringBuilder date_frombuilder = new StringBuilder();
 			date_frombuilder.append(request.getParameter("dateFrom"));
-			date_frombuilder.append(" ");
-			date_frombuilder.append(request.getParameter("hourFrom"));
-			date_frombuilder.append(":");
-			date_frombuilder.append(request.getParameter("minuteFrom"));
-			date_frombuilder.append(":");
-			date_frombuilder.append("00");
+			if (request.getParameter("hourFrom") != "") {
+
+				date_frombuilder.append(" ");
+				date_frombuilder.append(request.getParameter("hourFrom"));
+				if (request.getParameter("minuteFrom") != "") {
+					date_frombuilder.append(":");
+					date_frombuilder.append(request.getParameter("minuteFrom"));
+					date_frombuilder.append(":");
+					date_frombuilder.append("00");
+				} else {
+					date_frombuilder.append(":");
+					date_frombuilder.append("00");
+					date_frombuilder.append(":");
+					date_frombuilder.append("00");
+				}
+			} else {
+				date_frombuilder.append(" ");
+				date_frombuilder.append("12");
+				date_frombuilder.append(":");
+				date_frombuilder.append("00");
+				date_frombuilder.append(":");
+				date_frombuilder.append("00");
+
+			}
 			String date_from = date_frombuilder.toString();
 			Date dateFrom = DateParser.StringToSqlDate(date_from);
 
 			StringBuilder date_tobuilder = new StringBuilder();
 			date_tobuilder.append(request.getParameter("dateTo"));
-			date_tobuilder.append(" ");
-			date_tobuilder.append(request.getParameter("hourTo"));
-			date_tobuilder.append(":");
-			date_tobuilder.append(request.getParameter("minuteTo"));
-			date_tobuilder.append(":");
-			date_tobuilder.append("00");
+			if (request.getParameter("hourTo") != "") {
+
+				date_tobuilder.append(" ");
+				date_tobuilder.append(request.getParameter("hourTo"));
+				if (request.getParameter("minuteTo") != "") {
+
+					date_tobuilder.append(":");
+					date_tobuilder.append(request.getParameter("minuteTo"));
+					date_tobuilder.append(":");
+					date_tobuilder.append("00");
+				} else {
+					date_tobuilder.append(":");
+					date_tobuilder.append("00");
+					date_tobuilder.append(":");
+					date_tobuilder.append("00");
+				}
+			} else {
+
+				date_tobuilder.append(" ");
+				date_tobuilder.append("12");
+				date_tobuilder.append(":");
+				date_tobuilder.append("00");
+				date_tobuilder.append(":");
+				date_tobuilder.append("00");
+				System.out.println(date_tobuilder.toString());
+			}
+
 			String date_to = date_tobuilder.toString();
+			System.out.println("frs" + " " + date_from);
+			System.out.println(date_to);
 			Date dateTo = DateParser.StringToSqlDate(date_to);
 
 			String description = request.getParameter("description");
-			String participants_limit = request.getParameter("partisipant_limit");
+
+			if (request.getParameter("partisipant_limit") != "") {
+				String participants_limit = request
+						.getParameter("partisipant_limit");
+				event.setParticipants_limit(Integer
+						.parseInt(participants_limit));
+			}
+
+			if (request.getParameter("videoLink") != "") {
+				String video_link = request.getParameter("videoLink");
+				event.setVideoLink(video_link);
+			}
+
+			
 
 			event.setName(name);
-			event.setDescription(description);
-			event.setParticipants_limit(Integer.parseInt(participants_limit));
 			event.setDateFrom(dateFrom);
 			event.setDateTo(dateTo);
+			event.setDescription(description);
+			event.setStatus("active");
 
 			event.setModeratorId(user.getId());
+
+			userInEvent.setCarplaceCount(0);
+			userInEvent.setFoodCount(0);
+			userInEvent.setStatus(request.getParameter("status"));
+			userInEvent.setIsMember(true);
+
+			if (request.getParameter("bad_count") != "") {
+				if (request.getParameter("bedCountSelect").equalsIgnoreCase(
+						"need")) {
+					String bad_count = request.getParameter("bad_count");
+					userInEvent.setBedCount(Integer.parseInt("-" + bad_count));
+				}
+				else if (request.getParameter("bedCountSelect").equalsIgnoreCase(
+						"accept")){
+					String bad_count = request.getParameter("bad_count");
+					userInEvent.setBedCount(Integer.parseInt(bad_count));
+				}
+			} else {
+				userInEvent.setBedCount(0);
+			}
+			userInEvent.setUserId(user.getId());
 
 			Integer cityId = Integer.parseInt(request.getParameter("cityId")
 					.trim());
@@ -186,25 +256,36 @@ public class SubmitAddEventServlet implements HttpRequestHandler {
 			System.out.println("dateTo = " + dateTo);
 
 			System.out.println("description = " + description);
-			System.out.println("participants_limit = " + participants_limit);
+			// System.out.println("participants_limit = " + participants_limit);
 
 			System.out.println("adressId = " + newAddress.getId());
 
 			event.setAddressId(newAddress.getId());
 
 			EventService eventService = new EventService();
+			UserInEventService userInEventService = new UserInEventService();
 
 			try {
 				eventService.saveEvent(event);
+
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
+			List<Event> eventlist = eventService.getAll();
+
+			userInEvent.setEventId(eventlist.get(eventlist.size() - 1).getId());
+
+			try {
+				userInEventService.saveUserInEvent(userInEvent);
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			request.getRequestDispatcher("home.do").forward(request, response);
 
 		}
 
 	}
-
 }

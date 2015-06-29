@@ -12,19 +12,19 @@ import java.util.List;
  */
 public class UserInEventService {
 
-    private UserInEventDao userInEventDao;
+	private UserInEventDao userInEventDao;
 
-    public UserInEventService() {
-        userInEventDao = new UserInEventDao();
-    }
+	public UserInEventService() {
+		userInEventDao = new UserInEventDao();
+	}
 
-    public List<UserInEvent> getEventsByUserId (int userId) throws SQLException {
-        return userInEventDao.getEventsByUserId(userId);
-    }
+	public List<UserInEvent> getEventsByUserId(int userId) throws SQLException {
+		return userInEventDao.getEventsByUserId(userId);
+	}
 
-    public List<UserInEvent> getUsersByEventId(int eventId) throws SQLException {
-        return  userInEventDao.getUsersByEventId(eventId);
-    }
+	public List<UserInEvent> getUsersByEventId(int eventId) throws SQLException {
+		return userInEventDao.getUsersByEventId(eventId);
+	}
     
     public List<UserInEvent> getByEventAndUser(Integer eventId, Integer userId) throws SQLException {
     	return userInEventDao.getByEventAndUser(eventId, userId);
@@ -42,6 +42,13 @@ public class UserInEventService {
     	return  userInEventDao.getByEventOnlyMembersToUsers(eventId);
     }
 
+
+	public void saveUserInEvent(UserInEvent userInEvent) throws IllegalArgumentException,
+			IllegalAccessException, SQLException {
+		userInEventDao.saveUserInEvent(userInEvent);
+	}
+
+
     public void deleteUserFromEvent(Integer eventId, Integer userId) throws SQLException{
     	userInEventDao.deleteUserFromEvent(eventId, userId);
     }
@@ -49,4 +56,5 @@ public class UserInEventService {
  	public void joinToEvent(Integer eventId, Integer userId, Integer bedCount, String status) throws IllegalArgumentException, IllegalAccessException, SQLException {
  		userInEventDao.joinToEvent(eventId, userId, bedCount, status);
  	}	
+
 }

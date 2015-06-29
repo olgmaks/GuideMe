@@ -407,13 +407,16 @@
 							<ul class="clearfix">
 								<li><a href="#bio" class="sel">About</a></li>
 								<li><a href="#photos">Fotos</a></li>
+								<c:if test="${isAdmin||isModerator}">
+									<li><a href="#edit">Edit</a></li>
+								</c:if>
 								<li><a href="#members">Members</a></li>
 								<c:if test="${isModerator}">
 									<li><a href="#requests">Requests</a></li>
 								</c:if>
 								<li><a href="#chat">Chat</a></li>
 								<c:if test="${isAdmin}">
-									<li><a href="#settings">Settings</a></li>
+									
 								</c:if>
 							</ul>
 						</nav>
@@ -610,6 +613,419 @@
 
 							</ul>
 
+						</section><section id="edit" class="hidden">
+							<p>Edit event:</p>
+							<div class="row">
+								<form action="adminEventRequest.do?action=edit" method="POST">
+									<div class="row">
+										<div class="input-field col s6">
+											<input type="hidden" name="eventId" value="${event.id}">
+
+											<input type="text" name="name" id="name"
+												value="${requestScope.event.name}"> <label
+												for="name"> editEvent.eventName:</label>
+
+
+										</div>
+
+									</div>
+									<div class="row">
+										<div class=" col s12">
+											<table style="width: 100%;">
+												<tr>
+
+													<td style="width: 34%;"><label for="dateFrom">
+															editEvent.dateFrom:</label> <input type="date" class="datepicker"
+														id="dateFrom" name="dateFrom" value="${dateFrom}" /> <span
+														id="dateMessage"></span></td>
+
+													<td style="width: 8%;"><label for="hourFrom">
+															hour:</label> <input type="number" name="hourFrom" min="00"
+														max="23" id="hourFrom" value="${hourFrom}"></td>
+													<td style="width: 0%;">:</td>
+
+													<td style="width: 8%;"><label for="minuteFrom">
+															minute:</label> <input type="number" name="minuteFrom" min="00"
+														max="59" id="minuteFrom" value="${minuteFrom}"></td>
+
+													<td style="width: 34%;"><label for="dateTo">
+															editEvent.dateTo</label> <input type="date" class="datepicker"
+														id="dateTo" name="dateTo" value="${dateTo}" /> <span
+														id="dateMessage"></span></td>
+
+													<td style="width: 8%;"><label for="hourTo">
+															hour:</label> <input type="number" name="hourTo" min="00"
+														max="23" id="hourTo" value="${hourTo}"></td>
+													<td style="width: 0%;">:</td>
+
+													<td style="width: 8%;"><label for="minuteTo">
+															minute:</label> <input type="number" name="minuteTo" min="00"
+														max="59" id="minuteTo" value="${minuteTo}"></td>
+
+
+												</tr>
+											</table>
+										</div>
+									</div>
+									<div class="row">
+
+										<label>Address</label>
+
+										<div>
+											<c:forEach items="${requestScope.languageList}" var="lang">
+
+                                        ${lang.name} :
+                                        <table style="width: 100%;">
+													<tr>
+
+														<td style="width: 30%;"><label>Country</label> <select
+															id="countryByLang_${lang.id}" class="browser-default">
+																<option selected disabled value="choose">
+																	loginpage.country.choose</option>
+
+
+
+																<c:forEach items="${requestScope.countryList}"
+																	var="country">
+
+																	<c:if test="${country.localId == lang.id}">
+
+
+																		<option value="${country.id}">${country.name}</option>
+
+
+
+																	</c:if>
+																</c:forEach>
+
+																<script>
+																	$(
+																			'#countryByLang_${lang.id}')
+
+																			.change(
+																					function() {
+
+																						var destination = $(
+																								'#cityByLang_${lang.id}')
+																								.val();
+																						var selectedValue = $(
+																								this)
+																								.val();
+
+																						//change other countries
+																						$
+																								.ajax({
+																									type : "post",
+																									url : 'getLocalCountryAnalogs.do?value='
+																											+ selectedValue,
+																									success : function(
+																											originCountryId) { //we're calling the response json array 'cities'
+
+																										$
+																												.each(
+																														originCountryId,
+																														function(
+																																countryId,
+																																country) { //here we're doing a foeach loop round each city with id as the key and city as the value
+
+																															//$(countryId).val(country);
+
+																															$(
+																																	'#countryByLang_'
+																																			+ countryId)
+																																	.val(
+																																			country);
+
+																															//fill city list
+																															$(
+																																	'#cityByLang_'
+																																			+ countryId
+																																			+ " > option")
+																																	.remove(); //first of all clear select items
+
+																															$
+																																	.ajax({
+																																		type : "post",
+																																		url : 'getCitiesByCountry.do?value='
+																																				+ country,
+																																		success : function(
+																																				originCityId) { //we're calling the response json array 'cities'
+
+																																			var optFirst = $('<option selected />'); // here we're creating a new select option with for each city
+																																			optFirst
+																																					.val('choose');
+																																			$(
+																																					'#cityId')
+																																					.val(
+																																							'choose');
+
+																																			optFirst
+																																					.text('loginpage.city.choose');
+																																			$(
+																																					'#cityByLang_'
+																																							+ countryId)
+																																					.append(
+																																							optFirst);
+
+																																			$
+																																					.each(
+																																							originCityId,
+																																							function(
+																																									id,
+																																									city) { //here we're doing a foeach loop round each city with id as the key and city as the value
+
+																																								var opt = $('<option />'); // here we're creating a new select option with for each city
+																																								opt
+																																										.val(id);
+																																								opt
+																																										.text(city);
+
+																																								$(
+																																										'#cityByLang_'
+																																												+ countryId)
+																																										.append(
+																																												opt); //here we will append these new select options to a dropdown with the id 'cities'
+																																							});
+																																		}
+																																	});
+
+																														});
+																									}
+																								});
+
+																					});
+																</script>
+
+														</select></td>
+
+
+														<td style="width: 30%;"><label>City</label> <select
+															id="cityByLang_${lang.id}" class="browser-default">
+																<option selected value="choose">
+																	loginpage.city.choosecountryfirst</option>
+														</select> <script>
+															$(
+																	'#cityByLang_${lang.id}')
+																	.change(
+																			function() {
+
+																				var selectedValue = $(
+																						this)
+																						.val();
+
+																				$(
+																						'#cityId')
+																						.val(
+																								selectedValue);
+
+																				//change other cities
+																				$
+																						.ajax({
+																							type : "post",
+																							url : 'getLocalCityAnalogs.do?value='
+																									+ selectedValue,
+																							success : function(
+																									originCityId) { //we're calling the response json array 'cities'
+
+																								$
+																										.each(
+																												originCityId,
+																												function(
+																														cityId,
+																														city) { //here we're doing a foeach loop round each city with id as the key and city as the value
+
+																													$(
+																															'#cityByLang_'
+																																	+ cityId)
+																															.val(
+																																	city);
+
+																												});
+																							}
+																						});
+
+																			});
+														</script></td>
+
+														<td style="width: 40%;">
+															<div class="input-field">
+																<label for="addressByLang_${lang.id}">Adress</label> <input
+																	type="text" id="addressByLang_${lang.id}"
+																	name="addressByLang_${lang.id}"
+																	value="${event.address.address}" /> <span
+																	id="addressByLangMessage_${lang.id}"></span>
+															</div> <script>
+																$(document)
+																		.ready(
+																				function() {
+																					$(
+																							"#addressByLang_${lang.id}")
+																							.change(
+																									function() {
+																										$
+																												.ajax({
+																													url : "registerAddressValidator.do",
+																													type : "post",
+																													dataType : "json",
+																													data : $(
+																															this)
+																															.serialize(),
+																													success : function(
+																															data) {
+																														$(
+																																"#addressByLangMessage_${lang.id}")
+																																.text(
+																																		data.valid);
+
+																													}
+																												});
+																									});
+																				});
+															</script>
+														</td>
+													</tr>
+												</table>
+
+											</c:forEach>
+
+										</div>
+										<input type="hidden" id="cityId" name="cityId" /> <span
+											id="cityIdMessage"></span>
+
+									</div>
+
+									<div class="row">
+										<div class="input-field col s12">
+											<textarea id="description" name="description" rows="10"
+												cols="45" maxlength="400" class="materialize-textarea">${requestScope.event.description}</textarea>
+											<label for="description">editEvent.Description:</label>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="input-field col s12">
+											<label for="videoLink"> editEvent.videoLink:</label> <input
+												type="text" id="videoLink" name="videoLink"
+												value="${requestScope.event.videoLink}" /> <span
+												id="videoLinkMessage"></span><br>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col s12">
+											<ul class="collection z-depth-2 ">
+												<li class="collection-item">
+
+													<div class="row">
+														<div class=" col s12">
+															<table style="width: 100%;">
+																<tr>
+
+
+																	<td style="width: 25%;"><input type="number"
+																		name="partisipant_limit" min="1"
+																		id="partisipant_limit"
+																		value="${requestScope.event.participants_limit}">
+																		<label for="partisipant_limit">editEvent.Partisipant_limit</label>
+
+																	</td>
+
+
+
+																	<td style="width: 25%;"><input type="number"
+																		name="age_limit_from" min="0" id="age_limit_from">
+																		<label for="age_limit_from">editEvent.age_from</label>
+
+																	</td>
+																	<td style="width: 25%;"><input type="number"
+																		name="age_limit_to" min="0" id="age_limit_to">
+																		<label for="age_limit_to">editEvent.age_to</label></td>
+
+																	<td style="width: 25%;"><select
+																		id="gender_restriction" name="gender_restriction"
+																		class="browser-default">
+																			<option value="" disabled selected>editEvent.gender_restriction</option>
+																			<option value="male">only_male</option>
+																			<option value="female">only_female</option>
+																			<option value="all">all</option>
+																	</select></td>
+
+
+																</tr>
+															</table>
+
+
+
+
+
+														</div>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<c:if test="${isModerator}">
+									Status: <select class="browser-default" id="status"
+											name="status"
+											style="width: 50%; text-align: left; font-size: 100%; text-transform: capitalize">
+											<c:if test="${getstatus=='guest'}">
+												<option selected="" value="guest">Guest</option>
+												<option value="resident">Resident</option>
+											</c:if>
+											<c:if test="${getstatus=='resident'}">
+												<option value="guest">Guest</option>
+												<option selected="" value="resident">Resident</option>
+											</c:if>
+
+										</select>
+
+										<script>
+											$('#status')
+													.change(
+															function() {
+																var selectedValue = $(
+																		this)
+																		.val();
+
+																if (selectedValue == "guest") {
+
+																	$(
+																			'#bedCountSelect')
+																			.val(
+																					'need');
+																} else {
+
+																	$(
+																			'#bedCountSelect')
+																			.val(
+																					'accept');
+																}
+															});
+										</script>
+
+
+
+										<br>Apartments: <select class="browser-default"
+											id="bedCountSelect" name="bedCountSelect"
+											style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
+											<c:if test="${apartments=='need'}">
+												<option value="need" selected>Need apartments:</option>
+												<option value="accept">Accepting guests:</option>
+											</c:if>
+											<c:if test="${apartments=='accept'}">
+												<option value="need" selected>Need apartments:</option>
+												<option value="accept" selected>Accepting guests:</option>
+											</c:if>
+										</select> Persons: <br>
+										<input type="number" name="bad_count" min="1" id="bad_count"
+											style="width: 10%;" value="${getbet_count}">
+										<br>
+									</c:if>
+									<button class="btn light-blue waves-effect waves-light"
+										type="submit" name="action"
+										style="width: 20%; margin-top: 10px; text-align: center; font-size: 100%; text-transform: capitalize">
+										Edit</button>
+								</form>
+							</div>
 						</section>
 
 

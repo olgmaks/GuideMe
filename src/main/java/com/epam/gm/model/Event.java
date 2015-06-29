@@ -26,6 +26,8 @@ public class Event implements Serializable {
 	private Integer moderatorId;
 	@Column("participants_limit")
 	private Integer participants_limit;
+	@Column("video_link")
+	private String video_link;
 
 	@ForeignKey("id")
 	@OneToMany(field = "moderator_id", value = User.class)
@@ -52,6 +54,15 @@ public class Event implements Serializable {
 
 	// gryn
 	private String tagString;
+
+	public String getVideoLink() {
+		return video_link;
+	}
+
+	public void setVideoLink(String video_link) {
+		this.video_link = video_link;
+	}
+
 
 	private List<String> tagList;
 
@@ -191,49 +202,6 @@ public class Event implements Serializable {
 		this.tagList = tagList;
 	}
 
-	public String test(int to) {
-		String name = null;
-		int newTo = to + 1;
-		if (getName().length() < newTo) {
-			name = getName();
-		} else {
-			name = getName().substring(0, newTo);
-			while (name.charAt(name.length() - 1) != ' ') {
-				name = name.substring(0, name.length() - 2);
-			}
-		}
-
-		return name;
-	}
-
-	public String getCutName(int to) {
-		String name2 = this.name;
-		String name = null;
-		int newTo = to + 1;
-		if (name2.length() < newTo) {
-			name = name2;
-		} else {
-			name = name2.substring(0, newTo);
-
-			while (name.charAt(name.length() - 1) != ' ') {
-				name = deleteLastLetter(name);
-			}
-		}
-
-		return name;
-	}
-
-	public String deleteLastLetter(String string) {
-		if (string.length() > 0) {
-			string = string.substring(0, string.length() - 1);
-		}
-		return string;
-	}
-
-	public static void main(String[] args) {
-		System.out.println(new Event().deleteLastLetter("Some"));
-	}
-
 	// gryn
 	public String getEventNameAndCity() {
 		StringBuilder res = new StringBuilder(name);
@@ -270,18 +238,24 @@ public class Event implements Serializable {
 		public int compare(Event first, Event second) {
 			return second.createdOn.compareTo(first.createdOn);
 		}
-
 	};
+
+		
+	
 
 	@Override
 	public String toString() {
 		return "Event [id=" + id + ", name=" + name + ", description="
 				+ description + ", dateFrom=" + dateFrom + ", dateTo=" + dateTo
 				+ ", addressId=" + addressId + ", moderatorId=" + moderatorId
-				+ ", participants_limit=" + participants_limit + ", moderator="
-				+ moderator + ", status=" + status + ", address=" + address
-				+ "]";
-	}
+				+ ", participants_limit=" + participants_limit
+				+ ", video_link=" + video_link + ", moderator=" + moderator
+				+ ", status=" + status + ", address=" + address + ", avatarId="
+				+ avatarId + ", avatar=" + avatar + ", createdOn=" + createdOn
+				+ ", points=" + points + "]";
+	}		
+			
+			
 
 	@Override
 	public int hashCode() {
@@ -302,5 +276,24 @@ public class Event implements Serializable {
 
 		return false;
 	}
+
+	public static void main(String[] args) {
+		Event e1 = new Event();
+		Event e2 = new Event();
+		Event e3 = new Event();
+
+		e1.setId(5);
+		e2.setId(5);
+		e3.setId(7);
+		System.out.println(e1.equals(e2));
+		System.out.println(e2.equals(e2));
+		System.out.println(e2.equals(e1));
+		System.out.println(e2.equals(e3));
+
+		System.out.println(e3.equals(null));
+		System.out.println(e3.equals(new User()));
+	}
+
+	
 
 }

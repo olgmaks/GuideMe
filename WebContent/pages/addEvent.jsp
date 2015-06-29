@@ -299,6 +299,14 @@
 									<label for="description">addEventpage.Description:</label>
 								</div>
 							</div>
+
+							<div class="row">
+								<div class="input-field col s12">
+									<label for="videoLink"> addEventpage.videoLink:</label> <input
+										type="text" id="videoLink" name="videoLink" /> <span
+										id="videoLinkMessage"></span><br>
+								</div>
+							</div>
 							<div class="row">
 								<div class="col s12">
 									<ul class="collection z-depth-2 ">
@@ -310,34 +318,37 @@
 														<tr>
 
 
-															<td style="width: 25%;"><input type="number"
+															<td style="width: 20%;"><input type="number"
 																name="partisipant_limit" min="1" id="partisipant_limit">
 																<label for="partisipant_limit">addEventpage.Partisipant_limit</label>
 
 															</td>
 
-															<td style="width: 25%;"><input type="number"
+
+
+															<td style="width: 20%;"><input type="number"
 																name="age_limit_from" min="0" id="age_limit_from">
 																<label for="age_limit_from">addEventpage.age_from</label>
 
 															</td>
-															<td style="width: 25%;"><input type="number"
-																name="age_limit_to" min="0"  id="age_limit_to"> <label
+															<td style="width: 20%;"><input type="number"
+																name="age_limit_to" min="0" id="age_limit_to"> <label
 																for="age_limit_to">addEventpage.age_to</label></td>
 
-															<td style="width: 25%;"><select id="gender_restriction" name="gender_restriction"
-														class="browser-default">
-														<option value="" disabled selected>addEventpage.gender_restriction</option>
-														<option value="male">only_male</option>
-														<option value="female">only_female</option>
-														<option value="all">all</option>
-													</select></td>
+															<td style="width: 20%;"><select
+																id="gender_restriction" name="gender_restriction"
+																class="browser-default">
+																	<option value="" disabled selected>addEventpage.gender_restriction</option>
+																	<option value="male">only_male</option>
+																	<option value="female">only_female</option>
+																	<option value="all">all</option>
+															</select></td>
 
 
 														</tr>
 													</table>
 
-													
+
 
 
 
@@ -347,9 +358,46 @@
 									</ul>
 								</div>
 							</div>
-							addEventpage.addition: <input type="file"
-								accept="audio/*,video/*,image/*" name="image" multiple>
+
+
+						  Status: <select
+								class="browser-default" id="status" name="status"
+								style="width: 50%; text-align: left; font-size: 100%; text-transform: capitalize">
+								<option selected="" value="guest">Guest</option>
+								<option value="resident">Resident</option>
+							</select>
+
+							<script>
+								$('#status').change(function() {
+									var selectedValue = $(this).val();
+
+									if (selectedValue == "guest") {
+
+										$('#bedCountSelect').val('need');
+									} else {
+
+										$('#bedCountSelect').val('accept');
+									}
+								});
+							</script>
+
+
+
+							<br>Apartments: <select class="browser-default"
+								id="bedCountSelect" name="bedCountSelect"
+								style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
+								<option value="need">Need apartments:</option>
+								<option value="accept">Accepting guests:</option>
+							</select> Persons:
 							<br>
+							 <input  type="number" name="bad_count" min="1"
+								id="bad_count" style="width: 10%;"> 
+								<br>
+
+
+
+
+
 
 
 							<button class="light-blue btn waves-effect waves-light"

@@ -2,7 +2,6 @@ package com.epam.gm.web.servlets.eventpage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,9 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epam.gm.daolayer.CountryDao;
 import com.epam.gm.model.*;
-import com.epam.gm.services.CityService;
 import com.epam.gm.services.CountryService;
 import com.epam.gm.services.LanguageService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
