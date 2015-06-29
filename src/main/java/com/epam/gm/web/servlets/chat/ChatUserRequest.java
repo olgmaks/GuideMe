@@ -7,9 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epam.gm.daolayer.MessageEventDao;
 import com.epam.gm.daolayer.MessageUserDao;
-import com.epam.gm.model.MessageEvent;
 import com.epam.gm.model.MessageUser;
 import com.epam.gm.model.User;
 import com.epam.gm.sessionrepository.SessionRepository;
@@ -33,11 +31,10 @@ public class ChatUserRequest implements HttpRequestHandler {
 		System.out.println(action);
 		if(action.equals("getByUser")){
 			try {
+				dao.updateRead(Integer.parseInt(request.getParameter("userId")),user.getId());//set message read from sender
 				List<MessageUser> meList =  dao.getByUser(user.getId(), Integer.parseInt(request.getParameter("userId")));
-				String json = new Gson().toJson(meList);
 				response.setCharacterEncoding("UTF-8");
 		        response.setContentType("application/json");
-				//System.out.println(json);
 				response.getWriter().write(new Gson().toJson(meList));
 			} catch (SQLException e) {
 				e.printStackTrace();

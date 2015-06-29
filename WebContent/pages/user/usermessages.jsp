@@ -19,6 +19,7 @@
 </style>
 <script type="text/javascript">
 var friendId;
+var activeFriend;
     $(document).ready(function () {
 
         $("#friendfilter").keyup(function () {
@@ -74,6 +75,9 @@ var friendId;
 
   
     function getMessageByUser(userId) {
+    	var nemberMessageId = '#numberNewMessage' + userId;//recive number of new message
+    	$(nemberMessageId).html(0);
+    	
     	friendId = userId;	
     	$("#messageUser tr").remove();
     		$.ajax({
@@ -84,8 +88,9 @@ var friendId;
 	            	 var trHTML = '';
 	                jQuery.each(data, function(index, item) {	              
 	                	var avatar = item.sender.avatar.path;
-	               	 	trHTML += '<tr><td width="10%">' + item.sender.firstName + " "+ item.sender.lastName+'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' + 
-	               	 	 	avatar + '" ></td><td width="20%"> ' + item.sender.lastName + '</td><td width="60"> ' + item.message + '</td></tr>';
+	                	var color = item.senderId == "${sessionUser.id}"? "#CEF6E3": "#2ECCFA" ;  
+	               	 	trHTML += '<tr bgcolor= '+color +'><td width="10%">' + item.sender.firstName + " "+ item.sender.lastName+'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' + 
+	               	 	 	avatar + '" ></td><td width="20%"> ' + item.createdOn + '</td><td width="60"> ' + item.message + '</td></tr>';
 	                });
 	                $("#messageUser").append(trHTML);
 	            },         
@@ -120,6 +125,7 @@ var friendId;
 				<tr>
 				<td width="30%">
                 <c:forEach var="userFriend" items="${userFriends}">
+		
                     <form id="userFriendFormWithId${userFriend.id}">
                         <input type="hidden" id="userFriendId" class="userFriendId" name="userFriendId"
                                value="${userFriend.id}">
@@ -134,12 +140,24 @@ var friendId;
                                         </td>
                                         <td>
                                             <div>
-                                                <a href="#"  onclick = "getMessageByUser(${userFriend.friend.id})"
+                                                <a href="#"  onclick = "getMessageByUser( ${userFriend.friend.id} ) "
                                                 	
                                                    class="black-text">${userFriend.friend.firstName} ${userFriend.friend.lastName}
                                                   </a>
                                                 <br>
-                                                <span id = "numberNewMessage${userFriend.friend.id}" >0</span>
+                                              (+
+                                              
+                                                <span id = "numberNewMessage${userFriend.friend.id}">		                                            		
+	                                                <c:set var="map"  value="${numberNewMessage}"/>
+													<c:set var = "friendId" value="${userFriend.friendId}"/>
+													<c:if test="${ empty numberNewMessage.get(friendId)}">
+													   <c:out value="0"/>
+													</c:if>		
+													<c:if test="${not empty numberNewMessage.get(friendId)}">
+													   <c:out value="${numberNewMessage.get(friendId)}"/>	
+													</c:if>					                     
+							                    </span>
+							                    )
                                             </div>
                                         </td>
                                   </tr>
@@ -150,7 +168,7 @@ var friendId;
 				<td width="70%">
 				<span id="bottom">scroll to bottom</span>
 				<div class="table-wrapper" id = "divTableMessages">
-					<table class="striped" id = "messageUser">
+					<table  id = "messageUser">
 					</table>		
 				</div>
 				<input type = text id = "enterMessage" onkeydown="if (event.keyCode == 13) sendMessage();"><input class="button" type="submit" value="Send" onclick="sendMessage();" />
@@ -178,12 +196,13 @@ var friendId;
         chatClient.onmessage = function (event) {
                var jsonObj = JSON.parse(event.data);
                var nemberMessageId = '#numberNewMessage' + jsonObj.userId;//recive number of new message
-               var number = $(nemberMessageId).html()
+               var number = parseInt($(nemberMessageId).html()) +1 ;
+              
                if (friendId == jsonObj.userId){
         	   		var trHTML = '<tr><td width="10%"><img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="${sessionUser.avatar.path}"></td><td width = "20%">  ${sessionUser.lastName}</td><td width="70%">  '+ jsonObj.message+ '</td></tr>';
                		$("#messageUser").append(trHTML);
                }else{
-          	   		$(nemberMessageId).html(parseInt(number) + 1); // increment new message
+          	   		$(nemberMessageId).html(number); // increment new message
                }
         };
     }

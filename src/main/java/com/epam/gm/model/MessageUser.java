@@ -1,5 +1,7 @@
 package com.epam.gm.model;
 
+import java.util.Date;
+
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
@@ -12,8 +14,33 @@ public class MessageUser {
     private Integer id;
     @Column("sender_id")
     private Integer senderId;
+    @Column("created_on")
+    private Date createdOn;
+    public Date getCreatedOn() {
+		return createdOn;
+	}
 
-    @ForeignKey("id")
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public User getSender() {
+		return sender;
+	}
+
+	public void setSender(User sender) {
+		this.sender = sender;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@ForeignKey("id")
     @OneToMany(field = "sender_id", value = User.class)
     private User sender;
     @Column("user_id")
