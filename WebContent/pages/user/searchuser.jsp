@@ -34,7 +34,7 @@
 
 
                 <c:forEach var="user" items="${users}">
-                    <div class='card' id = 'card-${user.id}'style='height: 150px; width: 300px; float: left; margin-left: 10px;'>
+                    <div class='card' id = 'card-${user.id}'style='height: 150px; width: 330px; float: left; margin-left: 10px;'>
                         <table>
                             <tr>
                                 <td style='width: 120px; vertical-align: top;'>

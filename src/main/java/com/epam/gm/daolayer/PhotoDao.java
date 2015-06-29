@@ -56,8 +56,14 @@ public class PhotoDao extends AbstractDao<Photo> {
         return result;
     }
     
-    public List<Photo> getUserPhotos(int userId) throws SQLException {
+    public List<Photo> getAllUserPhotos(int userId) throws SQLException {
         List<Photo> result = super.getWithCustomQuery(String.format(GET_PHOTO_USER, userId));
+        return result;
+    }
+    
+    
+    public List<Photo> getAllEventPhotos(int eventId) throws SQLException{
+	List<Photo> result = super.getWithCustomQuery(String.format(GET_PHOTO_EVENT, eventId));
         return result;
     }
     
@@ -65,5 +71,7 @@ public class PhotoDao extends AbstractDao<Photo> {
 		System.out.println("User ph");
     	new PhotoDao().getUserPhoto(5);
 	}
+
+
 
 }

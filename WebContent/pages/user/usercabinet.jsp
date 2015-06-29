@@ -58,13 +58,13 @@
 
 	<jsp:include page="../home/logoutmodal.jsp" />
 	<jsp:include page="usercabinetheader.jsp" />
-
+	<%--<jsp:include page="fileupload.jsp"/>--%>
 
 	<table>
 		<tr>
 
 
-			<td style="width: 20%; vertical-align: top;"><jsp:include
+			<td style="width: 20%; vertical-align: top; "><jsp:include
 					page="usercabinetpanelleft.jsp" /></td>
 
 
@@ -76,6 +76,14 @@
 
 					<c:when test="${centralContent == 'friends'}">
 						<jsp:include page="userfriends.jsp" />
+					</c:when>
+
+					<c:when test="${centralContent == 'fileupload'}">
+						<jsp:include page="fileupload.jsp" />
+					</c:when>
+
+					<c:when test="${centralContent == 'usergallery'}">
+						<jsp:include page="usergallery.jsp" />
 					</c:when>
 
 					<c:when test="${centralContent == 'searchuser'}">
@@ -102,6 +110,9 @@
 					<c:when
 						test="${centralContent == 'eventsincabinet' || centralContent == 'moderatorevent'}">
 						<jsp:include page="../eventsincabinet/rightpanel.jsp" />
+					</c:when>
+					<c:when test="${centralContent == 'usergallery'}">
+						<jsp:include page="usergallerypanelright.jsp" />
 					</c:when>
 					<c:otherwise>
 						<jsp:include page="usercabinetpanelright.jsp" />

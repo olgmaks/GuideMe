@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="row">
-	<div class="col s12" style="margin-top: 10px;">
+	<div class="col s12" style="margin-top: 10px;width: 280px;">
 		<ul class="collection z-depth-2 " style="height: 100%;">
 			<li class="collection-item">
 				<div class="" align="center">
@@ -58,8 +58,12 @@
 				<button class="btn light-blue waves-effect waves-light"
 					type="submit" name="action"
 					style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-					Comments<i class="mdi-communication-comment right"></i>
-				</button> <c:if test="${sessionUser.userTypeId == 3}">
+					Comments<i class="mdi-communication-comment right"></i>	</button>
+					<a   href="usergallery.do"><button class="btn light-blue waves-effect waves-light"
+							type="submit" name="action"
+							style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
+						Gallery<i class="mdi-communication-comment right"></i></button></a>
+			 <c:if test="${sessionUser.userTypeId == 3}">
 					<a href="guideservices.do">
 						<button class="btn light-blue waves-effect waves-light"
 							type="submit" name="action"
@@ -78,3 +82,7 @@
 		</ul>
 	</div>
 </div>
+
+
+
+

@@ -57,9 +57,9 @@ public class DeleteHelper<T> extends AbstractHelper<T> {
        String whereCondition = new String();
         whereCondition += fieldName + "=?";
         String sql = String.format(AbstractDao.DELETE, tableName, whereCondition);
-        System.out.println(sql);
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setObject(1, fieldValue);
+        System.out.println(statement);
         return statement;
     }
 

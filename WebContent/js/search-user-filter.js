@@ -128,7 +128,7 @@ function getCard(user) {
     var sendFriendRequestId = "sendFriendRequestId" + user.Id;
     var sendFriendRequestClass = "send-friend-request";
 
-    return "<div class='card' id = 'card-"+userId+"' style='height: 150px; width: 300px; float: left; margin-left: 10px;'>" +
+    return "<div class='card' id = 'card-"+userId+"' style='height: 150px; width: 330px; float: left; margin-left: 10px;'>" +
         "<table><tr><td style='width: 120px; vertical-align: top;'>" +
         "<img class='circle' style='height: 120px; width: 120px; object-fit: cover' src='" + pathToImage + "'></td><td><div>" +
         "<div style='height: 40px;'><a href='#_' class='black-text'>" + fName + " " + lName + "</a></div>" +
