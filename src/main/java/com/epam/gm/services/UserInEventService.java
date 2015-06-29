@@ -60,6 +60,10 @@ public class UserInEventService {
  	public void joinToEvent(Integer eventId, Integer userId, Integer bedCount, String status) throws IllegalArgumentException, IllegalAccessException, SQLException {
  		userInEventDao.joinToEvent(eventId, userId, bedCount, status);
  	}	
+ 	
+ 	public void acceptToEvent(Integer eventId, Integer userId) throws IllegalArgumentException, IllegalAccessException, SQLException {
+ 		userInEventDao.acceptToEvent(eventId, userId);
+ 	}
 
  	public Boolean isMemberOfEvent (Integer userId, Integer eventId) throws SQLException {
  	    return userInEventDao.isMemberOfEvent(userId, eventId);

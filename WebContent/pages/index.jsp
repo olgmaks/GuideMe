@@ -555,7 +555,7 @@
                                          src="${usr.avatar.path}">
                                 </td>
                                 <td>
-                                <div><a href='adminUserProfile.do?id=${usr.id}'>${usr.getNameCityPoints()}</a></div>
+                                <div><a href='userProfile.do?id=${usr.id}'>${usr.getNameCityPoints()}</a></div>
                                 </td>
                             </tr>
                         </table>

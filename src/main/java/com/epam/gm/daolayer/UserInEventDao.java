@@ -154,6 +154,18 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 			SQLException {
 		super.save(userInEvent);
 	}
+	
+ 	public void acceptToEvent(Integer eventId, Integer userId) throws IllegalArgumentException, IllegalAccessException, SQLException {
+ 		List<UserInEvent> temp =  getByEventAndUser(eventId, userId);
+ 		if(temp == null || temp.isEmpty()) return;
+ 		
+ 		Map<String, Object> map = new HashMap<String, Object>();
+ 		map.put("is_member", 1);
+ 		
+ 		super.updateById(temp.get(0).getId(), 
+ 				map);
+ 		
+ 	}
 
 	public Boolean isMemberOfEvent(Integer userId, Integer eventId)
 			throws SQLException {

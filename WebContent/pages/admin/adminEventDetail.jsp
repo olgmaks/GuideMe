@@ -165,40 +165,62 @@
 	}
 </script>
 
-<script>
-	$(document).ready(function() {
-		$(".removefriend").on("click", function() {
+<script>		
+$(document).ready(function () {
+	
+	$(".acceptfriendrequest").click(function () {
+        	       console.log("acceptfriendrequest ajax call");
+            var value = $(this).data('id');
+            var strSelector = "#userFriendCard" + value;
+            var formSelector = "#userFriendFormWithId" + value;
+            $.ajax({
+                url: "acceptEventRequest.do",
+                type: "post",
+                dataType: "json",
+                data: $(formSelector).serialize()
+            });
+            console.log(strSelector);
+            $(strSelector).remove();
+            
+           
+        });    
+	
+        $(".removefriend").on("click", function () {
 
-			console.log("removefriend ajax call");
-			var value = $(this).data('id');
-			var strSelector = "#userFriendCard" + value;
-			var formSelector = "#userFriendFormWithId" + value;
-			$.ajax({
-				url : "removeMember.do",
-				type : "post",
-				dataType : "json",
-				data : $(formSelector).serialize()
-			});
-			console.log(strSelector);
-			$(strSelector).remove();
-		});
-
-		$(".acceptfriendrequest").click(function() {
-			console.log("acceptfriendrequest ajax call");
-			var value = $(this).data('id');
-			var strSelector = "#userFriendCard" + value;
-			var formSelector = "#userFriendFormWithId" + value;
-			$.ajax({
-				url : "acceptEventRequest.do",
-				type : "post",
-				dataType : "json",
-				data : $(formSelector).serialize()
-			});
-			console.log(strSelector);
-			$(strSelector).remove();
-		});
-
-	});
+            console.log("removefriend ajax call");
+            var value = $(this).data('id');
+            var strSelector = "#userFriendCard" + value;
+            var formSelector = "#userFriendFormWithId" + value;
+            $.ajax({
+                url: "removeMember.do",
+                type: "post",
+                dataType: "json",
+                data: $(formSelector).serialize()
+            });
+            console.log(strSelector);
+            $(strSelector).remove();
+        });
+        
+        $(document).on('click', '.removefriend', function(e){
+        	
+        
+        	
+            console.log("removefriend ajax call");
+            var value = $(this).data('id');
+            var strSelector = "#userFriendCard" + value;
+            var formSelector = "#userFriendFormWithId" + value;
+            $.ajax({
+                url: "removeMember.do",
+                type: "post",
+                dataType: "json",
+                data: $(formSelector).serialize()
+            });
+            console.log(strSelector);
+            $(strSelector).remove();
+            
+        })
+	
+});   
 </script>
 
 </head>
@@ -537,10 +559,8 @@
     </div>
 </div>
         <p>Photos: 
-        <c:if test="${showUploadAnchor}">
         <a  href="upload.do?uploadtype=event" >
         <span style="float: right;">Upload new photo</span></a>
-                </c:if>
         </p>
 <!--         <ul id="photolist" class="clearfix"> -->
 <%--           <c:forEach items="${photos}" var="p"> --%>
@@ -571,48 +591,50 @@
 							</div>
 						</section>
 
-						<section id="members" class="hidden">
-							<p>Members:</p>
+  <section id="members" class="hidden">
+  <p>Members:</p>
+
+      	
+  <ul class="collection" id="collectionResults">
+  <c:forEach items="${requestScope.members}" var="m">
+    
+    
+   <form id="userFriendFormWithId${m.user.id}">
+   <input type="hidden" id="userFriendId" class="userFriendId" name="userFriendId"
+          value="${m.user.id}">
+          
+    <input type="hidden" id="memberEventId" class="memberEventId" name="memberEventId"
+          value="${event.id}">         
+  
+    
+    <li class="collection-item avatar" id="userFriendCard${m.user.id}">
+      <img src="${m.user.avatar.path}" alt="" class="circle">
+      <span class="title"><a href="userProfile.do?id=${m.user.id}"> ${m.user.firstName} ${m.user.lastName}</a></span>
 
 
-							<ul class="collection">
-								<c:forEach items="${requestScope.members}" var="m">
-
-									<form id="userFriendFormWithId${m.user.id}">
-										<input type="hidden" id="userFriendId" class="userFriendId"
-											name="userFriendId" value="${m.user.id}"> <input
-											type="hidden" id="memberEventId" class="memberEventId"
-											name="memberEventId" value="${event.id}">
+      <p>
+      <c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
+      <c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
 
 
-										<li class="collection-item avatar"
-											id="userFriendCard${m.user.id}"><img
-											src="${m.user.avatar.path}" alt="" class="circle"> <span
-											class="title"><a href="userProfile.do?id=${m.user.id}">
-													${m.user.firstName} ${m.user.lastName}</a></span>
-											<p>
-												<c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
-												<c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
+	<c:if test="${isModerator}">
+	
+	<br>
+    <span style="margin-right: 10px;">Remove member</span>
+    <a href="#_" class="btn-floating light-blue removefriend" data-id="${m.user.id}">
+    <i class="mdi-navigation-close"></i>
 
-
-												<c:if test="${isModerator}">
-
-													<br>
-													<span style="margin-right: 10px;">Remove member</span>
-													<a href="#_" class="btn-floating light-blue removefriend"
-														data-id="${m.user.id}"> <i
-														class="mdi-navigation-close"></i>
-													</a>
-
-												</c:if>
-
-												<br>
-
-											</p> <a class="secondary-content"><i class="material-icons">${m.status}</i></a>
-										</li>
-									</form>
-								</c:forEach>
-
+    </a>
+    
+    </c:if>
+	  	
+ <br>
+         
+      </p>
+      <a  class="secondary-content"><i class="material-icons">${m.status}</i></a>
+    </li>
+     </form>
+    </c:forEach>
 							</ul>
 
 						</section><section id="edit" class="hidden">
@@ -1031,61 +1053,62 @@
 						</section>
 
 
-						<c:if test="${isModerator}">
-							<section id="requests" class="hidden">
-								<p>Requests:</p>
+ <c:if test="${isModerator}">
+  <section id="requests" class="hidden">
+  <p>Requests:</p>
+
+      	
+  <ul class="collection">
+  <c:forEach items="${requestScope.requests}" var="m">
+    
+   <form id="userFriendFormWithId${m.user.id}">
+   <input type="hidden" id="userFriendId" class="userFriendId" name="userFriendId"
+          value="${m.user.id}">
+          
+    <input type="hidden" id="memberEventId" class="memberEventId" name="memberEventId"
+          value="${event.id}">         
+  
+    
+    <li class="collection-item avatar" id="userFriendCard${m.user.id}">
+      <img src="${m.user.avatar.path}" alt="" class="circle">
+      <span class="title"><a href="userProfile.do?id=${m.user.id}"> ${m.user.firstName} ${m.user.lastName}</a></span>
 
 
-								<ul class="collection">
-									<c:forEach items="${requestScope.requests}" var="m">
 
-										<form id="userFriendFormWithId${m.user.id}">
-											<input type="hidden" id="userFriendId" class="userFriendId"
-												name="userFriendId" value="${m.user.id}"> <input
-												type="hidden" id="memberEventId" class="memberEventId"
-												name="memberEventId" value="${event.id}">
+      <p>
+      <c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
+      <c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
 
 
-											<li class="collection-item avatar"
-												id="userFriendCard${m.user.id}"><img
-												src="${m.user.avatar.path}" alt="" class="circle"> <span
-												class="title"><a
-													href="userProfile.do?id=${m.user.id}">
-														${m.user.firstName} ${m.user.lastName}</a></span>
-												<p>
-													<c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
-													<c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
+	<c:if test="${isModerator}">
+	<br>
+    <span style="margin-right: 10px;">Accept request</span>
+    <a href="#_" class="btn-floating light-blue acceptfriendrequest" data-id="${m.user.id}">
+    <i class="mdi-navigation-check"></i>
 
 
-													<c:if test="${isModerator}">
-														<br>
-														<span style="margin-right: 10px;">Accept request</span>
-														<a href="#_"
-															class="btn-floating light-blue acceptfriendrequest"
-															data-id="${m.user.id}"> <i
-															class="mdi-navigation-check"></i>
-														</a>
+    </a>
 
-														<span style="margin-right: 10px;">Remove request</span>
-														<a href="#_" class="btn-floating light-blue removefriend"
-															data-id="${m.user.id}"> <i
-															class="mdi-navigation-close"></i>
-														</a>
+    <span style="margin-right: 10px;">Remove request</span>
+    <a href="#_" class="btn-floating light-blue removefriend" data-id="${m.user.id}">
+    <i class="mdi-navigation-close"></i>
 
-													</c:if>
-
-													<br>
-
-												</p> <a class="secondary-content"><i class="material-icons">${m.status}</i></a>
-											</li>
-										</form>
-									</c:forEach>
-
-								</ul>
-
-							</section>
-						</c:if>
-
+    </a>
+    
+    </c:if>
+	  	
+ <br>
+         
+      </p>
+      <a  class="secondary-content"><i class="material-icons">${m.status}</i></a>
+    </li>
+     </form>
+    </c:forEach>
+    
+  </ul>
+      	
+ </section>
+ </c:if>
 
 						<!--       <section id="settings" class="hidden"> -->
 						<!--         <p>Edit your user settings:</p> -->
@@ -1114,12 +1137,76 @@
 					</div>
 					<!-- @end #content -->
 				</div>
-				<!-- @end #w --> <script type="text/javascript">
+				<!-- @end #w --> 
+				
+				
+  <form id="memberAjaxForm" name="memberAjaxForm" >
+  <input type = "hidden" name = "id" value = "${event.id}">
+  </form>
+  
+  				
+				<script type="text/javascript">
 					$(function() {
 						$('#profiletabs ul li a').on('click', function(e) {
 							e.preventDefault();
 							var newcontent = $(this).attr('href');
 
+							if(newcontent == "#members") {
+								
+
+								
+								$.ajax({
+								url: 'getEventMembers.do',
+								type: 'post',
+								dataType: 'json',
+								data: $("#memberAjaxForm").serialize(),
+								success: function (data) {
+										//alert(data.isEmpty);
+										
+										var resultCollenction = $("#collectionResults");
+										//resultCollenction.find("form").empty();
+										resultCollenction.empty();
+										//resultCollenction = $("#collectionResults");
+										
+										
+										$.each(data.results, function (counts, m) {
+											
+											var f = 
+													"<form id='userFriendFormWithId" +m.userId + "' >" +
+													"<input type='hidden' id='userFriendId' class='userFriendId' name='userFriendId' " +
+													"value='" +  m.userId + "'>" +
+													
+													"<input type='hidden' id='memberEventId' class='memberEventId' name='memberEventId'" +
+													"value='" + m.eventId +  "'>" +          
+													
+													"<li class='collection-item avatar' id='userFriendCard" +  m.userId  + "'>" +
+													"<img src='" + m.user.avatar.path +  "' alt='' class='circle'> " +
+													"<span class='title'><a href='userProfile.do?id="+ m.userId + "'>" + m.user.firstName + " " + m.user.lastName + "</a></span>";
+											if(m.bedCount > 0) {
+												f +=  "<br>Can accept: " + m.bedCount + " guest(s)";
+											} else if(m.bedCount < 0) {
+												f +=  "<br>Need lodjing for: " + (-m.bedCount) + " person(s)";
+											}										
+
+											if(1==1) {
+													
+												f +=	
+												"<br><span style='margin-right: 10px;'>Remove member</span>" +
+												"<a  href='#_' class='btn-floating light-blue removefriend' data-id='" + m.userId + "'> " +
+												"<i class='mdi-navigation-close'></i>" +
+												"</a>"
+												;
+									         }
+											f += 
+													"<a  class='secondary-content'><i class='material-icons'>"+ m.status + "</i></a>" +
+													
+													"</form>"; 		
+											resultCollenction.append(f); 
+										
+										});
+								}
+								});    	
+						    }							
 							$('#profiletabs ul li a').removeClass('sel');
 							$(this).addClass('sel');
 
