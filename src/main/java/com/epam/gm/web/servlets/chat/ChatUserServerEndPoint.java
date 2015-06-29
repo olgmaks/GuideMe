@@ -13,9 +13,10 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-import com.epam.gm.daolayer.MessageEventDao;
+
+
+
 import com.epam.gm.daolayer.MessageUserDao;
-import com.epam.gm.model.MessageEvent;
 import com.epam.gm.model.MessageUser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -71,6 +72,12 @@ public class ChatUserServerEndPoint {
         for (Session session : userSessions) {
         	//            System.out.println("Sending to " + session.getId());
             if(session.getUserProperties().get("userId").equals(friendId)){
+            	try {
+					new MessageUserDao().updateRead(Integer.parseInt(userId), Integer.parseInt(friendId));
+				} catch (NumberFormatException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             	session.getAsyncRemote().sendText(message);
             }
         }
