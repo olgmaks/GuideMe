@@ -43,6 +43,8 @@
             dialogOptions = $.extend({
                 modal: true,
                 width: 'auto'
+                ,
+                position: {my: "top+10%",at: "top",of: window}
             }, dialogWidget.data()),
             galleryOptions = $.extend(
                 {
@@ -80,6 +82,7 @@
                                     visibility: 'visible',
                                     height: 'auto',
                                     overflow: 'visible'
+                                    
                                 });
                             dialogInitialized = true;
                         }
@@ -96,10 +99,12 @@
             // Select all links with the same data-dialog attribute:
             links = $('[data-dialog="' + id + '"]'),
             setGalleryWidgetDimensions = function () {
-                var width = $(window).width() -
-                        (dialogOptions.offsetWidth || 100),
-                    height = $(window).height() -
-                        (dialogOptions.offsetHeight || 150),
+//                var width = $(window).width() -
+//                        (dialogOptions.offsetWidth || 100),
+//                    height = $(window).height() -
+//                        (dialogOptions.offsetHeight || 150),
+            var width = $(window).width()*0.6,
+        height = $(window).height() *0.6,
                     // blueimp gallery carousel ratio (16/9)
                     // to viewport ratio:
                     ratio = ((16 / 9) / (width / height));

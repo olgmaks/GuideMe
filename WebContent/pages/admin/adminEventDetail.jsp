@@ -29,6 +29,12 @@
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
 
+<link rel="stylesheet"	href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.css" id="theme" />
+<link rel="stylesheet"	href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css" />
+
+    <script	src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+	<script	src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+	<script src="js/jquery.image-gallery.js"></script>
 
 <style>
 .panel {
@@ -517,16 +523,36 @@
 
 						</section>
 
-						<section id="photos" class="hidden">
-							<p>Photos:</p>
-							<ul id="photolist" class="clearfix">
-								<c:forEach items="${photos}" var="p">
-									<li><a href=""> <img src="${p.path}"
-											style="height: 120px; width: 120px; object-fit: cover">>
-									</a></li>
-								</c:forEach>
-							</ul>
-						</section>
+      <section id="photos" class="hidden">
+      <div id="blueimp-gallery-dialog" data-show="fade" data-hide="fade" >
+    <!-- The Gallery widget  -->
+    <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
+        <div class="slides"></div>
+        <a class="prev"></a>
+        <a class="next"></a>
+        <a class="play-pause"></a>
+    </div>
+</div>
+        <p>Photos: 
+        <a href=""></a>
+        <span style="float: right;">Upload new photo</span>
+        </p>
+<!--         <ul id="photolist" class="clearfix"> -->
+<%--           <c:forEach items="${photos}" var="p"> --%>
+<!--           		<li>    -->
+<!--           		<a href=""> -->
+<%--           			<img src="${p.path}" style="height: 120px; width: 120px; object-fit: cover">> --%>
+<!--           		</a> -->
+<!--           		</li> -->
+<%--       		</c:forEach> --%>
+				<div id="links">
+					<c:forEach items="${photos}" var="photo">
+					<a href="${photo.path}" title="${photo.path}" data-dialog> 
+					<img src="${photo.path}" style="height: 160px; width: 160px; object-fit: cover" alt="${photo.path}"></a>
+				</c:forEach>
+				</div>
+<!--       	</ul> -->
+      </section>
 
 						<section id="chat" class="hidden">
 							<textarea id="messages" class="panel message-area" readonly

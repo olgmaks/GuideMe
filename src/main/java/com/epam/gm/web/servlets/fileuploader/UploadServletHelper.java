@@ -173,6 +173,18 @@ public class UploadServletHelper {
                     File file = new File(absoluteFolderPath, item.getName());
                         item.write(file);
                         JSONObject jsono = new JSONObject();
+                        
+                        if (!item.getName().contains(".jpg")
+                        	&&!item.getName().contains(".png")
+                        	&&!item.getName().contains(".jpeg")
+                        	&&!item.getName().contains(".gif")){
+                            jsono.put("name", item.getName());
+                            jsono.put("size", item.getSize());
+                            jsono.put("error", "Filetype not allowed. Supported types: .png, .jpg, .jpeg, .gif ");
+                            json.put(jsono);
+                            continue;
+			}
+                        
                         jsono.put("name", item.getName());
                         jsono.put("size", item.getSize());
                         jsono.put("url", targerUrl + "?getfile=" + item.getName());

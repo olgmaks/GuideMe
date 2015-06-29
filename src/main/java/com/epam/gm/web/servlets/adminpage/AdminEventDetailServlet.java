@@ -1,7 +1,6 @@
 package com.epam.gm.web.servlets.adminpage;
 
 import java.io.IOException;
-import java.nio.channels.SeekableByteChannel;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -13,16 +12,13 @@ import com.epam.gm.calculators.EventCalculator;
 import com.epam.gm.calculators.UserCalculator;
 import com.epam.gm.daolayer.RatingEventDao;
 import com.epam.gm.model.Event;
-import com.epam.gm.model.RatingUser;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
 import com.epam.gm.services.CommentEventService;
 import com.epam.gm.services.EventService;
 import com.epam.gm.services.PhotoService;
-import com.epam.gm.services.RatingUserService;
 import com.epam.gm.services.UserInEventService;
 import com.epam.gm.sessionrepository.SessionRepository;
-import com.epam.gm.web.servlets.eventsincabitnet.EventsInCabinetServlet;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class AdminEventDetailServlet implements HttpRequestHandler {
