@@ -534,8 +534,8 @@
     </div>
 </div>
         <p>Photos: 
-        <a href=""></a>
-        <span style="float: right;">Upload new photo</span>
+        <a  href="upload.do?uploadtype=event" >
+        <span style="float: right;">Upload new photo</span></a>
         </p>
 <!--         <ul id="photolist" class="clearfix"> -->
 <%--           <c:forEach items="${photos}" var="p"> --%>
