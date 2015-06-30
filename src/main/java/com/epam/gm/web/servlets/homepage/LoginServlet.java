@@ -1,5 +1,6 @@
 package com.epam.gm.web.servlets.homepage;
 
+import com.epam.gm.daolayer.UserLoginingDao;
 import com.epam.gm.hashpassword.MD5HashPassword;
 import com.epam.gm.model.User;
 import com.epam.gm.services.UserService;
@@ -55,6 +56,9 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 					//gryn
 					CookieUtil.saveLastUser(response, user);
 					System.out.println("**************saved cookie = " + user.getEmail());
+					
+					//save login history
+					new UserLoginingDao().save(user.getId());
 					
 					isValid = true;
 					map.put("userEmail", user.getEmail());

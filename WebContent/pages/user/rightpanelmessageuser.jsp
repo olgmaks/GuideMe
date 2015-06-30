@@ -1,5 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+.table-wrapper-friend
+{
+    width: 320px;
+    height: 500px;
+    overflow: auto;
+}
 
+</style>
+<div class="table-wrapper-friend">
 <div class="row" style="width: 280px;">
 	<div class="col s12" style="margin-top: 10px;">
 		<ul class="collection z-depth-2 " id="collectionResults">
@@ -40,4 +49,5 @@
 				</c:forEach></li>
 		</ul>
 	</div>
+</div>
 </div>

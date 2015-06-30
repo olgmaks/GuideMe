@@ -18,8 +18,8 @@ var friendLastName;
 var friendFirstName;
 var friendAvatar;
     function getMessageByUser(userId, friendLastNameIn, friendFirstNameIn, friendAvatarIn) {
-    	$('#submitButton').show();
-    	$('#enterMessage').show();
+    	$("#enterMessage").show();
+    	$("#submitButton").show();
     	friendId        = userId;	
     	friendLastName  = friendLastNameIn;
     	friendFirstName = friendFirstNameIn;
@@ -45,11 +45,6 @@ var friendAvatar;
 	            },         
 	        });    		
     }
-    $(document).ready(function(){
-    	$('#submitButton').hide();
-    	$('#enterMessage').hide();
-    });
-    
 </script>
 
 <div class="row">
@@ -102,7 +97,11 @@ var friendAvatar;
          if (message !== "") {
               var jsonObj = {"userName" : userName, "message" : message, "userId": "${sessionUser.id}",  "friendId" : friendId, 
             		  		"friendAvatar" :"${sessionUser.avatar.path}","friendFirstName" : "${sessionUser.firstName}", "friendLastName": "${sessionUser.lastName}" } ;
-             chatClient.send(JSON.stringify(jsonObj));
+              waitForSocketConnection(chatClient, function(){
+                  console.log("message sent!!!");
+                  chatClient.send(JSON.stringify(jsonObj));
+              });
+            
              
              var table = document.getElementById("messageUser");
              var rowCount = table.rows.length;
@@ -114,10 +113,32 @@ var friendAvatar;
          inputElement.focus();
     }
     
+    function waitForSocketConnection(socket, callback){
+        setTimeout(
+            function () {
+                if (socket.readyState === 1) {
+                    console.log("Connection is made")
+                    if(callback != null){
+                        callback();
+                    }
+                    return;
+
+                } else {
+                    console.log("wait for connection...")
+                    waitForSocketConnection(socket, callback);
+                }
+
+            }, 5); // wait 5 milisecond for the connection...
+    }
+    
     
     function scrollToBottom() {
-    	   var scrollBottom = Math.max($('#messageUser').height() - $('#divTableMessages').height() + 20, 0);
-    	   $('#divTableMessages').scrollTop(scrollBottom);
-    	}
+   	   var scrollBottom = Math.max($('#messageUser').height() - $('#divTableMessages').height() + 20, 0);
+   	   $('#divTableMessages').scrollTop(scrollBottom);
+   	}
 
+    $( document ).ready(function() {
+    	$("#enterMessage").hide();
+    	$("#submitButton").hide();
+    });
     </script>
