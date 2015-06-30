@@ -24,6 +24,10 @@ public class UserService {
     public UserService() {
         userDao = new UserDao();
     }
+    
+    public Boolean isUserPresent (Integer id) throws SQLException {
+    	return userDao.isUserPresent(id);
+    }
 
     public void saveUser(User user) throws IllegalArgumentException, IllegalAccessException, SQLException {
         userDao.saveUser(user);

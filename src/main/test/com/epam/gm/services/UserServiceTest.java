@@ -46,7 +46,7 @@ public class UserServiceTest {
 	}
     }
 
-
+@Ignore
 	@Test
 	public void testUpdateAvatar () {
 		System.out.println("update avatar test ...");
@@ -56,6 +56,16 @@ public class UserServiceTest {
 			e.printStackTrace();
 		}
 	}
+@Test
+public void testIsUser(){
+	try {
+		Boolean b =userService.isUserPresent(8);
+		System.out.println(b);
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
 
     @Ignore
     @Test

@@ -1,22 +1,22 @@
     package com.epam.gm.daolayer;
 
     import com.epam.gm.hashpassword.MD5HashPassword;
-    import com.epam.gm.model.Country;
-    import com.epam.gm.model.FriendUser;
-    import com.epam.gm.model.User;
-    import com.epam.gm.model.UserActivity;
-    import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
-    import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
+import com.epam.gm.model.Country;
+import com.epam.gm.model.FriendUser;
+import com.epam.gm.model.User;
+import com.epam.gm.model.UserActivity;
+import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
+import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
     import java.security.NoSuchAlgorithmException;
-    import java.sql.CallableStatement;
-    import java.sql.Connection;
-    import java.sql.ResultSet;
-    import java.sql.SQLException;
-    import java.util.ArrayList;
-    import java.util.HashMap;
-    import java.util.List;
-    import java.util.Map;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
     public class UserDao extends AbstractDao<User> {
 
@@ -71,6 +71,7 @@
                   "u JOIN address a ON u.address_id = a.id JOIN city c ON a.city_id = c.id JOIN country c1 ON c.country_id = c1.id " +
                     "WHERE u.is_active = TRUE AND u.user_type_id IN (2, 3) AND c1.pure_id = ? ";
 
+        public static final String IS_USER = "SELECT (%s in( select u.id from user u where is_active=true)) ";
 
         public UserDao() {
             // gryn
@@ -84,6 +85,10 @@
         }
 
 
+        
+        public Boolean isUserPresent (Integer id) throws SQLException {
+        	return super.getBoolean(String.format(IS_USER,id));
+        }
         /*
             Search user methods for future intersection (Maksymuk)
          */
