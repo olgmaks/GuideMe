@@ -59,8 +59,8 @@
 	<jsp:include page="usercabinetheader.jsp" />
 	<%--<jsp:include page="fileupload.jsp"/>--%>
 
-	<table>
-		<tr>
+	<table >
+		<tr style="width: 100%;">
 
 
 			<td style="width: 20%; vertical-align: top;"><jsp:include
@@ -108,6 +108,7 @@
 
 
 			<td style="width: 20%; vertical-align: top;"><c:choose>
+			
 					<c:when test="${centralContent == 'searchuser'}">
 						<jsp:include page="searchrightpanel.jsp" />
 					</c:when>

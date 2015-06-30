@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="row">
-	<div class="col s12" style="margin-top: 10px;width: 280px;">
+	<div class="col s12" style="margin-top: 10px;width: 260px;">
 		<ul class="collection z-depth-2 " style="height: 100%;">
 			<li class="collection-item">
 				<div class="" align="center">

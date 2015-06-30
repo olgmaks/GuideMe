@@ -14,12 +14,12 @@ import com.epam.gm.model.UserType;
 
 public class UserServiceTest {
 
-    private static UserDao userService;
+    private static UserService userService;
     private static UserType roleUser;
 
     @BeforeClass
     public static void bef() throws SQLException {
-	userService = new UserDao();
+	userService = new UserService();
 
 	// Returns list with UserTypes where field"name" = user
 	// in this case we have only one result
@@ -30,12 +30,13 @@ public class UserServiceTest {
     @Test
     public void testGetUsers() throws SQLException {
 	System.out.println("userRole = " + roleUser);
-	List<User> users = userService.getAllUsers();
-	for (User user : users) {
-	    System.out.println(user);
-	}
+//	List<User> users = userService.getAllUsers();
+//	for (User user : users) {
+//	    System.out.println(user);
+//	}
     }
 
+	@Ignore
     @Test
     public void getUserByEmailTest() {
 	try {
@@ -44,6 +45,17 @@ public class UserServiceTest {
 	    e.printStackTrace();
 	}
     }
+
+
+	@Test
+	public void testUpdateAvatar () {
+		System.out.println("update avatar test ...");
+		try {
+			userService.updateUserAvatar(8,2);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
     @Ignore
     @Test
@@ -60,6 +72,6 @@ public class UserServiceTest {
 	user.setAddressId(1);
 	user.setPassword("qwerty");
 
-	userService.save(user);
+//	userService.save(user);
     }
 }

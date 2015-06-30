@@ -1,22 +1,21 @@
 package com.epam.gm.web.servlets.userpage;
 
-import com.epam.gm.model.Photo;
-import com.epam.gm.model.User;
-import com.epam.gm.model.UserInEvent;
-import com.epam.gm.services.EventService;
-import com.epam.gm.services.PhotoService;
-import com.epam.gm.services.UserInEventService;
-import com.epam.gm.sessionrepository.SessionRepository;
-import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.epam.gm.model.User;
+import com.epam.gm.model.UserInEvent;
+import com.epam.gm.services.PhotoService;
+import com.epam.gm.services.UserInEventService;
+import com.epam.gm.sessionrepository.SessionRepository;
+import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 /**
  * Created by OLEG on 14.06.2015.
@@ -24,24 +23,27 @@ import java.util.Map;
 public class UserCabinetServlet implements HttpRequestHandler {
 
     private PhotoService photoService;
-    private EventService eventService;
+//    private EventService eventService;
     private UserInEventService userInEventService;
 
 
     public UserCabinetServlet() {
         photoService = new PhotoService();
-        eventService = new EventService();
+//        eventService = new EventService();
         userInEventService = new UserInEventService();
     }
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-        User user = SessionRepository.getSessionUser(request);
+        User sessionUser = SessionRepository.getSessionUser(request);
 
-        if (user != null) {
+    	if (sessionUser==null) {
+    	    response.sendRedirect("401.do");
+    	    return;
+    	}
 
-            Photo userPhoto = photoService.getUserPhoto(user.getId());
-            List<UserInEvent> userInEvents = userInEventService.getEventsByUserId(user.getId());
+//            Photo userPhoto = photoService.getUserPhoto(sessionUser.getId());
+            List<UserInEvent> userInEvents = userInEventService.getEventsByUserId(sessionUser.getId());
 
             //Creating map with paths for events photo <eventId, pathToEventPhoto>
             Map<Integer,String> eventPhotosPathMap= new HashMap<>();
@@ -56,7 +58,7 @@ public class UserCabinetServlet implements HttpRequestHandler {
             request.setAttribute("userInEvents", userInEvents);
             request.setAttribute("eventPhotosPathMap", eventPhotosPathMap);
 
-        }
+       
 
         request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(request, response);
     }

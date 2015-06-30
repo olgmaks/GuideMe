@@ -1,15 +1,5 @@
 package com.epam.gm.daolayer;
 
-import com.epam.gm.model.Event;
-import com.epam.gm.model.User;
-import com.epam.gm.model.UserInEvent;
-import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
-import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
-import com.epam.gm.services.UserService;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +7,11 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringJoiner;
+
+import com.epam.gm.model.User;
+import com.epam.gm.model.UserInEvent;
+import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
+import com.epam.gm.services.UserService;
 
 public class UserInEventDao extends AbstractDao<UserInEvent> {
 	private static final String GET_BY_EVENT_AND_USER = " uie WHERE uie.event_id = ?eventId AND uie.user_id = ?userId";

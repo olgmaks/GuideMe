@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -217,6 +218,12 @@ public class UserService {
 
     public void updateWithCustomQuery(Map<String, Object> updates, String joined, String where) throws SQLException {
         userDao.updateWithCustomQuery(updates, joined, where);
+    }
+
+    public void updateUserAvatar (Integer userId, Integer avatarId) throws SQLException {
+        Map <String, Object> map = new HashMap<>();
+        map.put("avatar_id",avatarId);
+        userDao.updateById(userId,map);
     }
 
     //gryn

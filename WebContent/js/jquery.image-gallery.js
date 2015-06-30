@@ -28,6 +28,19 @@
 }(function ($, Gallery) {
     'use strict';
 
+    function referenceControl(title){
+        var footer = $("#footer");
+        footer.css('visibility','visible');
+        
+        var updateAvatarAnchor = $("#updateAvatar");
+        var currentTitle = 'updateUserAvatar.do' + '?location=' + title;
+        updateAvatarAnchor.attr("href", currentTitle);
+        
+        var deletaPhotoAnchor = $("#deletePhoto");
+        var deletePhotoHref = title;
+        deletaPhotoAnchor.attr("data-value",deletePhotoHref);
+
+    }
     // Global click handler to open links with data-dialog attribute
     // in the Gallery lightbox:
     $(document).on('click', '[data-dialog]', function (event) {
@@ -44,6 +57,9 @@
                 modal: true,
                 width: 'auto'
                 ,
+                close: function(event, ui ) {
+                    $("#footer").css('visibility','hidden');
+                },
                 position: {my: "top+10%",at: "top",of: window}
             }, dialogWidget.data()),
             galleryOptions = $.extend(
@@ -64,6 +80,7 @@
                     onslide: function (index, slide) {
                         var gallery = this,
                             title = slide.firstChild.title;
+                        referenceControl(title);
                         if (dialogInitialized) {
                             dialogWidget.dialog('option', 'title', title);
                         } else {
@@ -123,8 +140,12 @@
             height: 0,
             overflow: 'hidden'
         });
+
+        referenceControl(this.title);
         setGalleryWidgetDimensions();
         return new Gallery(links, galleryOptions);
     });
+    
+
 
 }));

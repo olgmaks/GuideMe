@@ -2,10 +2,11 @@ package com.epam.gm.daolayer;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import com.epam.gm.model.*;
+import com.epam.gm.model.Language;
+import com.epam.gm.model.User;
+import com.epam.gm.model.UserLanguage;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 import com.epam.gm.util.Constants;
 
