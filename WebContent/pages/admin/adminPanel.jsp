@@ -57,8 +57,14 @@
                     <jsp:include page="adminEvent.jsp"/>
                 </c:when>
 
- 				<c:when test="${centralContent == 'adminUserDetail'}">
+ 				<c:when test="${centralContent == 'adminUser'}">
+                    <jsp:include page="adminUserTable.jsp"/>
+               </c:when>
+               <c:when test="${centralContent == 'adminUserDetail'}">
                     <jsp:include page="adminUserDetail.jsp"/>
+               </c:when>
+                <c:when test="${centralContent == 'adminTag'}">
+                    <jsp:include page="adminTag.jsp"/>
                </c:when>
 
             </c:choose>

@@ -17,8 +17,10 @@
             Friends<i class="mdi-social-group right"></i></button></a>
         <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">
             Find friends<i class="mdi-social-group-add right"></i></button>
+        <a href="adminuserservlet.do">
         <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">
-            Comments<i class="mdi-communication-comment right"></i></button>
+            users<i class="mdi-communication-comment right"></i></button>
+      </a>
       </li>
     </ul>
   </div>

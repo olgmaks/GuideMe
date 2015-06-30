@@ -13,6 +13,7 @@ import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.utf8uncoder.StringHelper;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,6 +32,7 @@ import java.util.Map;
  */
 
 public class AdminServletPost implements HttpRequestHandler{
+	private HashMap<String, Object> JSONROOT = new HashMap<String, Object>();
 
 
     /**
@@ -40,6 +42,7 @@ public class AdminServletPost implements HttpRequestHandler{
     @Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
+    	Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String action = request.getParameter("action");
         request.setCharacterEncoding("UTF-8");
         System.out.println(action);
@@ -48,6 +51,20 @@ public class AdminServletPost implements HttpRequestHandler{
                 Integer userId = Integer.parseInt(request
                         .getParameter("userId"));
                 new UserDao().activeUser(userId);
+            }else if (action.equalsIgnoreCase("list")) {
+            	List<User> userList = new UserDao().getAllUsers();
+
+				// Return in the format required by jTable plugin
+				JSONROOT.put("Result", "OK");
+				JSONROOT.put("Records", userList);
+
+				// Convert Java Object to Json
+				String jsonArray = gson.toJson(JSONROOT);
+				System.out.println(jsonArray);
+				// request.setAttribute("",jsonArray);
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().print(jsonArray);
+           
             } else if (action.equalsIgnoreCase("filterByUserType")) {
                 PrintWriter out = response.getWriter();
                 List<User> list = null;

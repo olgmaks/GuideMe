@@ -14,8 +14,8 @@ public class AdminTagServlet implements HttpRequestHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
-
-		request.getRequestDispatcher("pages/admin/adminTag.jsp").forward(request,
+		 request.setAttribute("centralContent", "adminTag");
+		request.getRequestDispatcher("pages/admin/adminPanel.jsp").forward(request,
 				response);
 	}
 }
