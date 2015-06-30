@@ -2,7 +2,7 @@
 <style>
 .table-wrapper
 {
-    width: 900px;
+    width: 100%;
     height: 550px;
     overflow: auto;
 }
@@ -18,12 +18,11 @@ var friendLastName;
 var friendFirstName;
 var friendAvatar;
     function getMessageByUser(userId, friendLastNameIn, friendFirstNameIn, friendAvatarIn) {
-    	$("#enterMessage").show();
-    	$("#submitButton").show();
     	friendId        = userId;	
     	friendLastName  = friendLastNameIn;
     	friendFirstName = friendFirstNameIn;
     	friendAvatar    = friendAvatarIn;
+    	$("#friendTitle").html(friendLastName + ' ' + friendFirstName);
     	var nemberMessageId = '#numberNewMessage' + userId;//recive number of new message
     	$(nemberMessageId).html(0);
     	scrollToBottom();
@@ -38,8 +37,10 @@ var friendAvatar;
 	                	var avatar = item.sender.avatar.path;
 	                	var color = item.senderId == "${sessionUser.id}"? "#CEF6E3": "#2ECCFA" ;  
 	               	 	trHTML += '<tr bgcolor= '+color +'><td width="10%">' + item.sender.firstName + " "+ item.sender.lastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' + 
-	               	 	 	avatar + '" ></td><td width="20%"> ' + item.createdOn + '</td><td width="60"> ' + item.message + '</td></tr>';
+	               	 	 	avatar + '" ></td><td width="20%"> ' + item.createdOn + '</td><td width="60">' + item.message.replace(/</g,'&lt') + '</td></tr>';
+	                
 	                });
+	               
 	                $("#messageUser").append(trHTML);
 	                scrollToBottom();
 	            },         
@@ -48,6 +49,7 @@ var friendAvatar;
 </script>
 
 <div class="row">
+<h3 id = "friendTitle"></h3>
     	<div class="col s12" style="margin-top:10px;">
 
 				<div class="table-wrapper" id = "divTableMessages">
@@ -77,7 +79,7 @@ var friendAvatar;
                var nemberMessageId = '#numberNewMessage' + jsonObj.userId;//recive number of new message
                var number = parseInt($(nemberMessageId).html()) +1 ;
                if (friendId == jsonObj.userId){
-        	   		var trHTML = '<tr bgcolor= "#2ECCFA"><td width="10%">'+ jsonObj.friendFirstName + ' ' + jsonObj.friendLastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' + jsonObj.friendAvatar + '"></td><td width = "20%">' + new Date() + '</td><td width="70%">  '+ jsonObj.message+ '</td></tr>';
+        	   		var trHTML = '<tr bgcolor= "#2ECCFA"><td width="10%">'+ jsonObj.friendFirstName + ' ' + jsonObj.friendLastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' + jsonObj.friendAvatar + '"></td><td width = "20%">' + new Date() + '</td><td width="70%">  '+ jsonObj.message.replace(/</g,'&lt')+ '</td></tr>';
                		$("#messageUser").append(trHTML);
                	 	scrollToBottom();
                }else{
@@ -105,7 +107,7 @@ var friendAvatar;
              
              var table = document.getElementById("messageUser");
              var rowCount = table.rows.length;
-             var trHTML = '<tr bgcolor= "#CEF6E3"><td width="10%">${sessionUser.firstName} ${sessionUser.lastName}<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="${sessionUser.avatar.path}"></td><td width = "20%">' + new Date() +'</td><td width="70%">  '+ message+ '</td></tr>';
+             var trHTML = '<tr bgcolor= "#CEF6E3"><td width="10%">${sessionUser.firstName} ${sessionUser.lastName}<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="${sessionUser.avatar.path}"></td><td width = "20%">' + new Date() +'</td><td width="70%">  '+ message.replace(/</g,'&lt')+ '</td></tr>';
              $("#messageUser").append(trHTML);
              scrollToBottom();
              inputElement.value = "";
@@ -138,7 +140,6 @@ var friendAvatar;
    	}
 
     $( document ).ready(function() {
-    	$("#enterMessage").hide();
-    	$("#submitButton").hide();
+    	getMessageByUser("${lastMessanger.id}", "${lastMessanger.lastName}", "${lastMessanger.firstName}", "${lastMessanger.avatar.path}")
     });
     </script>

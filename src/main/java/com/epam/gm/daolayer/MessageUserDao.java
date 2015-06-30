@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.epam.gm.model.MessageUser;
+import com.epam.gm.model.User;
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
+import com.epam.gm.services.UserService;
 
 public class MessageUserDao extends AbstractDao<MessageUser> {
 	private static final String GET_BY_USER = " mu WHERE (mu.sender_id = %S AND mu.user_id = %S) OR "
@@ -23,6 +25,14 @@ public class MessageUserDao extends AbstractDao<MessageUser> {
 													+ "FROM message_user mu "
 													+ "WHERE mu.user_id = ? AND mu.is_read = 0 "
 													+ "GROUP BY mu.sender_id";
+	private String GET_LAST_MESSANGER = "SELECT "
+											+ "CASE sender_id "
+											+ "WHEN ? THEN user_id "
+											+ "ELSE sender_id END  AS user  "
+									+ "FROM message_user mu  "
+									+ "WHERE mu.user_id = ? OR "
+									+ "mu.sender_id = ?  "
+									+ "ORDER BY mu.created_on DESC LIMIT 1";
 	public MessageUserDao() {
     	//gryn
     	//super(ConnectionManager.getConnection(), MessageUser.class);
@@ -58,7 +68,25 @@ public class MessageUserDao extends AbstractDao<MessageUser> {
 		ConnectionManager.closeConnection(connection);
     	return map;
     }
+    
+    public User getLastMessanger(int userId) throws SQLException{
+    	Connection connection = ConnectionManager.getConnection();
+		PreparedStatement stmt = connection.prepareStatement(GET_LAST_MESSANGER);
+		stmt.setInt(1, userId);
+		stmt.setInt(2, userId);
+		stmt.setInt(3, userId);
+		ResultSet rs = stmt.executeQuery();
+		int friendId = -1;
+		while (rs.next()) {
+			friendId = rs.getInt(1);
+			System.out.println(friendId);
+		}
+		rs.close();
+		stmt.close();
+		ConnectionManager.closeConnection(connection);
+		return new UserService().getUserById(friendId);
+    }
     public static void main(String[] args) throws SQLException {
-		new MessageUserDao().updateRead(12,8);
+		System.out.println(new MessageUserDao().getLastMessanger(8));
 	}
 }

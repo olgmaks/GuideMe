@@ -47,9 +47,11 @@
 		$('#tblAdminUser').jtable('load');
 	});
 </script>
+<form action="UserDetailReport" method="get">
+  <input type="submit" value="userReportBrowser">
+</form>
 
 <div style="width: 100%; margin-right: 10%; margin-left: 10%; text-align: center;">
-
 		<h4>User List</h4>
 		<div id="tblAdminUser"></div>
 	</div>
