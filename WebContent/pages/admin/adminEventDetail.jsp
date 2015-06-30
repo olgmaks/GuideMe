@@ -29,12 +29,17 @@
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
 
-<link rel="stylesheet"	href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.css" id="theme" />
-<link rel="stylesheet"	href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css" />
+<link rel="stylesheet"
+	href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.css"
+	id="theme" />
+<link rel="stylesheet"
+	href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css" />
 
-    <script	src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-	<script	src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-	<script src="js/jquery.image-gallery.js"></script>
+<script
+	src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<script
+	src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+<script src="js/jquery.image-gallery.js"></script>
 
 <style>
 .panel {
@@ -165,62 +170,59 @@
 	}
 </script>
 
-<script>		
-$(document).ready(function () {
-	
-	$(".acceptfriendrequest").click(function () {
-        	       console.log("acceptfriendrequest ajax call");
-            var value = $(this).data('id');
-            var strSelector = "#userFriendCard" + value;
-            var formSelector = "#userFriendFormWithId" + value;
-            $.ajax({
-                url: "acceptEventRequest.do",
-                type: "post",
-                dataType: "json",
-                data: $(formSelector).serialize()
-            });
-            console.log(strSelector);
-            $(strSelector).remove();
-            
-           
-        });    
-	
-        $(".removefriend").on("click", function () {
+<script>
+	$(document).ready(function() {
 
-            console.log("removefriend ajax call");
-            var value = $(this).data('id');
-            var strSelector = "#userFriendCard" + value;
-            var formSelector = "#userFriendFormWithId" + value;
-            $.ajax({
-                url: "removeMember.do",
-                type: "post",
-                dataType: "json",
-                data: $(formSelector).serialize()
-            });
-            console.log(strSelector);
-            $(strSelector).remove();
-        });
-        
-        $(document).on('click', '.removefriend', function(e){
-        	
-        
-        	
-            console.log("removefriend ajax call");
-            var value = $(this).data('id');
-            var strSelector = "#userFriendCard" + value;
-            var formSelector = "#userFriendFormWithId" + value;
-            $.ajax({
-                url: "removeMember.do",
-                type: "post",
-                dataType: "json",
-                data: $(formSelector).serialize()
-            });
-            console.log(strSelector);
-            $(strSelector).remove();
-            
-        })
-	
-});   
+		$(".acceptfriendrequest").click(function() {
+			console.log("acceptfriendrequest ajax call");
+			var value = $(this).data('id');
+			var strSelector = "#userFriendCard" + value;
+			var formSelector = "#userFriendFormWithId" + value;
+			$.ajax({
+				url : "acceptEventRequest.do",
+				type : "post",
+				dataType : "json",
+				data : $(formSelector).serialize()
+			});
+			console.log(strSelector);
+			$(strSelector).remove();
+
+		});
+
+		$(".removefriend").on("click", function() {
+
+			console.log("removefriend ajax call");
+			var value = $(this).data('id');
+			var strSelector = "#userFriendCard" + value;
+			var formSelector = "#userFriendFormWithId" + value;
+			$.ajax({
+				url : "removeMember.do",
+				type : "post",
+				dataType : "json",
+				data : $(formSelector).serialize()
+			});
+			console.log(strSelector);
+			$(strSelector).remove();
+		});
+
+		$(document).on('click', '.removefriend', function(e) {
+
+			console.log("removefriend ajax call");
+			var value = $(this).data('id');
+			var strSelector = "#userFriendCard" + value;
+			var formSelector = "#userFriendFormWithId" + value;
+			$.ajax({
+				url : "removeMember.do",
+				type : "post",
+				dataType : "json",
+				data : $(formSelector).serialize()
+			});
+			console.log(strSelector);
+			$(strSelector).remove();
+
+		})
+
+	});
 </script>
 
 </head>
@@ -257,9 +259,8 @@ $(document).ready(function () {
 
 
 
-									<br>
-									<br>Status: <select class="browser-default" id="status"
-										name="status"
+									<br> <br>Status: <select class="browser-default"
+										id="status" name="status"
 										style="width: 50%; text-align: left; font-size: 100%; text-transform: capitalize">
 										<option selected value="guest">Guest</option>
 										<option value="resident">Resident</option>
@@ -437,8 +438,11 @@ $(document).ready(function () {
 									<li><a href="#requests">Requests</a></li>
 								</c:if>
 								<li><a href="#chat">Chat</a></li>
+								<c:if test="${isModerator}">
+									<li><a href="#addservice">Add Service</a></li>
+								</c:if>
 								<c:if test="${isAdmin}">
-									
+
 								</c:if>
 							</ul>
 						</nav>
@@ -548,36 +552,39 @@ $(document).ready(function () {
 
 						</section>
 
-      <section id="photos" class="hidden">
-      <div id="blueimp-gallery-dialog" data-show="fade" data-hide="fade" >
-    <!-- The Gallery widget  -->
-    <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
-        <div class="slides"></div>
-        <a class="prev"></a>
-        <a class="next"></a>
-        <a class="play-pause"></a>
-    </div>
-</div>
-        <p>Photos: 
-        <a  href="upload.do?uploadtype=event" >
-        <span style="float: right;">Upload new photo</span></a>
-        </p>
-<!--         <ul id="photolist" class="clearfix"> -->
-<%--           <c:forEach items="${photos}" var="p"> --%>
-<!--           		<li>    -->
-<!--           		<a href=""> -->
-<%--           			<img src="${p.path}" style="height: 120px; width: 120px; object-fit: cover">> --%>
-<!--           		</a> -->
-<!--           		</li> -->
-<%--       		</c:forEach> --%>
-				<div id="links">
-					<c:forEach items="${photos}" var="photo">
-					<a href="${photo.path}" title="${photo.path}" data-dialog> 
-					<img src="${photo.path}" style="height: 160px; width: 160px; object-fit: cover" alt="${photo.path}"></a>
-				</c:forEach>
-				</div>
-<!--       	</ul> -->
-      </section>
+						<section id="photos" class="hidden">
+							<div id="blueimp-gallery-dialog" data-show="fade"
+								data-hide="fade">
+								<!-- The Gallery widget  -->
+								<div
+									class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
+									<div class="slides"></div>
+									<a class="prev"></a> <a class="next"></a> <a class="play-pause"></a>
+								</div>
+							</div>
+							<p>
+								Photos: <a href="upload.do?uploadtype=event"> <span
+									style="float: right;">Upload new photo</span></a>
+							</p>
+							<!--         <ul id="photolist" class="clearfix"> -->
+							<%--           <c:forEach items="${photos}" var="p"> --%>
+							<!--           		<li>    -->
+							<!--           		<a href=""> -->
+							<%--           			<img src="${p.path}" style="height: 120px; width: 120px; object-fit: cover">> --%>
+							<!--           		</a> -->
+							<!--           		</li> -->
+							<%--       		</c:forEach> --%>
+							<div id="links">
+								<c:forEach items="${photos}" var="photo">
+									<a href="${photo.path}" title="${photo.path}" data-dialog>
+										<img src="${photo.path}"
+										style="height: 160px; width: 160px; object-fit: cover"
+										alt="${photo.path}">
+									</a>
+								</c:forEach>
+							</div>
+							<!--       	</ul> -->
+						</section>
 
 						<section id="chat" class="hidden">
 							<textarea id="messages" class="panel message-area" readonly
@@ -591,53 +598,55 @@ $(document).ready(function () {
 							</div>
 						</section>
 
-  <section id="members" class="hidden">
-  <p>Members:</p>
-
-      	
-  <ul class="collection" id="collectionResults">
-  <c:forEach items="${requestScope.members}" var="m">
-    
-    
-   <form id="userFriendFormWithId${m.user.id}">
-   <input type="hidden" id="userFriendId" class="userFriendId" name="userFriendId"
-          value="${m.user.id}">
-          
-    <input type="hidden" id="memberEventId" class="memberEventId" name="memberEventId"
-          value="${event.id}">         
-  
-    
-    <li class="collection-item avatar" id="userFriendCard${m.user.id}">
-      <img src="${m.user.avatar.path}" alt="" class="circle">
-      <span class="title"><a href="userProfile.do?id=${m.user.id}"> ${m.user.firstName} ${m.user.lastName}</a></span>
+						<section id="members" class="hidden">
+							<p>Members:</p>
 
 
-      <p>
-      <c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
-      <c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
+							<ul class="collection" id="collectionResults">
+								<c:forEach items="${requestScope.members}" var="m">
 
 
-	<c:if test="${isModerator}">
-	
-	<br>
-    <span style="margin-right: 10px;">Remove member</span>
-    <a href="#_" class="btn-floating light-blue removefriend" data-id="${m.user.id}">
-    <i class="mdi-navigation-close"></i>
+									<form id="userFriendFormWithId${m.user.id}">
+										<input type="hidden" id="userFriendId" class="userFriendId"
+											name="userFriendId" value="${m.user.id}"> <input
+											type="hidden" id="memberEventId" class="memberEventId"
+											name="memberEventId" value="${event.id}">
 
-    </a>
-    
-    </c:if>
-	  	
- <br>
-         
-      </p>
-      <a  class="secondary-content"><i class="material-icons">${m.status}</i></a>
-    </li>
-     </form>
-    </c:forEach>
+
+										<li class="collection-item avatar"
+											id="userFriendCard${m.user.id}"><img
+											src="${m.user.avatar.path}" alt="" class="circle"> <span
+											class="title"><a href="userProfile.do?id=${m.user.id}">
+													${m.user.firstName} ${m.user.lastName}</a></span>
+
+
+											<p>
+												<c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
+												<c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
+
+
+												<c:if test="${isModerator}">
+
+													<br>
+													<span style="margin-right: 10px;">Remove member</span>
+													<a href="#_" class="btn-floating light-blue removefriend"
+														data-id="${m.user.id}"> <i
+														class="mdi-navigation-close"></i>
+
+													</a>
+
+												</c:if>
+
+												<br>
+
+											</p> <a class="secondary-content"><i class="material-icons">${m.status}</i></a>
+										</li>
+									</form>
+								</c:forEach>
 							</ul>
 
-						</section><section id="edit" class="hidden">
+						</section>
+						<section id="edit" class="hidden">
 							<p>Edit event:</p>
 							<div class="row">
 								<form action="adminEventRequest.do?action=edit" method="POST">
@@ -1053,62 +1062,66 @@ $(document).ready(function () {
 						</section>
 
 
- <c:if test="${isModerator}">
-  <section id="requests" class="hidden">
-  <p>Requests:</p>
-
-      	
-  <ul class="collection">
-  <c:forEach items="${requestScope.requests}" var="m">
-    
-   <form id="userFriendFormWithId${m.user.id}">
-   <input type="hidden" id="userFriendId" class="userFriendId" name="userFriendId"
-          value="${m.user.id}">
-          
-    <input type="hidden" id="memberEventId" class="memberEventId" name="memberEventId"
-          value="${event.id}">         
-  
-    
-    <li class="collection-item avatar" id="userFriendCard${m.user.id}">
-      <img src="${m.user.avatar.path}" alt="" class="circle">
-      <span class="title"><a href="userProfile.do?id=${m.user.id}"> ${m.user.firstName} ${m.user.lastName}</a></span>
+						<c:if test="${isModerator}">
+							<section id="requests" class="hidden">
+								<p>Requests:</p>
 
 
+								<ul class="collection">
+									<c:forEach items="${requestScope.requests}" var="m">
 
-      <p>
-      <c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
-      <c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
-
-
-	<c:if test="${isModerator}">
-	<br>
-    <span style="margin-right: 10px;">Accept request</span>
-    <a href="#_" class="btn-floating light-blue acceptfriendrequest" data-id="${m.user.id}">
-    <i class="mdi-navigation-check"></i>
+										<form id="userFriendFormWithId${m.user.id}">
+											<input type="hidden" id="userFriendId" class="userFriendId"
+												name="userFriendId" value="${m.user.id}"> <input
+												type="hidden" id="memberEventId" class="memberEventId"
+												name="memberEventId" value="${event.id}">
 
 
-    </a>
+											<li class="collection-item avatar"
+												id="userFriendCard${m.user.id}"><img
+												src="${m.user.avatar.path}" alt="" class="circle"> <span
+												class="title"><a
+													href="userProfile.do?id=${m.user.id}">
+														${m.user.firstName} ${m.user.lastName}</a></span>
 
-    <span style="margin-right: 10px;">Remove request</span>
-    <a href="#_" class="btn-floating light-blue removefriend" data-id="${m.user.id}">
-    <i class="mdi-navigation-close"></i>
 
-    </a>
-    
-    </c:if>
-	  	
- <br>
-         
-      </p>
-      <a  class="secondary-content"><i class="material-icons">${m.status}</i></a>
-    </li>
-     </form>
-    </c:forEach>
-    
-  </ul>
-      	
- </section>
- </c:if>
+
+												<p>
+													<c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
+													<c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
+
+
+													<c:if test="${isModerator}">
+														<br>
+														<span style="margin-right: 10px;">Accept request</span>
+														<a href="#_"
+															class="btn-floating light-blue acceptfriendrequest"
+															data-id="${m.user.id}"> <i
+															class="mdi-navigation-check"></i>
+
+
+														</a>
+
+														<span style="margin-right: 10px;">Remove request</span>
+														<a href="#_" class="btn-floating light-blue removefriend"
+															data-id="${m.user.id}"> <i
+															class="mdi-navigation-close"></i>
+
+														</a>
+
+													</c:if>
+
+													<br>
+
+												</p> <a class="secondary-content"><i class="material-icons">${m.status}</i></a>
+											</li>
+										</form>
+									</c:forEach>
+
+								</ul>
+
+							</section>
+						</c:if>
 
 						<!--       <section id="settings" class="hidden"> -->
 						<!--         <p>Edit your user settings:</p> -->
@@ -1136,88 +1149,113 @@ $(document).ready(function () {
 						<!--       </section> -->
 					</div>
 					<!-- @end #content -->
-				</div>
-				<!-- @end #w --> 
-				
-				
-  <form id="memberAjaxForm" name="memberAjaxForm" >
-  <input type = "hidden" name = "id" value = "${event.id}">
-  </form>
-  
-  				
-				<script type="text/javascript">
+				</div> <!-- @end #w --> <!-- #addservice	 -->
+				<form id="servicesAjaxForm" name="servicesAjaxForm"></form>
+
+
+
+				<form id="memberAjaxForm" name="memberAjaxForm">
+					<input type="hidden" name="id" value="${event.id}">
+				</form> <script type="text/javascript">
 					$(function() {
-						$('#profiletabs ul li a').on('click', function(e) {
-							e.preventDefault();
-							var newcontent = $(this).attr('href');
+						$('#profiletabs ul li a')
+								.on(
+										'click',
+										function(e) {
+											e.preventDefault();
+											var newcontent = $(this).attr(
+													'href');
 
-							if(newcontent == "#members") {
-								
+											if (newcontent == "#members") {
 
-								
-								$.ajax({
-								url: 'getEventMembers.do',
-								type: 'post',
-								dataType: 'json',
-								data: $("#memberAjaxForm").serialize(),
-								success: function (data) {
-										//alert(data.isEmpty);
-										
-										var resultCollenction = $("#collectionResults");
-										//resultCollenction.find("form").empty();
-										resultCollenction.empty();
-										//resultCollenction = $("#collectionResults");
-										
-										
-										$.each(data.results, function (counts, m) {
-											
-											var f = 
-													"<form id='userFriendFormWithId" +m.userId + "' >" +
-													"<input type='hidden' id='userFriendId' class='userFriendId' name='userFriendId' " +
-													"value='" +  m.userId + "'>" +
-													
-													"<input type='hidden' id='memberEventId' class='memberEventId' name='memberEventId'" +
-													"value='" + m.eventId +  "'>" +          
-													
-													"<li class='collection-item avatar' id='userFriendCard" +  m.userId  + "'>" +
-													"<img src='" + m.user.avatar.path +  "' alt='' class='circle'> " +
-													"<span class='title'><a href='userProfile.do?id="+ m.userId + "'>" + m.user.firstName + " " + m.user.lastName + "</a></span>";
-											if(m.bedCount > 0) {
-												f +=  "<br>Can accept: " + m.bedCount + " guest(s)";
-											} else if(m.bedCount < 0) {
-												f +=  "<br>Need lodjing for: " + (-m.bedCount) + " person(s)";
-											}										
+												$
+														.ajax({
+															url : 'getEventMembers.do',
+															type : 'post',
+															dataType : 'json',
+															data : $(
+																	"#memberAjaxForm")
+																	.serialize(),
+															success : function(
+																	data) {
+																//alert(data.isEmpty);
 
-											if(1==1) {
-													
-												f +=	
-												"<br><span style='margin-right: 10px;'>Remove member</span>" +
-												"<a  href='#_' class='btn-floating light-blue removefriend' data-id='" + m.userId + "'> " +
-												"<i class='mdi-navigation-close'></i>" +
-												"</a>"
-												;
-									         }
-											f += 
-													"<a  class='secondary-content'><i class='material-icons'>"+ m.status + "</i></a>" +
-													
-													"</form>"; 		
-											resultCollenction.append(f); 
-										
+																var resultCollenction = $("#collectionResults");
+																//resultCollenction.find("form").empty();
+																resultCollenction
+																		.empty();
+																//resultCollenction = $("#collectionResults");
+
+																$
+																		.each(
+																				data.results,
+																				function(
+																						counts,
+																						m) {
+
+																					var f = "<form id='userFriendFormWithId" +m.userId + "' >"
+																							+ "<input type='hidden' id='userFriendId' class='userFriendId' name='userFriendId' " +
+													"value='" +  m.userId + "'>"
+																							+
+
+																							"<input type='hidden' id='memberEventId' class='memberEventId' name='memberEventId'" +
+													"value='" + m.eventId +  "'>"
+																							+
+
+																							"<li class='collection-item avatar' id='userFriendCard" +  m.userId  + "'>"
+																							+ "<img src='" + m.user.avatar.path +  "' alt='' class='circle'> "
+																							+ "<span class='title'><a href='userProfile.do?id="
+																							+ m.userId
+																							+ "'>"
+																							+ m.user.firstName
+																							+ " "
+																							+ m.user.lastName
+																							+ "</a></span>";
+																					if (m.bedCount > 0) {
+																						f += "<br>Can accept: "
+																								+ m.bedCount
+																								+ " guest(s)";
+																					} else if (m.bedCount < 0) {
+																						f += "<br>Need lodjing for: "
+																								+ (-m.bedCount)
+																								+ " person(s)";
+																					}
+
+																					if (1 == 1) {
+
+																						f += "<br><span style='margin-right: 10px;'>Remove member</span>"
+																								+ "<a  href='#_' class='btn-floating light-blue removefriend' data-id='" + m.userId + "'> "
+																								+ "<i class='mdi-navigation-close'></i>"
+																								+ "</a>";
+																					}
+																					f += "<a  class='secondary-content'><i class='material-icons'>"
+																							+ m.status
+																							+ "</i></a>"
+																							+
+
+																							"</form>";
+																					resultCollenction
+																							.append(f);
+
+																				});
+															}
+														});
+											}
+											$('#profiletabs ul li a')
+													.removeClass('sel');
+											$(this).addClass('sel');
+
+											$('#content section').each(
+													function() {
+														if (!$(this).hasClass(
+																'hidden')) {
+															$(this).addClass(
+																	'hidden');
+														}
+													});
+
+											$(newcontent).removeClass('hidden');
 										});
-								}
-								});    	
-						    }							
-							$('#profiletabs ul li a').removeClass('sel');
-							$(this).addClass('sel');
-
-							$('#content section').each(function() {
-								if (!$(this).hasClass('hidden')) {
-									$(this).addClass('hidden');
-								}
-							});
-
-							$(newcontent).removeClass('hidden');
-						});
 					});
 				</script>
 			</td>
