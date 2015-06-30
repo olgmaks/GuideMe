@@ -28,7 +28,7 @@ public class ChangeEventStatusServlet implements HttpRequestHandler {
 		System.out.println("ChangeEventStatusServlet");
 
 		String id = request.getParameter("id");
-		String status = request.getParameter("status");
+		String status = request.getParameter("eventStatus");
 		if (id != null
 				&& ("active".equals(status) || "filled".equals(status)
 						|| "cancelled".equals(status) || "done".equals(status))

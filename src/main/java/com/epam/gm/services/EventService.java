@@ -2,15 +2,15 @@ package com.epam.gm.services;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.epam.gm.calculators.EventCalculator;
+
+
 import com.epam.gm.daolayer.EventDao;
 import com.epam.gm.model.Event;
 import com.epam.gm.model.User;
-import com.epam.gm.util.Constants;
+
 
 
 public class EventService {
@@ -72,6 +72,13 @@ public class EventService {
 	 
 	 public void buildTagString(List<Event> list) throws SQLException {
 		 eventDao.buildTagString(list);
+	 }
+	 
+	 public void buildTagString(Event event) throws SQLException {
+		 List<Event> list = new ArrayList<Event>(1);
+		 list.add(event);
+		 
+		 buildTagString(list);
 	 }
 	 
 	 public void changeEventStatus(Integer id, String status) throws SQLException {

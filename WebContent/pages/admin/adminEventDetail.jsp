@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
@@ -10,11 +9,15 @@
 <title>Guide ME</title>
 <link href="css/materialize.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
+
 <link href="css/style.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
 <link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
 <link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet"
+	
+	
 	type="text/css" />
+
 <!-- Include jTable script file. -->
 <link rel="shortcut icon" href="http://designshack.net/favicon.ico">
 <link rel="icon" href="http://designshack.net/favicon.ico">
@@ -29,17 +32,33 @@
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
 
-<link rel="stylesheet"
-	href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.css"
-	id="theme" />
-<link rel="stylesheet"
-	href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css" />
+<link rel="stylesheet"	href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.css" id="theme" />
 
-<script
-	src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-<script
-	src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-<script src="js/jquery.image-gallery.js"></script>
+<link rel="stylesheet"	href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css" />
+
+<!--     <script	src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script> -->
+	
+	<script	src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+	
+	<script src="js/jquery.image-gallery.js"></script>
+	
+<%--Tag it Java script--%>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"
+	type="text/javascript" charset="utf-8"></script>
+	
+	
+<!-- <script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>	 -->
+
+<!-- tag start -->
+    <link rel="StyleSheet" href="css/ui-lightness/jquery-ui-1.9.2.custom.min.css" type="text/css" media="all"/>
+    <link rel="StyleSheet" href="css/jquery.tagedit.css" type="text/css" media="all"/>
+    
+<!--     <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script> -->
+    
+    
+    <script type="text/javascript" src="js/jquery.autoGrowInput.js"></script>
+    <script type="text/javascript" src="js/jquery.tagedit.js"></script>
+<!-- tag end     -->
 
 <style>
 .panel {
@@ -225,6 +244,53 @@
 	});
 </script>
 
+  <script type="text/javascript">
+	$(function() {
+		
+		// Edit only
+		$( "#tagform-editonly" ).find('input.tag').tagedit({
+			autocompleteURL: 'autocompleteUserTags.do',
+			autocompleteOptions: {minLength: 0},
+			allowEdit: false,
+			allowAdd: false
+	
+		});
+	});
+	
+
+	</script>
+
+	<script>
+	$(document).ready(function() {
+		
+		$("#tagform-editonly").submit(function () {
+			
+        	$.ajax({
+            	
+        		
+                url: 'submitEventTags.do',
+                type: 'post',
+                dataType: 'json',
+                data: $("#tagform-editonly").serialize(),
+                success: function (data) {
+                	
+					Materialize.toast(
+							data.valid, 
+							2000,
+							'',
+							function() {
+							}
+					)                  
+                }
+            });
+            return false;
+       	 });
+	 });
+	
+
+	
+	</script> 
+
 </head>
 <body onload="connect();" onunload="disconnect();">
 
@@ -259,8 +325,9 @@
 
 
 
-									<br> <br>Status: <select class="browser-default"
-										id="status" name="status"
+									<br>
+									<br>Status: <select class="browser-default" id="status"
+										name="status"
 										style="width: 50%; text-align: left; font-size: 100%; text-transform: capitalize">
 										<option selected value="guest">Guest</option>
 										<option value="resident">Resident</option>
@@ -347,16 +414,23 @@
 
 
 						<c:if test="${!isModerator}">
+							
+                            <c:forEach items="${event.tagList}" var="tagElem">
+                        	<a href='home.do?tag=${tagElem}'>#${tagElem}</a> 
+                        	</c:forEach>							
+							
+							<br><br> 
+							<b> Event status: ${event.status} </b>
 							<br>
-							<b> Status: ${event.status} </b>
+							
 						</c:if>
 
 						<c:if test="${isModerator}">
 							<form action="changeEventStatus.do" method="POST"
 								id="changeEventForm">
 								<input type="hidden" name="id" value="${requestScope.event.id}">
-								<br>Status: <select class="browser-default" id="status"
-									name="status"
+								<br>Event status: <select class="browser-default" id="eventStatus"
+									name="eventStatus"
 									style="width: 50%; text-align: left; font-size: 100%; text-transform: capitalize">
 
 									<option ${selActive} value="active">Active</option>
@@ -405,8 +479,26 @@
 																	});
 												});
 							</script>
+ 							
+ 							<form  method="POST" 
+ 								id="tagform-editonly"> 
+ 								<input type="hidden" name="id" value="${requestScope.event.id}">
+ 								<br>Interests:  
 
+ 							   		 <input type="text" name="tag[]" value="" class="tag"/>
+							    
+    									<c:forEach items="${requestScope.tags}" var = "tag"> 
+    										<input type="text" name="tag[3-a]" value="${tag.name}" class="tag" />
+    									</c:forEach>									
+									
+									
+ 								<button class="btn light-blue waves-effect waves-light" 
+ 									type="submit" name="action" 
+ 									style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
+ 									Save</i> 
+ 								</button> 
 
+ 							</form>	
 						</c:if>
 
 

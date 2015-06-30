@@ -15,6 +15,7 @@ import com.epam.gm.dateparser.DateParser;
 import com.epam.gm.model.Country;
 import com.epam.gm.model.Event;
 import com.epam.gm.model.Language;
+import com.epam.gm.model.Tag;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
 import com.epam.gm.services.CommentEventService;
@@ -22,6 +23,7 @@ import com.epam.gm.services.CountryService;
 import com.epam.gm.services.EventService;
 import com.epam.gm.services.LanguageService;
 import com.epam.gm.services.PhotoService;
+import com.epam.gm.services.TagService;
 import com.epam.gm.services.UserInEventService;
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
@@ -41,13 +43,25 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			int id = Integer.parseInt(request.getParameter("id"));
 			Event event = new Event();
 			event = eventService.getById(id);
+			
+			eventService.buildTagString(event);
+			
 
 			LanguageService languageService = new LanguageService();
 			List<Language> languageList = languageService.getLocalizedLangs();
 			request.setAttribute("languageList", languageList);
 			
-			request.getSession(true).setAttribute("eventId", id);
-			Integer sessionUserId = SessionRepository.getSessionUser(request).getId();
+			//gryn - adding try
+			Integer sessionUserId = null;
+			try {
+				request.getSession(true).setAttribute("eventId", id);
+				sessionUserId = SessionRepository.getSessionUser(request).getId();
+			} catch(Exception e) {
+				response.sendRedirect("401.do");
+				return;
+			}
+				
+			
 			Boolean showUploadAnchor = UserInEventService.serve().isMemberOfEvent(
 				sessionUserId, id);
 			request.setAttribute("showUploadAnchor", showUploadAnchor);
@@ -203,6 +217,11 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 					"cancelled".equals(event.getStatus()) ? "selected" : "");
 			request.setAttribute("selDone",
 					"done".equals(event.getStatus()) ? "selected" : "");
+			
+            List<Tag> tags = new TagService().getAllEventTags(event.getId());
+            
+            
+            request.setAttribute("tags", tags);			
 
 			System.out.println(new PhotoService().getEventPhotos(id));
 			request.getRequestDispatcher("pages/admin/adminEventDetail.jsp")

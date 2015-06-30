@@ -421,7 +421,7 @@ public class EventDao extends AbstractDao<Event> {
 		// list.forEach(x -> System.out.println(x.getName() + "  " +
 		// x.getCreatedOn()));
 
-		// new EventDao().getAllNotDeletedEventsByPattern("²×").forEach(x ->
+		// new EventDao().getAllNotDeletedEventsByPattern("Â²Ã—").forEach(x ->
 		// System.out.println(x.getName()));
 
 	}
