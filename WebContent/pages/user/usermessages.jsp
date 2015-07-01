@@ -10,8 +10,8 @@
 td {
    font-size: 12px;
 }
-
 </style>
+<script src="js/moment.js"></script>
 <script type="text/javascript">
 var friendId;
 var friendLastName;
@@ -22,6 +22,8 @@ var friendAvatar;
     	friendLastName  = friendLastNameIn;
     	friendFirstName = friendFirstNameIn;
     	friendAvatar    = friendAvatarIn;
+    	$("#enterMessage").show();
+		$("#submitButton").show();
     	$("#friendTitle").html(friendLastName + ' ' + friendFirstName);
     	var nemberMessageId = '#numberNewMessage' + userId;//recive number of new message
     	$(nemberMessageId).html(0);
@@ -36,11 +38,15 @@ var friendAvatar;
 	                jQuery.each(data, function(index, item) {	              
 	                	var avatar = item.sender.avatar.path;
 	                	var color = item.senderId == "${sessionUser.id}"? "#CEF6E3": "#2ECCFA" ;  
-	               	 	trHTML += '<tr bgcolor= '+color +'><td width="10%">' + item.sender.firstName + " "+ item.sender.lastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' + 
-	               	 	 	avatar + '" ></td><td width="20%"> ' + item.createdOn + '</td><td width="60">' + item.message.replace(/</g,'&lt') + '</td></tr>';
-	                
+	               	 	trHTML += '<tr bgcolor= '+color +'><td width="10%">' 
+	               	 			+ item.sender.firstName + " " 
+	               	 			+ item.sender.lastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' 
+	               	 			+ avatar + '" ></td><td width="20%"> '
+	               	 			+ moment(item.createdOn).format('hh:mm MM D, YYYY') 
+	               	 			+ '</td><td width="60">' 
+	               	 			+ item.message.replace(/</g,'&lt') + '</td></tr>';          
 	                });
-	               
+	             
 	                $("#messageUser").append(trHTML);
 	                scrollToBottom();
 	            },         
@@ -49,9 +55,8 @@ var friendAvatar;
 </script>
 
 <div class="row">
-<h3 id = "friendTitle"></h3>
+<h5 id = "friendTitle"></h5>
     	<div class="col s12" style="margin-top:10px;">
-
 				<div class="table-wrapper" id = "divTableMessages">
 					<table  id = "messageUser">
 					</table>		
@@ -79,7 +84,10 @@ var friendAvatar;
                var nemberMessageId = '#numberNewMessage' + jsonObj.userId;//recive number of new message
                var number = parseInt($(nemberMessageId).html()) +1 ;
                if (friendId == jsonObj.userId){
-        	   		var trHTML = '<tr bgcolor= "#2ECCFA"><td width="10%">'+ jsonObj.friendFirstName + ' ' + jsonObj.friendLastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' + jsonObj.friendAvatar + '"></td><td width = "20%">' + new Date() + '</td><td width="70%">  '+ jsonObj.message.replace(/</g,'&lt')+ '</td></tr>';
+        	   		var trHTML = '<tr bgcolor= "#2ECCFA"><td width="10%">'+ jsonObj.friendFirstName + ' ' 
+        	   			+ jsonObj.friendLastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' 
+        	   			+ jsonObj.friendAvatar + '"></td><td width = "20%">' + moment().format('hh:mm MM D, YYYY') + '</td><td width="70%">  '
+        	   			+ jsonObj.message.replace(/</g,'&lt')+ '</td></tr>';
                		$("#messageUser").append(trHTML);
                	 	scrollToBottom();
                }else{
@@ -94,10 +102,11 @@ var friendAvatar;
 
     function sendMessage() {
          var userName = '${sessionUser.lastName} ${sessionUser.firstName}';
+         var userID = "${sessionUser.id}";
          var inputElement = document.getElementById("enterMessage");
          var message = inputElement.value.trim();
          if (message !== "") {
-              var jsonObj = {"userName" : userName, "message" : message, "userId": "${sessionUser.id}",  "friendId" : friendId, 
+              var jsonObj = {"userName" : userName, "message" : message, "userId": userID,  "friendId" : friendId, 
             		  		"friendAvatar" :"${sessionUser.avatar.path}","friendFirstName" : "${sessionUser.firstName}", "friendLastName": "${sessionUser.lastName}" } ;
               waitForSocketConnection(chatClient, function(){
                   console.log("message sent!!!");
@@ -107,7 +116,8 @@ var friendAvatar;
              
              var table = document.getElementById("messageUser");
              var rowCount = table.rows.length;
-             var trHTML = '<tr bgcolor= "#CEF6E3"><td width="10%">${sessionUser.firstName} ${sessionUser.lastName}<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="${sessionUser.avatar.path}"></td><td width = "20%">' + new Date() +'</td><td width="70%">  '+ message.replace(/</g,'&lt')+ '</td></tr>';
+             var trHTML = '<tr bgcolor= "#CEF6E3"><td width="10%">${sessionUser.firstName} ${sessionUser.lastName}<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="${sessionUser.avatar.path}"></td><td width = "20%">' 
+             	+ moment().format('hh:mm MM D, YYYY') +'</td><td width="70%">  '+ message.replace(/</g,'&lt')+ '</td></tr>';
              $("#messageUser").append(trHTML);
              scrollToBottom();
              inputElement.value = "";
@@ -140,6 +150,11 @@ var friendAvatar;
    	}
 
     $( document ).ready(function() {
-    	getMessageByUser("${lastMessanger.id}", "${lastMessanger.lastName}", "${lastMessanger.firstName}", "${lastMessanger.avatar.path}")
+    	if("${lastMessanger.id}"){
+    		getMessageByUser("${lastMessanger.id}", "${lastMessanger.lastName}", "${lastMessanger.firstName}", "${lastMessanger.avatar.path}")
+    	}else{
+    		$("#enterMessage").hide();
+    		$("#submitButton").hide();
+    	}
     });
     </script>

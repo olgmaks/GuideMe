@@ -42,8 +42,18 @@
 <table>
     <tr>
 
+	
+	
         <td style=" width:20%; vertical-align: top;">
-            <jsp:include page="../user/usercabinetpanelleft.jsp"/>
+        <c:choose>
+         <c:when test="${isAdmin}">
+                    <jsp:include page="adminLeftPanel.jsp"/>
+            </c:when>
+            <c:otherwise>
+            	    <jsp:include page="../user/usercabinetpanelleft.jsp"/>
+            </c:otherwise>
+         </c:choose>   
+        
         </td>
 
 

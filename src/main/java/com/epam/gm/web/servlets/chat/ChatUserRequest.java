@@ -25,14 +25,19 @@ public class ChatUserRequest implements HttpRequestHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		List<MessageUser> meList = null;
 		User user = SessionRepository.getSessionUser(request); 
 		 request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 		System.out.println(action);
 		if(action.equals("getByUser")){
 			try {
-				dao.updateRead(Integer.parseInt(request.getParameter("userId")),user.getId());//set message read from sender
-				List<MessageUser> meList =  dao.getByUser(user.getId(), Integer.parseInt(request.getParameter("userId")));
+				String friendId = request.getParameter("userId");
+				if (!friendId.equals("")){
+					dao.updateRead(Integer.parseInt(friendId), user.getId());//set message read from sender
+					meList =  dao.getByUser(user.getId(), Integer.parseInt(friendId));
+				}
+				
 				response.setCharacterEncoding("UTF-8");
 		        response.setContentType("application/json");
 				response.getWriter().write(new Gson().toJson(meList));

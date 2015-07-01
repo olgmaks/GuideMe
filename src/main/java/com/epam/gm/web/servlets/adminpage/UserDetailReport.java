@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.sql.Connection;
 import java.util.HashMap;
 
@@ -44,7 +45,10 @@ public class UserDetailReport extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 ServletOutputStream servletOutputStream = response.getOutputStream();
+		request.setCharacterEncoding("UTF-8");
+		 response.setCharacterEncoding("UTF-8");
+		 response.setContentType("application/pdf;charset=utf-8");
+		ServletOutputStream servletOutputStream = response.getOutputStream(); 
  	    File reportFile = new File(getServletConfig().getServletContext()
  	        .getRealPath("/report/report4.jasper"));
  	    byte[] bytes = null;
@@ -53,11 +57,12 @@ public class UserDetailReport extends HttpServlet {
  	    {
  	      bytes = JasperRunManager.runReportToPdf(reportFile.getPath(),
  	          new HashMap(), ConnectionManager.getConnection());
-
- 	      response.setContentType("application/pdf");
- 	      response.setContentLength(bytes.length);
-
+ 	     
+ 	      
+ 	     response.setContentLength(bytes.length);
+ 	     Writer goodWriter = new java.io.OutputStreamWriter(response.getOutputStream(), "UTF-8" );
  	      servletOutputStream.write(bytes, 0, bytes.length);
+ 	  
  	      servletOutputStream.flush();
  	      servletOutputStream.close();
  	    }
