@@ -5,7 +5,7 @@
       <li class="collection-item"  >
         <div class="" align="center"  > <a href="userCabinet.do"> <img class="circle" style="height: 120px; width: 120px; object-fit: cover" src="${sessionUser.avatar.path}"></a></div><br>
 
-        <a href="userCabinet.do"><button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;text-align: left;font-size: 100%;text-transform: capitalize">
+        <a href="admin.do"><button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;text-align: left;font-size: 100%;text-transform: capitalize">
             Events<i class="mdi-action-extension right" ></i></button></a>
         <a href="adminTag.do">
         	<button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">

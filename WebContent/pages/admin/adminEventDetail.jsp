@@ -113,11 +113,17 @@
     width: 100%;
     height: 450px;
     overflow: auto;
+  
+}
 
+#messageEvent{
+  border-collapse:separate;
+    border-spacing:0 10px;
 }
 .table-wrapper
 td {
-font-size: 12px;
+	font-size: 12px;
+
 } 
 
 .td-left-round {
@@ -129,6 +135,14 @@ font-size: 12px;
     border-radius: 0px 25px 25px 0px;
   
 }
+
+nav {
+  color: #fff;
+  background-color: #6699FF;
+  width: 100%;
+  height: 56px;
+  line-height: 56px; }
+  
 </style>
 
 <script>
@@ -767,8 +781,8 @@ font-size: 12px;
 										<table  id = "messageEvent">
 										</table>		
 									</div>
-									<input  type = text id = "enterMessage" onkeydown="if (event.keyCode == 13) sendMessage();">
-									<input  type="submit" value="Send" onclick="sendMessage();" id = "submitButton"/>
+									<input type = text id = "enterMessage" onkeydown="if (event.keyCode == 13) sendMessage();">
+									<input    type="submit" value="Надыслати" onclick="sendMessage();" id = "submitButton"/>
 					        </div>
 						</section>
 
