@@ -31,6 +31,7 @@
 
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
+<script src="js/moment.js"></script>
 
 <link rel="stylesheet"	href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.css" id="theme" />
 
@@ -106,6 +107,17 @@
 	min-width: 60%;
 	max-width: 80%;
 }
+
+.table-wrapper
+{
+    width: 100%;
+    height: 550px;
+    overflow: auto;
+}
+.table-wrapper
+ td {
+   font-size: 12px;
+}
 </style>
 
 <script>
@@ -119,29 +131,47 @@
 	var room = '';
 	function connect() {
 		room = '${event.id}';
+		var userName = '${sessionUser.lastName} ${sessionUser.firstName}';
+		var userID = "${sessionUser.id}";
+		var inputElement = document.getElementById("enterMessage");
+		var message = inputElement.value.trim();
 		$.ajax({
 			url : "chatEventRequest.do?action=getByEvent&eventId="
 					+ '${event.id}',
 			type : "post",
 			dataType : "json",
-			success : function(data) {
-				jQuery.each(data, function(index, item) {
-					var messagesArea = document.getElementById("messages");
-					console.log(item.sender.lastName);
-					var message = item.sender.lastName + ": " + item.message
-							+ "\r\n";
-					messagesArea.value = messagesArea.value + message;
-
-				});
-			},
+			 success: function(data) {
+            	 var trHTML = '';
+                jQuery.each(data, function(index, item) {	              
+                	var avatar = item.sender.avatar.path;
+                	var color = item.senderId == "${sessionUser.id}"? "#CEF6E3": "#2ECCFA" ; 
+                	var td = '<td width="10%">' 
+       	 			+ item.sender.firstName + " " 
+       	 			+ item.sender.lastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' 
+       	 			+ avatar + '" ></td>'
+                	var tdUser = item.senderId == "${sessionUser.id}"?  td: '<td></td>'
+       	 			var tdSender = item.senderId == "${sessionUser.id}"? '<td></td>' : td
+               	 	trHTML += '<tr bgcolor= '+color +'>'
+               	 			+ tdUser
+               	 			+'<td width="20%"> '
+               	 			+ moment(item.createdOn).format('hh:mm MM D, YYYY') 
+               	 			+ '</td><td width="60">' 
+               	 			+ item.message.replace(/</g,'&lt') + '</td>'
+               	 			+ tdSender
+               	 			+'</tr>';          
+                });
+             
+                $("#messageEvent").append(trHTML);
+                scrollToBottom();
+            },        
 		});
 		chatClient = new WebSocket(endPointURL + room);
 		chatClient.onmessage = function(event) {
-			var messagesArea = document.getElementById("messages");
-			var jsonObj = JSON.parse(event.data);
-			var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
-			messagesArea.value = messagesArea.value + message;
-			messagesArea.scrollTop = messagesArea.scrollHeight;
+// 			var messagesArea = document.getElementById("messages");
+// 			var jsonObj = JSON.parse(event.data);
+// 			var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+// 			messagesArea.value = messagesArea.value + message;
+// 			messagesArea.scrollTop = messagesArea.scrollHeight;
 		};
 	}
 
@@ -151,14 +181,14 @@
 
 	function sendMessage() {
 		var userName = '${sessionUser.lastName} ${sessionUser.firstName}';
-		//document.getElementById("userName").value.trim();
-		var inputElement = document.getElementById("messageInput");
+		var inputElement = document.getElementById("enterMessage");
 		var message = inputElement.value.trim();
 		if (message !== "") {
 			var jsonObj = {
 				"userName" : userName,
 				"message" : message,
-				"userId" : "${sessionUser.id}"
+				"userId" : "${sessionUser.id}",
+				"userAvatar":"${sessionUser.avatar.path}"
 			};
 			chatClient.send(JSON.stringify(jsonObj));
 			inputElement.value = "";
@@ -679,15 +709,14 @@
 						</section>
 
 						<section id="chat" class="hidden">
-							<textarea id="messages" class="panel message-area" readonly
-								rows="14"></textarea>
-							<div class="panel input-area">
-								<input id="messageInput" class="text-field" type="text"
-									placeholder="Message"
-									onkeydown="if (event.keyCode == 13) sendMessage();" /> <input
-									class="button" type="submit" value="Send"
-									onclick="sendMessage();" />
-							</div>
+							<div class="col s12" style="margin-top:10px;">
+									<div class="table-wrapper" id = "divTableMessages">
+										<table  id = "messageEvent">
+										</table>		
+									</div>
+									<input  type = text id = "enterMessage" onkeydown="if (event.keyCode == 13) sendMessage();">
+									<input  type="submit" value="Send" onclick="sendMessage();" id = "submitButton"/>
+					        </div>
 						</section>
 
 						<section id="members" class="hidden">
@@ -1249,6 +1278,11 @@
 				<form id="memberAjaxForm" name="memberAjaxForm">
 					<input type="hidden" name="id" value="${event.id}">
 				</form> <script type="text/javascript">
+				   function scrollToBottom() {
+				   	   var scrollBottom = Math.max($('#messageEvent').height() - $('#divTableMessages').height() + 20, 0);
+				   	   $('#divTableMessages').scrollTop(scrollBottom);
+				   	}
+
 					$(function() {
 						$('#profiletabs ul li a')
 								.on(

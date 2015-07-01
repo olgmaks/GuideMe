@@ -6,8 +6,8 @@
     height: 550px;
     overflow: auto;
 }
-
-td {
+.table-wrapper
+ td {
    font-size: 12px;
 }
 </style>
@@ -123,7 +123,6 @@ var friendAvatar;
             		  		"friendAvatar" :"${sessionUser.avatar.path}","friendFirstName" : "${sessionUser.firstName}", "friendLastName": "${sessionUser.lastName}" } ;
               console.log(jsonObj);
               waitForSocketConnection(chatClient, function(){
-                  console.log("message sent!!!");
                   chatClient.send(JSON.stringify(jsonObj));
               });
             
