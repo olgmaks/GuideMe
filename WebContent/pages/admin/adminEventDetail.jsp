@@ -62,61 +62,72 @@
 <!-- tag end     -->
 
 <style>
-.panel {
-	border: 2px solid #0078ae;
-	border-radius: 5px;
-	width: 100%;
-}
+/* .panel { */
+/* 	border: 2px solid #0078ae; */
+/* 	border-radius: 5px; */
+/* 	width: 100%; */
+/* } */
 
-.message-area {
-	height: 70%;
-	resize: none;
-	box-sizing: border-box;
-}
+/* .message-area { */
+/* 	height: 70%; */
+/* 	resize: none; */
+/* 	box-sizing: border-box; */
+/* } */
 
-.input-area {
-	background: #0078ae;
-	box-shadow: inset 0 0 10px #00568c;
-}
+/* .input-area { */
+/* 	background: #0078ae; */
+/* 	box-shadow: inset 0 0 10px #00568c; */
+/* } */
 
-.input-area input {
-	margin: 0.5em 0em 0.5em 0.5em;
-}
+/* .input-area input { */
+/* 	margin: 0.5em 0em 0.5em 0.5em; */
+/* } */
 
-.text-field {
-	border: 1px solid grey;
-	padding: 0.2em;
-	box-shadow: 0 0 5px #000000;
-}
+/* .text-field { */
+/* 	border: 1px solid grey; */
+/* 	padding: 0.2em; */
+/* 	box-shadow: 0 0 5px #000000; */
+/* } */
 
-.button {
-	border: none;
-	padding: 5px 5px;
-	border-radius: 5px;
-	width: 60px;
-	background: orange;
-	box-shadow: inset 0 0 10px #000000;
-	font-weight: bold;
-}
+/* .button { */
+/* 	border: none; */
+/* 	padding: 5px 5px; */
+/* 	border-radius: 5px; */
+/* 	width: 60px; */
+/* 	background: orange; */
+/* 	box-shadow: inset 0 0 10px #000000; */
+/* 	font-weight: bold; */
+/* } */
 
-.button:hover {
-	background: yellow;
-}
+/* .button:hover { */
+/* 	background: yellow; */
+/* } */
 
-#messageInput {
-	min-width: 60%;
-	max-width: 80%;
-}
+/* #messageInput { */
+/* 	min-width: 60%; */
+/* 	max-width: 80%; */
+/* } */
 
 .table-wrapper
 {
     width: 100%;
-    height: 550px;
+    height: 450px;
     overflow: auto;
+
 }
 .table-wrapper
- td {
-   font-size: 12px;
+td {
+font-size: 12px;
+} 
+
+.td-left-round {
+    
+    border-radius: 25px 0px 0px 25px;
+  
+}
+.td-right-round {
+    border-radius: 0px 25px 25px 0px;
+  
 }
 </style>
 
@@ -144,21 +155,38 @@
             	 var trHTML = '';
                 jQuery.each(data, function(index, item) {	              
                 	var avatar = item.sender.avatar.path;
-                	var color = item.senderId == "${sessionUser.id}"? "#CEF6E3": "#2ECCFA" ; 
-                	var td = '<td width="10%">' 
-       	 			+ item.sender.firstName + " " 
-       	 			+ item.sender.lastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' 
-       	 			+ avatar + '" ></td>'
-                	var tdUser = item.senderId == "${sessionUser.id}"?  td: '<td></td>'
-       	 			var tdSender = item.senderId == "${sessionUser.id}"? '<td></td>' : td
-               	 	trHTML += '<tr bgcolor= '+color +'>'
-               	 			+ tdUser
-               	 			+'<td width="20%"> '
-               	 			+ moment(item.createdOn).format('hh:mm MM D, YYYY') 
-               	 			+ '</td><td width="60">' 
-               	 			+ item.message.replace(/</g,'&lt') + '</td>'
-               	 			+ tdSender
-               	 			+'</tr>';          
+                	
+                	
+                	var colorSender = "#CEF6E3";// = item.senderId == "${sessionUser.id}"? "#CEF6E3": "#2ECCFA" ; 
+                    var colorRecived =  "#2ECCFA";
+                    
+                    var tdUser=  '<tr>'
+                       +'<td class = "td-left-round" bgcolor="' +colorSender +'" width="10%">' 
+                       + item.sender.firstName + " " 
+                       + item.sender.lastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' 
+                       + avatar + '"></td>'
+                       +'<td bgcolor= "'+colorSender +'" width="20%"> '
+                       + moment(item.createdOn).format('hh:mm MM D, YYYY') 
+                       + '</td><td  class = "td-right-round"  bgcolor= "'+colorSender +'" width="60%">' 
+                       + item.message.replace(/</g,'&lt') + '</td>'
+                       +'<td width="10%"></td>'
+                      +'</tr>'
+                      console.log(tdUser)
+                    var tdSender=
+                       '<tr>'
+                          +'<td width = "10%"></td>'
+                        +'<td class = "td-left-round" bgcolor= "'+colorRecived +'" width="20%"> '
+                           + moment(item.createdOn).format('hh:mm MM D, YYYY') 
+                           + '</td><td bgcolor= "'+colorRecived +'" width="60%">' 
+                           + item.message.replace(/</g,'&lt') + '</td>'
+                           +'<td class = "td-right-round" bgcolor="' +colorRecived +'" width="10%">' 
+                           + item.sender.firstName + " " 
+                           + item.sender.lastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' 
+                           + avatar + '"></td>'
+                          +'</tr>'
+                        
+                   trHTML += item.senderId == "${sessionUser.id}"? tdUser : tdSender;
+                      
                 });
              
                 $("#messageEvent").append(trHTML);
@@ -167,12 +195,27 @@
 		});
 		chatClient = new WebSocket(endPointURL + room);
 		chatClient.onmessage = function(event) {
-// 			var messagesArea = document.getElementById("messages");
-// 			var jsonObj = JSON.parse(event.data);
-// 			var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
-// 			messagesArea.value = messagesArea.value + message;
-// 			messagesArea.scrollTop = messagesArea.scrollHeight;
+ 			var jsonObj = JSON.parse(event.data);
+				if ("${sessionUser.id}" != jsonObj.userId){
+	         	   var td = ' <td class = "td-right-round" bgcolor= "#2ECCFA" width="10%">' 
+	       	 			+ jsonObj.userName 
+	       	 			+'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' 
+	       	 			+ jsonObj.userAvatar 
+	       	 			+ '" ></td>';
+	       	 			
+	     	   		var trHTML = '<tr><td></td>'
+	     	   			+'<td class = "td-left-round" bgcolor= "#2ECCFA" width = "20%">' 
+	     	   			+ moment().format('hh:mm MM D, YYYY') 
+	     	   			+ '</td><td bgcolor= "#2ECCFA" width="70%">  '
+	     	   			+ jsonObj.message.replace(/</g,'&lt')
+	     	   			+ '</td>'
+	     	   			+ td
+	     	   			+'</tr>';
+	            		$("#messageEvent").append(trHTML);
+	            		scrollToBottom();	
+				}	
 		};
+		
 	}
 
 	function disconnect() {
@@ -191,6 +234,16 @@
 				"userAvatar":"${sessionUser.avatar.path}"
 			};
 			chatClient.send(JSON.stringify(jsonObj));
+			var trHTML = '<tr>'
+           		+'<td class = "td-left-round" bgcolor= "#CEF6E3" width="10%">'
+           		+ userName 
+           		+'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="${sessionUser.avatar.path}"></td>'
+           		+'<td bgcolor= "#CEF6E3" width = "20%">' 
+           		+ moment().format('hh:mm MM D, YYYY') 
+           		+'</td><td class = "td-right-round" bgcolor= "#CEF6E3" width="60%">  '
+           		+ message.replace(/</g,'&lt')+ '</td><td width="10%"></td></tr>'; 
+			$("#messageEvent").append(trHTML);
+             scrollToBottom();
 			inputElement.value = "";
 		}
 		inputElement.focus();
@@ -221,7 +274,6 @@
 
 <script>
 	$(document).ready(function() {
-
 		$(".acceptfriendrequest").click(function() {
 			console.log("acceptfriendrequest ajax call");
 			var value = $(this).data('id');
@@ -559,7 +611,7 @@
 								<c:if test="${isModerator}">
 									<li><a href="#requests">Requests</a></li>
 								</c:if>
-								<li><a href="#chat">Chat</a></li>
+								<li><a href="#chat" >Chat</a></li>
 								<c:if test="${isModerator}">
 									<li><a href="#addservice">Add Service</a></li>
 								</c:if>
@@ -709,6 +761,7 @@
 						</section>
 
 						<section id="chat" class="hidden">
+
 							<div class="col s12" style="margin-top:10px;">
 									<div class="table-wrapper" id = "divTableMessages">
 										<table  id = "messageEvent">
