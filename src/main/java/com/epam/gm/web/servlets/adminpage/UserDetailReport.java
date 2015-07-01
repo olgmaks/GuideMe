@@ -57,10 +57,8 @@ public class UserDetailReport extends HttpServlet {
  	    {
  	      bytes = JasperRunManager.runReportToPdf(reportFile.getPath(),
  	          new HashMap(), ConnectionManager.getConnection());
- 	     
- 	      
+ 	    
  	     response.setContentLength(bytes.length);
- 	     Writer goodWriter = new java.io.OutputStreamWriter(response.getOutputStream(), "UTF-8" );
  	      servletOutputStream.write(bytes, 0, bytes.length);
  	  
  	      servletOutputStream.flush();

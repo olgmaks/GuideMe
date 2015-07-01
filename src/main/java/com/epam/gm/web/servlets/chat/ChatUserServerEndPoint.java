@@ -39,11 +39,12 @@ public class ChatUserServerEndPoint {
     @OnOpen
     public void onOpen(Session userSession, @PathParam("userId") final String userId) {
     	System.out.println("new user with id " + userId);
-    	userSession.getUserProperties().put("userId", userId);
+    	userSession.getUserProperties().put("userId", userId.replace("\"", ""));
         userSessions.add(userSession);
     }
      
     /**
+     * 
      * Callback hook for Connection close events. This method will be invoked when a
      * client closes a WebSocket connection.
      * @param userSession the userSession which is opened.
@@ -66,7 +67,7 @@ public class ChatUserServerEndPoint {
         JsonObject  jobject = jelement.getAsJsonObject();
         String userId = jobject.get("userId").toString().replace("\"", "");
         System.out.println(message);
-        String friendId = jobject.get("friendId").toString();
+        String friendId = jobject.get("friendId").toString().replace("\"", "");
         System.out.println("message from " + friendId +" to " + userId);
         System.out.println("size sesion" + userSessions.size());
         for (Session session : userSessions) {
@@ -91,7 +92,7 @@ public class ChatUserServerEndPoint {
         String userId = jobject.get("userId").toString().replace("\"", "");
         String message = jobject.get("message").toString();
         
-        String friendId = jobject.get("friendId").toString();
+        String friendId = jobject.get("friendId").toString().replace("\"", "");
         message = message.substring(1, message.length()-1);
     	MessageUser mu = new MessageUser();
         mu.setSenderId(Integer.parseInt(userId));
