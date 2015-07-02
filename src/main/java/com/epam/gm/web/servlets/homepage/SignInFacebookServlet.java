@@ -96,7 +96,7 @@ public class SignInFacebookServlet extends HttpServlet implements
 			lastName = (String) json.get("last_name");
 			// email = (String) json.get("email");
 			email = firstName;
-			
+
 			UserDao userDao = new UserDao();
 			boolean isValid = false;
 			logger.info(facebookId + " signed with facebook");
@@ -106,7 +106,7 @@ public class SignInFacebookServlet extends HttpServlet implements
 				user.setFacebookId(facebookId);
 				user.setFirstName(firstName);
 				user.setLastName(lastName);
-			//	user.setEmail("");
+				// user.setEmail("");
 
 				user.setUserTypeId(8);
 				user.setLangId(3);
@@ -134,9 +134,8 @@ public class SignInFacebookServlet extends HttpServlet implements
 			map.put("isValid", isValid);
 			res.getWriter().write(new Gson().toJson(map));
 
-			RequestDispatcher requestDispatcher = req
-					.getRequestDispatcher("home.do");
-			requestDispatcher.forward(req, res);
+			res.sendRedirect(res.encodeRedirectURL(req.getContextPath()
+					+ "/home.do"));
 		} catch (JSONException e) {
 
 		}

@@ -103,7 +103,7 @@ public class SingInVkServlet extends HttpServlet implements HttpRequestHandler {
 				user.setVkId(userId.toString());
 				user.setFirstName(first_name_encoded);
 				user.setLastName(last_name_encoded);
-			//	user.setEmail();
+				// user.setEmail();
 
 				user.setUserTypeId(8);
 				user.setLangId(3);
@@ -130,9 +130,8 @@ public class SingInVkServlet extends HttpServlet implements HttpRequestHandler {
 			map.put("isValid", isValid);
 			res.getWriter().write(new Gson().toJson(map));
 
-			RequestDispatcher requestDispatcher = req
-					.getRequestDispatcher("home.do");
-			requestDispatcher.forward(req, res);
+			res.sendRedirect(res.encodeRedirectURL(req.getContextPath()
+					+ "/home.do"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

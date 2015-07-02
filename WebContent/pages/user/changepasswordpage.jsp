@@ -47,14 +47,13 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="password" type="password" class="validate"
-                               name="password1"> <label for="password">Password</label>
+                               name="password1" placeholder= "Password"> 
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="password" type="password" class="validate"
-                               name="repeatedpassword1"> <label for="password">Repeat
-                        Password</label>
+                               name="repeatedpassword1" placeholder= " Repeat Password"> 
                     </div>
                 </div>
 

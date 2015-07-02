@@ -11,6 +11,9 @@
 	media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
+<script src="http://code.jquery.com/jquery-latest.js">
+	
+</script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -28,37 +31,66 @@
 		$("#tabs").tabs();
 	});
 </script>
-
-
-</head>
-<body>
-	<script type="text/javascript">
-		function showDiv() {
-			document.getElementById('sec').style.display = "block";
-			document.getElementById("sub").style.display = "none";
-			document.getElementById("inp").style.display = "none";
-		}
-		$(document).ready(function() {
+<!-- <script type="text/javascript">
+	function showDiv() {
+		document.getElementById('sec').style.display = "block";
+		document.getElementById("sub").style.display = "none";
+		document.getElementById("inp").style.display = "none";
+	}
+	$(document).ready(function() {
+		$('#but').click(function(event) {
 			$.ajax({
 				url : 'sendlinktoresetpass.do',
 				type : 'GET',
 				dataType : 'json',
-				data : $("#sendlink").serialize(),
+				data : $("#welcometext").serialize(),
 				success : function(data) {
-					if (data.u != null) {
-						showDiv();
+
+					alert("message");
+				}
+
+			});
+
+		});
+	});
+</script>
+ -->
+<!-- <script type="text/javascript">
+	function showDiv() {
+		document.getElementById('sec').style.display = "block";
+		document.getElementById("sub").style.display = "none";
+		document.getElementById("inp").style.display = "none";
+	}
+	$(document).ready(function() {
+		$('#sub').click(function() {
+
+			$.ajax({
+				url : 'sendlinktoresetpass.do',
+				type : 'POST',
+				dataType : 'json',
+				data : {
+					email : $('#email22').val()
+				},
+				success : function(data) {
+					if (data.isExist == true) {
+						window.location.href = "pages/user/successfulsent.jsp";
 					}
 				}
 
 			});
+
 		});
-	</script>
+	});
+</script> -->
+
+</head>
+<body>
+
 	<jsp:include page="/pages/header.jsp" />
 	<jsp:include page="../home/loginmodal.jsp" />
 	<jsp:include page="../home/logoutmodal.jsp" />
 	<br>
 	<br>
-
 	<div>
 		<h5 class="center-align">Please type your email</h5>
 	</div>
@@ -68,16 +100,17 @@
 
 		<div class="row">
 			<div class="row">
-				<form class="col s12" action="sendlinktoresetpass.do" method="post"
-					id="sendlink">
+				<form action="sendlinktoresetpass.do" method="post">
 					<div class="row">
 						<div class="input-field col s12" id="inp" style="display: block">
-							<input id="email" type="email" class="validate" name="email"
-								required> <label for="email">Email</label>
+							<input id="email22" type="email" class="validate" name="email"
+								placeholder="email " required>
+
 						</div>
 					</div>
+
 					<button class="btn waves-effect waves-light" type="submit"
-						name="action" onclick="" id="sub" style="display: block">
+						name="action" id="sub" style="display: block">
 						Email me a link to reset a password <i
 							class="mdi-content-send right"></i>
 					</button>
