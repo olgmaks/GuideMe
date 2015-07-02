@@ -21,17 +21,12 @@ public class DeleteEventPhotoServlet implements HttpRequestHandler{
 
         PhotoService.serve().deletePhotoByPath(photoLocation);
 
-        String path = request.getServletContext().getContextPath();
-
+        String path = request.getServletContext().getRealPath("/");
         String fullPath = path  + photoLocation;
-
         System.out.println("full path : " + fullPath);
-
         File file = new File(fullPath);
-
         if (file.exists()) {
             file.delete();
-
             System.out.println("file has been succesfuly deleted from file system");
         }
 

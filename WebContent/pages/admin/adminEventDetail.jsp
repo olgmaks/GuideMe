@@ -750,6 +750,7 @@
                                 <div class="slides"></div>
                                 <a class="prev"></a> <a class="next"></a> <a class="play-pause"></a>
                             </div>
+                            <c:if test="${isModerator}">
                             <div style="visibility: hidden" id="footer">
                                 <a class="update-event-avatar" href="updateUserAvatar.do"
                                    data-url="updateEventAvatar.do" id="updateAvatar">
@@ -760,7 +761,7 @@
                                     <img src="icons/delete-photo-icon.png" style="width: 30px; height: 30px;"/>
                                     Delete from gallery</a>
                             </div>
-
+                            </c:if>
                         </div>
                         <p>
                             Photos: <a href="upload.do?uploadtype=event"> <span
