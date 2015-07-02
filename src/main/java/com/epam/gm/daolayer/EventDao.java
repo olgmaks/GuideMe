@@ -7,6 +7,7 @@ import com.epam.gm.model.Event;
 import com.epam.gm.model.User;
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
+import org.apache.commons.collections.map.HashedMap;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -430,4 +431,9 @@ public class EventDao extends AbstractDao<Event> {
 
 	}
 
+	public void updateEventAvatar(Integer eventId, Integer photoId) throws SQLException {
+		Map<String, Object> updates = new HashMap<>();
+		updates.put("avatar_id",photoId);
+		super.updateById(eventId,updates);
+	}
 }

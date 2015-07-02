@@ -59,7 +59,7 @@
 						<a class="">Set as avatar</a>
 					</div>
 					<div style="visibility: hidden" id="footer">
-						<a class="update-user-avatar" href="updateUserAvatar.do" id="updateAvatar">
+						<a class="update-user-avatar" href="updateUserAvatar.do" data-url="updateUserAvatar.do" id="updateAvatar">
 						<img src="icons/update-avatar-icon.png" style="width: 30px; height: 30px;">
 							Set on avatar</a>
 						<a class="delete-user-photo" data-value="" href="#_" id="deletePhoto" style="float: right">

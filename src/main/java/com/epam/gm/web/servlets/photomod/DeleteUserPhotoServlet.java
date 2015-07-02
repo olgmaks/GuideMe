@@ -1,5 +1,6 @@
 package com.epam.gm.web.servlets.photomod;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -19,8 +20,10 @@ public class DeleteUserPhotoServlet implements HttpRequestHandler{
         System.out.println("photolocation : " + photoLocation);
 
         PhotoService.serve().deletePhotoByPath(photoLocation);
+        
+        File file = new File(photoLocation);
 
-        System.out.println("delete user success");
+        System.out.println("delete user success photoPass = '"+photoLocation+"'");
 
     }
 

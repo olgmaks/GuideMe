@@ -33,7 +33,7 @@
         footer.css('visibility','visible');
         
         var updateAvatarAnchor = $("#updateAvatar");
-        var currentTitle = 'updateUserAvatar.do' + '?location=' + title;
+        var currentTitle = updateAvatarAnchor.attr("data-url") + '?location=' + title;
         updateAvatarAnchor.attr("href", currentTitle);
         
         var deletaPhotoAnchor = $("#deletePhoto");
@@ -116,10 +116,10 @@
             // Select all links with the same data-dialog attribute:
             links = $('[data-dialog="' + id + '"]'),
             setGalleryWidgetDimensions = function () {
-//                var width = $(window).width() -
-//                        (dialogOptions.offsetWidth || 100),
-//                    height = $(window).height() -
-//                        (dialogOptions.offsetHeight || 150),
+// var width = $(window).width() -
+// (dialogOptions.offsetWidth || 100),
+// height = $(window).height() -
+// (dialogOptions.offsetHeight || 150),
             var width = $(window).width()*0.6,
         height = $(window).height() *0.6,
                     // blueimp gallery carousel ratio (16/9)
@@ -140,8 +140,9 @@
             height: 0,
             overflow: 'hidden'
         });
-
+//Maks - get current reference and set to function than should create anhors
         referenceControl(this.title);
+
         setGalleryWidgetDimensions();
         return new Gallery(links, galleryOptions);
     });
