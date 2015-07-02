@@ -115,17 +115,17 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 
 			}
 
-			// gryn
-			else {
-				response.sendRedirect("401.do");
-				return;
-			}
-
-			// grn
-			if (event == null) {
-				response.sendRedirect("404.do");
-				return;
-			}
+//			// gryn
+//			else {
+//				response.sendRedirect("401.do");
+//				return;
+//			}
+//
+//			// grn
+//			if (event == null) {
+//				response.sendRedirect("404.do");
+//				return;
+//			}
 
 			boolean isModerator = event.getModeratorId().equals(user.getId());
 			request.setAttribute("isModerator", isModerator);

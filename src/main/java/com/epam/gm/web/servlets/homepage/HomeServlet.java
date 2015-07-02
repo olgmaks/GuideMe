@@ -75,6 +75,13 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 				Country country = countryService.getCountryById(lastCountryId);
 				request.setAttribute("searchEventTitle", "Latest events in: " + country.getName());
 				
+				for(Event e: lastEvents) {
+					System.out.println("--------------------------");
+					System.out.println(e.getStatus()== null);
+					System.out.println(e.getModerator().getUserType());
+				}
+				
+				
 			} else {
 				lastEvents = eventService.getByTagName(byTag.trim());
 				eventService.buildTagString(lastEvents);

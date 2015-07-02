@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,15 +23,13 @@
     <script src="js/init.js"></script>
     
 
-<!--     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script> -->
-<!--   	<link href="css/jquery.tagit.css" rel="stylesheet" type="text/css"> -->
-<!--     <link href="css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css"> -->
-<!--      <script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script> -->
 
 
 
 
 
+	<script src="js/moment.js"></script>
+	
     <script type="text/javascript">
         $(document).ready(function () {
         	window.onload = function () {
@@ -39,6 +39,8 @@
         		
         	}
         });
+        
+      
 	</script>
 
     <script type="text/javascript">
@@ -131,6 +133,8 @@
                         resultCollenction = $("#inner-row");
                         
                         if(data.isEmpty)  {
+                        	resultCollenction.append("<span class='blue-text'> <h2> No results!</h2> <h3>Change parameters  and try again . </h3></span");
+                        	
                         	Materialize.toast('No results !', 3000,'',function(){})
                         }
                         
@@ -169,7 +173,7 @@
                                   "</span>" + 
 
                                       "<p>" +
-                                          "<a href='eventDetail.do?id=" + currentEvent.id +"'>" + currentEvent.dateFrom + " - " + currentEvent.dateTo   + ", rate: " + Math.round(currentEvent.points) + currentEvent.status  + "</a>" +
+                                          "<a href='eventDetail.do?id=" + currentEvent.id +"'>" +  moment(currentEvent.dateFrom ).format('DD.MM.YY hh:mm')   + " - " + moment(currentEvent.dateTo).format('DD.MM.YY hh:mm')   + ", rate: " + Math.round(currentEvent.points) + currentEvent.status  + "</a>" +
                                       "</p>" +
                                   "</div>" + 
                                   "<div class='card-reveal'>" +
@@ -193,7 +197,16 @@
                 return false;
             });
         });
-    </script>    
+    </script>
+   
+  <script>  
+  $(document).ready(function(){
+    $('.collapsible').collapsible({
+      accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+    });
+  });
+  </script>    
+        
 </head>
 <body>
 
@@ -212,34 +225,21 @@
     	<form action="home.do" method="post" id="homeform" name="homeform">
     	
     	</form>
+    	
+   <form action="searchindexpage.do" method="post" id="searchform" name="searchform">
         
-        <form action="searchindexpage.do" method="post" id="searchform" name="searchform">
-        <ul class="collection">
-            <li class="collection-item" style="margin-left: 30%;">
-                <div class="input-field col s6">
-                    <i class="mdi-action-search prefix"></i> 
-                    <input id="icon_prefix" name = "icon_prefix" type="text" class="ligth-blue"> <label for="icon_prefix">Search</label>
-                    <input id="selCountryId" name="selCountryId" type = "hidden">
-                    <input id="cityId" name="cityId" type = "hidden">
-                </div>
+    <ul class="collapsible" data-collapsible="expandable">
 
-            </li>
-            
-            
-            <li class="collection-item" style="margin-left: 30%;">
-            <p>
-                <div class="input-field col s6">
-                    
-   
-<!--                                 <br> -->
-
-                                <div>
+    <li>
+      <div class="collapsible-header active"><b>Search in:</b></div>
+      <div class="collapsible-body">
+      
                                     <c:forEach items="${requestScope.languageList}" var="lang">
 
                                         <table style="width: 100%;">
                                             <tr>
 
-                                                <td style="width:30%;">
+                                                <td style="width:25%;">
                                                     Country
                                                     <select id="countryByLang_${lang.id}" class="browser-default">
                                                         <option selected value="choose"  selected>
@@ -326,7 +326,7 @@
                                                 </td>
 
 
-                                                <td style="width:30%;">
+                                                <td style="width:25%;">
                                                     City
                                                     <select id="cityByLang_${lang.id}" class="browser-default">
                                                         <option selected value="choose">
@@ -343,26 +343,36 @@
                                                     </select>
 
                                                 </td>
-
+                                                
+                                                <td style="width:20%;">
+                 									<button class="light-blue btn waves-effect waves-light" type="submit"
+                        							name="action"  style="  margin-left: auto; margin-right: auto; width: 100%;">
+                 									Guide me ! <i class="mdi-content-send right"></i>
+                 									</button>     
+                                                </td>                                                
                                             </tr>
                                         </table>
 
                                     </c:forEach>
-
-                                </div>
-                    
-                </div>
-               </p>
-            </li>
-             
-            
-            
-            <li class="collection-item" style="margin-left: 30%;">
-            
-    		<p>
-    		
-    		<p>Status:</p>  
-    		
+       </div>
+    </li>
+    
+    <li>
+      <div class="collapsible-header"><b>By word:</b> </div>
+      <div class="collapsible-body">
+                <div class="input-field col s6"> 
+                    <i class="mdi-action-search prefix"></i> 
+                    <input id="icon_prefix" name = "icon_prefix" type="text" class="ligth-blue"> <label for="icon_prefix">Enter text...</label>
+                    <input id="selCountryId" name="selCountryId" type = "hidden">
+                    <input id="cityId" name="cityId" type = "hidden">
+                 </div> 
+                 
+      </div>
+    </li>    
+    <li>
+      <div class="collapsible-header"><b>Event status...:</b></div>
+      <div class="collapsible-body">
+      		<p>
       		<input type="checkbox" id="status_active" name = "status_active" checked="checked" />
       		<label for="status_active">Active</label>
     		    		
@@ -373,55 +383,29 @@
       		<label for="status_done">Done</label> 
       		
     		<input type="checkbox" id="status_cancelled" name="status_cancelled"   />
-      		<label for="status_cancelled">Cancelled</label> 
-    		</p>            
-            </li>
-            
-            <li class="collection-item" style="margin-left: 30%;">
-    		<p>
-    		Event type:
+      		<label for="status_cancelled">Cancelled</label>
+       		 </p>
+       		 
+       		 <p>
+       		Type:
     		<select class="browser-default" id= "moderator_type" name= "moderator_type">
       		<option selected value="(2,3)" selected>Events and Excursions</option>
       		<option value="(2)">Events</option>
       		<option value="(3)">Excursions</option>
     		</select>            
             </p>
-            </li>
             
-            <li class="collection-item" style="margin-left: 30%;">
-    		<p>
-    		Max. number of members:
+            <p>
+            Max. number of members:</p>
+            
     		<p class="range-field">
-      		<input type="range" id="max_members" name="max_members" min="0"   max="100"  value = "100"  />
+      		<input type="range" id="max_members" name="max_members" min="1"   max="100"  value = "100"  />
     		</p>
-            </p>
-            </li>
-            
-<!--              <li class="collection-item" style="margin-left: 30%;"> -->
-<!--  							<p> -->
-<!-- 							    <input type="text" name="tag[]" value="" class="tag"/> -->
-							    
-<%--    								<c:forEach items="${requestScope.tags}" var = "tag"> --%>
-<%--    									<input type="text" name="tag[3-a]" value="${tag.name}" class="tag" /> --%>
-<%--    								</c:forEach> --%>
-   											
-<!-- 							</p> -->
-<!--     		</li>			 -->
-    					 
-            
-            <li class="collection-itenm" style="margin-left: 30%;">
 
-                <button class="light-blue btn waves-effect waves-light" type="submit"
-                        name="action"  style="  margin-left: auto; margin-right: auto; width: 15%;">
-                 Guide me ! <i class="mdi-content-send right"></i>
-                 </button>
-                 
-            </li>
+ 	</div>
+    </li>
         </ul>
-        
-
-                         
-        </form>
+         </form>
     </div>
 
 
@@ -494,7 +478,13 @@
                                       </span>
 
                             <p>
-                                <a href='eventDetail.do?id=${event.id}'>${event.dateFrom} - ${event.dateTo}, rate: ${Math.round(event.points)}${event.status}</a>
+                                <a href='eventDetail.do?id=${event.id}'>
+                                
+                                <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${event.dateFrom}" />
+                                 -  <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${event.dateTo}" />, rate: ${Math.round(event.points)}${event.status}
+                                 
+                                 
+                                 </a>
                             </p>
                         </div>
                         <div class="card-reveal">
@@ -510,30 +500,7 @@
                  
                  </li>  
                 
-                
-                
-<!--                 <li id="inner-row"> -->
-<!--                 <div style="display:inline; width: 45%; float: left; margin-left: 10px"> -->
-<!--                     <div class="card small"> -->
-<!--                         <div class="card-image waves-effect waves-block waves-light"> -->
-<!--                             <img class="activator" src="img/guide1.jpg"> -->
-<!--                         </div> -->
-<!--                         <div class="card-content"> -->
-<!-- 									  <span class="black-text"> -->
-<!--                                           Event Name -->
-<!--                                           <i class="mdi-navigation-more-vert right"></i> -->
-<!--                                       </span> -->
 
-<!--                             <p> -->
-<!--                                 <a href="#">Event details</a> -->
-<!--                             </p> -->
-<!--                         </div> -->
-<!--                         <div class="card-reveal"> -->
-<!-- 									<span class="card-title grey-text text-darken-4">Card -->
-<!-- 										Title <i class="mdi-navigation-close right"></i> -->
-<!-- 									</span> -->
-
-<!--                             <p>Here is event description</p> -->
                         </div>
                     </div>
                  </div> 
@@ -573,116 +540,20 @@
     </div>
 </div>
 
-<!-- <div class="container"> -->
-<!--     <div class="section"> -->
-
-<!--           Icon Section   -->
-<!--         <div class="row"> -->
-<!--             <div class="col s12 m4"> -->
-<!--                 <div class="icon-block"> -->
-<!--                     <h2 class="center brown-text"> -->
-<!--                         <i class="mdi-image-flash-on"></i> -->
-<!--                     </h2> -->
-<!--                     <h5 class="center">Speeds up development</h5> -->
-
-<!--                     <p class="light">We did most of the heavy lifting for you to -->
-<!--                         provide a default stylings that incorporate our custom -->
-<!--                         components. Additionally, we refined animations and transitions -->
-<!--                         to provide a smoother experience for developers.</p> -->
-<!--                 </div> -->
-<!--             </div> -->
-
-<!--             <div class="col s12 m4"> -->
-<!--                 <div class="icon-block"> -->
-<!--                     <h2 class="center brown-text"> -->
-<!--                         <i class="mdi-social-group"></i> -->
-<!--                     </h2> -->
-<!--                     <h5 class="center">User Experience Focused</h5> -->
-
-<!--                     <p class="light">By utilizing elements and principles of -->
-<!--                         Material Design, we were able to create a framework that -->
-<!--                         incorporates components and animations that provide more feedback -->
-<!--                         to users. Additionally, a single underlying responsive system -->
-<!--                         across all platforms allow for a more unified user experience.</p> -->
-<!--                 </div> -->
-<!--             </div> -->
-
-<!--             <div class="col s12 m4"> -->
-<!--                 <div class="icon-block"> -->
-<!--                     <h2 class="center brown-text"> -->
-<!--                         <i class="mdi-action-settings"></i> -->
-<!--                     </h2> -->
-<!--                     <h5 class="center">Easy to work with</h5> -->
-
-<!--                     <p class="light">We have provided detailed documentation as -->
-<!--                         well as specific code examples to help new users get started. We -->
-<!--                         are also always open to feedback and can answer any questions a -->
-<!--                         user may have about Materialize.</p> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </div> -->
-
-<!--     </div> -->
-<!-- </div> -->
 
 
-<!-- <div class="container"> -->
-<!--     <div class="section"> -->
+<footer class="page-footer teal">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Hello from GuideMe Team !</h5>
 
-<!--         <div class="row"> -->
-<!--             <div class="col s12 center"> -->
-<!--                 <h3> -->
-<!--                     <i class="mdi-content-send brown-text"></i> -->
-<!--                 </h3> -->
-<!--                 <h4>Contact Us</h4> -->
-
-<!--                 <p class="left-align light">Lorem ipsum dolor sit amet, -->
-<!--                     consectetur adipiscing elit. Nullam scelerisque id nunc nec -->
-<!--                     volutpat. Etiam pellentesque tristique arcu, non consequat magna -->
-<!--                     fermentum ac. Cras ut ultricies eros. Maecenas eros justo, -->
-<!--                     ullamcorper a sapien id, viverra ultrices eros. Morbi sem neque, -->
-<!--                     posuere et pretium eget, bibendum sollicitudin lacus. Aliquam -->
-<!--                     eleifend sollicitudin diam, eu mattis nisl maximus sed. Nulla -->
-<!--                     imperdiet semper molestie. Morbi massa odio, condimentum sed ipsum -->
-<!--                     ac, gravida ultrices erat. Nullam eget dignissim mauris, non -->
-<!--                     tristique erat. Vestibulum ante ipsum primis in faucibus orci -->
-<!--                     luctus et ultrices posuere cubilia Curae;</p> -->
-<!--             </div> -->
-<!--         </div> -->
-
-<!--     </div> -->
-<!-- </div> -->
+                <p class="grey-text text-lighten-4">We hope you spend wonderful time with us and find new friends !</p>
 
 
-<!-- <div class="parallax-container valign-wrapper"> -->
-<!--     <div class="section no-pad-bot"> -->
-<!--         <div class="container"> -->
-<!--             <div class="row center"> -->
-<!--                 <h5 class="header col s12 light">A modern responsive front-end -->
-<!--                     framework based on Material Design</h5> -->
-<!--             </div> -->
-<!--         </div> -->
-<!--     </div> -->
-<!--     <div class="parallax"> -->
-<!--         <img src="background2.jpg" alt="Unsplashed background img 3"> -->
-<!--     </div> -->
-<!-- </div> -->
-
-<!-- <footer class="page-footer teal"> -->
-<!--     <div class="container"> -->
-<!--         <div class="row"> -->
-<!--             <div class="col l6 s12"> -->
-<!--                 <h5 class="white-text">Company Bio</h5> -->
-
-<!--                 <p class="grey-text text-lighten-4">We are a team of college -->
-<!--                     students working on this project like it's our full time job. Any -->
-<!--                     amount would help support and continue development on this project -->
-<!--                     and is greatly appreciated.</p> -->
-
-
-<!--             </div> -->
+            </div>
 <!--             <div class="col l3 s12"> -->
-<!--                 <h5 class="white-text">Settings</h5> -->
+<!--                 <h5 class="white-text">Connect us</h5> -->
 <!--                 <ul> -->
 <!--                     <li><a class="white-text" href="#!">Link 1</a></li> -->
 <!--                     <li><a class="white-text" href="#!">Link 2</a></li> -->
@@ -699,15 +570,14 @@
 <!--                     <li><a class="white-text" href="#!">Link 4</a></li> -->
 <!--                 </ul> -->
 <!--             </div> -->
-<!--         </div> -->
-<!--     </div> -->
-<!--     <div class="footer-copyright"> -->
-<!--         <div class="container"> -->
-<!--             Made by <a class="brown-text text-lighten-3" -->
-<!--                        href="http://materializecss.com">Materialize</a> -->
-<!--         </div> -->
-<!--     </div> -->
-<!-- </footer> -->
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            &copy; 2015, GuideMe Team 
+        </div>
+    </div>
+</footer>
 
 
 <!--  Scripts-->

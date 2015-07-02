@@ -394,6 +394,10 @@ public class EventDao extends AbstractDao<Event> {
 		updateById(id, updates);
 
 	}
+	
+//	public void setEventStatus(List<Event> list) throws SQLException {
+//		list.get(0).getModerator().getUserType();
+//	}
 
 	public static void main(String[] args) throws SQLException,
 			IllegalAccessException {
