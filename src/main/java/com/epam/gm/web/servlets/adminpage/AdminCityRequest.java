@@ -39,9 +39,7 @@ public class AdminCityRequest implements HttpRequestHandler {
 		if (action != null) {
 			try {
 				if (action.equals("list")) {
-					// Fetch Data from Student Table
 					cityList = dao.getAll();
-					// Return in the format required by jTable plugin
 					JSONROOT.put("Result", "OK");
 					JSONROOT.put("Records", cityList);
 					String jsonArray = gson.toJson(JSONROOT);

@@ -35,10 +35,6 @@
 <jsp:include page="../home/logoutmodal.jsp"/>
 <jsp:include page="../user/usercabinetheader.jsp"/>
 
-<form action="LoadPhoto?action=saveFile" method="post" enctype="multipart/form-data">
-            <input type="file" size="50" accept="image/*" name="browseButton">
-            <input style="width: 7em" type=submit value="Upload" name="uploadButton">
-</form>
 <table>
     <tr>
 
@@ -59,7 +55,7 @@
 
 
 
-        <td style=" width:60%;vertical-align: top;">
+        <td style=" width:80%;vertical-align: top;">
             <c:choose>
 
           
@@ -76,18 +72,15 @@
                 <c:when test="${centralContent == 'adminTag'}">
                     <jsp:include page="adminTag.jsp"/>
                </c:when>
+               <c:when test="${centralContent == 'adminCity'}">
+                    <jsp:include page="adminCityTable.jsp"/>
+               </c:when>
+               <c:when test="${centralContent == 'adminCountry'}">
+                    <jsp:include page="adminCountryTable.jsp"/>
+               </c:when>
 
             </c:choose>
         </td>
-
-
-
-        <td style=" width:20%;vertical-align: top;">
-            <jsp:include page="../user/usercabinetpanelright.jsp"/>
-        </td>
-
-
-
 
     </tr>
 </table>

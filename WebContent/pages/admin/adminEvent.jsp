@@ -26,34 +26,34 @@
 				},
 				description : {
 					title : 'description',
-					width : '67%',
+					
 					edit : true
 				},
 				dateFrom : {
 					title : 'dateFrom',
-					width : '67%',
+				
 					edit : true
 				},
 				dateTo : {
 					title : 'dateTo',
-					width : '67%',
+					
 					edit : true
 				},
 				moderatorId : {
 					title : 'moderatorId',
-					width : '67%',
+					
 					edit : true,
 					visibility: 'hidden'
 				},
 				addressId : {
 					title : 'addressId',
-					width : '67%',
+					
 					edit : true,
 					visibility: 'hidden'
 				},
 				status : {
 					title : 'status',
-					width : '67%',
+					
 					edit : true,
 					options: { 'active': 'active', 'cancel': 'cancel' },
 				},
@@ -75,7 +75,7 @@
 	});
 </script>
 
-<div style="width: 100%; margin-right: 10%; margin-left: 10%; text-align: center;">
+<div style="width: 90%; margin-right: 5%; margin-left: 5%; text-align: center;">
 
 		<h4>AEvent List</h4>
 		<div id="tblAdminEvent"></div>

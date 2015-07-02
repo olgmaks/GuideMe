@@ -7,13 +7,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.gm.daolayer.CityDao;
+import com.epam.gm.services.CityService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class AdminCityServlet implements HttpRequestHandler{
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
-		request.setAttribute("centralContent", "adminTag");
+		request.setAttribute("centralContent", "adminCity");
+		request.setAttribute("cityList",new CityDao().getAll());
 		request.getRequestDispatcher("pages/admin/adminPanel.jsp").forward(request,
 				response);
 	}

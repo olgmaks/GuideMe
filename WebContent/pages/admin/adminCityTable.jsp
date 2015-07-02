@@ -1,57 +1,35 @@
- 
-<script type="text/javascript">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script>
 	$(document).ready(function() {
-		$('#tblAdminUser').jtable({
-			title : 'Event List',
-			actions : {
-				listAction :   'adminUserRequest.do?action=list',
-				createAction : 'adminUserRequest.do?action=create',
-				updateAction : 'adminUserRequest.do?action=update',
-				deleteAction : 'adminUserRequest.do?action=delete'
-			},
-			fields : {
-				Id : {
-					title : 'id',
-					width : '3%',
-					key : true,
-					list : true,
-					edit : false				
-					},
-					
-				firstName : {
-					 title: 'lastName',
-						display: function (data) {
-	                     return '<a href="userProfile.do?id=' + data.record.Id + '">'+data.record.lastName+'</a>';
-	                 }
-				},
-				lastName : {
-					 title: 'firstName',
-						display: function (data) {
-	                     return '<a href="userProfile.do?id=' + data.record.Id + '">'+data.record.firstName+'</a>';
-	                 }
-				},
-				addressId : {
-					title : 'addressId',
-					width : '67%',
-					edit : true,
-					visibility: 'hidden'
-				},
-				city: {
-			        title: 'city',
-			        display:function(data){
-			                return data.record.address.city.name;
-			        }
-				}
-			}
+		$('#cityTable').DataTable({
+		  "order": [[ 2, "asc" ]]
 		});
-		$('#tblAdminUser').jtable('load');
 	});
 </script>
-<form action="UserDetailReport" method="get">
-  <input type="submit" value="userReportBrowser">
-</form>
+<link rel="StyleSheet" href="css/dataTables.css" type="text/css"
+	media="all" />
+<script type="text/javascript" src="js/dataTables.js"></script>
+<div style="width: 90%; margin-right: 5%; margin-left: 5%; text-align: center;">
+<table id="cityTable" class="display" cellspacing="0" width="100%">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th hidden>pureID </th>
+			<th>country</th>
+		</tr>
+	</thead>
 
-<div style="width: 100%; margin-right: 10%; margin-left: 10%; text-align: center;">
-		<h4>User List</h4>
-		<div id="tblAdminUser"></div>
-	</div>
+	<tbody>
+		<c:forEach items="${cityList}" var="list">
+			<tr>
+				<td>${list.id}</td>
+				<td>${list.name}</td>
+				<td hidden>${list.pureId }</td>
+				<td>${list.country.name} </td>
+			</tr>
+		</c:forEach>
+
+	</tbody>
+</table>
+</div>

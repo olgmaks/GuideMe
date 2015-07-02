@@ -31,7 +31,7 @@
 										<a href="#"
 											onclick="getMessageByUser( ${userFriend.friend.id} ,'${userFriend.friend.lastName}','${userFriend.friend.firstName}','${userFriend.friend.avatar.path}'  ) "
 											class="black-text">${userFriend.friend.firstName}
-											${userFriend.friend.lastName} </a> <br> (+ <span
+											${userFriend.friend.lastName} </a> <br> <span class="new badge"
 											id="numberNewMessage${userFriend.friend.id}"> <c:set
 												var="map" value="${numberNewMessage}" /> <c:set
 												var="friendId" value="${userFriend.friendId}" /> <c:if
@@ -40,7 +40,7 @@
 											</c:if> <c:if test="${not empty numberNewMessage.get(friendId)}">
 												<c:out value="${numberNewMessage.get(friendId)}" />
 											</c:if>
-										</span> )
+										</span> 
 									</div>
 								</td>
 							</tr>

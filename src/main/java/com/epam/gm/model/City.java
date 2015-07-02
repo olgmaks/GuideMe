@@ -27,7 +27,15 @@ public class City {
     @OneToMany(field="country_id", value=Country.class)
     private Country country;
 
-    public Integer getId() {
+    public Country getCountry() {
+		return country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
+	}
+
+	public Integer getId() {
 	return id;
     }
 

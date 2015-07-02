@@ -93,7 +93,7 @@ var friendAvatar;
                if (friendId == jsonObj.userId){
             	   var td = '<td width="10%">' 
           	 			+ jsonObj.friendFirstName + " " 
-          	 			+ jsonObj.friendlastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' 
+          	 			+ jsonObj.friendLastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' 
           	 			+ jsonObj.friendAvatar + '" ></td>';
           	 			
         	   		var trHTML = '<tr bgcolor= "#2ECCFA"><td></td>'
