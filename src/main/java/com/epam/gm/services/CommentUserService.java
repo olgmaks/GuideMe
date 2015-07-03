@@ -19,4 +19,8 @@ public class CommentUserService {
 			cuDao.save(comment);
 		}
 		
+		public void deleteById(Integer id) throws IllegalAccessException, SQLException {
+			cuDao.deleteByField("id", id);
+		}
+		
 }

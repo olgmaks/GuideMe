@@ -1,5 +1,7 @@
 package com.epam.gm.model;
 
+import java.util.Comparator;
+
 import com.epam.gm.olgmaks.absractdao.annotation.*;
 
 /**
@@ -25,6 +27,10 @@ public class FriendUser {
     @ForeignKey
     @OneToMany(field = "friend_id", value = User.class)
     private User friend;
+    
+    private Double points;
+    
+    private Double rate;
 
     public FriendUser() {
     }
@@ -73,8 +79,25 @@ public class FriendUser {
     public void setFriend(User friend) {
         this.friend = friend;
     }
+    
+	public Double getPoints() {
+		return points;
+	}
 
-    @Override
+	public void setPoints(Double points) {
+		this.points = points;
+	}
+	
+	
+    public Double getRate() {
+		return rate;
+	}
+
+	public void setRate(Double rate) {
+		this.rate = rate;
+	}
+
+	@Override
     public String toString() {
         return "FriendUser{" +
                 "id=" + id +
@@ -84,7 +107,14 @@ public class FriendUser {
                 ", friend=" + friend +
                 '}';
     }
-
+    
+	public static final Comparator<FriendUser> BY_POINTS = new Comparator<FriendUser>() {
+		@Override
+		public int compare(FriendUser first, FriendUser second) {
+			return second.points.compareTo(first.points);
+		}
+	};
+	
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,4 +136,6 @@ public class FriendUser {
         result = 31 * result + (friendId != null ? friendId.hashCode() : 0);
         return result;
     }
+    
+
 }

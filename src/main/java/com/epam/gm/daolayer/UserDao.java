@@ -2,6 +2,7 @@
 
     import com.epam.gm.hashpassword.MD5HashPassword;
 import com.epam.gm.model.Country;
+import com.epam.gm.model.Event;
 import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserActivity;
@@ -11,12 +12,14 @@ import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
     import java.security.NoSuchAlgorithmException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
     public class UserDao extends AbstractDao<User> {
 
@@ -72,6 +75,16 @@ import java.util.Map;
                     "WHERE u.is_active = TRUE AND u.user_type_id IN (2, 3) AND c1.pure_id = ? ";
 
         public static final String IS_USER = "SELECT (%s in( select u.id from user u where is_active=true)) ";
+        
+        
+        //gryn
+        public static final String GET_TAGS_BY_USERS = 
+        		" SELECT  e.id, et.tag_id, t.name AS 'tag_name' " + 
+		        " FROM user e JOIN user_tag et ON e.id = et.user_id " +
+	            " JOIN tag t ON et.tag_id = t.id " + 
+		        " WHERE e.id IN (?) " +
+		        " ORDER BY e.id, t.name "; 
+        
 
         public UserDao() {
             // gryn
@@ -247,7 +260,50 @@ import java.util.Map;
 
             return getWithCustomQuery(ACTIVE_USERS_AND_GUIDES_IN_COUNTRY.replace("?", pureId.toString()));
         }
+        
+        //gryn
+    	public void buildTagString(List<User> list) throws SQLException {
+    		if (list == null || list.isEmpty())
+    			return;
 
+    		Map<Integer, User> map = new HashMap<Integer, User>();
+
+    		StringJoiner join = new StringJoiner(",");
+    		for (User e : list) {
+    			join.add(e.getId().toString());
+
+    			map.put(e.getId(), e);
+
+    			e.setTagString("");
+
+    			e.setTagList(new ArrayList<String>());
+    		}
+
+    		Connection connection = ConnectionManager.getConnection();
+
+    		StringBuilder sb = new StringBuilder();
+
+    		System.out.println(GET_TAGS_BY_USERS.replace("?", join.toString()));
+
+    		PreparedStatement stmt = connection.prepareStatement(GET_TAGS_BY_USERS
+    				.replace("?", join.toString()));
+    		ResultSet rs = stmt.executeQuery();
+    		while (rs.next()) {
+    			User user = map.get(rs.getInt("id"));
+
+    			user.setTagString(sb.append(user.getTagString()).append("#")
+    					.append(rs.getString("tag_name")).append(" ").toString());
+
+    			user.getTagList().add(rs.getString("tag_name"));
+
+    			sb.setLength(0);
+    		}
+    		rs.close();
+    		stmt.close();
+    		ConnectionManager.closeConnection(connection);
+
+    	}
+    	
         public static void main(String[] args) throws SQLException {
     //        UserDao userDao = new UserDao();
     //        userDao.getActiveUsersAndGuidesInTheCountry(9).forEach(x -> System.out.println(x.getFirstName()));

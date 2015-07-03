@@ -116,7 +116,7 @@ public class AdminServletPost implements HttpRequestHandler{
     	cu.setUserId(userId);
     	try {
 			cuService.save(cu);
-			response.sendRedirect("adminUserProfile.do?id=" + userId);
+			response.sendRedirect("userProfile.do?id=" + userId);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {

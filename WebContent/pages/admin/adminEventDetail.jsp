@@ -673,13 +673,17 @@
 
                         <c:if test="${isMember}">
 
-                            <p>
-                                <span><b>Your mark: </b></span>
-                            </p>
+						<c:if test="${!isModerator}">
+							<p>
+							  <span><b>Your mark: </b></span>
+							</p>
+						</c:if>
 
                             <c:choose>
                                 <c:when test="${not empty userLogined}">
+                                <c:if test="${!isModerator}">
                                     <div id="ratingEvent"></div>
+                                </c:if>    
                                     <br/>
 
                                     <form action="adminEventRequest.do?action=commentEvent"
@@ -819,7 +823,7 @@
                                             <c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
 
 
-                                            <c:if test="${isModerator}">
+                                            <c:if test="${isModerator && (m.user.id != user.id)}">
 
                                                 <br>
                                                 <span style="margin-right: 10px;">Remove member</span>
@@ -1425,14 +1429,16 @@
                                                                     + (-m.bedCount)
                                                                     + " person(s)";
                                                                 }
+                                                                
+                                                                
 
-                                                                if (1 == 1) {
+                                                                <c:if test="${isModerator}">
 
                                                                     f += "<br><span style='margin-right: 10px;'>Remove member</span>"
                                                                     + "<a  href='#_' class='btn-floating light-blue removefriend' data-id='" + m.userId + "'> "
                                                                     + "<i class='mdi-navigation-close'></i>"
                                                                     + "</a>";
-                                                                }
+                                                                  </c:if>
                                                                 f += "<a  class='secondary-content'><i class='material-icons'>"
                                                                 + m.status
                                                                 + "</i></a>"

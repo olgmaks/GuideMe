@@ -1,9 +1,11 @@
 package com.epam.gm.services;
 
 import com.epam.gm.daolayer.UserDao;
+import com.epam.gm.model.Event;
 import com.epam.gm.model.User;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -257,5 +259,18 @@ public class UserService {
 			throws SQLException {
 		return userDao.getActiveUsersAndGuidesInTheCountry(countryId);
 	}
+    
+     //gryn
+	 public void buildTagString(List<User> list) throws SQLException {
+		 userDao.buildTagString(list);
+	 }
+	 
+	//gryn
+	 public void buildTagString(User user) throws SQLException {
+		 List<User> list = new ArrayList<User>(1);
+		 list.add(user);
+		 
+		 buildTagString(list);
+	 }
 
 }

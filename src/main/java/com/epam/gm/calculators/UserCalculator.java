@@ -50,6 +50,10 @@ public class UserCalculator {
 	public UserCalculator(Integer userId, Integer clientId) throws SQLException {
 		user = userService.getUserById(userId);
 		allRatingUser = ratingUserService.getRatingByUser(userId);
+		
+//		System.out.println("userId = " + userId);
+//		System.out.println("++++++++++++++++++++++++++++++++++++ allRatingUser = " + allRatingUser);
+		
 		allEvents = eventService.getUserEvents(userId);
 		allTags = tagService.getAllUserTags(userId);
 		allLangs = langService.getAllUserLangs(userId);
@@ -239,15 +243,33 @@ public class UserCalculator {
 	
 	
 	public static void sortUsersByPoints(List<User> users, Integer userid) throws SQLException {
-		
 		for(User e: users) {
 			 e.setPoints(new UserCalculator(e.getId(), userid).calculate());
 		}
 		
 		Collections.sort(users, User.BY_POINTS);
-		
 	}
 	
+	public static void sortFriendsByPoints(List<FriendUser> friends, Integer userid) throws SQLException {
+		
+		for(FriendUser f: friends) {
+			User friend = f.getFriend();
+			
+			if(friend == null) continue;
+			
+			UserCalculator calc = new UserCalculator(friend.getId(), userid);
+			
+			friend.setPoints(calc.calculate());
+			
+			
+			f.setPoints(friend.getPoints());
+			f.setRate(calc.getAverageRate());
+		}
+		
+		Collections.sort(friends, FriendUser.BY_POINTS);
+	}
+	
+
 	public static void main(String[] args) throws SQLException {
 
 		

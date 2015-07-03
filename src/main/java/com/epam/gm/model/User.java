@@ -1,6 +1,7 @@
 package com.epam.gm.model;
 
 import java.util.Comparator;
+import java.util.List;
 
 import com.epam.gm.olgmaks.absractdao.annotation.*;
 
@@ -65,7 +66,13 @@ public class User implements Comparable<User> {
 	public enum FriendCriteria {
 		sentRequest, receivedRequest, notFriend, friend
 	}
-
+	
+	// gryn
+	private String tagString;
+	
+	private List<String> tagList;
+	
+	
 	public Integer getId() {
 		return Id;
 	}
@@ -233,6 +240,25 @@ public class User implements Comparable<User> {
 			newBoolean = true;
 		}
 		return newBoolean;
+	}
+	
+	
+	
+
+	public String getTagString() {
+		return tagString;
+	}
+
+	public void setTagString(String tagString) {
+		this.tagString = tagString;
+	}
+
+	public List<String> getTagList() {
+		return tagList;
+	}
+
+	public void setTagList(List<String> tagList) {
+		this.tagList = tagList;
 	}
 
 	public String getFirstNameAndLastName() {

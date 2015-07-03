@@ -24,4 +24,6 @@ public class CommentUserDao extends AbstractDao<CommentUser> {
 		super.save(comment);
 	}
 
+
+
 }

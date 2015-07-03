@@ -43,6 +43,13 @@ public class GetEventMembersServlet implements HttpRequestHandler {
 
 	        responseMap.put("isEmpty", members.isEmpty());
 	        responseMap.put("results", members);
+	        
+	        Event event = new EventService().getById(Integer.parseInt(id.trim()));
+	        if(event != null) 
+	        	responseMap.put("moderatorId",  event.getModeratorId() );
+	        else 
+	        	responseMap.put("moderatorId",  -1);
+	        
 	        response.getWriter().write(new Gson().toJson(responseMap));			
 			
 	        
