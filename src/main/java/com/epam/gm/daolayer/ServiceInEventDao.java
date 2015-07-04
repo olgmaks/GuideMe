@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.epam.gm.model.Service;
 import com.epam.gm.model.ServiceInEvent;
@@ -24,25 +25,17 @@ public class ServiceInEventDao extends AbstractDao<ServiceInEvent> {
 		super.save(serviceInEvent);
 	}
 
+	public List<ServiceInEvent> getAllServicesByEventId(int eventId)
+			throws SQLException {
+		return super.getByField("event_id", eventId);
+	}
+
 	public static void main(String[] args) throws IllegalArgumentException,
 			IllegalAccessException, SQLException, ParseException {
-		ServiceInEvent serviceInEvent = new ServiceInEvent();
-		String date = "2015-07-04";
-		String time = "22:02";
-		String fulldate = date + "-" + time;
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
-		Date d = format.parse(fulldate);
-		Service service = new Service();
-		service.setGuideId(2);
-		service.setName("new");
-		service.setPrice(20.0);
-		serviceInEvent.setService(service);
-		serviceInEvent.setEventId(22);
-	
-		serviceInEvent.setDateFrom(d);
-
-		new ServiceInEventDao().saveServiceInEvent(serviceInEvent);
-
+List<ServiceInEvent>list = new ServiceInEventDao().getAllServicesByEventId(42);
+for (ServiceInEvent s:list){
+	System.out.println(s.getService().getName());
+}
 	}
 
 }

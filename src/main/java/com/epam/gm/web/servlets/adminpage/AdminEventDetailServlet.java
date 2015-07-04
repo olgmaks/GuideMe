@@ -13,6 +13,7 @@ import com.epam.gm.calculators.EventCalculator;
 import com.epam.gm.calculators.UserCalculator;
 import com.epam.gm.daolayer.RatingEventDao;
 import com.epam.gm.daolayer.ServiceDao;
+import com.epam.gm.daolayer.ServiceInEventDao;
 import com.epam.gm.dateparser.DateParser;
 import com.epam.gm.model.Country;
 import com.epam.gm.model.Event;
@@ -56,6 +57,9 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			LanguageService languageService = new LanguageService();
 			List<Language> languageList = languageService.getLocalizedLangs();
 			request.setAttribute("languageList", languageList);
+
+			session.setAttribute("servicesInEvent",
+					new ServiceInEventDao().getAllServicesByEventId(id));
 
 			// gryn - adding try
 			Integer sessionUserId = null;
