@@ -33,23 +33,23 @@ public class EventsInCabinetServlet extends HttpServlet implements
 		User user = (User) session.getAttribute("sessionUser");
 		EventDao eventDao = new EventDao();
 		UserInEventDao userInEventDao = new UserInEventDao();
-		session.setAttribute("listOfUserInEvent", userInEventDao
+	request.setAttribute("listOfUserInEvent", userInEventDao
 				.getAllActualUserInEventWhereUserNotModeratorByUserId(user
 						.getId()));
-		session.setAttribute("listOfOldUserInEvent",
+		request.setAttribute("listOfOldUserInEvent",
 				userInEventDao
 						.getAllOldUserInEventWhereUserNotModeratorByUserId(user
 								.getId()));
 
 		
 		//gryn
-		session.setAttribute("listOfOldModeratorEvents",
+		request.setAttribute("listOfOldModeratorEvents",
 				eventDao.getOldAndNotDeletedEventsByModeratorId(user.getId()));
 		
 
 		
 		
-		session.setAttribute("listOfModeratorEvents", eventDao
+		request.setAttribute("listOfModeratorEvents", eventDao
 				.getActiveAndNotDeletedEventsByModeratorId(user.getId()));
 
 		request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(

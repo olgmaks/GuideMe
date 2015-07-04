@@ -234,7 +234,7 @@ public class User implements Comparable<User> {
 		return this;
 	}
 
-	private boolean isGuide() {
+	public boolean isGuide() {
 		boolean newBoolean = false;
 		if (getUserTypeId() == 3) {
 			newBoolean = true;

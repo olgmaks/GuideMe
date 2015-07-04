@@ -1,6 +1,7 @@
 <!-- events in cabinet page -->
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%@ taglib
+	prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <br>
 <table>
 	<thead>
@@ -11,6 +12,7 @@
 		</tr>
 	</thead>
 </table>
+
 
 <br>
 <div class="row">
@@ -25,9 +27,16 @@
 				<div class="card-content">
 					<p>${usersevent.getEvent().getCutName(25) }</p>
 					<br> <span class="grey-text text-darken-1">Date from: </span>
-					<p>${moderatorevent.getDateFrom() }</p>
+
+					<p>
+						<fmt:formatDate type="both" dateStyle="short" timeStyle="short"
+							value="${moderatorevent.dateFrom}" />
+					</p>
 					<br> <span class="grey-text text-darken-2">Date to: </span>
-					<p>${moderatorevent.getDateTo() }</p>
+					<p>
+						<fmt:formatDate type="both" dateStyle="short" timeStyle="short"
+							value="${moderatorevent.dateTo}" />
+					</p>
 				</div>
 				<div class="card-action">
 					<a href="eventDetail.do?id=${moderatorevent.getId() } ">Event
@@ -60,9 +69,15 @@
 				<div class="card-content">
 					<p>${usersevent.getEvent().getCutName(25) }</p>
 					<br> <span class="grey-text text-darken-1">Date from: </span>
-					<p>${usersevent.getEvent().getDateFrom() }</p>
+					<p>
+						<fmt:formatDate type="both" dateStyle="short" timeStyle="short"
+							value="${usersevent.getEvent().getDateFrom()}" />
+					</p>
 					<br> <span class="grey-text text-darken-2">Date to: </span>
-					<p>${usersevent.getEvent().getDateTo() }</p>
+					<p>
+						<fmt:formatDate type="both" dateStyle="short" timeStyle="short"
+							value="${usersevent.getEvent().getDateTo()}" />
+					</p>
 				</div>
 				<div class="card-action">
 					<a href="eventDetail.do?id=${usersevent.getEvent().getId() } ">Event

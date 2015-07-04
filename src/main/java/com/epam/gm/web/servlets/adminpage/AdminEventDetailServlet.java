@@ -7,14 +7,17 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.epam.gm.calculators.EventCalculator;
 import com.epam.gm.calculators.UserCalculator;
 import com.epam.gm.daolayer.RatingEventDao;
+import com.epam.gm.daolayer.ServiceDao;
 import com.epam.gm.dateparser.DateParser;
 import com.epam.gm.model.Country;
 import com.epam.gm.model.Event;
 import com.epam.gm.model.Language;
+import com.epam.gm.model.Service;
 import com.epam.gm.model.Tag;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
@@ -36,34 +39,37 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 		RatingEventDao reDao = new RatingEventDao();
 		System.out.println("eventDetailservlet");
 		try {
+			HttpSession session = request.getSession();
 			User user = new User();
 			user = SessionRepository.getSessionUser(request);
-
+			if (user.isGuide()) {
+				List<Service> list = new ServiceDao().getServicesByGuideId(2);
+				request.setAttribute("listOfServices", list);
+			}
 			EventService eventService = new EventService();
 			int id = Integer.parseInt(request.getParameter("id"));
 			Event event = new Event();
 			event = eventService.getById(id);
-			
+
 			eventService.buildTagString(event);
-			
 
 			LanguageService languageService = new LanguageService();
 			List<Language> languageList = languageService.getLocalizedLangs();
 			request.setAttribute("languageList", languageList);
-			
-			//gryn - adding try
+
+			// gryn - adding try
 			Integer sessionUserId = null;
 			try {
 				request.getSession(true).setAttribute("eventId", id);
-				sessionUserId = SessionRepository.getSessionUser(request).getId();
-			} catch(Exception e) {
+				sessionUserId = SessionRepository.getSessionUser(request)
+						.getId();
+			} catch (Exception e) {
 				response.sendRedirect("401.do");
 				return;
 			}
-				
-			
-			Boolean showUploadAnchor = UserInEventService.serve().isMemberOfEvent(
-				sessionUserId, id);
+
+			Boolean showUploadAnchor = UserInEventService.serve()
+					.isMemberOfEvent(sessionUserId, id);
 			request.setAttribute("showUploadAnchor", showUploadAnchor);
 
 			CountryService countryService = new CountryService();
@@ -115,17 +121,17 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 
 			}
 
-//			// gryn
-//			else {
-//				response.sendRedirect("401.do");
-//				return;
-//			}
-//
-//			// grn
-//			if (event == null) {
-//				response.sendRedirect("404.do");
-//				return;
-//			}
+			// // gryn
+			// else {
+			// response.sendRedirect("401.do");
+			// return;
+			// }
+			//
+			// // grn
+			// if (event == null) {
+			// response.sendRedirect("404.do");
+			// return;
+			// }
 
 			boolean isModerator = event.getModeratorId().equals(user.getId());
 			request.setAttribute("isModerator", isModerator);
@@ -217,11 +223,10 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 					"cancelled".equals(event.getStatus()) ? "selected" : "");
 			request.setAttribute("selDone",
 					"done".equals(event.getStatus()) ? "selected" : "");
-			
-            List<Tag> tags = new TagService().getAllEventTags(event.getId());
-            
-            
-            request.setAttribute("tags", tags);			
+
+			List<Tag> tags = new TagService().getAllEventTags(event.getId());
+
+			request.setAttribute("tags", tags);
 
 			System.out.println(new PhotoService().getEventPhotos(id));
 			request.getRequestDispatcher("pages/admin/adminEventDetail.jsp")

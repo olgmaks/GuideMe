@@ -1,12 +1,14 @@
 package com.epam.gm.model;
 
+import java.io.Serializable;
+
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
 import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("service")
-public class Service {
+public class Service implements Serializable{
 	@Column("id")
 	private Integer id;
 	@Column("guide_id")

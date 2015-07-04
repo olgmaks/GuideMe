@@ -1,7 +1,9 @@
 package com.epam.gm.web.servlets.homepage;
 
+import com.epam.gm.daolayer.ServiceDao;
 import com.epam.gm.daolayer.UserLoginingDao;
 import com.epam.gm.hashpassword.MD5HashPassword;
+import com.epam.gm.model.Service;
 import com.epam.gm.model.User;
 import com.epam.gm.services.UserService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
@@ -14,11 +16,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LoginServlet extends HttpServlet implements HttpRequestHandler {
@@ -52,14 +56,15 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 								user.getEmail()))) {
 					System.out.println("logination has been successful");
 					SessionRepository.setSessionUser(request, user);
-					
-					//gryn
+
+					// gryn
 					CookieUtil.saveLastUser(response, user);
-					System.out.println("**************saved cookie = " + user.getEmail());
-					
-					//save login history
+					System.out.println("**************saved cookie = "
+							+ user.getEmail());
+
+					// save login history
 					new UserLoginingDao().save(user.getId());
-					
+				
 					isValid = true;
 					map.put("userEmail", user.getEmail());
 					map.put("sessionUser", user);
@@ -77,10 +82,11 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 		map.put("isValid", isValid);
 		response.getWriter().write(new Gson().toJson(map));
 		// System.out.println(SessionRepository.getSessionUser(request));
-/*
-		RequestDispatcher requestDispatcher = request
-				.getRequestDispatcher("home.do");
-		requestDispatcher.forward(request, response);*/
+		/*
+		 * RequestDispatcher requestDispatcher = request
+		 * .getRequestDispatcher("home.do"); requestDispatcher.forward(request,
+		 * response);
+		 */
 
 	}
 
