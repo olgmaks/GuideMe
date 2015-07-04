@@ -629,7 +629,9 @@ nav {
 						<nav id="profiletabs">
 							<ul class="clearfix">
 								<li><a href="#bio" class="sel">About</a></li>
+								<li><a href="#services">Services</a></li>
 								<li><a href="#photos">Fotos</a></li>
+
 								<c:if test="${isAdmin||isModerator}">
 									<li><a href="#edit">Edit</a></li>
 								</c:if>
@@ -1270,12 +1272,16 @@ nav {
 								</form>
 							</div>
 						</section>
+						<section id="services" class="hidden">
+							<jsp:include page="servicesInEvent.jsp" />
+						</section>
 						<section id="addservice" class="hidden">
 
 							<jsp:include page="guideAddService.jsp" />
 
 
 						</section>
+
 
 						<c:if test="${isModerator}">
 							<section id="requests" class="hidden">
