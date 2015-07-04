@@ -25,8 +25,18 @@ public class ServiceDao extends AbstractDao<Service> {
 				newList.add(s);
 			}
 		}
-
 		return newList;
+	}
+
+	public Service getServiceById(int idService) throws SQLException {
+
+		List<Service> newList = getByField("id", idService);
+		if (newList.isEmpty()) {
+			return null;
+		} else {
+			return newList.get(0);
+		}
+
 	}
 
 	public void deleteServiceById(int id) throws IllegalAccessException,
@@ -42,6 +52,26 @@ public class ServiceDao extends AbstractDao<Service> {
 	public void updateServiceToDeletedById(int id) {
 		Map<String, Object> updates = new HashMap<String, Object>();
 		updates.put("deleted", 1);
+		try {
+			updateById(id, updates);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateServiceDescriptionById(int id, String newDescription) {
+		Map<String, Object> updates = new HashMap<String, Object>();
+		updates.put("description", newDescription);
+		try {
+			updateById(id, updates);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateServicePriceById(int id, Integer newPrice) {
+		Map<String, Object> updates = new HashMap<String, Object>();
+		updates.put("price", newPrice);
 		try {
 			updateById(id, updates);
 		} catch (SQLException e) {

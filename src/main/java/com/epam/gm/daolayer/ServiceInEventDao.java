@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.epam.gm.model.Service;
 import com.epam.gm.model.ServiceInEvent;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
@@ -17,7 +18,7 @@ public class ServiceInEventDao extends AbstractDao<ServiceInEvent> {
 		super(ServiceInEvent.class);
 	}
 
-	public void saveService(ServiceInEvent serviceInEvent)
+	public void saveServiceInEvent(ServiceInEvent serviceInEvent)
 			throws IllegalArgumentException, IllegalAccessException,
 			SQLException {
 		super.save(serviceInEvent);
@@ -31,11 +32,16 @@ public class ServiceInEventDao extends AbstractDao<ServiceInEvent> {
 		String fulldate = date + "-" + time;
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
 		Date d = format.parse(fulldate);
+		Service service = new Service();
+		service.setGuideId(2);
+		service.setName("new");
+		service.setPrice(20.0);
+		serviceInEvent.setService(service);
 		serviceInEvent.setEventId(22);
-		serviceInEvent.setServiceId(3);
+	
 		serviceInEvent.setDateFrom(d);
 
-		new ServiceInEventDao().saveService(serviceInEvent);
+		new ServiceInEventDao().saveServiceInEvent(serviceInEvent);
 
 	}
 

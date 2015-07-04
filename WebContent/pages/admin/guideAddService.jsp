@@ -22,8 +22,7 @@
 								}
 							});
 						});
-						
-						
+
 						$('#sub')
 								.click(
 										function() {
@@ -134,9 +133,15 @@
 
 															success : function(
 																	data) {
+																if (data.isChanged) {
+																	Materialize
+																			.toast(
+																					"Service Changed",
+																					1500);
+																}
 																Materialize
 																		.toast(
-																				'<span>Item Added</span><a class=&quot;btn-flat yellow-text&quot; href="delete">Undo<a>',
+																				'<span>Service Added</span><a class=&quot;btn-flat yellow-text&quot; href="delete">Undo<a>',
 																				5000)
 															}
 														});
