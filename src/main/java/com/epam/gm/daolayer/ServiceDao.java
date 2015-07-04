@@ -11,6 +11,7 @@ import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 public class ServiceDao extends AbstractDao<Service> {
 	private static final String GUIDE_ID = "guide_id";
+	private static final String GET_ALL_NOT_TEMPORARY_SERVICES = "s WHERE s.is_temporary=0 AND s.guide_id=%S";
 
 	public ServiceDao() {
 		// gryn
@@ -20,12 +21,22 @@ public class ServiceDao extends AbstractDao<Service> {
 
 	public List<Service> getServicesByGuideId(int guideId) throws SQLException {
 		List<Service> newList = new ArrayList<Service>();
+
 		for (Service s : super.getByField(GUIDE_ID, guideId)) {
 			if (!s.isDeleted()) {
 				newList.add(s);
 			}
 		}
 		return newList;
+	}
+
+	public List<Service> getNotTemporaryServicesByGuideId(int guideId)
+			throws SQLException {
+		List<Service> newList = super.getWithCustomQuery(String.format(
+				GET_ALL_NOT_TEMPORARY_SERVICES, guideId));
+
+		return newList;
+
 	}
 
 	public Service getServiceById(int idService) throws SQLException {
@@ -69,7 +80,7 @@ public class ServiceDao extends AbstractDao<Service> {
 		}
 	}
 
-	public void updateServicePriceById(int id, Integer newPrice) {
+	public void updateServicePriceById(int id, Double newPrice) {
 		Map<String, Object> updates = new HashMap<String, Object>();
 		updates.put("price", newPrice);
 		try {

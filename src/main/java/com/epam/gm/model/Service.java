@@ -25,6 +25,8 @@ public class Service implements Serializable {
 	private String description;
 	@Column("deleted")
 	private int deleted;
+	@Column("is_temporary")
+	private int isTemporary;
 
 	public Integer getId() {
 		return id;
@@ -78,6 +80,22 @@ public class Service implements Serializable {
 		this.deleted = 0;
 		if (deleted == true) {
 			this.deleted = 1;
+		}
+	}
+
+	public boolean getIsTemporary() {
+		boolean newBoolean = false;
+		if (isTemporary == 1) {
+			newBoolean = true;
+		}
+		return newBoolean;
+	}
+
+	public void setIsTemporary(boolean isTemporary) {
+		if (isTemporary) {
+			this.isTemporary = 1;
+		} else {
+			this.isTemporary = 0;
 		}
 	}
 

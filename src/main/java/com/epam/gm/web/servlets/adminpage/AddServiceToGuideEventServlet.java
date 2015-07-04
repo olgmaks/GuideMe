@@ -38,19 +38,13 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 			throws ServletException, IOException, SQLException,
 			IllegalAccessException {
 		HttpSession session = request.getSession();
-		System.out.println("**********" + request.getParameter("priceval"));
-		System.out.println("**********" + request.getParameter("id"));
-		System.out.println(request.getParameter("description"));
-		System.out.println(request.getParameter("datefromval"));
-		System.out.println(request.getParameter("timefromval"));
-		System.out.println(request.getParameter("serviceidval"));
-		System.out.println(request.getParameter("positionsval"));
+
 		String description = request.getParameter("description");
-		Integer price = null;
+		double price = 0;
 		try {
-			price = Integer.parseInt(request.getParameter("priceval"));
+			price = Double.parseDouble(request.getParameter("priceval"));
 		} catch (NumberFormatException e) {
-			price = 0;
+			price = 0.0;
 		}
 		ServiceInEvent serviceInEvent = new ServiceInEvent();
 		if (request.getParameter("datefromval") != null
@@ -98,10 +92,12 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 		Service service = serviceDao.getServiceById(idService);
 		boolean isChanged = false;
 		if (!service.getDescription().equals(description)) {
+			System.out.println(service.getDescription()+"*********"+description);
 			isChanged = true;
 			serviceDao.updateServiceDescriptionById(idService, description);
 		}
-		if (!service.getPrice().equals(price)) {
+		if (service.getPrice() != price) {
+			System.out.println(service.getPrice() + "********" + price);
 			isChanged = true;
 			serviceDao.updateServicePriceById(idService, price);
 		}

@@ -29,7 +29,7 @@ public class GuideServicesServlet extends HttpServlet implements
 		User u = (User) session.getAttribute("sessionUser");
 		request.setAttribute("centralContent", "guideservices");
 		request.setAttribute("guideservices",
-				new ServiceDao().getServicesByGuideId(u.getId()));
+				new ServiceDao().getNotTemporaryServicesByGuideId(u.getId()));
 		request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(
 				request, response);
 
