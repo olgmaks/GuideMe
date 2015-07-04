@@ -8,7 +8,7 @@ import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
 import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("service")
-public class Service implements Serializable{
+public class Service implements Serializable {
 	@Column("id")
 	private Integer id;
 	@Column("guide_id")
@@ -83,8 +83,9 @@ public class Service implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Service [id=" + id + ", guideId=" + guideId + ", name=" + name
-				+ ", price=" + price + "]";
+		return "Service [id=" + id + ", guideId=" + guideId + ", guide="
+				+ guide + ", name=" + name + ", price=" + price
+				+ ", description=" + description + ", deleted=" + deleted + "]";
 	}
 
 }
