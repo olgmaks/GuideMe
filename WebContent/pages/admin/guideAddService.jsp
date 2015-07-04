@@ -16,6 +16,7 @@
 									select : selectvalue
 								},
 								success : function(data) {
+									$('#name2').val(data.name);
 									$('#desc').val(data.description);
 									$('#price').val(data.price);
 								}
@@ -29,6 +30,7 @@
 													.val();
 											var good = 1;
 											var price = $('#price').val();
+											var name = $('#name2').val();
 											if (!isNaN(price)) {
 												if (price < -1) {
 													good = 0;
@@ -66,6 +68,7 @@
 											var timefrom = $('#timefrom').val();
 											var dateto = $('#dateto').val();
 											var timeto = $('#timeto').val();
+
 											var datefromformated = new Date(
 													datefrom);
 											var currentdate = new Date();
@@ -124,6 +127,7 @@
 																datetoval : dateto,
 																timetoval : datefrom,
 																serviceidval : serviceid,
+																nameval : name,
 																positionsval : $(
 																		'#positions')
 																		.val()
@@ -177,7 +181,9 @@
 		<option value='${service.getId() }'>${ service.getName()}</option>
 	</c:forEach>
 </select>
-
+name
+<input type="text" style="width: 50%;" id="name2" />
+<br>
 desciption
 <input type="text" style="width: 50%;" id="desc" />
 price

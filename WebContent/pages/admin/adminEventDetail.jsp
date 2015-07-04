@@ -1275,6 +1275,7 @@ nav {
 						<section id="services" class="hidden">
 							<jsp:include page="servicesInEvent.jsp" />
 						</section>
+						
 						<section id="addservice" class="hidden">
 
 							<jsp:include page="guideAddService.jsp" />

@@ -44,7 +44,8 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			User user = new User();
 			user = SessionRepository.getSessionUser(request);
 			if (user.isGuide()) {
-				List<Service> list = new ServiceDao().getServicesByGuideId(2);
+				List<Service> list = new ServiceDao().getServicesByGuideId(user
+						.getId());
 				request.setAttribute("listOfServices", list);
 			}
 			EventService eventService = new EventService();

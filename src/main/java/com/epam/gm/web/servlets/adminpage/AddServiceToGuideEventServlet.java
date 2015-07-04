@@ -21,6 +21,7 @@ import com.epam.gm.daolayer.ServiceInEventDao;
 import com.epam.gm.model.Event;
 import com.epam.gm.model.Service;
 import com.epam.gm.model.ServiceInEvent;
+import com.epam.gm.model.User;
 import com.epam.gm.services.EventService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.google.gson.Gson;
@@ -40,6 +41,9 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 		HttpSession session = request.getSession();
 
 		String description = request.getParameter("description");
+		String name = request.getParameter("nameval");
+		System.out.println(name);
+		User u = (User) session.getAttribute("sessionUser");
 		double price = 0;
 		try {
 			price = Double.parseDouble(request.getParameter("priceval"));
@@ -91,17 +95,35 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 		ServiceDao serviceDao = new ServiceDao();
 		Service service = serviceDao.getServiceById(idService);
 		boolean isChanged = false;
+		Integer newServiceId = null;
 		if (!service.getDescription().equals(description)) {
-			System.out.println(service.getDescription()+"*********"+description);
+			System.out.println(service.getDescription() + "*********"
+					+ description);
 			isChanged = true;
-			serviceDao.updateServiceDescriptionById(idService, description);
 		}
 		if (service.getPrice() != price) {
 			System.out.println(service.getPrice() + "********" + price);
 			isChanged = true;
-			serviceDao.updateServicePriceById(idService, price);
+
 		}
-		serviceInEvent.setServiceId(idService);
+		if (!service.getName().equals(name)) {
+			System.out.println("*************" + name);
+			isChanged = true;
+		}
+		if (isChanged) {
+			Service newService = new Service();
+			newService.setDescription(description);
+			newService.setGuideId(u.getId());
+			newService.setIsTemporary(true);
+			newService.setName(name);
+			newService.setPrice(price);
+			newServiceId = serviceDao.saveAndReturnId(newService);
+		}
+		if (newServiceId == null) {
+			serviceInEvent.setServiceId(idService);
+		} else {
+			serviceInEvent.setServiceId(newServiceId);
+		}
 		serviceInEvent.setEventId(event.getId());
 		serviceInEvent.setAvailableAmountOfPositions(amountOfPosition);
 		/* serviceInEvent.setEventId(eventId); */
