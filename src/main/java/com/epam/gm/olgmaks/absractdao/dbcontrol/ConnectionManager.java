@@ -48,7 +48,7 @@ public class ConnectionManager {
 
 				e.printStackTrace();
 			}
-			// pool.printStatus();
+			 //pool.printStatus();
 
 		} else {
 			try {

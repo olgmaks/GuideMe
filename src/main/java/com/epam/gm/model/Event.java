@@ -28,6 +28,8 @@ public class Event implements Serializable {
 	private Integer participants_limit;
 	@Column("video_link")
 	private String video_link;
+	@Column("deleted")
+	private Boolean deleted;
 
 	@ForeignKey("id")
 	@OneToMany(field = "moderator_id", value = User.class)
@@ -202,6 +204,14 @@ public class Event implements Serializable {
 		this.tagList = tagList;
 	}
 	
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public String test(int to) {
 		String name = null;
 		int newTo = to + 1;

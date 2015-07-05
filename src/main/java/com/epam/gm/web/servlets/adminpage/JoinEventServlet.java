@@ -23,70 +23,110 @@ public class JoinEventServlet implements HttpRequestHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException,
 			IllegalAccessException {
-		
+
 		System.out.println("JoinEventServlet");
-		
+
 		String id = request.getParameter("id");
 		String operation = request.getParameter("operation");
-		if(id != null && ("join".equals(operation) || "quit".equals(operation)) && ValidateHelper.isNumber(id)) {
+		if (id != null
+				&& ("join".equals(operation) || "quit".equals(operation))
+				&& ValidateHelper.isNumber(id)) {
 			EventService eventService = new EventService();
 			Event event = eventService.getById(Integer.parseInt(id.trim()));
 			UserInEventService userInEventService = new UserInEventService();
-			
-			if(event == null) {
+
+			if (event == null) {
 				response.sendRedirect("404.do");
 				return;
 			}
-			
+
 			User user = new User();
-			user = SessionRepository.getSessionUser(request);			
-			
-			if(user == null) {
+			user = SessionRepository.getSessionUser(request);
+
+			if (user == null) {
 				response.sendRedirect("401.do");
 				return;
 			}
-			
-			if("quit".equals(operation)) {
-				userInEventService.deleteUserFromEvent(event.getId(), user.getId());
-				response.sendRedirect("eventDetail.do?id=" + event.getId().toString());
-				return;				
-			} else if("join".equals(operation)) {
+
+			if ("quit".equals(operation)) {
+				userInEventService.deleteUserFromEvent(event.getId(),
+						user.getId());
+				response.sendRedirect("eventDetail.do?id="
+						+ event.getId().toString());
+				return;
+			} else if ("join".equals(operation)) {
 				String status = request.getParameter("status");
 				String bedCount = request.getParameter("bedCount");
 				String bedCountSelect = request.getParameter("bedCountSelect");
-				
-				System.out.println("status="+status);
-				System.out.println("bedCount="+bedCount);
-				System.out.println("bedCountSelect="+bedCountSelect);
-				
-				
-				if(bedCount != null && ("resident".equals(status) || "guest".equals(status) )
-						&& ValidateHelper.isNumber(bedCount) 
-						&& ("accept".equals(bedCountSelect) || "need".equals(bedCountSelect))) {
-					
-					List<UserInEvent> temp = userInEventService.getByEventAndUser(event.getId(), user.getId());
-					
-					//not exists already
-					if(temp == null || temp.isEmpty()) {
-						
-						System.out.println("userInEventService.joinToEvent");
-						
-						userInEventService.joinToEvent(event.getId(), user.getId(), 
-								Integer.parseInt(bedCount) * ("need".equals(bedCountSelect) ? -1 : 1), status);
+
+				System.out.println("status=" + status);
+				System.out.println("bedCount=" + bedCount);
+				System.out.println("bedCountSelect=" + bedCountSelect);
+
+				if (bedCount != null
+						&& ("resident".equals(status) || "guest".equals(status))
+						&& ValidateHelper.isNumber(bedCount)
+						&& ("accept".equals(bedCountSelect) || "need"
+								.equals(bedCountSelect))) {
+
+					List<UserInEvent> temp = userInEventService
+							.getByEventAndUser(event.getId(), user.getId());
+
+					// not exists already
+					if (temp == null || temp.isEmpty()) {
+
+						if ((!event.getDeleted())
+								&& ("active".equals(event.getStatus()))) {
+
+							List<UserInEvent> members = userInEventService
+									.getByEventOnlyMembers(event.getId());
+
+							int capacityInt = Integer.MAX_VALUE;
+							if (event.getParticipants_limit() != null
+									&& event.getParticipants_limit() > 0) {
+								capacityInt = event.getParticipants_limit();
+							}
+
+							if (members.size() + 1 <= capacityInt) {
+
+								System.out
+										.println("userInEventService.joinToEvent");
+
+								System.out.println("Event status: "
+										+ event.getStatus());
+
+								userInEventService
+										.joinToEvent(
+												event.getId(),
+												user.getId(),
+												Integer.parseInt(bedCount)
+														* ("need"
+																.equals(bedCountSelect) ? -1
+																: 1), status);
+								
+//								if (members.size() + 1 == capacityInt) {
+//									//filled
+//									
+//									eventService.changeEventStatus(event.getId(), "filled");
+//								}
+								
+
+							}
+						}
 					}
-					
-					response.sendRedirect("eventDetail.do?id=" + event.getId().toString());
+
+					response.sendRedirect("eventDetail.do?id="
+							+ event.getId().toString());
 					return;
 				}
-			
-			}	
-				
-				
-			//return;
+
+			}
+
+			// return;
 		}
-		
+
 		response.sendRedirect("404.do");
-		
+
 	}
-	
+
 }

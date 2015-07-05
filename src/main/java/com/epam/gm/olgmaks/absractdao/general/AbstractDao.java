@@ -126,9 +126,13 @@ public class AbstractDao<T> {
         // gryn
         Connection connection = ConnectionManager.getConnection();
 
+        //System.out.println("BEFORE DELETE ");
+        
         // deleteHelper.delete(t).executeUpdate();
         deleteHelper.delete(connection, t).executeUpdate();
 
+        //System.out.println("AFTER DELETE");
+        
         // gryn
         ConnectionManager.closeConnection(connection);
     }
@@ -148,6 +152,9 @@ public class AbstractDao<T> {
     public void deleteWithCustomQuery(String customWhere) throws SQLException {
         Connection connection = ConnectionManager.getConnection();
         deleteHelper.deleteWithCustomQuery(connection, customWhere).executeUpdate();
+        
+        // gryn
+        ConnectionManager.closeConnection(connection);        
     }
 
     public List<T> getAll() throws SQLException {
@@ -202,6 +209,10 @@ public class AbstractDao<T> {
 	ResultSet resultSet = statement.executeQuery();
 	resultSet.next();
 	Boolean res = resultSet.getBoolean("value");
+	
+	//gryn
+	ConnectionManager.closeConnection(connection); 
+	 
 	return res;
     }
     
@@ -212,6 +223,10 @@ public class AbstractDao<T> {
 	ResultSet resultSet = statement.executeQuery();
 	resultSet.next();
 	Integer res = resultSet.getInt("value");
+	
+	//gryn
+	ConnectionManager.closeConnection(connection); 
+	
 	return res;
     }
     
@@ -222,6 +237,10 @@ public class AbstractDao<T> {
 	ResultSet resultSet = statement.executeQuery();
 	resultSet.next();
 	Double res = resultSet.getDouble("value");
+	
+	//gryn
+	ConnectionManager.closeConnection(connection); 
+	
 	return res;
     }
     
@@ -232,6 +251,10 @@ public class AbstractDao<T> {
 	ResultSet resultSet = statement.executeQuery();
 	resultSet.next();
 	Object res = resultSet.getObject("value");
+	
+	//gryn
+	ConnectionManager.closeConnection(connection); 
+	
 	return res;
     }
 

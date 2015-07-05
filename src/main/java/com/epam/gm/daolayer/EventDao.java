@@ -5,8 +5,12 @@ import com.epam.gm.model.City;
 import com.epam.gm.model.Country;
 import com.epam.gm.model.Event;
 import com.epam.gm.model.User;
+import com.epam.gm.model.UserInEvent;
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
+import com.epam.gm.services.EventService;
+import com.epam.gm.services.UserInEventService;
+
 import org.apache.commons.collections.map.HashedMap;
 
 import java.sql.Connection;
@@ -395,6 +399,30 @@ public class EventDao extends AbstractDao<Event> {
 		updateById(id, updates);
 
 	}
+	
+	public void fixEventLimit(Integer id) throws SQLException {
+		Event event = new EventService().getById(id);
+		if(event.getParticipants_limit() == null || event.getParticipants_limit().equals(0)) {
+			return;
+		}
+		
+		UserInEventService userInEventService = new UserInEventService();
+		List<UserInEvent> members = userInEventService
+				.getByEventOnlyMembers(event.getId());
+		
+		if(members == null) return;
+		
+		if(members.size() > event.getParticipants_limit()) {
+			//event.setParticipants_limit(members.size());
+			
+			Map<String, Object> updateConditions = new HashMap<String, Object>();
+			updateConditions.put("participants_limit", members.size());
+			
+			super.updateById(id, updateConditions);
+			
+		}
+	}
+	
 	
 //	public void setEventStatus(List<Event> list) throws SQLException {
 //		list.get(0).getModerator().getUserType();

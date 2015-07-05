@@ -89,6 +89,10 @@ public class EventService {
     public void updateEventAvatar(Integer eventId, Integer photoId) throws SQLException {
         eventDao.updateEventAvatar(eventId, photoId);
     }
+    
+    public void fixEventLimit(Integer id) throws SQLException {
+    	eventDao.fixEventLimit(id);
+    }
 
     public static void main(String[] args) throws SQLException {
         List<Event> topUserEvents = new EventService().getAllActiveNotDeletedUserEvents();

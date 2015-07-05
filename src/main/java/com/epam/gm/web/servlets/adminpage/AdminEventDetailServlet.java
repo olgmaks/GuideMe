@@ -3,7 +3,7 @@ package com.epam.gm.web.servlets.adminpage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
+import java.util.StringJoiner;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +33,8 @@ import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class AdminEventDetailServlet implements HttpRequestHandler {
+	
+	
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
@@ -157,6 +159,10 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 
 				showJoin = true;
 
+				if(!"active".equals(event.getStatus())) {
+					showJoin = false;
+				}
+				
 			} else {
 				details = userInEvent.get(0);
 				if (!details.getIsMember())
@@ -176,6 +182,49 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			List<UserInEvent> members = userInEventService
 					.getByEventOnlyMembers(event.getId());
 			request.setAttribute("members", members);
+			
+			Integer totalBed = 0;
+			for(UserInEvent m: members) {
+				totalBed += m.getBedCount();
+				
+				//System.out.println("%%%%%%%%%%%%%%%%% " + m.getBedCount());
+				
+			}
+			
+			String totalBedStr = "";
+			if(totalBed > 0) {
+				totalBedStr = "Accepting guests: " + totalBed;
+			} else if(totalBed < 0) {
+				totalBedStr = "Need lodjing: " + (-totalBed);
+			}
+			
+			//System.out.println("#########totalBed = " + totalBed);
+			
+			
+			request.setAttribute("totalBed",  totalBed);
+			request.setAttribute("totalBedStr",  totalBedStr);
+			
+			StringJoiner capacity = new StringJoiner(" / ", "", "");
+			capacity.setEmptyValue("");
+			
+			capacity.add(((Integer) members.size()).toString());
+			
+			int capacityInt = Integer.MAX_VALUE;
+			if(event.getParticipants_limit() != null && event.getParticipants_limit() > 0) {
+				capacity.add(event.getParticipants_limit().toString());
+				
+				capacityInt = event.getParticipants_limit();
+			}	
+			
+			request.setAttribute("capacity", capacity.toString());
+			
+			if(members.size() + 1 > capacityInt) 
+				showJoin = false;
+			
+			
+			System.out.println("showQuit = " + showQuit);
+			System.out.println("showJoin = " + showJoin);
+			System.out.println("showCancel = " + showCancel);			
 
 			List<UserInEvent> requests = userInEventService
 					.getByEventOnlyRequesters(event.getId());

@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
 <title>User Cabinet</title>
@@ -65,34 +67,30 @@
 <script type="text/javascript" src="js/jquery.tagedit.js"></script>
 <!-- tag end     -->
 
+
 <style>
 /* .panel { */
 /* 	border: 2px solid #0078ae; */
 /* 	border-radius: 5px; */
 /* 	width: 100%; */
 /* } */
-
 /* .message-area { */
 /* 	height: 70%; */
 /* 	resize: none; */
 /* 	box-sizing: border-box; */
 /* } */
-
 /* .input-area { */
 /* 	background: #0078ae; */
 /* 	box-shadow: inset 0 0 10px #00568c; */
 /* } */
-
 /* .input-area input { */
 /* 	margin: 0.5em 0em 0.5em 0.5em; */
 /* } */
-
 /* .text-field { */
 /* 	border: 1px solid grey; */
 /* 	padding: 0.2em; */
 /* 	box-shadow: 0 0 5px #000000; */
 /* } */
-
 /* .button { */
 /* 	border: none; */
 /* 	padding: 5px 5px; */
@@ -102,11 +100,9 @@
 /* 	box-shadow: inset 0 0 10px #000000; */
 /* 	font-weight: bold; */
 /* } */
-
 /* .button:hover { */
 /* 	background: yellow; */
 /* } */
-
 /* #messageInput { */
 /* 	min-width: 60%; */
 /* 	max-width: 80%; */
@@ -116,25 +112,20 @@
 	height: 450px;
 	overflow: auto;
 }
-
 #messageEvent {
 	border-collapse: separate;
 	border-spacing: 0 10px;
 }
-
 .table-wrapper
         td {
 	font-size: 12px;
 }
-
 .td-left-round {
 	border-radius: 25px 0px 0px 25px;
 }
-
 .td-right-round {
 	border-radius: 0px 25px 25px 0px;
 }
-
 nav {
 	color: #fff;
 	background-color: #6699FF;
@@ -150,7 +141,6 @@ nav {
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
 	var endPointURL = "ws://" + window.location.host + webCtx + "/chatevent/";
-
 	var chatClient = null;
 	var room = '';
 	function connect() {
@@ -172,10 +162,8 @@ nav {
 										data,
 										function(index, item) {
 											var avatar = item.sender.avatar.path;
-
 											var colorSender = "#CEF6E3";// = item.senderId == "${sessionUser.id}"? "#CEF6E3": "#2ECCFA" ;
 											var colorRecived = "#2ECCFA";
-
 											var tdUser = '<tr>'
 													+ '<td class = "td-left-round" bgcolor="'
 													+ colorSender
@@ -223,12 +211,9 @@ nav {
 													+ '<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="'
                                 + avatar + '"></td>'
 													+ '</tr>'
-
 											trHTML += item.senderId == "${sessionUser.id}" ? tdUser
 													: tdSender;
-
 										});
-
 						$("#messageEvent").append(trHTML);
 						scrollToBottom();
 					}
@@ -242,7 +227,6 @@ nav {
 						+ '<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="'
                             + jsonObj.userAvatar
                             + '" ></td>';
-
 				var trHTML = '<tr><td></td>'
 						+ '<td class = "td-left-round" bgcolor= "#2ECCFA" width = "20%">'
 						+ moment().format('hh:mm MM D, YYYY')
@@ -253,13 +237,10 @@ nav {
 				scrollToBottom();
 			}
 		};
-
 	}
-
 	function disconnect() {
 		chatClient.close();
 	}
-
 	function sendMessage() {
 		var userName = '${sessionUser.lastName} ${sessionUser.firstName}';
 		var inputElement = document.getElementById("enterMessage");
@@ -291,7 +272,6 @@ nav {
 <script type="text/javascript">
 	$(document).ready(
 			function() {
-
 				$('#ratingEvent').ratings(5, '${mark}').bind('ratingchanged',
 						function(event, data) {
 							rate(data.rating)
@@ -326,11 +306,8 @@ nav {
 			});
 			console.log(strSelector);
 			$(strSelector).remove();
-
 		});
-
 		$(".removefriend").on("click", function() {
-
 			console.log("removefriend ajax call");
 			var value = $(this).data('id');
 			var strSelector = "#userFriendCard" + value;
@@ -344,9 +321,7 @@ nav {
 			console.log(strSelector);
 			$(strSelector).remove();
 		});
-
 		$(document).on('click', '.removefriend', function(e) {
-
 			console.log("removefriend ajax call");
 			var value = $(this).data('id');
 			var strSelector = "#userFriendCard" + value;
@@ -359,15 +334,12 @@ nav {
 			});
 			console.log(strSelector);
 			$(strSelector).remove();
-
 		})
-
 	});
 </script>
 
 <script type="text/javascript">
 	$(function() {
-
 		// Edit only
 		$("#tagform-editonly").find('input.tag').tagedit({
 			autocompleteURL : 'autocompleteUserTags.do',
@@ -376,24 +348,19 @@ nav {
 			},
 			allowEdit : false,
 			allowAdd : false
-
 		});
 	});
 </script>
 
 <script>
 	$(document).ready(function() {
-
 		$("#tagform-editonly").submit(function() {
-
 			$.ajax({
-
 				url : 'submitEventTags.do',
 				type : 'post',
 				dataType : 'json',
 				data : $("#tagform-editonly").serialize(),
 				success : function(data) {
-
 					Materialize.toast(data.valid, 2000, '', function() {
 					})
 				}
@@ -449,15 +416,12 @@ nav {
 														function() {
 															var selectedValue = $(
 																	this).val();
-
 															if (selectedValue == "guest") {
-
 																$(
 																		'#bedCountSelect')
 																		.val(
 																				'need');
 															} else {
-
 																$(
 																		'#bedCountSelect')
 																		.val(
@@ -510,9 +474,22 @@ nav {
 						</c:if>
 
 
-						<h2>
-							<c:out value="${requestScope.event.name} " />
-						</h2>
+                    <h3>
+                        <c:out value="${requestScope.event.name} "/>
+                    </h3>
+                    
+                    <p>
+                    <div id='totalNeed'>
+                    <c:if test="${requestScope.totalBed > 0}">
+                    	<span class="blue-text" >${requestScope.totalBedStr}</span>
+                    </c:if>
+                    
+                    <c:if test="${requestScope.totalBed < 0}">
+                    	<span class="red-text" >${requestScope.totalBedStr}</span>
+                    </c:if>
+                    </div>
+                    </p>
+                    
 
 						<!-- 		       <form action="joinEvent.do" method="POST" > -->
 						<%-- 				<input type="hidden" name = "eventId" value ="${event.id}"> --%>
@@ -563,7 +540,6 @@ nav {
 													$("#changeEventForm")
 															.submit(
 																	function() {
-
 																		$
 																				.ajax({
 																					url : 'changeEventStatus.do',
@@ -583,7 +559,6 @@ nav {
 																										})
 																					}
 																				});
-
 																		return false;
 																	});
 												});
@@ -661,15 +636,15 @@ nav {
 								<c:out value="${event.description}" />
 							</p>
 
-							<p>
-								<span><b>From: </b></span>
-								<c:out value="${event.dateFrom}" />
-							</p>
+                       		 <p>
+                        	    <span><b>From: </b></span>
+                        	    <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${event.dateFrom}" />
+                        	</p>
 
-							<p>
-								<span><b>To: </b></span>
-								<c:out value="${event.dateTo}" />
-							</p>
+                        	<p>
+                        	    <span><b>To: </b></span>
+                        	    <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${event.dateTo}" />
+                        	</p>
 
 							<p>
 								<span><b>Address: </b></span>
@@ -690,17 +665,27 @@ nav {
 								<span><b>Total points: </b></span>
 								<c:out value="${eventPoints}" />
 							</p>
+							
+                        	<p>
+                         	   <span><b>Capacity: </b></span>
+                         	   <c:out value="${capacity}"/>
+                        	</p>							
 							<br>
 
 							<c:if test="${isMember}">
 
-								<p>
-									<span><b>Your mark: </b></span>
-								</p>
+
+								<c:if test="${!isModerator}">
+									<p>
+							 		 <span><b>Your mark: </b></span>
+									</p>
+								</c:if>
 
 								<c:choose>
 									<c:when test="${not empty userLogined}">
+									<c:if test="${!isModerator}">
 										<div id="ratingEvent"></div>
+									</c:if> 	
 										<br />
 
 										<form action="adminEventRequest.do?action=commentEvent"
@@ -726,7 +711,7 @@ nav {
 											</button>
 										</form>
 
-
+										<div class="table-wrapper" id = "divTableMessages">
 										<ul class="collection" id="friendslist">
 
 											<c:forEach items="${requestScope.commentEvent}" var="ce">
@@ -738,7 +723,7 @@ nav {
 															${ce.commentator.firstName} ${ce.commentator.lastName}</a></span>
 
 													<p>
-														<br> ${ce.comment}
+														<br> <c:out value="${ce.comment}"/>
 													</p> <c:if test="${ce.commentator.id == userLogined.id}">
 														<form id="deleteForm"
 															action="deleteEventComment.do?id=${ce.id}&eventId=${event.id}"
@@ -755,6 +740,7 @@ nav {
 
 
 										</ul>
+										</div>
 									</c:when>
 								</c:choose>
 							</c:if>
@@ -771,6 +757,7 @@ nav {
 									<div class="slides"></div>
 									<a class="prev"></a> <a class="next"></a> <a class="play-pause"></a>
 								</div>
+								<c:if test="${isModerator}">
 								<div style="visibility: hidden" id="footer">
 									<a class="update-event-avatar" href="updateUserAvatar.do"
 										data-url="updateEventAvatar.do" id="updateAvatar"> <img
@@ -782,6 +769,7 @@ nav {
 										style="width: 30px; height: 30px;" /> Delete from gallery
 									</a>
 								</div>
+								</c:if>
 
 							</div>
 							<p>
@@ -842,17 +830,17 @@ nav {
 												<c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
 
 
-												<c:if test="${isModerator}">
+                                            <c:if test="${isModerator && (m.user.id != user.id)}">
 
-													<br>
-													<span style="margin-right: 10px;">Remove member</span>
-													<a href="#_" class="btn-floating light-blue removefriend"
-														data-id="${m.user.id}"> <i
-														class="mdi-navigation-close"></i>
+                                                <br>
+                                                <span style="margin-right: 10px;">Remove member</span>
+                                                <a class="btn-floating light-blue removefriend"
+                                                   data-id="${m.user.id}"> <i
+                                                        class="mdi-navigation-close"></i>
 
-													</a>
+                                                </a>
 
-												</c:if>
+                                            </c:if>
 
 												<br>
 
@@ -950,17 +938,14 @@ nav {
 																<script>
 																	$(
 																			'#countryByLang_${lang.id}')
-
 																			.change(
 																					function() {
-
 																						var destination = $(
 																								'#cityByLang_${lang.id}')
 																								.val();
 																						var selectedValue = $(
 																								this)
 																								.val();
-
 																						//change other countries
 																						$
 																								.ajax({
@@ -969,29 +954,24 @@ nav {
 																											+ selectedValue,
 																									success : function(
 																											originCountryId) { //we're calling the response json array 'cities'
-
 																										$
 																												.each(
 																														originCountryId,
 																														function(
 																																countryId,
 																																country) { //here we're doing a foeach loop round each city with id as the key and city as the value
-
 																															//$(countryId).val(country);
-
 																															$(
 																																	'#countryByLang_'
 																																			+ countryId)
 																																	.val(
 																																			country);
-
 																															//fill city list
 																															$(
 																																	'#cityByLang_'
 																																			+ countryId
 																																			+ " > option")
 																																	.remove(); //first of all clear select items
-
 																															$
 																																	.ajax({
 																																		type : "post",
@@ -999,7 +979,6 @@ nav {
 																																				+ country,
 																																		success : function(
 																																				originCityId) { //we're calling the response json array 'cities'
-
 																																			var optFirst = $('<option selected />'); // here we're creating a new select option with for each city
 																																			optFirst
 																																					.val('choose');
@@ -1007,7 +986,6 @@ nav {
 																																					'#cityId')
 																																					.val(
 																																							'choose');
-
 																																			optFirst
 																																					.text('loginpage.city.choose');
 																																			$(
@@ -1015,20 +993,17 @@ nav {
 																																							+ countryId)
 																																					.append(
 																																							optFirst);
-
 																																			$
 																																					.each(
 																																							originCityId,
 																																							function(
 																																									id,
 																																									city) { //here we're doing a foeach loop round each city with id as the key and city as the value
-
 																																								var opt = $('<option />'); // here we're creating a new select option with for each city
 																																								opt
 																																										.val(id);
 																																								opt
 																																										.text(city);
-
 																																								$(
 																																										'#cityByLang_'
 																																												+ countryId)
@@ -1037,11 +1012,9 @@ nav {
 																																							});
 																																		}
 																																	});
-
 																														});
 																									}
 																								});
-
 																					});
 																</script>
 
@@ -1057,16 +1030,13 @@ nav {
 																	'#cityByLang_${lang.id}')
 																	.change(
 																			function() {
-
 																				var selectedValue = $(
 																						this)
 																						.val();
-
 																				$(
 																						'#cityId')
 																						.val(
 																								selectedValue);
-
 																				//change other cities
 																				$
 																						.ajax({
@@ -1075,24 +1045,20 @@ nav {
 																									+ selectedValue,
 																							success : function(
 																									originCityId) { //we're calling the response json array 'cities'
-
 																								$
 																										.each(
 																												originCityId,
 																												function(
 																														cityId,
 																														city) { //here we're doing a foeach loop round each city with id as the key and city as the value
-
 																													$(
 																															'#cityByLang_'
 																																	+ cityId)
 																															.val(
 																																	city);
-
 																												});
 																							}
 																						});
-
 																			});
 														</script></td>
 
@@ -1125,7 +1091,6 @@ nav {
 																																"#addressByLangMessage_${lang.id}")
 																																.text(
 																																		data.valid);
-
 																													}
 																												});
 																									});
@@ -1231,15 +1196,12 @@ nav {
 																var selectedValue = $(
 																		this)
 																		.val();
-
 																if (selectedValue == "guest") {
-
 																	$(
 																			'#bedCountSelect')
 																			.val(
 																					'need');
 																} else {
-
 																	$(
 																			'#bedCountSelect')
 																			.val(
@@ -1327,7 +1289,7 @@ nav {
 														</a>
 
 														<span style="margin-right: 10px;">Remove request</span>
-														<a href="#_" class="btn-floating light-blue removefriend"
+														<a  class="btn-floating light-blue removefriend"
 															data-id="${m.user.id}"> <i
 															class="mdi-navigation-close"></i>
 
@@ -1386,7 +1348,6 @@ nav {
 								- $('#divTableMessages').height() + 20, 0);
 						$('#divTableMessages').scrollTop(scrollBottom);
 					}
-
 					$(function() {
 						$('#profiletabs ul li a')
 								.on(
@@ -1395,9 +1356,7 @@ nav {
 											e.preventDefault();
 											var newcontent = $(this).attr(
 													'href');
-
 											if (newcontent == "#members") {
-
 												$
 														.ajax({
 															url : 'getEventMembers.do',
@@ -1409,29 +1368,24 @@ nav {
 															success : function(
 																	data) {
 																//alert(data.isEmpty);
-
 																var resultCollenction = $("#collectionResults");
 																//resultCollenction.find("form").empty();
 																resultCollenction
 																		.empty();
 																//resultCollenction = $("#collectionResults");
-
 																$
 																		.each(
 																				data.results,
 																				function(
 																						counts,
 																						m) {
-
 																					var f = "<form id='userFriendFormWithId" + m.userId + "' >"
 																							+ "<input type='hidden' id='userFriendId' class='userFriendId' name='userFriendId' " +
                                                                         "value='" + m.userId + "'>"
 																							+
-
 																							"<input type='hidden' id='memberEventId' class='memberEventId' name='memberEventId'" +
                                                                         "value='" + m.eventId + "'>"
 																							+
-
 																							"<li class='collection-item avatar' id='userFriendCard" + m.userId + "'>"
 																							+ "<img src='" + m.user.avatar.path + "' alt='' class='circle'> "
 																							+ "<span class='title'><a href='userProfile.do?id="
@@ -1450,23 +1404,25 @@ nav {
 																								+ (-m.bedCount)
 																								+ " person(s)";
 																					}
-
-																					if (1 == 1) {
-
-																						f += "<br><span style='margin-right: 10px;'>Remove member</span>"
-																								+ "<a  href='#_' class='btn-floating light-blue removefriend' data-id='" + m.userId + "'> "
-																								+ "<i class='mdi-navigation-close'></i>"
-																								+ "</a>";
-																					}
+					                                                                <c:if test="${isModerator}">
+																					
+					                                                                if(data.moderatorId != m.userId) {
+					                                                                
+					                                                                    f += "<br><span style='margin-right: 10px;'>Remove member</span>"
+					                                                                    + "<a   class='btn-floating light-blue removefriend' data-id='" + m.userId + "'> "
+					                                                                    + "<i class='mdi-navigation-close'></i>"
+					                                                                    + "</a>";
+					                                                                 }    
+					                                                                    
+					                                                                  </c:if>
+																					
 																					f += "<a  class='secondary-content'><i class='material-icons'>"
 																							+ m.status
 																							+ "</i></a>"
 																							+
-
 																							"</form>";
 																					resultCollenction
 																							.append(f);
-
 																				});
 															}
 														});
@@ -1474,7 +1430,6 @@ nav {
 											$('#profiletabs ul li a')
 													.removeClass('sel');
 											$(this).addClass('sel');
-
 											$('#content section').each(
 													function() {
 														if (!$(this).hasClass(
@@ -1483,7 +1438,6 @@ nav {
 																	'hidden');
 														}
 													});
-
 											$(newcontent).removeClass('hidden');
 										});
 					});
@@ -1507,5 +1461,4 @@ nav {
 
 </body>
 </html>
-
 
