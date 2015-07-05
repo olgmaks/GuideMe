@@ -1,15 +1,25 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style>
-.table-wrapper
-{
-    width: 100%;
-    height: 550px;
-    overflow: auto;
+.table-wrapper {
+	width: 100%;
+	height: 450px;
+	overflow: auto;
+}
+#messageUser {
+	border-collapse: separate;
+	border-spacing: 0 10px;
 }
 .table-wrapper
- td {
-   font-size: 12px;
+        td {
+	font-size: 12px;
 }
+.td-left-round {
+	border-radius: 25px 0px 0px 25px;
+}
+.td-right-round {
+	border-radius: 0px 25px 25px 0px;
+}
+
 </style>
 <script src="js/moment.js"></script>
 <script type="text/javascript">
@@ -37,21 +47,61 @@ var friendAvatar;
 	            	 var trHTML = '';
 	                jQuery.each(data, function(index, item) {	              
 	                	var avatar = item.sender.avatar.path;
-	                	var color = item.senderId == "${sessionUser.id}"? "#CEF6E3": "#2ECCFA" ; 
-	                	var td = '<td width="10%">' 
-           	 			+ item.sender.firstName + " " 
-           	 			+ item.sender.lastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' 
-           	 			+ avatar + '" ></td>'
-	                	var tdUser = item.senderId == "${sessionUser.id}"?  td: '<td></td>'
-           	 			var tdSender = item.senderId == "${sessionUser.id}"? '<td></td>' : td
-	               	 	trHTML += '<tr bgcolor= '+color +'>'
-	               	 			+ tdUser
-	               	 			+'<td width="20%"> '
-	               	 			+ moment(item.createdOn).format('hh:mm MM D, YYYY') 
-	               	 			+ '</td><td width="60">' 
-	               	 			+ item.message.replace(/</g,'&lt') + '</td>'
-	               	 			+ tdSender
-	               	 			+'</tr>';          
+						var colorSender = "#CEF6E3";// = item.senderId == "${sessionUser.id}"? "#CEF6E3": "#2ECCFA" ;
+						var colorRecived = "#2ECCFA";
+						var tdUser = '<tr>'
+								+ '<td class = "td-left-round" bgcolor="'
+								+ colorSender
+								+ '" width="10%">'
+								+ item.sender.firstName
+								+ " "
+								+ item.sender.lastName
+								+ '<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="'
+            					+ avatar + '"></td>'
+								+ '<td bgcolor= "'
+								+ colorSender
+								+ '" width="20%"> '
+								+ moment(item.createdOn)
+										.format(
+												'hh:mm MM D, YYYY')
+								+ '</td><td  class = "td-right-round"  bgcolor= "'
+								+ colorSender
+								+ '" width="60%">'
+								+ item.message.replace(
+										/</g, '&lt')
+								+ '</td>'
+								+ '<td width="10%"></td>'
+								+ '</tr>'
+					
+						var tdSender = '<tr>'
+								+ '<td width = "10%"></td>'
+								+ '<td class = "td-left-round" bgcolor= "'
+								+ colorRecived
+								+ '" width="20%"> '
+								+ moment(item.createdOn)
+										.format(
+												'hh:mm MM D, YYYY')
+								+ '</td><td bgcolor= "'
+								+ colorRecived
+								+ '" width="60%">'
+								+ item.message.replace(
+										/</g, '&lt')
+								+ '</td>'
+								+ '<td class = "td-right-round" bgcolor="'
+								+ colorRecived
+								+ '" width="10%">'
+								+ item.sender.firstName
+								+ " "
+								+ item.sender.lastName
+								+ '<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="'
+            					+ avatar + '"></td>'
+								+ '</tr>'
+						trHTML += item.senderId == "${sessionUser.id}" ? tdUser
+								: tdSender;
+					
+	                	
+	                	
+	                	      
 	                });
 	             
 	                $("#messageUser").append(trHTML);
@@ -91,16 +141,17 @@ var friendAvatar;
                var nemberMessageId = '#numberNewMessage' + jsonObj.userId;//recive number of new message
                var number = parseInt($(nemberMessageId).html()) +1 ;
                if (friendId == jsonObj.userId){
-            	   var td = '<td width="10%">' 
-          	 			+ jsonObj.friendFirstName + " " 
-          	 			+ jsonObj.friendLastName +'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="' 
-          	 			+ jsonObj.friendAvatar + '" ></td>';
-          	 			
-        	   		var trHTML = '<tr bgcolor= "#2ECCFA"><td></td>'
-        	   			+'<td width = "20%">' + moment().format('hh:mm MM D, YYYY') + '</td><td width="70%">  '
-        	   			+ jsonObj.message.replace(/</g,'&lt')+ '</td>'
-        	   			+ td
-        	   			+'</tr>';
+            	   var td = ' <td class = "td-right-round" bgcolor= "#2ECCFA" width="10%">'
+						+ jsonObj.userName
+						+ '<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="'
+                           + jsonObj.friendAvatar
+                           + '" ></td>';
+					var trHTML = '<tr><td></td>'
+						+ '<td class = "td-left-round" bgcolor= "#2ECCFA" width = "20%">'
+						+ moment().format('hh:mm MM D, YYYY')
+						+ '</td><td bgcolor= "#2ECCFA" width="70%">  '
+						+ jsonObj.message.replace(/</g, '&lt') + '</td>' + td
+						+ '</tr>';
                		$("#messageUser").append(trHTML);
                	 	scrollToBottom();
                }else{
@@ -126,14 +177,17 @@ var friendAvatar;
                   chatClient.send(JSON.stringify(jsonObj));
               });
             
-             
              var table = document.getElementById("messageUser");
              var rowCount = table.rows.length;
-             var trHTML = '<tr bgcolor= "#CEF6E3">'
-             		+'<td width="10%">${sessionUser.firstName} ${sessionUser.lastName}'
-             		+'<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="${sessionUser.avatar.path}"></td>'
-             		+'<td width = "20%">' 
-             	+ moment().format('hh:mm MM D, YYYY') +'</td><td width="70%">  '+ message.replace(/</g,'&lt')+ '</td><td></td></tr>';
+             var trHTML = '<tr>'
+					+ '<td class = "td-left-round" bgcolor= "#CEF6E3" width="10%">'
+					+ userName
+					+ '<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="${sessionUser.avatar.path}"></td>'
+					+ '<td bgcolor= "#CEF6E3" width = "20%">'
+					+ moment().format('hh:mm MM D, YYYY')
+					+ '</td><td class = "td-right-round" bgcolor= "#CEF6E3" width="60%">  '
+					+ message.replace(/</g, '&lt')
+					+ '</td><td width="10%"></td></tr>';
              $("#messageUser").append(trHTML);
              scrollToBottom();
              inputElement.value = "";
