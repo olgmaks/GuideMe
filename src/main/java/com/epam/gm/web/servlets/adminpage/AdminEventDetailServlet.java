@@ -45,6 +45,12 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			HttpSession session = request.getSession();
 			User user = new User();
 			user = SessionRepository.getSessionUser(request);
+			
+			if(user == null) {
+				response.sendRedirect("401.do");
+				return;			
+			}
+			
 			if (user.isGuide()) {
 				List<Service> list = new ServiceDao().getServicesByGuideId(user
 						.getId());
