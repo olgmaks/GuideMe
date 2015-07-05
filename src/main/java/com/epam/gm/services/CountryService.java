@@ -24,4 +24,7 @@ public class CountryService {
     public List<Country> getCountriesByPureId(Integer pureId) throws SQLException {
     	return countryDao.getCountriesByPureId(pureId);
     }	
+    public List<Country> getCountriesByLocalId(Integer localId) throws SQLException{
+    	return countryDao.getCountriesByLocalId(localId);
+    }
 }

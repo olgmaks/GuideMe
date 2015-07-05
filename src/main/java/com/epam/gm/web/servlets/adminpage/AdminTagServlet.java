@@ -16,7 +16,7 @@ public class AdminTagServlet implements HttpRequestHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
 		 request.setAttribute("centralContent", "adminTag");
-		 request.setAttribute("tagList", new TagDao().getAll());
+		 request.setAttribute("tagList", new TagDao().getAllActiveTags());
 		request.getRequestDispatcher("pages/admin/adminPanel.jsp").forward(request,
 				response);
 	}

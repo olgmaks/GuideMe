@@ -1,82 +1,35 @@
- 
-<script type="text/javascript">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script>
 	$(document).ready(function() {
-		$('#tblAdminEvent').jtable({
-			title : 'Event List',
-			actions : {
-				listAction :   'adminEventRequest.do?action=list',
-				createAction : 'adminEventRequest.do?action=create',
-				updateAction : 'adminEventRequest.do?action=update',
-				deleteAction : 'adminEventRequest.do?action=delete'
-			},
-			fields : {
-				id : {
-					title : 'id',
-					width : '3%',
-					key : true,
-					list : true,
-					edit : false				
-					},
-					
-				name : {
-					 title: 'name',
-						display: function (data) {
-	                     return '<a href="eventDetail.do?id=' + data.record.id + '">'+data.record.name+'</a>';
-	                 }
-				},
-				description : {
-					title : 'description',
-					
-					edit : true
-				},
-				dateFrom : {
-					title : 'dateFrom',
-				
-					edit : true
-				},
-				dateTo : {
-					title : 'dateTo',
-					
-					edit : true
-				},
-				moderatorId : {
-					title : 'moderatorId',
-					
-					edit : true,
-					visibility: 'hidden'
-				},
-				addressId : {
-					title : 'addressId',
-					
-					edit : true,
-					visibility: 'hidden'
-				},
-				status : {
-					title : 'status',
-					
-					edit : true,
-					options: { 'active': 'active', 'cancel': 'cancel' },
-				},
-				city: {
-			        title: 'city',
-			        display:function(data){
-			                return data.record.address.city.name;
-			        }
-				},
-				moderator: {
-			        title: 'moderator1',
-					display: function (data) {
-                     return '<a href="userProfile.do?id=' + data.record.moderatorId + '">'+data.record.moderator.lastName+'</a>';
-                 }
-				}
-			}
-		});
-		$('#tblAdminEvent').jtable('load');
+		$('#eventTable').DataTable();
 	});
 </script>
-
+<link rel="StyleSheet" href="css/dataTables.css" type="text/css"
+	media="all" />
+<script type="text/javascript" src="js/dataTables.js"></script>
 <div style="width: 90%; margin-right: 5%; margin-left: 5%; text-align: center;">
+<table id="eventTable" class="display" cellspacing="0" width="100%">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>moderator</th>
+			<th>name</th>
+			<th>description</th>
+			
+		</tr>
+	</thead>
 
-		<h4>AEvent List</h4>
-		<div id="tblAdminEvent"></div>
-	</div>
+	<tbody>
+		<c:forEach items="${eventList}" var="list">
+			<tr>
+				<td>${list.id}</td>
+				<td><a href="userProfile.do?id=${list.moderator.id}">	${list.moderator.lastName} ${list.moderator.firstName} </a></td>
+				<td><a href="eventDetail.do?id=${list.id}">${list.name}</a></td>
+				<td>${list.description}</td>
+		
+			</tr>
+		</c:forEach>
+
+	</tbody>
+</table>
+</div>

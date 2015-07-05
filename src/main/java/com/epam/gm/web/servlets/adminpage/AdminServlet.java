@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.gm.daolayer.EventDao;
 import com.epam.gm.model.User;
 import com.epam.gm.services.UserService;
 import com.epam.gm.services.UserTypeService;
@@ -20,6 +21,7 @@ public class AdminServlet implements HttpRequestHandler {
 	
 		UserService userService = new UserService();
 		List<User> userList = userService.getAll();
+		request.setAttribute("eventList", new EventDao().getAllEvents());
 		request.setAttribute("userList", userList);
 		request.setAttribute("userType", new UserTypeService().getAll());
 		//request.getRequestDispatcher("pages/admin.jsp").forward(request, response);

@@ -1,7 +1,11 @@
 package com.epam.gm.model;
 
+import java.util.List;
+
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
+import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
+import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("country")
 public class Country {
@@ -16,6 +20,18 @@ public class Country {
 	@Column("pure_id")
 	private Integer pureId;
 	
+	 @ForeignKey
+	    @OneToMany(field="local_id", value=Language.class)
+	private Language language;
+	 
+	public Language getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
+
 	public Integer getId() {
 	return id;
     }

@@ -7,6 +7,11 @@
 <link rel="StyleSheet" href="css/dataTables.css" type="text/css"
 	media="all" />
 <script type="text/javascript" src="js/dataTables.js"></script>
+<form action="UserDetailReport" method="get">
+<button type = "submit">
+report
+</button>
+</form>
 <div style="width: 90%; margin-right: 5%; margin-left: 5%; text-align: center;">
 <table id="userTable" class="display" cellspacing="0" width="100%">
 	<thead>

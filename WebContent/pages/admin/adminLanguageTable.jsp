@@ -3,8 +3,8 @@
 var addedit='add';
 var id;
 	$(document).ready(function() {
-		var dTable = $('#countryTable').DataTable();
-		$("#countryTable").on("click",".edit",function(){
+		var dTable = $('#languageTable').DataTable();
+		$("#languageTable").on("click",".edit",function(){
 			$('#action').val('edit');
 			var tr = $(this).parents("tr");
 			   <c:forEach var="item" items="${languageList}" varStatus="loop">
@@ -14,7 +14,7 @@ var id;
 			$('#action').val('add');
 		});
 		
-		$("#countryTable").on("click",".delete",function(){
+		$("#languageTable").on("click",".delete",function(){
 			var tr = $(this).parents("tr");
 			id = tr.find("td:eq(0)").html();
 			$.ajax({
@@ -32,7 +32,7 @@ var id;
 <script type="text/javascript" src="js/dataTables.js"></script>
 <div
 	style="width: 80%; margin-right: 10%; margin-left: 10%; text-align: center;">
-	<table id="countryTable" class="display" cellspacing="0" width="80%">
+	<table id="languageTable" class="display" cellspacing="0" width="80%">
 		<thead>
 			<tr>
 				<th hidden>ID</th>
@@ -68,7 +68,7 @@ var id;
 	</table>
 	
 	<div style="width: 50%; margin-left: 25% margin-right: 25% text-align: center;">
-	<form  action="admincountryrequest.do" method="post">
+	<form  action="adminlanuagerequest.do" method="post">
 		<input hidden name="action" id = "action" /> 
 		<input hidden name="id"  id = "id"/> 
 	      <c:forEach var="item" items="${languageList}">
@@ -80,5 +80,3 @@ var id;
 	</form>
 	</div>
 </div>
-
-

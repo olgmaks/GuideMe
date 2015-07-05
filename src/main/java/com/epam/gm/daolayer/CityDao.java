@@ -2,8 +2,12 @@ package com.epam.gm.daolayer;
 
 
 import com.epam.gm.model.City;
+import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -51,17 +55,19 @@ public class CityDao extends AbstractDao<City> {
 
     //gryn
     //must be optimized later
-    public Integer getLastPureId() throws SQLException {
-
-        List<City> list = getAll();
-
-        Integer max = 0;
-        for (City c : list) {
-            if (c.getPureId() > max)
-                max = c.getPureId();
-        }
-
-        return max;
+    public Integer getLastPureId() throws SQLException{
+    	Integer result=null;
+    	String select = "select pure_id from city order by pure_id  DESC LIMIT 1";
+    	Connection connection = ConnectionManager.getConnection();
+    	PreparedStatement stmt = connection.prepareStatement(select);
+    	ResultSet rs = stmt.executeQuery();
+    	if(rs.next()){
+    		result = rs.getInt(1);
+    	}
+    	rs.close();
+		stmt.close();
+		ConnectionManager.closeConnection(connection);
+		return result;
     }
 
 

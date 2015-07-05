@@ -41,27 +41,27 @@ public class AdminTagRequest implements HttpRequestHandler {
 		if (action != null) {
 			try {
 				if (action.equals("list")) {
-					// Fetch Data from Student Table
-					tagList = dao.getAllActiveTags();
-
-					// Return in the format required by jTable plugin
-					JSONROOT.put("Result", "OK");
-					JSONROOT.put("Records", tagList);
-
-					// Convert Java Object to Json
-					String jsonArray = gson.toJson(JSONROOT);
-					// request.setAttribute("",jsonArray);
-					response.setCharacterEncoding("UTF-8");
-					response.getWriter().print(jsonArray);
-				} else if (action.equals("create") || action.equals("update")) {
+//					// Fetch Data from Student Table
+//					tagList = dao.getAllActiveTags();
+//
+//					// Return in the format required by jTable plugin
+//					JSONROOT.put("Result", "OK");
+//					JSONROOT.put("Records", tagList);
+//
+//					// Convert Java Object to Json
+//					String jsonArray = gson.toJson(JSONROOT);
+//					// request.setAttribute("",jsonArray);
+//					response.setCharacterEncoding("UTF-8");
+//					response.getWriter().print(jsonArray);
+				} else if (action.equals("add") || action.equals("edit")) {
 					Tag tag = new Tag();
 					String name = request.getParameter("name");
 					tag.setName(name);
-					if (action.equals("create")) {
+					if (action.equals("add")) {
 						// Create new record
 						tag.setDeleted(false);
 						dao.save(tag);
-					} else if (action.equals("update")) {
+					} else if (action.equals("edit")) {
 						// Update existing record
 						int id = Integer.parseInt(request.getParameter("id"));
 						Map<String, Object> map = new HashMap<>();
@@ -69,14 +69,14 @@ public class AdminTagRequest implements HttpRequestHandler {
 						dao.update(id, map);
 					}
 
-					// Return in the format required by jTable plugin
-					JSONROOT.put("Result", "OK");
-					JSONROOT.put("Record", tag);
-
-					// Convert Java Object to Json
-					String jsonArray = gson.toJson(JSONROOT);
-					response.setCharacterEncoding("UTF-8");
-					response.getWriter().print(jsonArray);
+//					// Return in the format required by jTable plugin
+//					JSONROOT.put("Result", "OK");
+//					JSONROOT.put("Record", tag);
+//
+//					// Convert Java Object to Json
+//					String jsonArray = gson.toJson(JSONROOT);
+//					response.setCharacterEncoding("UTF-8");
+//					response.getWriter().print(jsonArray);
 				} else if (action.equals("delete")) {
 					// Delete record
 					if (request.getParameter("id") != null) {
@@ -86,13 +86,13 @@ public class AdminTagRequest implements HttpRequestHandler {
 						map.put("deleted", 1);
 						dao.update(id, map);
 
-						// Return in the format required by jTable plugin
-						JSONROOT.put("Result", "OK");
-
-						// Convert Java Object to Json
-						String jsonArray = gson.toJson(JSONROOT);
-						response.setCharacterEncoding("UTF-8");
-						response.getWriter().print(jsonArray);
+//						// Return in the format required by jTable plugin
+//						JSONROOT.put("Result", "OK");
+//
+//						// Convert Java Object to Json
+//						String jsonArray = gson.toJson(JSONROOT);
+//						response.setCharacterEncoding("UTF-8");
+//						response.getWriter().print(jsonArray);
 					}
 				}
 			} catch (Exception ex) {
