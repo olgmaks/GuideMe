@@ -15,7 +15,7 @@ public class CommentUserDao extends AbstractDao<CommentUser> {
 	}
 
 	public List<CommentUser> getByUserId(int userId) throws SQLException {
-		return getByField("user_id", userId);
+		return super.getByField("user_id", userId);
 	}
 
 	public void saveCommentUser(CommentUser comment)

@@ -29,6 +29,7 @@ public class GetHelper<T> extends AbstractHelper<T> {
 //		System.out.println(sql);
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setObject(1, fieldValue);
+//        System.out.println(statement);
         return statement;
     }
 

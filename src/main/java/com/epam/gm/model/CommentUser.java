@@ -9,22 +9,27 @@ import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("comment_user")
 public class CommentUser {
+
     @Column("id")
     private Integer id;
+
     @Column("date")
     private Date date;
+
     @Column("commentator_id")
     private Integer commentatorId;
 
     @ForeignKey
     @OneToMany(field="commentator_id",value= User.class)
     private User Commentator;
+
     @Column("user_id")
     private Integer userId;
 
     @ForeignKey
     @OneToMany(field="user_id",value=User.class)
     private User user;
+
     @Column("comment")
     private String comment;
 
