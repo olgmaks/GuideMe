@@ -27,6 +27,9 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 
 	private static final String IS_MEMBER_OF_EVENT = "select (%s in( SELECT uie.user_id FROM user_in_event uie   WHERE uie.is_member = TRUE AND uie.event_id = %s ))";
 
+
+  
+	
 	public UserInEventDao() {
 		// gryn
 		// super(ConnectionManager.getConnection(), UserInEvent.class);
@@ -166,6 +169,8 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 		return super.getBoolean(String.format(IS_MEMBER_OF_EVENT, userId,
 				eventId));
 	}
+	
+
 
 	public static void main(String[] args) throws SQLException,
 			IllegalArgumentException, IllegalAccessException {

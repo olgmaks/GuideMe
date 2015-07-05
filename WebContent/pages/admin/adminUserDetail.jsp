@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  
  <link rel="stylesheet"	href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css" />
 
@@ -16,6 +17,12 @@
      height: 56px;
      line-height: 56px; 
    }  
+   
+	.table-wrapper {
+	width: 100%;
+	height: 450px;
+	overflow: auto;
+	}
   
   </style>
    
@@ -136,6 +143,10 @@
           
           <li><a href="#newfriends">Friends</a></li>
           
+          <li><a href="#moderatorEvents">Author of</a></li>
+          
+          <li><a href="#memberEvents">Member of</a></li>
+          
 <!--           <li><a href="#settings">Settings</a></li> -->
           
         </ul>
@@ -200,7 +211,7 @@
 <%-- 	          <p class = "activity">${cu.comment} </p> --%>
 <%-- 	      	   </c:forEach>  --%>
 	      	   
-	      	   
+	      	   <div class="table-wrapper" id = "divTableMessages">
 				<ul class="collection" id="commentslist">
 
 					<c:forEach items="${requestScope.commentUser}" var="ce">
@@ -226,7 +237,8 @@
 
 					</c:if></li>
 					</c:forEach>
-				</ul>	      	   
+				</ul>	
+				</div>      	   
 	      	   
 	      	   
 	      	    
@@ -337,9 +349,50 @@
 			</c:forEach>
 			</ul>
 
-		</section>      
-      
-      
+		</section>    
+		
+	  <section id="moderatorEvents" class="hidden">
+			<p>Author of:</p>
+
+
+			<ul class="collection" id="collectionResults">
+			<c:forEach items="${requestScope.moderatorEvents}" var="m">
+				<li class="collection-item avatar" id="userFriendCard${m.id}"><img src="${m.avatar.path}" alt="" class="circle"> 
+				<span class="title"><a href="eventDetail.do?id=${m.id}">
+												<c:out value="${m.name}"/></a></span>
+													
+				<p>
+				Date: <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${m.dateFrom}" /> - <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${m.dateTo}" /> 
+				</p>
+				
+				</li>
+						
+			</c:forEach>
+			</ul>
+
+		</section>
+		
+		
+	  <section id="memberEvents" class="hidden">
+			<p>Member of:</p>
+
+
+			<ul class="collection" id="collectionResults">
+			<c:forEach items="${requestScope.memberEvents}" var="m">
+				<li class="collection-item avatar" id="userFriendCard${m.id}"><img src="${m.avatar.path}" alt="" class="circle"> 
+				<span class="title"><a href="eventDetail.do?id=${m.id}">
+												<c:out value="${m.name}"/></a></span>
+													
+				<p>
+				Date: <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${m.dateFrom}" /> - <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${m.dateTo}" /> 
+				</p>
+				
+				</li>
+						
+			</c:forEach>
+			</ul>
+
+		</section>         
       
       
 <!--       <section id="settings" class="hidden"> -->

@@ -93,6 +93,14 @@ public class EventService {
     public void fixEventLimit(Integer id) throws SQLException {
     	eventDao.fixEventLimit(id);
     }
+    
+    public List<Event> getAllActiveEventsWhereUserModerator(Integer userId) throws SQLException {
+    	return eventDao.getAllActiveEventsWhereUserModerator(userId);
+    }
+    
+    public List<Event> getAllActiveEventsWhereUserNotModerator(Integer userId) throws SQLException {
+    	return eventDao.getAllActiveEventsWhereUserNotModerator(userId);
+    }
 
     public static void main(String[] args) throws SQLException {
         List<Event> topUserEvents = new EventService().getAllActiveNotDeletedUserEvents();

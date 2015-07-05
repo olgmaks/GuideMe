@@ -9,14 +9,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.gm.calculators.EventCalculator;
 import com.epam.gm.calculators.UserCalculator;
 import com.epam.gm.daolayer.RatingUserDao;
 import com.epam.gm.daolayer.UserDao;
+import com.epam.gm.model.Event;
 import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.Language;
 import com.epam.gm.model.Tag;
 import com.epam.gm.model.User;
 import com.epam.gm.services.CommentUserService;
+import com.epam.gm.services.EventService;
 import com.epam.gm.services.FriendUserService;
 import com.epam.gm.services.LanguageService;
 import com.epam.gm.services.PhotoService;
@@ -91,6 +94,14 @@ public class AdminUserProfileServlet implements HttpRequestHandler {
 		
 		UserDao userDao = new UserDao();
 		
+		
+		EventService es = new EventService();
+		List<Event> moderatorEvents = es.getAllActiveEventsWhereUserModerator(id);
+		EventCalculator.sortEventsByPoints(moderatorEvents, user.getId());
+
+		List<Event> memberEvents = es.getAllActiveEventsWhereUserNotModerator(id);
+		EventCalculator.sortEventsByPoints(memberEvents, user.getId());		
+		
 		try {
 			request.setAttribute("userLogined", SessionRepository.getSessionUser(request));
 			request.setAttribute("commentUser", new CommentUserService().getByUserId(id));
@@ -108,6 +119,8 @@ public class AdminUserProfileServlet implements HttpRequestHandler {
 			request.setAttribute("requesterId", requesterId);
 			request.setAttribute("noRelation", noRelation);
 			request.setAttribute("langs", joiner.toString());
+			request.setAttribute("moderatorEvents", moderatorEvents);
+			request.setAttribute("memberEvents", memberEvents);
 			
 			request.setAttribute("photos",
 					new PhotoService().getUserPhotos(id));
