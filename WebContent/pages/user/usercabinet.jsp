@@ -35,8 +35,7 @@
 
 <%--Tag it Java script--%>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"
-	type="text/javascript" charset="utf-8"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>
 
 

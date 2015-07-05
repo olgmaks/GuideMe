@@ -28,7 +28,7 @@ public class UserLanguageDaoTest {
 			System.out.println(userLanguage);
 		}
 	}
-	
+	@Ignore
 	@Test
 	public void test2() throws SQLException {
 
@@ -40,7 +40,10 @@ public class UserLanguageDaoTest {
 		
 		
 	}
-	
+
+	@Test
+	public void testDeleteUserLang(){
+	}
 	
 
 }

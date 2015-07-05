@@ -53,7 +53,8 @@
                     <form id="searchOptions">
                         <input type="hidden" name="userNameHidden" value="" id="userNameHidden">
                     <%--<input style="height: 30px;" placeholder="Interests" id="mySingleField" disabled="true" name="tags"/>--%>
-                        <ul class="browser-default" id="singleFieldTags"></ul>
+                        <ul class="browser-default" id="singleFieldTags">
+                        </ul>
                         <input  class="browser-default" id="visibleInput" type="submit" value="Submit">
                     </form>
                 </div>

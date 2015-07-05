@@ -24,7 +24,7 @@ import com.epam.gm.services.UserInEventService;
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
-public class UserTagsServlet implements HttpRequestHandler {
+public class  UserTagsServlet implements HttpRequestHandler {
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)

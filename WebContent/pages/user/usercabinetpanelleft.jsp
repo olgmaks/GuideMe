@@ -3,6 +3,21 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<script src="js/left-panel-tag-controller.js" type="text/javascript"></script>
+
+<script>
+	$(document).ready(function(){
+		$('#modalInterests').click(function(){
+			$('#modalInterestsWindow').openModal();
+			$('.ui-autocomplete').css('z-index','1001');
+		});
+		$('#modalLanguages').click(function(){
+			$('#modalLanguagesWindow').openModal();
+			$('.ui-autocomplete').css('z-index','1001');
+		});
+	});
+</script>
 <div class="row">
 	<div class="col s12" style="margin-top: 10px;width: 260px;">
 		<ul class="collection z-depth-2 " style="height: 100%;">
@@ -16,11 +31,11 @@
 <%-- 						src="${sessionUser.avatar.path}"> --%>
 						
 					<img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                                 src="${sessionUser.avatar.path}">						
-						
-						
+                                                 src="${sessionUser.avatar.path}">
 						</a>
-				</div> <br> <h7>${sessionUser.firstName} ${sessionUser.lastName}</h7>
+				</div><a href="editProfile.do" style="float:right;">
+				<img class="circle" style="height: 40px; width: 40px;" src="icons/edit-profile.png"></a>
+				 <br> <h7>${sessionUser.firstName} ${sessionUser.lastName}</h7>
 				<br> <br> <a href="eventsincabinet.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
@@ -77,15 +92,21 @@
 				</c:if>
 
 				<h6>
-					<a href="modaleLanguages">Languages</a>: ua, en, fr
+					<a href="#_" id="modalLanguages">Languages</a>:
+					<div id = "userLanguagesTagReferences" style="width: 200px;">
+					</div>
 				</h6>
 				<h6>
-					<a href="modaleInterests">Interests</a>: music, sport, tourism
+					<a href="#_" id="modalInterests">Interests</a>:
+					<div id = "userInterestsTagReferences" style="width: 200px;">
+					</div>
 				</h6>
 			</li>
 		</ul>
 	</div>
 </div>
+<jsp:include page="modal/userintereststags.jsp"/>
+<jsp:include page="modal/userlanguages.jsp"/>
 
 
 

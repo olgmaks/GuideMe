@@ -96,9 +96,9 @@
                                 + currentUser.id
                                 + "'></form><div class='card' style='height: 150px; width: 330px; float: left; margin-left: 10px;' id='userFriendCard"
                                 + currentUser.id
-                                + "'><table><tr><td style='width: 120px;'><img class='circle' style='height: 120px; width: 120px; object-fit: cover'src='"
+                                + "'><table><tr><td style='width: 120px;'>"+"<a href='userProfile.do?id=" + currentUser.friend.Id + "'>"+"<img class='circle' style='height: 120px; width: 120px; object-fit: cover'src='"
                                 + currentUser.friend.avatar.path
-                                + "'></td><td><div><a href='#'class='black-text'>"
+                                + "'>"+"</a>"+"</td><td><div><a href='userProfile.do?id="+currentUser.friend.Id+"'class='black-text'>"
                                 + currentUser.friend.firstName + " " + currentUser.friend.lastName
                                 + "</a><br><br><div style='float: right; margin-right: 10px;'><span style='margin-right: 10px;'>Remove friend</span><a href='#_' class='btn-floating light-blue removefriend' data-id='"
                                 + currentUser.id
@@ -171,13 +171,13 @@
                                  id="userFriendCard${userFriend.id}">
                                 <table>
                                     <tr>
-                                        <td style="width: 120px;">
+                                        <td style="width: 120px;"><a href="userProfile.do?id=${userFriend.user.id}">
                                             <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                                 src="${userFriend.user.avatar.path}">
+                                                 src="${userFriend.user.avatar.path}"></a>
                                         </td>
                                         <td>
                                             <div>
-                                                <a href="#"
+                                                <a href="userProfile.do?id=${userFriend.user.id}"
                                                    class="black-text">${userFriend.user.firstName} ${userFriend.user.lastName}</a>
 
                                                 <div>
@@ -202,13 +202,13 @@
                                  id="userFriendCard${userFriend.id}">
                                 <table>
                                     <tr>
-                                        <td style="width: 120px;">
+                                        <td style="width: 120px;"><a href="userProfile.do?id=${userFriend.friend.id}">
                                             <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                                 src="${userFriend.friend.avatar.path}">
+                                                 src="${userFriend.friend.avatar.path}"></a>
                                         </td>
                                         <td>
                                             <div>
-                                                <a href="#"
+                                                <a href="userProfile.do?id=${userFriend.friend.id}"
                                                    class="black-text">${userFriend.friend.firstName} ${userFriend.friend.lastName}</a>
 
                                                 <div>
@@ -236,13 +236,13 @@
                                  id="userFriendCard${userFriend.id}">
                                 <table>
                                     <tr>
-                                        <td style="width: 120px;">
+                                        <td style="width: 120px;"><a href="userProfile.do?id=${userFriend.friend.id}">
                                             <img class="circle" style="height: 120px; width: 120px; object-fit: cover"
-                                                 src="${userFriend.friend.avatar.path}">
+                                                 src="${userFriend.friend.avatar.path}"></a>
                                         </td>
                                         <td>
                                             <div>
-                                                <a href="#"
+                                                <a href="userProfile.do?id=${userFriend.friend.id}"
                                                    class="black-text">${userFriend.friend.firstName} ${userFriend.friend.lastName}</a>
                                                 <br><br>
 

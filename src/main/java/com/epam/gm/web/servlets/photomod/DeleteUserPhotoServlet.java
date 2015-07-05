@@ -20,8 +20,15 @@ public class DeleteUserPhotoServlet implements HttpRequestHandler{
         System.out.println("photolocation : " + photoLocation);
 
         PhotoService.serve().deletePhotoByPath(photoLocation);
-        
-        File file = new File(photoLocation);
+
+        String path = request.getServletContext().getRealPath("/");
+        String fullPath = path  + photoLocation;
+        System.out.println("full path : " + fullPath);
+        File file = new File(fullPath);
+        if (file.exists()) {
+            file.delete();
+            System.out.println("file has been succesfuly deleted from file system");
+        }
 
         System.out.println("delete user success photoPass = '"+photoLocation+"'");
 

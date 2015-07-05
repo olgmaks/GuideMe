@@ -8,6 +8,7 @@ import com.epam.gm.daolayer.TagDao;
 import com.epam.gm.model.Tag;
 
 public class TagService {
+
 	private TagDao dao = new TagDao();
 	
 	public List<Tag> getAllUserTags(Integer userId) throws SQLException {

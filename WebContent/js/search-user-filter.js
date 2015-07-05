@@ -98,7 +98,7 @@ $(document).ready(function(){
 
 function getSearchUserFilter() {
     var userNameInput = $("#userNameInput").val();
-    var tags = $("[name = 'tags']").val();
+    var tags = $("#singleFieldTags").tagit("assignedTags").toString();
     var cityName = $("#city-select").val();
     var tagsMatches = 0;
     var searchRole = $("#user-type-select").val();

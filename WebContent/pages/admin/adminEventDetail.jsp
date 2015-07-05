@@ -32,6 +32,10 @@
 <link rel="stylesheet"
 	href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css" />
 
+	<%--Tag it css--%>
+	<link href="css/jquery.tagit.css" rel="stylesheet" type="text/css">
+	<link href="css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
+
 <!-- tag start -->
 <%--Maskymuk commented this line to provide goog visibility of img gallery--%>
 <%--<link rel="StyleSheet" href="css/ui-lightness/jquery-ui-1.9.2.custom.min.css" type="text/css" media="all"/>--%>
@@ -56,7 +60,7 @@
 <%--Tag it Java script--%>
 <%--<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>--%>
 
-
+	<script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>
 <!-- <script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>	 -->
 
 
