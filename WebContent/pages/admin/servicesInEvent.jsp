@@ -10,34 +10,105 @@
 								.getElementsByClassName("collapsible-header tooltipped");
 						var classname2 = document
 								.getElementsByClassName("collection with-header");
+						var classname3 = document
+								.getElementsByClassName("collection-item");
 						var price = 0;
-						$(classname).click(
-								function() {
-									var id = $(this).attr('id');
-									var str = $(this).text();
+						var boughtArr = [];
 
-									var serviceprice = parseFloat($(this).attr(
-											'price'));
+						$(classname)
+								.click(
+										function() {
+											var id = $(this).attr('id');
+											var str = $(this).text();
 
-									if ($('#s' + id).length) {
+											/* 	$('[id^="servppppp"]').each(
+														function() {
+															boughtArr[index++] = $(this)
+																	.attr('idofserv');
+														}); */
 
-									} else {
-										str = str.substring(0, str.length - 5);
-										/* 	alert($('.' + id).length); */
+											var serviceprice = parseFloat($(
+													this).attr('price'));
 
-										$(classname2).append(
-												"<div id='s"+id+"'><li class='collection-item'>"
-														+ str + "</li></div>");
-										price = price + serviceprice;
-									}
-									$('.black-text').text('bucket');
-									$('.grey-text').text(
-											'Price ' + price + ' $');
+											if ($('#servppppp' + id).length) {
 
-								});
+											} else {
+												boughtArr.push(id);
+												str = str.substring(0,
+														str.length - 5);
+												/* 	alert($('.' + id).length); */
+
+												$(classname2)
+														.append(
+																"<div id='servppppp"+id+"' idofserv="+id+" price2="+serviceprice +" ><li class='collection-item'>"
+																		+ str
+																		+ "<i class='mdi-content-remove-circle-outline right'></i></div></li>  ");
+
+												price = price + serviceprice;
+											}
+											$("#servppppp" + id)
+													.click(
+															function() {
+																serviceprice2 = $(
+																		this)
+																		.attr(
+																				'price2');
+																var index = boughtArr
+																		.indexOf(id);
+																if (index > -1) {
+																	boughtArr
+																			.splice(
+																					index,
+																					1);
+																}
+																$(this)
+																		.remove();
+
+																/* var serviceprice2 = parseFloat(); */
+
+																price = price
+																		- serviceprice2;
+
+																$('.black-text')
+																		.text(
+																				'bucket');
+																$('.grey-text')
+																		.text(
+																				'Price '
+																						+ price
+																						+ ' $');
+															});
+											$('.black-text').text('bucket');
+											$('.grey-text').text(
+													'Price ' + price + ' $');
+
+										});
+
+						$("#buttonbuy").click(function() {
+							$("#generalprice").text(price);
+							alert(boughtArr)
+							$.ajax({
+								url : 'buyService.do',
+								type : 'POST',
+								data : {
+									boughtArrval : JSON.stringify(boughtArr)
+								},
+								success : function(data) {
+
+								}
+							});
+
+						});
+
 					});
 </script>
-<ul class="collapsible" data-collapsible="accordion" style="width: 45%;">
+<script type="text/javascript">
+	$(document).ready(function() {
+		// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+		$('.modal-trigger').leanModal();
+	});
+</script>
+<ul class="collapsible" data-collapsible="accordion" style="width: 75%;">
 	<c:forEach items="${servicesInEvent }" var="serviceinevent">
 		<li>
 			<div class="collapsible-header tooltipped"
@@ -45,19 +116,32 @@
 				id="${serviceinevent.getService().getId() }" data-position="left"
 				data-delay="50"
 				data-tooltip="${serviceinevent.getService().getDescription() }">${serviceinevent.getService().getName() }
-				${serviceinevent.getService().getPrice() }$ <a
-					class="btn-floating btn-medium waves-effect waves-light green"><i
-					class="material-icons">+</i></a>
+				${serviceinevent.getService().getPrice() }$ <i
+					class="mdi-content-add-circle-outline right"></i>
 			</div>
 		</li>
 	</c:forEach>
 </ul>
 <h4 class="green-text text-darken-4">bucket</h4>
 <h4 class="grey-text text-darken-4">Price</h4>
-<a class="waves-effect waves-light btn">Buy</a>
 
+<a id="buttonbuy" class="waves-effect waves-light btn modal-trigger"
+	href="#modal1">Buy</a>
 <ul class="collection with-header">
 
 
 
 </ul>
+
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+	<div class="modal-content">
+		<h4>Modal Header</h4>
+		<p id="generalprice"></p>
+	</div>
+	<div class="modal-footer">
+		<a href="#!"
+			class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+	</div>
+</div>
