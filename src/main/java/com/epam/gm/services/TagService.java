@@ -33,4 +33,8 @@ public class TagService {
 	public void save(Tag tag) throws IllegalArgumentException, IllegalAccessException, SQLException {
 		dao.save(tag);
 	}
+	public Boolean isPresentName(String name) throws SQLException{
+		return dao.isPresentName(name);
+	}
+	
 }

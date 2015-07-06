@@ -1,46 +1,61 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script>
-var addedit='add';
-var id;
-	$(document).ready(function() {
+	var id;
+	var nameValid;
+	$(document).ready(
+			function() {
 
-		var dTable = $('#tagTable').DataTable();
-		$('#addbtn').on('click', function() {
-			 $.ajax({
-	                url: "adminTagRequest.do?action=" + addedit + "&name=" + $('#name').val() +"&id=" + id,
-	                type: "post",
-	                success: function () {
-	                }
-	            });
+				var dTable = $('#tagTable').DataTable();
 				
-			if(addedit =='edit'){
-				location.reload();	
-			}
-			else{
-				location.reload();
-				//dTable.row.add([$('#name').val(),'<button id ="edit">edit</button>' ]).draw();
-			} 
-			addedit = 'add';
-		});
-
-		$("#tagTable").on("click",".edit",function(){
-			addedit = 'edit';
-			var tr = $(this).parents("tr");
-			$('#name').val(tr.find("td:eq(1)").html());
-			id = tr.find("td:eq(0)").html();
-		});
-		$("#tagTable").on("click",".delete",function(){
-			var tr = $(this).parents("tr");
-			id = tr.find("td:eq(0)").html();
-			$.ajax({
-                url: "adminTagRequest.do?action=delete&id=" + id,
-                type: "post",
-                success: function () {
-                }
-            });
-			location.reload();
-		});
-	});
+				$("#tagTable").on("click", ".edit", function() {
+					var tr = $(this).parents("tr");
+					$('#name').val(tr.find("td:eq(1)").html());
+					$('#id').val(tr.find("td:eq(0)").html());
+					$('#action').val('edit')
+				});
+				
+				$("#tagTable").on("click", ".delete", function() {
+					var tr = $(this).parents("tr");
+					id = tr.find("td:eq(0)").html();
+					$.ajax({
+						url : "adminTagRequest.do?action=delete&id=" + id,
+						type : "post",
+						success : function() {
+						}
+					});
+					location.reload();
+				});
+				
+				$("#name").change(function(){
+					if (!this.value){
+						 nameValid = false
+						 $('#namefalse').show();
+		        		 $('#nameOk').hide();
+					}
+					$.ajax({
+		                url: "adminTagRequest.do?action=isPresentName&name=" + $('#name').val(),
+		                type: "post",
+		                async: false,
+		                success: function (data) {
+		                	if((!data)){
+		                		nameValid = true;
+		                		 $('#namefalse').hide();
+		                		 $('#nameOk').show();
+		                	}else{
+		                		 nameValid = false;
+		                		 $('#namefalse').show();
+		                		 $('#nameOk').hide();
+		                	}
+		   	          
+		                }
+		            });
+				});
+					
+				 $('form[name=saveForm]').submit(function(){
+						if(!nameValid)
+				        	return false;
+				    });
+			});
 </script>
 <link rel="StyleSheet" href="css/dataTables.css" type="text/css"
 	media="all" />
@@ -61,19 +76,44 @@ var id;
 		<tbody>
 			<c:forEach items="${tagList}" var="list">
 				<tr>
-					<td hidden id = "tdId" >${list.id}</td>
-					<td id = "tdName">${list.name}</td>
-					<td><button name ="edit" id = "edit" class ="edit">Edit</button></td>
-					<td><button name ="delete" id = "delete" class ="delete">delete</button></td>
+					<td hidden id="tdId">${list.id}</td>
+					<td id="tdName">${list.name}</td>
+					<td>
+						<button name="edit" id="edit" class="edit"
+							style="border: 0; background: transparent">
+							<img src="icons/edit.png"
+								style="height: 20px; width: 20px; object-fit: cover" />
+						</button>
+					</td>
+					<td>
+						<button name="delete" id="delete" class="delete"
+							style="border: 0; background: transparent">
+							<img src="icons/delete-photo-icon.png"
+								style="height: 20px; width: 20px; object-fit: cover" />
+						</button>
+					</td>
 				</tr>
 			</c:forEach>
 
 		</tbody>
 	</table>
-	<div style="width: 50%; margin-left: 20%">
-		Name: <br />
-		<input  type="text" name="name" id="name" /> <br />
-	</div>
-	<input type="button" value="Save" id="addbtn" />
+	<form class="collection z-depth-2 " style="width: 50%; margin-right: 25%; margin-left: 25%; text-align: center;""
+		action="adminTagRequest.do" method="post" name="saveForm">
+		<input hidden type="text" name="action" id="action" value="add">
+		<input hidden type="text" name="id" id="id">
+			
+			<table>
+			<tr>
+			<td width = "50%">
+				<input required  type="text" name="name" id="name" />
+			</td>
+			<td  width = "10%">
+				<a hidden  href="" id = "nameOk"><img src="img/ok.ico" id="contentImage" border="0" width="50px" height="50px"></a>
+				<a hidden  href="" id = "namefalse"><img src="img/error.jpg" id="contentImage" border="0" width="50px" height="50px"></a>
+			</td>
+				
+			</table>
+		<input type="submit" value="Save" id="save">
+	</form>
 </div>
 

@@ -7,9 +7,9 @@ import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 @Entity("language")
 public class Language implements Comparable<Language> {
 
-    	@Column("id")
+    @Column("id")
 	private Integer id;
-	@Column("key")
+	@Column("short_name")
 	private String key;
 	@Column("name")
 	private String name;

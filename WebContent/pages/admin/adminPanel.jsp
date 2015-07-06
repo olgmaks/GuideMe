@@ -78,6 +78,9 @@
                <c:when test="${centralContent == 'adminCountry'}">
                     <jsp:include page="adminCountryTable.jsp"/>
                </c:when>
+               <c:when test="${centralContent == 'adminLanguage'}">
+                    <jsp:include page="adminLanguageTable.jsp"/>
+               </c:when>
 
             </c:choose>
         </td>

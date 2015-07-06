@@ -2,7 +2,7 @@
 <style>
 .table-wrapper {
 	width: 100%;
-	height: 450px;
+	height: 500px;
 	overflow: auto;
 }
 #messageUser {
@@ -10,7 +10,7 @@
 	border-spacing: 0 10px;
 }
 .table-wrapper
-        td {
+     td {
 	font-size: 12px;
 }
 .td-left-round {
@@ -66,7 +66,7 @@ var friendAvatar;
 												'hh:mm MM D, YYYY')
 								+ '</td><td  class = "td-right-round"  bgcolor= "'
 								+ colorSender
-								+ '" width="60%">'
+								+ '" width="40%">'
 								+ item.message.replace(
 										/</g, '&lt')
 								+ '</td>'
@@ -83,7 +83,7 @@ var friendAvatar;
 												'hh:mm MM D, YYYY')
 								+ '</td><td bgcolor= "'
 								+ colorRecived
-								+ '" width="60%">'
+								+ '" width="40%">'
 								+ item.message.replace(
 										/</g, '&lt')
 								+ '</td>'

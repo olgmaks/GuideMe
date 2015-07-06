@@ -18,7 +18,11 @@ public class TagDao extends AbstractDao<Tag> {
 		// super(ConnectionManager.getConnection(), Tag.class);
 		super(Tag.class);
 	}
-
+	
+	public Boolean isPresentName(String name) throws SQLException{
+		String select = "SELECT ('%S' IN (SELECT t.name FROM tag t))";
+		return super.getBoolean(String.format(select, name));
+	}
 	// gryn - all not deleted tags
 	public List<Tag> getAllActiveTags() throws SQLException {
 		List<Tag> result = getByField("deleted", false);

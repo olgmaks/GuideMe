@@ -305,7 +305,14 @@ import java.util.StringJoiner;
     	}
     	
         public static void main(String[] args) throws SQLException {
-    //        UserDao userDao = new UserDao();
+   
+        	        UserDao userDao = new UserDao();
+        	        try {
+						System.out.println(userDao.userActivity(2));
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     //        userDao.getActiveUsersAndGuidesInTheCountry(9).forEach(x -> System.out.println(x.getFirstName()));
     //
 

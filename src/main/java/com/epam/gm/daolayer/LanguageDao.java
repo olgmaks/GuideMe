@@ -3,8 +3,10 @@ package com.epam.gm.daolayer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.epam.gm.model.Language;
+import com.epam.gm.model.Tag;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserLanguage;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
@@ -22,6 +24,15 @@ public class LanguageDao extends AbstractDao<Language> {
 	public List<Language> getLocalizedLangs() throws SQLException {
 		List<Language> result = getByField("localized", true);
 		return result;      
+	}
+	
+	public Boolean isPresentName(String name) throws SQLException{
+		String select = "SELECT ('%S' IN (SELECT l.name FROM language l))";
+		return super.getBoolean(String.format(select, name));
+	}
+	public Boolean isPresentShortName(String shortName) throws SQLException{
+		String select = "SELECT ('%S' IN (SELECT l.short_name FROM language l))";
+		return super.getBoolean(String.format(select, shortName));
 	}
 	
 	//gryn
@@ -54,6 +65,10 @@ public class LanguageDao extends AbstractDao<Language> {
 		}
 	}	
 	
+	public void save(Language lang) throws IllegalArgumentException,
+		IllegalAccessException, SQLException {
+		super.save(lang);
+	}
 	public Language getlangByName(String name) throws SQLException {
 		List<Language> result = getByField("name", name);
 		if (result.isEmpty()) {
@@ -83,7 +98,9 @@ public class LanguageDao extends AbstractDao<Language> {
 		
 		return res;
 	} 
-	
+	public void update(int id , Map<String, Object> updates) throws SQLException{
+		updateById(id, updates);
+	}
 	
 	public static void main(String[] args) throws SQLException {
 //		List<UserLanguage> list = new UserLanguageDao().getByField("user_id", 14);
@@ -105,7 +122,4 @@ public class LanguageDao extends AbstractDao<Language> {
 		
 	}
 
-
-	
-	
 }

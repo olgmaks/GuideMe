@@ -2,10 +2,12 @@ package com.epam.gm.services;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.epam.gm.daolayer.LanguageDao;
 import com.epam.gm.model.Language;
 import com.epam.gm.model.User;
+import com.epam.gm.utf8uncoder.StringHelper;
 
 public class LanguageService {
 	private LanguageDao languageDao;
@@ -36,5 +38,25 @@ public class LanguageService {
 	
 	public List<Language> getUserLangsForLocal(User user) throws SQLException {
 		return languageDao.getUserLangsForLocal(user);
+	}
+	
+	public void save(Language lang) throws IllegalArgumentException, IllegalAccessException, SQLException{
+		languageDao.save(lang);
+	}
+	
+	public void updateById(int id, Map<String, Object> updates) throws SQLException{
+		languageDao.updateById(id, updates);
+	}
+	public Boolean isPresentName(String name) throws SQLException{
+		return languageDao.isPresentName(name);
+	}
+	
+	public Boolean isPresentShortName(String shortName) throws SQLException{
+		return languageDao.isPresentShortName(shortName);
+	}
+	public static void main(String[] args) throws SQLException {
+		String s = "Українська";
+		s = StringHelper.convertFromUTF8(s);
+		System.out.println(new LanguageService().isPresentName(s));
 	}
 }

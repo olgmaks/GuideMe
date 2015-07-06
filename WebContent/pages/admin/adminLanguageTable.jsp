@@ -1,29 +1,103 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<style>
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+  position: relative;
+  left: 0px;
+  }
+</style>
 <script>
-var addedit='add';
 var id;
+var nameValid;
+var keyValid;
 	$(document).ready(function() {
 		var dTable = $('#languageTable').DataTable();
+		
+		$("#name").change(function(){
+			if (!this.value){
+				 nameValid = false
+				 $('#namefalse').show();
+        		 $('#nameOk').hide();
+			}
+			$.ajax({
+                url: "adminlanguagerequest.do?action=isPresentName&name=" + $('#name').val(),
+                type: "post",
+                async: false,
+                success: function (data) {
+                	if((!data)){
+                		nameValid = true;
+                		 $('#namefalse').hide();
+                		 $('#nameOk').show();
+                	}else{
+                		 nameValid = false;
+                		 $('#namefalse').show();
+                		 $('#nameOk').hide();
+                	}
+   	          
+                }
+            });
+		});
+		
+		$("#key").change(function(){
+			if (!this.value){
+				keyValid = false;
+				$('#keyfalse').show();
+       		 	$('#keyeOk').hide();
+			}
+			$.ajax({
+                url: "adminlanguagerequest.do?action=isPresentShortName&key=" + $('#key').val(),
+                type: "post",
+                async: false,
+                success: function (data) {
+                	if((!data)){
+                		 keyValid = true;
+                		 $('#keyfalse').hide();
+                		 $('#keyOk').show();
+                	}
+                	else{
+                		keyValid = false;
+                		 $('#keyfalse').show();
+                		 $('#keyOk').hide();
+                	}
+   	          
+                }
+            });
+		});
+		
+		 $('form[name=saveForm]').submit(function(){
+				if(!(nameValid) || (!keyValid))
+		        	return false;
+		    });
+
 		$("#languageTable").on("click",".edit",function(){
-			$('#action').val('edit');
 			var tr = $(this).parents("tr");
-			   <c:forEach var="item" items="${languageList}" varStatus="loop">
-					$('#langCountry${item.id}').val(tr.find("td:eq(${loop.index+1})").html());
-			   </c:forEach>
-			$('#action').val(tr.find("td:eq(0)").html());
-			$('#action').val('add');
+			$('#name').val(tr.find("td:eq(1)").html());
+			$('#key').val(tr.find("td:eq(2)").html());
+			$('#id').val(tr.find("td:eq(0)").html());
+			$('#action').val('edit')
 		});
 		
 		$("#languageTable").on("click",".delete",function(){
 			var tr = $(this).parents("tr");
 			id = tr.find("td:eq(0)").html();
 			$.ajax({
-                url: "adminCountryRequest.do?action=delete&id=" + id,
+                url: "adminlanguagerequest.do?action=delete&id=" + id,
                 type: "post",
                 success: function () {
                 }
             });
 			location.reload();
+		});
+		
+		$("#languageTable").on("click",".localized",function(){
+			var tr = $(this).parents("tr");
+			id = tr.find("td:eq(0)").html();
+			$.ajax({
+                url: "adminlanguagerequest.do?action=localized&id=" + id,
+                type: "post",
+                success: function () {
+                }
+            });
 		});
 	});
 </script>
@@ -36,29 +110,33 @@ var id;
 		<thead>
 			<tr>
 				<th hidden>ID</th>
-				<c:forEach var="item" items="${languageList}">
-		            <th>${item.name}</th>
-		          </c:forEach>
+				<th>Name</th>
+				<th>key</th>
+				<th>Localized</th>
 				<th>edit</th>
 				<th>delete</th>
 			</tr>
 		</thead>
 
 		<tbody>
-			<c:forEach var="type" items="${countryLocal}">
+			<c:forEach items="${languageList}" var="list">
 				<tr>
-					<td hidden id = "tdId" >${type.key.id}</td>
-					<c:forEach var="lang" items="${type.value}">
-						<td>${lang.name}</td>
-					</c:forEach>
+					<td hidden id = "tdId" >${list.id}</td>
+					<td id = "tdName">${list.name}</td>
+					<td id = "tdKey">${list.key}</td>
+					<td id = "tdLocalized">
+						<p>
+							<input type="checkbox" name="Localized" class = "localized"   ${list.localized == 'true' ? 'checked' : ''}>
+						</p>
+					</td>
 					<td>
-						<button name ="edit" id = "edit" class ="edit">
-							<img src="icons/edit.jpg" style="height: 20px; width: 20px; object-fit: cover" />
+						<button name ="edit" id = "edit" class ="edit" style="border: 0; background: transparent">							
+							<img src="icons/edit.png" style="height: 20px; width: 20px; object-fit: cover"/>
 						</button>
 					</td>
 					<td>
-						<button name ="delete" id = "delete" class ="delete">
-							<img src="icons/button-delete.ico" style="height: 20px; width: 20px; object-fit: cover" />
+						<button name ="delete" id = "delete" class ="delete" style="border: 0; background: transparent">
+							<img src="icons/delete-photo-icon.png" style="height: 20px; width: 20px; object-fit: cover"/>
 						</button>
 					</td>
 				</tr>
@@ -66,17 +144,36 @@ var id;
 
 		</tbody>
 	</table>
-	
-	<div style="width: 50%; margin-left: 25% margin-right: 25% text-align: center;">
-	<form  action="adminlanuagerequest.do" method="post">
-		<input hidden name="action" id = "action" /> 
-		<input hidden name="id"  id = "id"/> 
-	      <c:forEach var="item" items="${languageList}">
-         	<label> ${item.name} </label>
-         	<input required  type="text" name="langCountry${item.id }" id="langCountry${item.id}" /> 
-          </c:forEach>
-		<br/>
-	<input type="submit" value="Save" id="addbtn" />
-	</form>
+	<form class="collection z-depth-2 " style="height: 100%;" action = "adminlanguagerequest.do" method = "post" name = "saveForm">
+	<input hidden type = "text" name = "action" id = "action" value = "add">
+	<input hidden type = "text" name = "id" id = "id">
+	<div
+	style="width: 80%; margin-right: 10%; margin-left: 10%; text-align: center;">
+	<table>
+		<tr>
+			<th>Name<th>
+			<th>key</th>
+		</tr>
+		<tr>
+			<td width = "50%">
+				<input required  type="text" name="name" id="name" />
+			</td>
+			<td  width = "10%">
+				<a hidden  href="" id = "nameOk"><img src="img/ok.ico" id="contentImage" border="0" width="50px" height="50px"></a>
+				<a hidden  href="" id = "namefalse"><img src="img/error.jpg" id="contentImage" border="0" width="50px" height="50px"></a>
+			</td>
+			<td width = "30%">
+				<input required  type="text" name="key"  id="key" /> 
+			</td>
+			<td width = 10%>
+				<a hidden href="" id = "keyOk"><img src="img/ok.ico" id="contentImage" border="0" width="50px" height="50px"></a>
+				<a hidden  href="" id = "keyfalse"><img src="img/error.jpg" id="contentImage" border="0" width="50px" height="50px"></a>
+			</td>
+		</tr>	
+	</table>	
 	</div>
+		<input type = "submit" value = "Save" id = "save" >
+	</form>
 </div>
+
+	
