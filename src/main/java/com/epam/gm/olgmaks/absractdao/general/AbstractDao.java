@@ -204,12 +204,13 @@ public class AbstractDao<T> {
     
     protected Boolean getBoolean (String sql) throws SQLException {
 	Connection connection = ConnectionManager.getConnection();
-	PreparedStatement statement = connection.prepareStatement(sql + "as 'value'");
+//	PreparedStatement statement = connection.prepareStatement(sql + "as 'value'");
+        PreparedStatement statement = connection.prepareStatement(sql);
 	System.out.println(statement);
 	ResultSet resultSet = statement.executeQuery();
 	resultSet.next();
-	Boolean res = resultSet.getBoolean("value");
-	
+//	Boolean res = resultSet.getBoolean("value");
+	Boolean res = resultSet.getBoolean(1);
 	//gryn
 	ConnectionManager.closeConnection(connection); 
 	 
@@ -218,11 +219,13 @@ public class AbstractDao<T> {
     
     protected Integer getInteger (String sql) throws SQLException {
 	Connection connection = ConnectionManager.getConnection();
-	PreparedStatement statement = connection.prepareStatement(sql + "as 'value'");
-	System.out.println(statement);
+//	PreparedStatement statement = connection.prepareStatement(sql + "as 'value'");
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        System.out.println(statement);
 	ResultSet resultSet = statement.executeQuery();
 	resultSet.next();
-	Integer res = resultSet.getInt("value");
+	Integer res = resultSet.getInt(1);
 	
 	//gryn
 	ConnectionManager.closeConnection(connection); 
@@ -232,11 +235,11 @@ public class AbstractDao<T> {
     
     protected Double getDouble (String sql) throws SQLException {
 	Connection connection = ConnectionManager.getConnection();
-	PreparedStatement statement = connection.prepareStatement(sql + "as 'value'");
+	PreparedStatement statement = connection.prepareStatement(sql);
 	System.out.println(statement);
 	ResultSet resultSet = statement.executeQuery();
 	resultSet.next();
-	Double res = resultSet.getDouble("value");
+	Double res = resultSet.getDouble(1);
 	
 	//gryn
 	ConnectionManager.closeConnection(connection); 
@@ -246,11 +249,11 @@ public class AbstractDao<T> {
     
     protected Object getObject (String sql) throws SQLException {
 	Connection connection = ConnectionManager.getConnection();
-	PreparedStatement statement = connection.prepareStatement(sql + "as 'value'");
+	PreparedStatement statement = connection.prepareStatement(sql);
 	System.out.println(statement);
 	ResultSet resultSet = statement.executeQuery();
 	resultSet.next();
-	Object res = resultSet.getObject("value");
+	Object res = resultSet.getObject(1);
 	
 	//gryn
 	ConnectionManager.closeConnection(connection); 

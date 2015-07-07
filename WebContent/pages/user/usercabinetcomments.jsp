@@ -13,9 +13,10 @@
         });
 
         $('.respond-button').on('click', function () {
-            $('#answerOnCommentWindow').openModal(function () {
+
                 $('#messageRespond').val("");
-            });
+
+            $('#answerOnCommentWindow').openModal();
         });
 
 

@@ -716,7 +716,7 @@
         }
 
         function ob(a) {
-            var b = a.oClasses, c = a.sTableId, e = a.oLanguage, d = a.oPreviousSearch, f = a.aanFeatures, g = '<input type="search" class="' + b.sFilterInput + '" />', j = e.sSearch, j = j.match(/_INPUT_/) ? j.replace("_INPUT_", g) : j + g, b = h("<div/>", {
+            var b = a.oClasses, c = a.sTableId, e = a.oLanguage, d = a.oPreviousSearch, f = a.aanFeatures, g = '<input type="search" class="' + b.sFilterInput + '" style=""/>', j = e.sSearch, j = j.match(/_INPUT_/) ? j.replace("_INPUT_", g) : j + g, b = h("<div/>", {
                     id: !f.f ? c + "_filter" : null,
                     "class": b.sFilter
                 }).append(h("<label/>").append(j)),
