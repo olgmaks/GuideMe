@@ -33,8 +33,7 @@ import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class AdminEventDetailServlet implements HttpRequestHandler {
-	
-	
+
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
@@ -45,12 +44,12 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			HttpSession session = request.getSession();
 			User user = new User();
 			user = SessionRepository.getSessionUser(request);
-			
-			if(user == null) {
+
+			if (user == null) {
 				response.sendRedirect("401.do");
-				return;			
+				return;
 			}
-			
+
 			if (user.isGuide()) {
 				List<Service> list = new ServiceDao().getServicesByGuideId(user
 						.getId());
@@ -67,7 +66,7 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			List<Language> languageList = languageService.getLocalizedLangs();
 			request.setAttribute("languageList", languageList);
 
-			session.setAttribute("servicesInEvent",
+			request.setAttribute("servicesInEvent",
 					new ServiceInEventDao().getAllServicesByEventId(id));
 
 			// gryn - adding try
@@ -165,10 +164,10 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 
 				showJoin = true;
 
-				if(!"active".equals(event.getStatus())) {
+				if (!"active".equals(event.getStatus())) {
 					showJoin = false;
 				}
-				
+
 			} else {
 				details = userInEvent.get(0);
 				if (!details.getIsMember())
@@ -188,49 +187,48 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			List<UserInEvent> members = userInEventService
 					.getByEventOnlyMembers(event.getId());
 			request.setAttribute("members", members);
-			
+
 			Integer totalBed = 0;
-			for(UserInEvent m: members) {
+			for (UserInEvent m : members) {
 				totalBed += m.getBedCount();
-				
-				//System.out.println("%%%%%%%%%%%%%%%%% " + m.getBedCount());
-				
+
+				// System.out.println("%%%%%%%%%%%%%%%%% " + m.getBedCount());
+
 			}
-			
+
 			String totalBedStr = "";
-			if(totalBed > 0) {
+			if (totalBed > 0) {
 				totalBedStr = "Accepting guests: " + totalBed;
-			} else if(totalBed < 0) {
+			} else if (totalBed < 0) {
 				totalBedStr = "Need lodjing: " + (-totalBed);
 			}
-			
-			//System.out.println("#########totalBed = " + totalBed);
-			
-			
-			request.setAttribute("totalBed",  totalBed);
-			request.setAttribute("totalBedStr",  totalBedStr);
-			
+
+			// System.out.println("#########totalBed = " + totalBed);
+
+			request.setAttribute("totalBed", totalBed);
+			request.setAttribute("totalBedStr", totalBedStr);
+
 			StringJoiner capacity = new StringJoiner(" / ", "", "");
 			capacity.setEmptyValue("");
-			
+
 			capacity.add(((Integer) members.size()).toString());
-			
+
 			int capacityInt = Integer.MAX_VALUE;
-			if(event.getParticipants_limit() != null && event.getParticipants_limit() > 0) {
+			if (event.getParticipants_limit() != null
+					&& event.getParticipants_limit() > 0) {
 				capacity.add(event.getParticipants_limit().toString());
-				
+
 				capacityInt = event.getParticipants_limit();
-			}	
-			
+			}
+
 			request.setAttribute("capacity", capacity.toString());
-			
-			if(members.size() + 1 > capacityInt) 
+
+			if (members.size() + 1 > capacityInt)
 				showJoin = false;
-			
-			
+
 			System.out.println("showQuit = " + showQuit);
 			System.out.println("showJoin = " + showJoin);
-			System.out.println("showCancel = " + showCancel);			
+			System.out.println("showCancel = " + showCancel);
 
 			List<UserInEvent> requests = userInEventService
 					.getByEventOnlyRequesters(event.getId());

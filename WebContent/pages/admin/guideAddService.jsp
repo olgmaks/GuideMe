@@ -1,10 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<br>
 
+
+<br>
+<jsp:include page="deleteServicesFromEventModal.jsp" />
 <script type="text/javascript">
 	$(document)
 			.ready(
 					function() {
+						var currenteventdateto;
 						$('#dropdowndef').click(function() {
 							$("#firstchoosen").prop('disabled', true);
 							$("#sub").prop('disabled', false);
@@ -19,6 +22,7 @@
 									$('#name2').val(data.name);
 									$('#desc').val(data.description);
 									$('#price').val(data.price);
+									currenteventdateto = data.eventId;
 								}
 							});
 						});
@@ -69,9 +73,19 @@
 											var dateto = $('#dateto').val();
 											var timeto = $('#timeto').val();
 
-											var datefromformated = new Date(
-													datefrom);
-											var currentdate = new Date();
+											var today = new Date();
+											var dd = today.getDate();
+											var mm = today.getMonth() + 1; //January is 0!
+
+											var yyyy = today.getFullYear();
+											if (dd < 10) {
+												dd = '0' + dd
+											}
+											if (mm < 10) {
+												mm = '0' + mm
+											}
+											var today = yyyy + '-' + mm + '-'
+													+ dd;
 
 											if (!document
 													.getElementById('test6').checked) {
@@ -93,16 +107,21 @@
 														.toast(
 																"date to can't be less than date from",
 																1500);
-											} else if (currentdate.getYear() > datefromformated
-													.getYear()) {
+											} else if (datefrom < today) {
 												good = 0;
 												Materialize
 														.toast(
 																"date from can't be less than NOW!",
 																1500);
+											} else if (dateto > currenteventdateto) {
+												good = 0;
+												Materialize
+														.toast(
+																"date to can't be bigger than event date to",
+																1500);
 											}
 
-											else {
+											else if (datefrom == dateto) {
 												if (timefrom > timeto) {
 													good = 0;
 													Materialize
@@ -203,8 +222,12 @@ amount of positons
 <input type="checkbox" id="test5" />
 <label for="test5">unlimited</label>
 <br>
-<button disabled class="btn waves-effect waves-light" type="submit"
-	id="sub" name="action">Add To Event</button>
+<button disabled class=" waves-light btn" type="submit" id="sub"
+	name="action">Add To Event</button>
+<br>
+<br>
+<a id="deleteservices" class="waves-light btn modal-trigger"
+	href="#modal2">Delete Services From Event</a>
 
 
 
