@@ -14,7 +14,8 @@ import com.epam.gm.model.ServiceInEvent;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 public class ServiceInEventDao extends AbstractDao<ServiceInEvent> {
-	private static final String GET_ALL_NOT_DELETED = "e WHERE e.deleted = 0 and e.event_id = %s";
+	private static final String GET_ALL_NOT_DELETED = "e WHERE e.deleted = 0 and e.event_id = %s AND e.is_necessary_to_pay=1";
+	private static final String GET_ALL_NECESSARY = "";
 
 	public ServiceInEventDao() {
 		// gryn
@@ -32,7 +33,12 @@ public class ServiceInEventDao extends AbstractDao<ServiceInEvent> {
 			throws SQLException {
 		return super.getWithCustomQuery(String.format(GET_ALL_NOT_DELETED,
 				eventId));
+	}
 
+	public List<ServiceInEvent> getAllNecessaryServicesByEventId(int eventId)
+			throws SQLException {
+		return super.getWithCustomQuery(String.format(GET_ALL_NECESSARY,
+				eventId));
 	}
 
 	public void updateServiceInEventToDeletedById(int id) throws SQLException {

@@ -83,7 +83,11 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 			}
 		}
 		int idEvent = (int) session.getAttribute("eventId");
-		int idService = Integer.parseInt(request.getParameter("serviceidval"));
+		System.out.println("***** " + request.getParameter("serviceidval"));
+		Integer idService = null;
+		if (!request.getParameter("serviceidval").equals("choose")) {
+			idService = Integer.parseInt(request.getParameter("serviceidval"));
+		}
 		int amountOfPosition = 0;
 		try {
 			amountOfPosition = Integer.parseInt(request
@@ -93,21 +97,28 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 		}
 		Event event = new EventService().getById(idEvent);
 		ServiceDao serviceDao = new ServiceDao();
-		Service service = serviceDao.getServiceById(idService);
+		Service service = null;
+		if (idService != null) {
+			service = serviceDao.getServiceById(idService);
+		}
 		boolean isChanged = false;
 		Integer newServiceId = null;
-		if (!service.getDescription().equals(description)) {
-			System.out.println(service.getDescription() + "*********"
-					+ description);
-			isChanged = true;
-		}
-		if (service.getPrice() != price) {
-			System.out.println(service.getPrice() + "********" + price);
-			isChanged = true;
+		if (service != null) {
+			if (!service.getDescription().equals(description)) {
+				System.out.println(service.getDescription() + "*********"
+						+ description);
+				isChanged = true;
+			}
+			if (service.getPrice() != price) {
+				System.out.println(service.getPrice() + "********" + price);
+				isChanged = true;
 
-		}
-		if (!service.getName().equals(name)) {
-			System.out.println("*************" + name);
+			}
+			if (!service.getName().equals(name)) {
+				System.out.println("*************" + name);
+				isChanged = true;
+			}
+		} else {
 			isChanged = true;
 		}
 		if (isChanged) {

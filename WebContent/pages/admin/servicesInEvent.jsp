@@ -162,6 +162,7 @@
 <h4 class="green-text text-darken-4">bucket</h4>
 <h4 class="grey-text text-darken-4">Price</h4>
 
+
 <a id="buttonbuy" class="waves-light btn modal-trigger" href="#modal1">Buy</a>
 <ul class="collection with-header">
 

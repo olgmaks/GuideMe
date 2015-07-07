@@ -27,6 +27,8 @@ public class ServiceInEvent {
 	@ForeignKey
 	@OneToMany(field = "event_id", value = Event.class)
 	private Event event;
+	@Column("is_necessary_to_pay")
+	private Integer isNecessaryToPay;
 
 	public Integer getId() {
 		return id;

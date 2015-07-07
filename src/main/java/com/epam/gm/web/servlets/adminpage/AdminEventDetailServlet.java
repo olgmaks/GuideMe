@@ -51,7 +51,7 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			}
 
 			if (user.isGuide()) {
-				List<Service> list = new ServiceDao().getServicesByGuideId(user
+				List<Service> list = new ServiceDao().getNotTemporaryServicesByGuideId(user
 						.getId());
 				request.setAttribute("listOfServices", list);
 			}
@@ -244,8 +244,7 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 					new PhotoService().getEventPhotos(id));
 
 			request.setAttribute("isAdmin", SessionRepository.isAdmin(request));
-			
-			
+
 			UserCalculator userCalc = new UserCalculator(
 					event.getModeratorId(), user.getId());
 			Integer moderatorMark = 0;

@@ -8,6 +8,30 @@
 			.ready(
 					function() {
 						var currenteventdateto;
+						$('#sourcefrom').click(function() {
+
+							$("#name2").prop('disabled', false);
+							if ($('#fromtemplates').is(':checked')) {
+								$("#dropdowndef").prop('disabled', false);
+								$("#sub").prop('disabled', true);
+							} else if ($('#newservice').is(':checked')) {
+								$("#dropdowndef").prop('disabled', true);
+								$('#name2').val(null);
+								$('#desc').val(null);
+								$('#price').val(null);
+								$("#sub").prop('disabled', false);
+							}
+
+							/* 			$.ajax({
+																	url : 'infoServlet.do',
+																	type : 'GET',
+																	success : function(data) {
+																		currenteventdateto = data.eventId;
+																	}
+																}); */
+
+						});
+
 						$('#dropdowndef').click(function() {
 							$("#firstchoosen").prop('disabled', true);
 							$("#sub").prop('disabled', false);
@@ -32,9 +56,6 @@
 								.click(
 										function() {
 
-											Materialize.toast($(
-													'#fromtemplates').is(
-													':checked'), 1500);
 											var serviceid = $('#dropdowndef')
 													.val();
 											var good = 1;
@@ -168,15 +189,13 @@
 
 															success : function(
 																	data) {
+																var stringToShow = "Service Added"
 																if (data.isChanged) {
-																	Materialize
-																			.toast(
-																					"Service Changed",
-																					1500);
+																	stringToShow = "New Service Added";
 																}
 																Materialize
 																		.toast(
-																				'<span>Service Added</span><a class=&quot;btn-flat yellow-text&quot; href="delete">Undo<a>',
+																				stringToShow,
 																				5000)
 															}
 														});
@@ -208,23 +227,21 @@
 
 					});
 </script>
-<form action="#">
+<div id="sourcefrom">
 
-	<input name="group1" type="radio" id="fromtemplates" /> <label
-		for="fromtemplates">From Templates</label> <input name="group1"
+	<input name="group1" type="radio" id="fromtemplates" checked="checked" />
+	<label for="fromtemplates">From Templates</label> <input name="group1"
 		type="radio" id="newservice" /> <label for="newservice">New</label>
 
-</form>
+</div>
 <select id="dropdowndef" style="width: 20%;" class="browser-default">
-	<option value="9999" id="firstchoosen">choose</option>
+	<option id="firstchoosen">choose</option>
 	<c:forEach items="${listOfServices }" var="service">
 		<option value='${service.getId() }'>${ service.getName()}</option>
 	</c:forEach>
 </select>
-
-
 name
-<input type="text" style="width: 50%;" id="name2" />
+<input type="text" style="width: 50%;" disabled id="name2" />
 <br>
 desciption
 <input type="text" style="width: 50%;" id="desc" />
