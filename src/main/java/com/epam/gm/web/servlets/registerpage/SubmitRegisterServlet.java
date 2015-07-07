@@ -28,80 +28,78 @@ public class SubmitRegisterServlet implements HttpRequestHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
-		
+
 		System.out.println("SubmitRegisterServlet");
-//        String email = request.getParameter("email");
-//        String password = request.getParameter("password");
-//        System.out.println(email);
-//        System.out.println(password);	
-		
+
 		boolean ok = true;
-		
+
 		Map<Integer, String> addressMap = new HashMap<>();
-		
-		
+
 		Map<String, String[]> params = request.getParameterMap();
-		for(Map.Entry<String, String[]> entry : params.entrySet() ) { 
-			if (entry.getKey() == null) continue;
-			
-//			System.out.println("key = " + entry.getKey());
-//			System.out.println("value = " +  Arrays.toString(entry.getValue())  );
-			
-			if(entry.getKey().startsWith("addressByLang_")) {
-				
-				String key = entry.getKey().replace("addressByLang_", "").trim();
-				if(ValidateHelper.isNumber(key)) {
+		for (Map.Entry<String, String[]> entry : params.entrySet()) {
+			if (entry.getKey() == null)
+				continue;
+
+			// System.out.println("key = " + entry.getKey());
+			// System.out.println("value = " + Arrays.toString(entry.getValue())
+			// );
+
+			if (entry.getKey().startsWith("addressByLang_")) {
+
+				String key = entry.getKey().replace("addressByLang_", "")
+						.trim();
+				if (ValidateHelper.isNumber(key)) {
 					Integer langId = Integer.parseInt(key);
-					
-					if(entry.getValue() != null && entry.getValue().length > 0) {
+
+					if (entry.getValue() != null && entry.getValue().length > 0) {
 						String value = entry.getValue()[0];
-						
-						String result = ValidateHelper.validateField("address", value, User.class);
-						
+
+						String result = ValidateHelper.validateField("address",
+								value, User.class);
+
 						System.out.println("**********************");
 						System.out.println("param = " + entry.getKey());
 						System.out.println("value = " + value);
 						System.out.println("result = " + result);
-						
+
 						addressMap.put(langId, value);
-						
-						if(!"".equals(result))
-							if(!result.endsWith(".ok"))
-								ok = false;						
+
+						if (!"".equals(result))
+							if (!result.endsWith(".ok"))
+								ok = false;
 					}
-					
+
 				}
-				
-				
+
 			} else {
-				
+
 				String param = entry.getKey().trim();
 				String value = "";
-				if(entry.getValue() != null && entry.getValue().length > 0) 
+				if (entry.getValue() != null && entry.getValue().length > 0)
 					value = entry.getValue()[0];
-				
-				String result = ValidateHelper.validateField(param, value, User.class);
-				
+
+				String result = ValidateHelper.validateField(param, value,
+						User.class);
+
 				System.out.println("**********************");
 				System.out.println("param = " + param);
 				System.out.println("value = " + value);
 				System.out.println("result = " + result);
-				
+
 				System.out.println("**********************AdressMap");
 				System.out.println(addressMap);
-				
-				
-				if(!"".equals(result))
-					if(!result.endsWith(".ok"))
+
+				if (!"".equals(result))
+					if (!result.endsWith(".ok"))
 						ok = false;
-				
+
 			}
-		}	
-		
-		System.out.println("ok="+ok);
-		
-		if(ok) {
-			
+		}
+
+		System.out.println("ok=" + ok);
+
+		if (ok) {
+
 			String firstName = request.getParameter("firstName").trim();
 			String lastName = request.getParameter("lastName").trim();
 			String email = request.getParameter("email").trim();
@@ -110,38 +108,41 @@ public class SubmitRegisterServlet implements HttpRequestHandler {
 			String password = request.getParameter("password").trim();
 			String isGuide = request.getParameter("isGuide");
 			System.out.println("$$$$$$$$$$$$$$$$$$$ isGuide = " + isGuide);
-			
-			
-			Integer cityId = Integer.parseInt(request.getParameter("cityId").trim());
-			
-			//get our city
+
+			Integer cityId = Integer.parseInt(request.getParameter("cityId")
+					.trim());
+
+			// get our city
 			CityService cityService = new CityService();
 			City city = cityService.getCityById(cityId);
-			
+
 			Map<Integer, Integer> cityMap = new HashMap<>();
-			//get analogs
+			// get analogs
 			List<City> cities = cityService.getCitiesByPureId(city.getPureId());
-			for(City c: cities) {
+			for (City c : cities) {
 				cityMap.put(c.getLocalId(), c.getId());
 			}
-			System.out.println("saving adress ================================================================");
+			System.out
+					.println("saving adress ================================================================");
 			AddressService addressService = new AddressService();
 			Integer newPureId = addressService.getLastPureId() + 1;
-			
-			for(City c: cities) {
-				
+
+			for (City c : cities) {
+
 				Address address = new Address();
 				address.setCityId(c.getId());
 				address.setLocalId(c.getLocalId());
 				address.setPureId(newPureId);
 				address.setAddress(addressMap.get(c.getLocalId()));
-				
+
 				addressService.save(address);
 			}
-			
-			Address newAddress = addressService.getAddressByPureId(newPureId).get(0);
-			
-			System.out.println("saving user ================================================================");
+
+			Address newAddress = addressService.getAddressByPureId(newPureId)
+					.get(0);
+
+			System.out
+					.println("saving user ================================================================");
 			System.out.println("firstName = " + firstName);
 			System.out.println("lastName = " + lastName);
 			System.out.println("email = " + email);
@@ -149,38 +150,47 @@ public class SubmitRegisterServlet implements HttpRequestHandler {
 			System.out.println("cellNumber = " + cellNumber);
 			System.out.println("cityId = " + cityId);
 			System.out.println("adressId = " + newAddress.getId());
-			
-	        User user = new User();
-	        user.setFirstName(firstName);
-	        user.setLastName(lastName);
-	        user.setEmail(email.toLowerCase());
-	        
-	        if("on".equals(isGuide)) user.setUserTypeId(7); 
-	        else user.setUserTypeId(2);
-	        user.setSex(sex);
-	        user.setLangId(3);
-	        user.setCellNumber(cellNumber);
-	        user.setIsActive(true);
-	        user.setAddressId(newAddress.getId());
-	        try {
-				user.setPassword(MD5HashPassword.getHashPassword(password, email.toLowerCase()));
+
+			User user = new User();
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			user.setEmail(email.toLowerCase());
+
+			if ("on".equals(isGuide))
+				user.setUserTypeId(7);
+			else
+				user.setUserTypeId(2);
+			user.setSex(sex);
+			user.setLangId(3);
+			user.setCellNumber(cellNumber);
+			user.setIsActive(true);
+			user.setAddressId(newAddress.getId());
+			try {
+				user.setPassword(MD5HashPassword.getHashPassword(password,
+						email.toLowerCase()));
 			} catch (NoSuchAlgorithmException e1) {
-				
+
 				e1.printStackTrace();
 			}
-	        
-	        UserService userService = new UserService();
-	        try {
+
+			UserService userService = new UserService();
+			try {
 				userService.saveUser(user);
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	        
-	        request.getRequestDispatcher("home.do").forward(request, response);
-			
+
+			//request.getRequestDispatcher("home.do").forward(request, response);
+
 		}
 		
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		Map<String, Object> map = new HashMap<>();
+		map.put("isValid", ok);
+		response.getWriter().write(new Gson().toJson(map));
+
 	}
-	
+
 }

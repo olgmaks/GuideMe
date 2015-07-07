@@ -35,6 +35,8 @@ public class RegisterValidatorServlet implements HttpRequestHandler {
 			
 			String valid = ValidateHelper.validateField(p, value, User.class);
 			
+//			if(valid.contains(".ok"))
+//				valid = "<b>" + valid + "</b>";
 			
 			
 			System.out.println("valid = " + valid);

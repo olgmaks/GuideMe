@@ -14,8 +14,8 @@ public class ValidateHelper {
 		
 		if(value != null){
 			String temp = value.toLowerCase().replaceAll(" ", "").replaceAll("\t", "").replaceAll("\n", "");
-			if(temp.contains("<script")) 
-				return "validation.containsscripts";
+			if(temp.contains("<")) 
+				return "js.valid.containsscripts";
 		}
 		return "";
 	}
@@ -30,9 +30,9 @@ public class ValidateHelper {
 			if(fieldName.equals("firstName")) {
 				
 				if(value.trim().length() == 0) 
-					result = "validation.firstName.empty";
+					result = "js.valid.firstName.empty";
 				else 
-					result = "validation.ok";
+					result = "js.valid.ok";
 			
 			}
 			
@@ -49,9 +49,9 @@ public class ValidateHelper {
 				//if(1==1) return "hohoho";
 				
 				if(value.trim().length() == 0) 
-					result = "validation.email.empty";
+					result = "js.valid.email.empty";
 				else if(!value.contains("@")) {
-					result = "validation.email.wrongformat";
+					result = "js.valid.email.wrongformat";
 				} else {
 					User temp = null;
 					try {
@@ -63,9 +63,9 @@ public class ValidateHelper {
 					}
 					
 					if(temp == null)
-						result = "validation.ok";
+						result = "js.valid.ok";
 					else
-						result = "validation.email.exists";
+						result = "js.valid.email.exists";
 				}
 					
 				
@@ -74,33 +74,33 @@ public class ValidateHelper {
 			if(fieldName.equals("password")) {
 				
 				if(value.trim().length() == 0) 
-					result = "validation.password.empty";
-				else if(value.trim().length() < 3) {
-					result = "validation.password.toosmall";
+					result = "js.valid.password.empty";
+				else if(value.trim().length() < 4) {
+					result = "js.valid.password.toosmall";
 				} else 
-					result = "validation.ok";
+					result = "js.valid.ok";
 				
 			}
 			
 			if(fieldName.equals("cityId")) {
 				
-				//System.out.println("################################################################################");
+				
 				
 				if(ValidateHelper.isNumber(value.trim()))
-					result = "validation.cityId.ok";
+					result = "js.valid.cityId.ok";
 				else
-					result = "validation.cityId.empty";
+					result = "js.valid.cityId.empty";
 				
 			}
 
 			if(fieldName.equals("sex")) {
 				if(value.trim().length() == 0) 
-					result = "validation.sex.empty";
+					result = "js.valid.sex.empty";
 				else if("male".equals(value.trim()) ||  "female".equals(value.trim())) {
 					
-					result = "validation.ok";
+					result = "js.valid.ok";
 				} else 
-					result = "validation.sex.wrongformat";
+					result = "js.valid.sex.wrongformat";
 			}
 
 

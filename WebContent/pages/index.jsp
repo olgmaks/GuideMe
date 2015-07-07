@@ -140,7 +140,7 @@
                     	
                     	var searchEventTitle =  $("#searchEventTitle");
                     	searchEventTitle.empty();
-                    	searchEventTitle.append("Search results:");
+                    	searchEventTitle.append(_("js.searchresults"));
 						
                     	var resultCollenction = $("#collectionResults");
                         resultCollenction.find("li").empty();   
@@ -355,7 +355,7 @@
                                                     <fmt:message key="index.City" />
                                                     <select id="cityByLang_${lang.id}" class="browser-default">
                                                         <option selected value="choose">
-                                                            <fmt:message key="js.chooseCity" />
+                                                            <fmt:message key="js.chooseCountryFirst" />
                                                         </option>
                                                         
                                                     <script>

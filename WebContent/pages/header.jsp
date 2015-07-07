@@ -10,7 +10,7 @@
 				href=${sessionUser==null ? "home.do" : "userCabinet.do"}>Guide
 					ME</a></li>
 		</ul>
-		<a id="logo-container" href="#" class="brand-logo center">
+		<a id="logo-container" href="home.do" class="brand-logo center">
 			<div>
 				<img src="icons/brandlabel2.png"
 					style="width: 100px; height: 100px;">

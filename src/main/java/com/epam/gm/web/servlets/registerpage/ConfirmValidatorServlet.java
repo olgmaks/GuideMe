@@ -32,12 +32,12 @@ public class ConfirmValidatorServlet implements HttpRequestHandler {
 			if(password.trim().length() > 0 && confirm.trim().length() > 0) {
 				
 				if(password.trim().equals(confirm.trim())) 
-					valid = "validation.confirm.ok";
+					valid = "js.valid.ok";
 				else
-					valid = "validation.confirm.fail";
+					valid = "js.valid.confirmfail";
 				
 			} else if(password.trim().length() > 0 && confirm.trim().length() == 0) {
-				valid = "validation.confirm.empty";
+				valid = "js.valid.empty";
 			}
 			
 		}

@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-    <title>Guide ME</title>
+    
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -20,12 +22,24 @@
         });
     </script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    
+    
+	<!-- begin Localization -->
+	<jsp:include page="localization.jsp"/>
+	<ct:showLocale basename="locale.register.messages" from = "register.do" />
+
+	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+	<fmt:bundle basename="locale.register.messages">
+	<!-- end Localization -->
+    
+    <title> <fmt:message key="register.title" /></title>
+    
     <script>
         $(document).ready(function () {
 
 
             $("#registerform").submit(function () {
-                $("#firstName").change();
+                $("#").change();
                 $("#lastName").change();
                 $("#email").change();
                 $("#password").change();
@@ -40,7 +54,13 @@
                     dataType: "json",
                     data: $("#cityId").serialize(),
                     success: function (data) {
-                        $("#cityIdMessage").text(data.valid);
+                        
+                    	if(data.valid.indexOf(".ok") >= 0)
+                        	$("#cityIdMessage").attr('class','green-text');
+                        else
+                        	$("#cityIdMessage").attr('class','red-text');
+                        
+                        $("#cityIdMessage").text(_(data.valid) );                       
 
                     }
                 });
@@ -53,23 +73,16 @@
                     dataType: 'json',
                     data: $("#registerform").serialize(),
                     success: function (data) {
-                        alert('Ok!!!');
+                             if (data.isValid) {
 
+                            	 Materialize.toast(_('js.success') , 1000,'',function(){   
+                                 	window.location.href = "home.do";
+                                 });
 
-//                             if (data.isValid) {
-//                                 console.log(data);
-//                                 $('#signinlabel').text(
-//                                         data.sessionUser.email);
-//                                 $('#signinlabel').attr("href", "#logoutModal");
-//                                 $('#signInModal').closeModal();
-//                                 var helloMessage = 'Hello, ' + data.sessionUser.firstName + ' ' + data.sessionUser.lastName;
-//                                 console.log(helloMessage);
-//                                 $('#helloMessageOnLogoutModal').text(helloMessage);
-//                             } else {
-//                                 $('#password').val('');
-//                                 $('#errorMessage').text('Email or/and password are not valid. Please try again');
-//                             }
-
+                             } else{
+                            	 
+                            	 Materialize.toast(_('js.fail') , 1000,'',function(){});                            	 
+                             }
 
                     }
                 });
@@ -84,7 +97,14 @@
                     dataType: "json",
                     data: $(this).serialize(),
                     success: function (data) {
-                        $("#firstNameMessage").text(data.valid);
+                        //$("#firstNameMessage").text(data.valid);
+                        
+                        if(data.valid.indexOf(".ok") >= 0)
+                        	$("#firstNameMessage").attr('class','green-text');
+                        else
+                        	$("#firstNameMessage").attr('class','red-text');
+                        
+                        $("#firstNameMessage").text(_(data.valid) );
 
                     }
                 });
@@ -98,7 +118,12 @@
                     dataType: "json",
                     data: $(this).serialize(),
                     success: function (data) {
-                        $("#lastNameMessage").text(data.valid);
+
+                        if(data.valid.indexOf(".ok") >= 0)
+                        	$("#lastNameMessage").attr('class','green-text');
+                        else
+                        	$("#lastNameMessage").attr('class','red-text');
+                        $("#lastNameMessage").text(_(data.valid) );
 
                     }
                 });
@@ -117,12 +142,18 @@
                     dataType: "json",
                     data: $(this).serialize(),
                     success: function (data) {
-                        $("#emailMessage").text(data.valid);
+                    	
+                        if(data.valid.indexOf(".ok") >= 0)
+                        	$("#emailMessage").attr('class','green-text');
+                        else
+                        	$("#emailMessage").attr('class','red-text');
+                        $("#emailMessage").text(_(data.valid) );
 
                     }
                 });
             });
-
+            
+            
             $("#password").change(function () {
                 $.ajax({
                     url: "registervalidator.do",
@@ -130,7 +161,13 @@
                     dataType: "json",
                     data: $(this).serialize(),
                     success: function (data) {
-                        $("#passwordMessage").text(data.valid);
+                    	
+                        if(data.valid.indexOf(".ok") >= 0)
+                        	$("#passwordMessage").attr('class','green-text');
+                        else
+                        	$("#passwordMessage").attr('class','red-text');
+                        $("#passwordMessage").text(_(data.valid) );
+                        
 
                     }
                 });
@@ -145,7 +182,12 @@
                     url: 'confirmValidator.do?password=' + pass + '&confirm=' + conf,
                     success: function (data) { //we're calling the response json array 'cities'
 
-                        $("#confirmMessage").text(data.valid);
+                        if(data.valid.indexOf(".ok") >= 0)
+                        	$("#confirmMessage").attr('class','green-text');
+                        else
+                        	$("#confirmMessage").attr('class','red-text');
+                        $("#confirmMessage").text(_(data.valid) );
+                        
 
                     }
                 });
@@ -160,7 +202,14 @@
                     dataType: "json",
                     data: $(this).serialize(),
                     success: function (data) {
-                        $("#sexMessage").text(data.valid);
+                    	
+
+                        if(data.valid.indexOf(".ok") >= 0)
+                        	$("#sexMessage").attr('class','green-text');
+                        else
+                        	$("#sexMessage").attr('class','red-text');
+                        $("#sexMessage").text(_(data.valid) );
+
 
                     }
                 });
@@ -173,7 +222,11 @@
                     dataType: "json",
                     data: $(this).serialize(),
                     success: function (data) {
-                        $("#cellNumberMessage").text(data.valid);
+                        if(data.valid.indexOf(".ok") >= 0)
+                        	$("#cellNumberMessage").attr('class','green-text');
+                        else
+                        	$("#cellNumberMessage").attr('class','red-text');
+                        $("#cellNumberMessage").text(_(data.valid) );                        
 
                     }
                 });
@@ -187,14 +240,16 @@
         $(document).ready(function () {
             $("#cellNumber").click(function () {
                 if ($(this).val() == "") {
-                    $(this).val("+380");
+                    //$(this).val("+380");
+                	$(this).val("");
                 }
             });
         });
     </script>
-
+</fmt:bundle> 
 </head>
 <body>
+<fmt:bundle basename="locale.register.messages">
 <jsp:include page="header.jsp"/>
 <td style=" width:60%;vertical-align: top;">
     <div class="row" style="margin-top: 15px;">
@@ -202,22 +257,22 @@
             <ul class="collection z-depth-2 ">
                 <li class="collection-item">
                     <div class="row">
-                        <p>Registration form</p>
+                        <p><fmt:message key="register.RegistrationForm"/></p>
 
                         <form class="col s12" action="submitRegister.do" method="post" id="registerform"
                               name="registerform">
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <label for="firstName">First Name</label>
+                                    <label for="firstName"><fmt:message key="register.FirstName"/></label>
                                     <input type="text" id="firstName" name="firstName"/>
-                                    <span id="firstNameMessage"></span>
+                                    <span id="firstNameMessage" ></span>
                                 </div>
                             </div>
 
 
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <label for="lastName">Last Name</label>
+                                    <label for="lastName"><fmt:message key="register.LastName"/></label>
                                     <input type="text" id="lastName" name="lastName"/>
                                     <span id="lastNameMessage"></span>
                                 </div>
@@ -226,7 +281,7 @@
 
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <label for="email">e-mail</label>
+                                    <label for="email"><fmt:message key="register.email"/></label>
                                     <input type="text" id="email" name="email"/>
                                     <span id="emailMessage"></span>
                                 </div>
@@ -234,7 +289,7 @@
 
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <label for="password">Password</label>
+                                    <label for="password"><fmt:message key="register.password"/></label>
                                     <input type="password" id="password" name="password"/>
                                     <span id="passwordMessage"></span>
                                 </div>
@@ -242,20 +297,20 @@
 
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <label for="confirm">Confirm password</label>
+                                    <label for="confirm"><fmt:message key="register.confirm"/></label>
                                     <input type="password" id="confirm" name="confirm"/>
                                     <span id="confirmMessage"></span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <label>Sex</label>
+                                <label><fmt:message key="register.sex"/></label>
 
                                 <div class="input-field col s12">
                                     <select id="sex" name="sex" class="browser-default">
-                                        <option selected value="choose">Choose sex</option>
-                                        <option value="male">male</option>
-                                        <option value="female">female</option>
+                                        <option selected value="choose"><fmt:message key="register.ChooseSex"/></option>
+                                        <option value="male"><fmt:message key="register.male"/></option>
+                                        <option value="female"> <fmt:message key="register.female"/></option>
                                     </select>
                                     <span id="sexMessage"></span>
                                 </div>
@@ -263,15 +318,15 @@
 
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <label for="cellNumber">Cell</label>
-                                    <input type="text" id="cellNumber" name="cellNumber" value="+380" length="13"/>
+                                    <label for="cellNumber"><fmt:message key="register.Cell"/> </label>
+                                    <input type="text" id="cellNumber" name="cellNumber" value="" length="13"/>
                                     <span id="cellNumberMessage"></span>
                                 </div>
                             </div>
 
 
                             <div class="row">
-                                <label>Address</label>
+                                <label><fmt:message key="register.Adress"/></label>
 
                                 <div>
                                     <c:forEach items="${requestScope.languageList}" var="lang">
@@ -281,10 +336,10 @@
                                             <tr>
 
                                                 <td style="width:30%;">
-                                                    <label>Country</label>
+                                                    <label><fmt:message key="register.Country"/></label>
                                                     <select id="countryByLang_${lang.id}" class="browser-default">
                                                         <option selected value="choose" disabled selected>
-                                                            loginpage.country.choose
+                                                            <fmt:message key="register.ChooseCountry"/>
                                                         </option>
 
                                                         <c:forEach items="${requestScope.countryList}" var="country">
@@ -324,7 +379,7 @@
                                                                                     optFirst.val('choose');
                                                                                     $('#cityId').val('choose');
 
-                                                                                    optFirst.text('loginpage.city.choose');
+                                                                                    optFirst.text(_('js.citychoose'));
                                                                                     $('#cityByLang_' + countryId).append(optFirst);
 
                                                                                     $.each(originCityId, function (id, city) { //here we're doing a foeach loop round each city with id as the key and city as the value
@@ -352,10 +407,10 @@
 
 
                                                 <td style="width:30%;">
-                                                    <label>City</label>
+                                                    <label><fmt:message key="register.City"/></label>
                                                     <select id="cityByLang_${lang.id}" class="browser-default">
                                                         <option selected value="choose">
-                                                            loginpage.city.choosecountryfirst
+                                                            <fmt:message key="register.choosecountryfirst"/>  
                                                         </option>
                                                     </select>
                                                     <script>
@@ -385,7 +440,7 @@
 
                                                 <td style="width:40%;">
                                                     <div class="input-field">
-                                                        <label for="addressByLang_${lang.id}">Adress</label>
+                                                        <label for="addressByLang_${lang.id}"><fmt:message key="register.Adress"/></label>
                                                         <input type="text" id="addressByLang_${lang.id}"
                                                                name="addressByLang_${lang.id}"/>
                                                         <span id="addressByLangMessage_${lang.id}"></span>
@@ -421,12 +476,12 @@
 
                                 <p>
                                     <input type="checkbox" id="isGuide" name="isGuide"/>
-                                    <label for="isGuide">Guide</label>
+                                    <label for="isGuide"><fmt:message key="register.Guide"/> </label>
                                 </p>
                                 <br>
                                 <button class="light-blue btn waves-effect waves-light" type="submit"
                                         name="action" style="margin-left: auto; margin-right: auto; width: 33%;">
-                                    Submit <i class="mdi-content-send right"></i>
+                                    <fmt:message key="register.Submit"/> <i class="mdi-content-send right"></i>
                                 </button>
                             </div>
                         </form>
@@ -435,5 +490,6 @@
             </ul>
         </div>
     </div>
+</fmt:bundle>    
 </body>
 </html>

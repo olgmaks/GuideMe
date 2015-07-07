@@ -185,12 +185,18 @@ public class ShowLocaleTag extends TagSupport {
 
 					if (key == null || name == null)
 						continue;
+					
+					//name = name.replaceAll("'", "&rsquo;");
 
 					if (key.startsWith("js.")) {
 
-						joiner.add(builder.append("'").append(key.trim())
-								.append("' : '").append(name.trim())
-								.append("'").toString());
+//						joiner.add(builder.append("'").append(key.trim())
+//								.append("' : '").append(name.trim())
+//								.append("'").toString());
+						
+						joiner.add(builder.append("\"").append(key.trim())
+								.append("\" : \"").append(name.trim())
+								.append("\"").toString());						
 
 						builder.setLength(0);
 					}
