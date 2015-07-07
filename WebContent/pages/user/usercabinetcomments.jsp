@@ -71,7 +71,10 @@
     <div class="col s12" style="margin-top:10px;">
         <ul class="collection z-depth-2">
             <li class="collection-item" style="height : 50px;">
-                Comments from other users
+                <span>Comments from other users</span>
+                <div style="display: inline-block; float: right;">
+                <a href="#_" class="respond-button" >
+                    Add comment to your self <img src="icons/respond-icon.png" style="width: 30px;height: 30px;vertical-align: middle"></a></div>
             </li>
         </ul>
         <ul class="collection z-depth-2">
@@ -113,6 +116,7 @@
 
                     </tbody>
                 </table>
+
             </li>
         </ul>
     </div>
@@ -120,7 +124,7 @@
 
 <div id="answerOnCommentWindow" class="modal" style="height: 320px;">
     <div class="modal-content">
-        <h4>Provide your answer</h4>
+        <h4>Provide your comment</h4>
 
         <div class="row" style="margin-left: 10%">
             <div class="input-field col s6" style="width: 80%">
@@ -133,7 +137,7 @@
 
     </div>
     <div class="modal-footer">
-        <a href="#_" id="sendRespondOnComment" style="margin-left: 40%;">Send
+        <a href="#_" id="sendRespondOnComment" style="margin-left: 40%;">Post
             <img src="icons/send-message-icon.png" style="width: 60px;height: 60px;vertical-align:middle"></a>
     </div>
 </div>
