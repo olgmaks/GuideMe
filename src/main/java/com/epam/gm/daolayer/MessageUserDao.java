@@ -86,6 +86,9 @@ public class MessageUserDao extends AbstractDao<MessageUser> {
 		ConnectionManager.closeConnection(connection);
 		return new UserService().getUserById(friendId);
     }
+    public void deleteById(int id) throws IllegalAccessException, SQLException{
+    	super.deleteByField("id", id);
+    }
     public static void main(String[] args) throws SQLException {
 		System.out.println(new MessageUserDao().getLastMessanger(8));
 	}

@@ -144,7 +144,8 @@ var keyValid;
 
 		</tbody>
 	</table>
-	<form class="collection z-depth-2 " style="height: 100%;" action = "adminlanguagerequest.do" method = "post" name = "saveForm">
+	<form class="collection z-depth-2 "  action = "adminlanguagerequest.do" method = "post" name = "saveForm"
+		 style="width: 50%; margin-right: 25%; margin-left: 25%; text-align: center;">
 	<input hidden type = "text" name = "action" id = "action" value = "add">
 	<input hidden type = "text" name = "id" id = "id">
 	<div

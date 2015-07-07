@@ -1,9 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style>
 .table-wrapper {
+	table-layout: fixed;
 	width: 100%;
 	height: 500px;
 	overflow: auto;
+	
 }
 #messageUser {
 	border-collapse: separate;

@@ -2,7 +2,6 @@ package com.epam.gm.web.servlets.adminpage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,16 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-
-
-
-
-
-
-
 import com.epam.gm.daolayer.CountryDao;
 import com.epam.gm.model.Country;
-import com.epam.gm.model.Language;
+
 import com.epam.gm.services.LanguageService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 

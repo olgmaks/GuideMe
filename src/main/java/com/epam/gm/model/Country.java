@@ -19,8 +19,18 @@ public class Country {
 	
 	@Column("pure_id")
 	private Integer pureId;
+	@Column("deleted")
+	private Boolean deleted;
 	
-	 @ForeignKey
+	 public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	@ForeignKey
 	    @OneToMany(field="local_id", value=Language.class)
 	private Language language;
 	 

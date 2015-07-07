@@ -11,7 +11,7 @@
 					var tr = $(this).parents("tr");
 					$('#name').val(tr.find("td:eq(1)").html());
 					$('#id').val(tr.find("td:eq(0)").html());
-					$('#action').val('edit')
+					$('#action').val('edit');
 				});
 				
 				$("#tagTable").on("click", ".delete", function() {
@@ -97,7 +97,7 @@
 
 		</tbody>
 	</table>
-	<form class="collection z-depth-2 " style="width: 50%; margin-right: 25%; margin-left: 25%; text-align: center;""
+	<form class="collection z-depth-2 " style="width: 50%; margin-right: 25%; margin-left: 25%; text-align: center;"
 		action="adminTagRequest.do" method="post" name="saveForm">
 		<input hidden type="text" name="action" id="action" value="add">
 		<input hidden type="text" name="id" id="id">

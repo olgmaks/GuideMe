@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.gm.daolayer.TagDao;
-import com.epam.gm.model.Language;
+
 import com.epam.gm.model.Tag;
-import com.epam.gm.services.LanguageService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

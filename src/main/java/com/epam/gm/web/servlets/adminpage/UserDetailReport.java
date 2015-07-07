@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.io.Writer;
+
 import java.sql.Connection;
 import java.util.HashMap;
 
@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;

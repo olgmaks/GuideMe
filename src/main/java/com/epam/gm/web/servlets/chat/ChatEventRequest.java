@@ -23,7 +23,7 @@ public class ChatEventRequest implements HttpRequestHandler {
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+			throws IOException, IllegalAccessException, SQLException {
 		 request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 		System.out.println(action);
@@ -42,6 +42,9 @@ public class ChatEventRequest implements HttpRequestHandler {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}else if (action.equals("deleteMessage")){
+			int messageEventId = Integer.parseInt(request.getParameter("id"));
+			dao.deleteById(messageEventId);
 		}
 	}
 }

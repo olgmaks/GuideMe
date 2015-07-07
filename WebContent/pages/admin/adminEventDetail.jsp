@@ -168,7 +168,7 @@ nav {
 											var avatar = item.sender.avatar.path;
 											var colorSender = "#CEF6E3";// = item.senderId == "${sessionUser.id}"? "#CEF6E3": "#2ECCFA" ;
 											var colorRecived = "#2ECCFA";
-											var tdUser = '<tr>'
+											var tdUser = '<tr><td width = "0%" hidden>'+item.id+'</td>'
 													+ '<td class = "td-left-round" bgcolor="'
 													+ colorSender
 													+ '" width="10%">'
@@ -176,7 +176,7 @@ nav {
 													+ " "
 													+ item.sender.lastName
 													+ '<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="'
-                                + avatar + '"></td>'
+                                					+ avatar + '"></td>'
 													+ '<td bgcolor= "'
 													+ colorSender
 													+ '" width="20%"> '
@@ -185,14 +185,23 @@ nav {
 																	'hh:mm MM D, YYYY')
 													+ '</td><td  class = "td-right-round"  bgcolor= "'
 													+ colorSender
-													+ '" width="60%">'
+													+ '" width="55%">'
 													+ item.message.replace(
 															/</g, '&lt')
 													+ '</td>'
 													+ '<td width="10%"></td>'
-													+ '</tr>'
-											console.log(tdUser)
-											var tdSender = '<tr>'
+												
+													+'<td width="5%">'
+													+ '<c:if test="${isAdmin}">'
+													+'<button name ="delete" data-id = "'+item.id+'" id = "delete" class ="delete" style="border: 0; background: transparent">'
+													+'<img src="icons/delete-photo-icon.png" style="height: 20px; width: 20px; object-fit: cover"/>'
+													+'</button>'
+													+'</c:if>'
+													+'</td>'
+												
+					                                + '</tr>'
+											
+											var tdSender = '<tr><td width = "1%" hidden>'+item.id+'</td>'
 													+ '<td width = "10%"></td>'
 													+ '<td class = "td-left-round" bgcolor= "'
 													+ colorRecived
@@ -202,7 +211,7 @@ nav {
 																	'hh:mm MM D, YYYY')
 													+ '</td><td bgcolor= "'
 													+ colorRecived
-													+ '" width="60%">'
+													+ '" width="55%">'
 													+ item.message.replace(
 															/</g, '&lt')
 													+ '</td>'
@@ -213,8 +222,17 @@ nav {
 													+ " "
 													+ item.sender.lastName
 													+ '<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="'
-                                + avatar + '"></td>'
-													+ '</tr>'
+					                                + avatar + '"></td>'
+					                               
+													+'<td width="5%">'
+													 +'<c:if test="${isAdmin}">'
+													+'<button name ="delete" data-id = "'+item.id+'" id = "delete" class ="delete" style="border: 0; background: transparent">'
+													+'<img src="icons/delete-photo-icon.png" style="height: 20px; width: 20px; object-fit: cover"/>'
+													+'</button>'
+													+'</c:if>'		
+													+'</td>'
+														
+					                                + '</tr>'
 											trHTML += item.senderId == "${sessionUser.id}" ? tdUser
 													: tdSender;
 										});
@@ -281,6 +299,18 @@ nav {
 							rate(data.rating)
 							$('#example-rating-1').text(data.rating);
 						});
+			
+				$("#messageEvent").on("click",".delete",function(){
+					var id  = $(this).attr('data-id');
+					$.ajax({
+		                url: "chatEventRequest.do?action=deleteMessage&id=" + id,
+		                type: "post",
+		                success: function () {
+		                }
+		            });
+					location.reload();
+				});
+				
 			});
 </script>
 <script type="text/javascript">

@@ -244,7 +244,8 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 					new PhotoService().getEventPhotos(id));
 
 			request.setAttribute("isAdmin", SessionRepository.isAdmin(request));
-
+			
+			
 			UserCalculator userCalc = new UserCalculator(
 					event.getModeratorId(), user.getId());
 			Integer moderatorMark = 0;

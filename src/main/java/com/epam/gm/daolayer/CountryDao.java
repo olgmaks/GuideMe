@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 import com.epam.gm.model.Country;
+import com.epam.gm.model.Tag;
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 import com.epam.gm.services.UserService;
@@ -56,6 +58,11 @@ public class CountryDao extends AbstractDao<Country> {
 		ConnectionManager.closeConnection(connection);
 		return result;
     }
+    
+    public List<Country> getAllActive() throws SQLException {
+		List<Country> result = getByField("deleted", false);
+		return result;
+	}
     
 
 }

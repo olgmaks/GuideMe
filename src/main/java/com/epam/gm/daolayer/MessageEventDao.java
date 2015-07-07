@@ -25,4 +25,7 @@ public class MessageEventDao extends AbstractDao<MessageEvent> {
     public List<MessageEvent> getByEvent(int eventId) throws SQLException{
     	return super.getByField("event_id", eventId);
     }
+    public void deleteById(int id) throws IllegalAccessException, SQLException{
+    	super.deleteByField("id", id);
+    }
 }

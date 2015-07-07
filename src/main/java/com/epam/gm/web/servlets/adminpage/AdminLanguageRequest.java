@@ -1,22 +1,20 @@
 package com.epam.gm.web.servlets.adminpage;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.epam.gm.model.Language;
 import com.epam.gm.services.LanguageService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
-import com.epam.gm.web.servlets.usertags.LangSubmitUserTagsServlet;
+
 import com.google.gson.Gson;
 
 
 public class AdminLanguageRequest implements HttpRequestHandler {
-	private HashMap<String, Object> JSONROOT = new HashMap<String, Object>();
 
 	private LanguageService dao;
 
