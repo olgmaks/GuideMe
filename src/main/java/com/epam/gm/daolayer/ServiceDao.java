@@ -11,7 +11,7 @@ import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 public class ServiceDao extends AbstractDao<Service> {
 	private static final String GUIDE_ID = "guide_id";
-	private static final String GET_ALL_NOT_TEMPORARY_SERVICES = "s WHERE s.is_temporary=0 AND s.guide_id=%S";
+	private static final String GET_ALL_NOT_TEMPORARY_SERVICES = "s WHERE s.is_temporary=0 AND s.deleted=0 and s.guide_id=%S";
 
 	public ServiceDao() {
 		// gryn
@@ -68,6 +68,10 @@ public class ServiceDao extends AbstractDao<Service> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void main(String[] args) {
+		new ServiceDao().updateServiceToDeletedById(16);
 	}
 
 	public void updateServiceDescriptionById(int id, String newDescription) {

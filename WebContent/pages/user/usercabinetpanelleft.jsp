@@ -30,8 +30,7 @@
 						style="height: 120px; width: 120px; object-fit: cover"
 						src="${sessionUser.avatar.path}">
 					</a>
-				</div>
-				<a href="editProfile.do" style="float: right;"> <img
+				</div> <a href="editProfile.do" style="float: right;"> <img
 					class="circle" style="height: 40px; width: 40px;"
 					src="icons/edit-profile.png"></a> <br> <h7>${sessionUser.firstName}
 				${sessionUser.lastName}</h7> <br> <br> <a
@@ -87,7 +86,7 @@
 						<button class="btn light-blue waves-effect waves-light"
 							type="submit" name="action"
 							style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-							Services Templates</button>
+							Services</button>
 					</a>
 				</c:if>
 

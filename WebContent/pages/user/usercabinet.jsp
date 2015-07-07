@@ -35,7 +35,8 @@
 
 <%--Tag it Java script--%>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"
+	type="text/javascript" charset="utf-8"></script>
 <script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>
 
 
@@ -58,7 +59,7 @@
 	<jsp:include page="usercabinetheader.jsp" />
 	<%--<jsp:include page="fileupload.jsp"/>--%>
 
-	<table >
+	<table>
 		<tr style="width: 100%;">
 
 
@@ -95,7 +96,7 @@
 						<jsp:include page="../eventsincabinet/allevents.jsp" />
 					</c:when>
 					<c:when test="${centralContent == 'usermessages' }">
- 						<jsp:include page="usermessages.jsp" /> 
+						<jsp:include page="usermessages.jsp" />
 					</c:when>
 					<c:when test="${centralContent == 'moderatorevent' }">
 						<jsp:include page="../eventsincabinet/moderatorevents.jsp" />
@@ -103,14 +104,14 @@
 					<c:when test="${centralContent == 'memberevent' }">
 						<jsp:include page="../eventsincabinet/memberevents.jsp" />
 					</c:when>
-				<c:when test="${centralContent == 'userCabinetComments' }">
-					<jsp:include page="usercabinetcomments.jsp" />
-				</c:when>
+					<c:when test="${centralContent == 'userCabinetComments' }">
+						<jsp:include page="usercabinetcomments.jsp" />
+					</c:when>
 				</c:choose></td>
 
 
 			<td style="width: 20%; vertical-align: top;"><c:choose>
-			
+
 					<c:when test="${centralContent == 'searchuser'}">
 						<jsp:include page="searchrightpanel.jsp" />
 					</c:when>
@@ -122,7 +123,7 @@
 						<jsp:include page="usergallerypanelright.jsp" />
 					</c:when>
 					<c:when test="${centralContent == 'usermessages' }">
- 						<jsp:include page="rightpanelmessageuser.jsp" /> -
+						<jsp:include page="rightpanelmessageuser.jsp" /> -
 					</c:when>
 					<c:otherwise>
 						<jsp:include page="usercabinetpanelright.jsp" />

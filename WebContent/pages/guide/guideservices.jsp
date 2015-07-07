@@ -22,13 +22,17 @@ Add new service
 		<div class="col s1 m3">
 			<div class="card light-blue lighten-5">
 				<div class="card-content black-text">
-					<span class="card-title black-text">${service.getName() }</span>
-					<p>Description: ${service.getDescription() }</p>
+					<span class="card-title black-text"><c:out
+							value="${service.getName() }" /> </span>
+					<p>
+						Description:
+						<c:out value="${service.getDescription() }" />
+					</p>
 					<p>One Person Price: ${service.getPrice() }</p>
 				</div>
 				<div class="card-action">
-			<!-- 		<a class="modal-trigger" href="#editservicemodal">Edit</a> --> <a
-						href="deleteeditservice.do?act=delete&id=${service.getId() }">delete</a>
+					<!-- 		<a class="modal-trigger" href="#editservicemodal">Edit</a> -->
+					<a href="deleteeditservice.do?act=delete&id=${service.getId() }">delete</a>
 				</div>
 			</div>
 		</div>

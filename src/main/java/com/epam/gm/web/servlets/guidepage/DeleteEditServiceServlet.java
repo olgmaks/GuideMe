@@ -34,7 +34,7 @@ public class DeleteEditServiceServlet extends HttpServlet implements
 			}
 		}
 
-		System.out.println(act + "\n" + id);
+		System.out.println("***************" + act + "\n" + id);
 		response.sendRedirect(response.encodeRedirectURL("guideservices.do"));
 
 	}

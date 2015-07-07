@@ -25,11 +25,16 @@
 									currenteventdateto = data.eventId;
 								}
 							});
+
 						});
 
 						$('#sub')
 								.click(
 										function() {
+
+											Materialize.toast($(
+													'#fromtemplates').is(
+													':checked'), 1500);
 											var serviceid = $('#dropdowndef')
 													.val();
 											var good = 1;
@@ -68,69 +73,77 @@
 																"positions must be a number",
 																1500);
 											}
-											var datefrom = $('#datefrom').val();
-											var timefrom = $('#timefrom').val();
-											var dateto = $('#dateto').val();
-											var timeto = $('#timeto').val();
-
-											var today = new Date();
-											var dd = today.getDate();
-											var mm = today.getMonth() + 1; //January is 0!
-
-											var yyyy = today.getFullYear();
-											if (dd < 10) {
-												dd = '0' + dd
-											}
-											if (mm < 10) {
-												mm = '0' + mm
-											}
-											var today = yyyy + '-' + mm + '-'
-													+ dd;
-
-											if (!document
+											if (document
 													.getElementById('test6').checked) {
-												if (datefrom == ''
-														|| timefrom == ''
-														|| dateto == ''
-														|| datefrom == '') {
-													good = 0;
-													Materialize
-															.toast(
-																	"date and time can't null",
-																	1500);
+											} else {
+
+												var datefrom = $('#datefrom')
+														.val();
+												var timefrom = $('#timefrom')
+														.val();
+												var dateto = $('#dateto').val();
+												var timeto = $('#timeto').val();
+
+												var today = new Date();
+												var dd = today.getDate();
+												var mm = today.getMonth() + 1; //January is 0!
+
+												var yyyy = today.getFullYear();
+												if (dd < 10) {
+													dd = '0' + dd
 												}
-											}
+												if (mm < 10) {
+													mm = '0' + mm
+												}
+												var today = yyyy + '-' + mm
+														+ '-' + dd;
 
-											if (datefrom > dateto) {
-												good = 0;
-												Materialize
-														.toast(
-																"date to can't be less than date from",
-																1500);
-											} else if (datefrom < today) {
-												good = 0;
-												Materialize
-														.toast(
-																"date from can't be less than NOW!",
-																1500);
-											} else if (dateto > currenteventdateto) {
-												good = 0;
-												Materialize
-														.toast(
-																"date to can't be bigger than event date to",
-																1500);
-											}
+												if (!document
+														.getElementById('test6').checked) {
 
-											else if (datefrom == dateto) {
-												if (timefrom > timeto) {
+													if (datefrom == ''
+															|| timefrom == ''
+															|| dateto == ''
+															|| datefrom == '') {
+
+														good = 0;
+														Materialize
+																.toast(
+																		"date and time can't null",
+																		1500);
+													}
+												}
+
+												if (datefrom > dateto) {
 													good = 0;
 													Materialize
 															.toast(
 																	"date to can't be less than date from",
 																	1500);
+												} else if (datefrom < today) {
+													good = 0;
+													Materialize
+															.toast(
+																	"date from can't be less than NOW!",
+																	1500);
+												} else if (dateto > currenteventdateto) {
+													good = 0;
+													Materialize
+															.toast(
+																	"date to can't be bigger than event date to",
+																	1500);
+												}
+
+												else if (datefrom == dateto) {
+													if (timefrom > timeto) {
+														good = 0;
+														Materialize
+																.toast(
+																		"date to can't be less than date from",
+																		1500);
+													}
 												}
 											}
-
 											if (good == 1) {
 												$
 														.ajax({
@@ -171,6 +184,7 @@
 											}
 
 										});
+
 						$('#test5').click(function() {
 							if (document.getElementById('test5').checked) {
 								$("#positions").prop('disabled', true);
@@ -194,12 +208,21 @@
 
 					});
 </script>
+<form action="#">
+
+	<input name="group1" type="radio" id="fromtemplates" /> <label
+		for="fromtemplates">From Templates</label> <input name="group1"
+		type="radio" id="newservice" /> <label for="newservice">New</label>
+
+</form>
 <select id="dropdowndef" style="width: 20%;" class="browser-default">
 	<option value="9999" id="firstchoosen">choose</option>
 	<c:forEach items="${listOfServices }" var="service">
 		<option value='${service.getId() }'>${ service.getName()}</option>
 	</c:forEach>
 </select>
+
+
 name
 <input type="text" style="width: 50%;" id="name2" />
 <br>
