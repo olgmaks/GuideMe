@@ -12,8 +12,10 @@ public class CommentEvent {
 
     @Column("id")
     private Integer id;
+
     @Column("date")
     private Date date;
+
     @Column("commentator_id")
     private Integer commentatorId;
 

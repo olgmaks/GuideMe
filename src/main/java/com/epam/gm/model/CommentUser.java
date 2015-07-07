@@ -33,6 +33,14 @@ public class CommentUser {
     @Column("comment")
     private String comment;
 
+    public CommentUser () {}
+
+    public CommentUser(Integer commentatorId, Integer userId, String comment) {
+        this.commentatorId = commentatorId;
+        this.userId = userId;
+        this.comment = comment;
+    }
+
     public User getCommentator() {
 		return Commentator;
 	}

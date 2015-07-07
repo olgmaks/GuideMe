@@ -26,4 +26,18 @@ public class CommentUserService {
         cuDao.deleteByField("id", id);
     }
 
+    public Integer saveAndReturnId(CommentUser commentUser) throws SQLException, IllegalAccessException {
+        return cuDao.saveAndReturnId(commentUser);
+    }
+
+    public CommentUser getCommentUserById(Integer id) throws SQLException {
+        List<CommentUser> commentUsers = cuDao.getByField("id", id);
+
+        if (!commentUsers.isEmpty()) {
+            return commentUsers.get(0);
+        } else {
+            return null;
+        }
+    }
+
 }

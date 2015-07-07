@@ -18,12 +18,9 @@ public class CommentUserDao extends AbstractDao<CommentUser> {
 		return super.getByField("user_id", userId);
 	}
 
-	public void saveCommentUser(CommentUser comment)
-			throws IllegalArgumentException, IllegalAccessException,
-			SQLException {
+	public void saveCommentUser(CommentUser comment)throws IllegalArgumentException, IllegalAccessException,SQLException {
 		super.save(comment);
 	}
-
 
 
 }
