@@ -5,14 +5,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.epam.gm.model.Language;
+import com.epam.gm.services.LanguageService;
+
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 public class FrontController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private Map<String, HttpRequestHandler> handlers;
+    
+    private List<Language> languages;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -21,6 +28,8 @@ public class FrontController extends HttpServlet {
         String props = getServletContext().getRealPath(
                 "/WEB-INF/frontcontroller.properties");
 
+        
+        
         System.out.println("Prop = " + props);
 
         try {
@@ -28,6 +37,17 @@ public class FrontController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        try {
+        	
+			languages = new LanguageService().getLocalizedLangs();
+			System.out.println("Put langs: " + languages);
+			config.getServletContext().setAttribute("applicationLangs", languages);
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 
     }
 
@@ -35,6 +55,11 @@ public class FrontController extends HttpServlet {
                          HttpServletResponse response) throws ServletException, IOException {
         try {
             System.out.println("Front controller");
+            
+//            System.out.println("Put langs: " + languages);
+//            request.getServletContext().setAttribute("applicationLangs", languages);
+            
+            
             // response.getWriter().append("Served at: ").append(request.getContextPath());
 
             HttpRequestHandler handler = null;
@@ -86,5 +111,7 @@ public class FrontController extends HttpServlet {
         doGet(request, response);
 
     }
+    
+   
 
 }

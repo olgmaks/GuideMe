@@ -2,6 +2,8 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,30 +11,35 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-    <title>Guide ME</title>
-    
- 
- 
+
      
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/init.js"></script>
-    
-
-
-
-
-
-
 	<script src="js/moment.js"></script>
 	
-    <script type="text/javascript">
+	
+	<!-- begin Localization -->
+	<jsp:include page="localization.jsp"/>
+	<ct:showLocale basename="locale.home.messages"  from = "home.do" />
+
+	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+	<fmt:bundle basename="locale.home.messages">
+	<!-- end Localization -->
+	
+	<title><fmt:message key="index.title"/></title>
+	
+    <script type="text/javascript"> 
         $(document).ready(function () {
         	window.onload = function () {
+        		
+        		
+        		
  //       		$("#searchform").submit();
 //             	var countryVal = $("#selCountryId").val();
 //             	countryVal = "choose";        		
@@ -71,10 +78,10 @@
                             $('#signinlabel').attr("href", "#logoutModal");
                             $('#guide-me-label').attr("href", "userCabinet.do");
                             $('#signInModal').closeModal();
-                            var helloMessage = 'Hello, ' + data.sessionUser.firstName + ' ' + data.sessionUser.lastName;
+                            var helloMessage =   _('js.hello') + ', ' + data.sessionUser.firstName + ' ' + data.sessionUser.lastName;
                             console.log(helloMessage);
                             $('#helloMessageOnLogoutModal').text(helloMessage);
-
+                            
                             Materialize.toast('Guide me! :)' , 1000,'',function(){   
                             	window.location.href = "home.do";
                             	window.location.reload(true);
@@ -83,7 +90,7 @@
                         } else {
                         	
                             $('#password').val('');
-                            $('#errorMessage').text('Email or/and password are not valid. Please try again');
+                            $('#errorMessage').text(_('js.emailPassNotValid'));
                             
                         }
                     }
@@ -103,17 +110,24 @@
                 return false;
             });
         });
-    </script>    
+    </script> 
+    
+    
+       
     <script type="text/javascript">
+    
         $(document).ready(function () {
             $("#searchform").submit(function () {
+            	
             	
             	var countryVal = $("#selCountryId").val();
             	
             	
             	if(countryVal == "" || countryVal == "choose") {
             		
-            		Materialize.toast('Choose country first !', 3000,'',function(){})
+
+            		Materialize.toast(_('js.chooseCountry'), 3000,'',function(){})
+
             		return false;
             	}
             	
@@ -133,9 +147,10 @@
                         resultCollenction = $("#inner-row");
                         
                         if(data.isEmpty)  {
-                        	resultCollenction.append("<span class='blue-text'> <h2> No results!</h2> <h3>Change parameters  and try again . </h3></span");
+                        	resultCollenction.append("<span class='blue-text'> <h2> " + _("js.noResults") + "</h2> <h3>"   
+                        			+ _("js.chkParams")  + " </h3></span");
                         	
-                        	Materialize.toast('No results !', 3000,'',function(){})
+                        	Materialize.toast(_("js.noResults"), 3000,'',function(){})
                         }
                         
                         
@@ -173,7 +188,7 @@
                                   "</span>" + 
 
                                       "<p>" +
-                                          "<a href='eventDetail.do?id=" + currentEvent.id +"'>" +  moment(currentEvent.dateFrom ).format('DD.MM.YY hh:mm')   + " - " + moment(currentEvent.dateTo).format('DD.MM.YY hh:mm')   + ", rate: " + Math.round(currentEvent.points) + currentEvent.status  + "</a>" +
+                                          "<a href='eventDetail.do?id=" + currentEvent.id +"'>" +  moment(currentEvent.dateFrom ).format('DD.MM.YY hh:mm')   + " - " + moment(currentEvent.dateTo).format('DD.MM.YY hh:mm')   + ", " + _("js.rate")  + ": " + Math.round(currentEvent.points) + currentEvent.status  + "</a>" +
                                       "</p>" +
                                   "</div>" + 
                                   "<div class='card-reveal'>" +
@@ -207,15 +222,24 @@
   });
   
   </script>    
+  
+
+  
         
+  </fmt:bundle>      
 </head>
 <body>
+
+<fmt:bundle basename="locale.home.messages">
+
 
 <jsp:include page="header.jsp"/>
 <jsp:include page="home/loginmodal.jsp"/>
 <jsp:include page="home/logoutmodal.jsp"/>
 
+<script type="text/javascript">
 
+</script>
 
 
 <div class="row">
@@ -232,7 +256,7 @@
     <ul class="collapsible" data-collapsible="expandable">
 
     <li>
-      <div class="collapsible-header active"><b>Search in:</b></div>
+      <div class="collapsible-header active"><b><fmt:message key="index.searchIn" />  </b></div>
       <div class="collapsible-body">
       
                                     <c:forEach items="${requestScope.languageList}" var="lang">
@@ -241,10 +265,10 @@
                                             <tr>
 
                                                 <td style="width:25%;">
-                                                    Country
+                                                    <fmt:message key = "index.Country"/>
                                                     <select id="countryByLang_${lang.id}" class="browser-default">
                                                         <option selected value="choose"  selected>
-                                                            loginpage.country.choose
+                                                             <fmt:message key = "loginpage.country.choose"/> 
                                                         </option>
 
                                                         <c:forEach items="${requestScope.countryList}" var="country">
@@ -300,7 +324,7 @@
                                                                                     $('#countryId').val('choose');
                                                                                     $('#cityId').val('choose');
 
-                                                                                    optFirst.text('loginpage.city.choose');
+                                                                                    optFirst.text(_('js.chooseCity'));
                                                                                     $('#cityByLang_' + countryId).append(optFirst);
 
                                                                                     $.each(originCityId, function (id, city) { //here we're doing a foeach loop round each city with id as the key and city as the value
@@ -328,10 +352,10 @@
 
 
                                                 <td style="width:25%;">
-                                                    City
+                                                    <fmt:message key="index.City" />
                                                     <select id="cityByLang_${lang.id}" class="browser-default">
                                                         <option selected value="choose">
-                                                            loginpage.city.choosecountryfirst
+                                                            <fmt:message key="js.chooseCity" />
                                                         </option>
                                                         
                                                     <script>
@@ -359,11 +383,11 @@
     </li>
     
     <li>
-      <div class="collapsible-header"><b>By word:</b> </div>
+      <div class="collapsible-header"><b><fmt:message key="index.search"/>:</b> </div>
       <div class="collapsible-body">
                 <div class="input-field col s6"> 
                     <i class="mdi-action-search prefix"></i> 
-                    <input id="icon_prefix" name = "icon_prefix" type="text" class="ligth-blue"> <label for="icon_prefix">Enter text...</label>
+                    <input id="icon_prefix" name = "icon_prefix" type="text" class="ligth-blue"> <label for="icon_prefix"><fmt:message key="index.entertext"/></label>
                     <input id="selCountryId" name="selCountryId" type = "hidden">
                     <input id="cityId" name="cityId" type = "hidden">
                  </div> 
@@ -371,33 +395,33 @@
       </div>
     </li>    
     <li>
-      <div class="collapsible-header"><b>Event status...:</b></div>
+      <div class="collapsible-header"><b><fmt:message key="index.Event_status"/>...:</b></div>
       <div class="collapsible-body">
       		<p>
       		<input type="checkbox" id="status_active" name = "status_active" checked="checked" />
-      		<label for="status_active">Active</label>
+      		<label for="status_active"><fmt:message key="index.eventActive" />  </label>
     		    		
              <input type="checkbox" id="status_filled" name="status_filled" />
-      		<label for="status_filled">Filled</label> 		
+      		<label for="status_filled"><fmt:message key="index.eventFilled" /></label> 		
     		
     		<input type="checkbox" id="status_done" name="status_done"  />
-      		<label for="status_done">Done</label> 
+      		<label for="status_done"><fmt:message key="index.Done" /></label> 
       		
     		<input type="checkbox" id="status_cancelled" name="status_cancelled"   />
-      		<label for="status_cancelled">Cancelled</label>
+      		<label for="status_cancelled"><fmt:message key="index.Cancelled" /></label>
        		 </p>
        		 
        		 <p>
-       		Type:
+       		<fmt:message key="index.Type" />:
     		<select class="browser-default" id= "moderator_type" name= "moderator_type">
-      		<option selected value="(2,3)" selected>Events and Excursions</option>
-      		<option value="(2)">Events</option>
-      		<option value="(3)">Excursions</option>
+      		<option selected value="(2,3)" selected><fmt:message key="index.EventsAndExcursions" /></option>   
+      		<option value="(2)"><fmt:message key="index.Events" /> </option>
+      		<option value="(3)"><fmt:message key="index.Excursions" /></option>
     		</select>            
             </p>
             
             <p>
-            Max. number of members:</p>
+            <fmt:message key="index.MaxNumber" />:</p>  
             
     		<p class="range-field">
       		<input type="range" id="max_members" name="max_members" min="1"   max="100"  value = "100"  />
@@ -420,9 +444,9 @@
         <table>
             <thead>
             <tr>
-                <th style="width: 20%; margin-left: 0%;">Recommended</th>
+                <th style="width: 20%; margin-left: 0%;"> <fmt:message key="index.TopEvents" /></th>
                 <th style="width: 60%; margin-left: 20%;" id = 'searchEventTitle' >${requestScope.searchEventTitle}</th>
-                <th style="width: 20%; margin-left: 80%;">Top users</th>
+                <th style="width: 20%; margin-left: 80%;"><fmt:message key="index.TopUsers" /></th>
             </tr>
             </thead>
             <tbody>
@@ -482,7 +506,7 @@
                                 <a href='eventDetail.do?id=${event.id}'>
                                 
                                 <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${event.dateFrom}" />
-                                 -  <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${event.dateTo}" />, rate: ${Math.round(event.points)}${event.status}
+                                 -  <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${event.dateTo}" />, <fmt:message key="js.rate" />: ${Math.round(event.points)}${event.status}
                                  
                                  
                                  </a>
@@ -547,9 +571,9 @@
     <div class="container">
         <div class="row">
             <div class="col l6 s12">
-                <h5 class="white-text">Hello from GuideMe Team !</h5>
+                <h5 class="white-text"><fmt:message key="index.FooterLineFirst" /></h5>
 
-                <p class="grey-text text-lighten-4">We hope you spend wonderful time with us and find new friends !</p>
+                <p class="grey-text text-lighten-4"><fmt:message key="index.FooterLineSecond" /></p>
 
 
             </div>
@@ -575,7 +599,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            &copy; 2015, GuideMe Team 
+            &copy; <fmt:message key="index.footerCopyright" /> 
         </div>
     </div>
 </footer>
@@ -583,5 +607,6 @@
 
 <!--  Scripts-->
 
+</fmt:bundle>
 </body>
 </html>

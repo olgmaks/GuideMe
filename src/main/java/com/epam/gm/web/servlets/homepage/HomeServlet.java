@@ -36,8 +36,12 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 	
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, SQLException {
 		
+//		java.net.URL url = getClass().getClassLoader().getResource("locale/home");
+//		System.out.println("Path: " + url.getPath());
+		
+		SessionRepository.initBundle(request, "locale.home.messages");
 		
 		User user =  SessionRepository.getSessionUser(request);
 		Integer userId = null;
@@ -73,7 +77,7 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 				Collections.sort(lastEvents, Event.BY_CREATED_DATE);
 				
 				Country country = countryService.getCountryById(lastCountryId);
-				request.setAttribute("searchEventTitle", "Latest events in: " + country.getName());
+				request.setAttribute("searchEventTitle", SessionRepository.getLocaleMessage("index.LatestEventsIn") + ": " + country.getName());
 				
 				for(Event e: lastEvents) {
 					System.out.println("--------------------------");
@@ -87,10 +91,8 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 				eventService.buildTagString(lastEvents);
 				EventCalculator.sortEventsByPoints(lastEvents, userId);
 				
-				request.setAttribute("searchEventTitle", "All active events by: #" + byTag);
+				request.setAttribute("searchEventTitle", SessionRepository.getLocaleMessage("index.AllActiveBy") + ": #" + byTag);
 			}
-				
-			
 			
 			request.setAttribute("lastEvents", lastEvents);
 			

@@ -54,6 +54,14 @@ public class LanguageService {
 	public Boolean isPresentShortName(String shortName) throws SQLException{
 		return languageDao.isPresentShortName(shortName);
 	}
+	
+	public Language getLangByLocale(String locale) throws SQLException {
+		return languageDao.getLangByLocale(locale);
+	}
+	
+	public Language getLangByKey(String key) throws SQLException {
+		return languageDao.getLangByKey(key);
+	}	
 	public static void main(String[] args) throws SQLException {
 		String s = "Українська";
 		s = StringHelper.convertFromUTF8(s);

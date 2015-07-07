@@ -3,8 +3,10 @@ package com.epam.gm.web.servlets.homepage;
 import com.epam.gm.daolayer.ServiceDao;
 import com.epam.gm.daolayer.UserLoginingDao;
 import com.epam.gm.hashpassword.MD5HashPassword;
+import com.epam.gm.model.Language;
 import com.epam.gm.model.Service;
 import com.epam.gm.model.User;
+import com.epam.gm.services.LanguageService;
 import com.epam.gm.services.UserService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.epam.gm.sessionrepository.SessionRepository;
@@ -56,7 +58,14 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 								user.getEmail()))) {
 					System.out.println("logination has been successful");
 					SessionRepository.setSessionUser(request, user);
-
+					
+					//and setting lang 
+					//gryn
+					Language lang = new LanguageService().getLangById(user.getLangId());
+					SessionRepository.setSessionLanguage(request, lang);
+					//and cookie
+					CookieUtil.saveLastLanguage(response, lang);					
+					
 					// gryn
 					CookieUtil.saveLastUser(response, user);
 					System.out.println("**************saved cookie = "

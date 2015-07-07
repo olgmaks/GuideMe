@@ -304,6 +304,17 @@ import java.util.StringJoiner;
 
     	}
     	
+    	public void saveUserLang(int userId, int langId) throws SQLException {
+            Map<String, Object> updates = new HashMap<String, Object>();
+            updates.put("lang_id", langId);
+            try {
+                updateById(userId, updates);
+            } catch (SQLException e) {
+
+                e.printStackTrace();
+            }
+    	}
+    	
         public static void main(String[] args) throws SQLException {
    
         	        UserDao userDao = new UserDao();

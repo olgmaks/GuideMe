@@ -102,6 +102,24 @@ public class LanguageDao extends AbstractDao<Language> {
 		updateById(id, updates);
 	}
 	
+	public Language getLangByLocale(String locale) throws SQLException {
+		List<Language> result = getByField("locale", locale);
+		if (result.isEmpty()) {
+			return null;
+		} else {
+			return result.get(0);
+		}
+	}
+	
+	public Language getLangByKey(String key) throws SQLException {
+		List<Language> result = getByField("short_name", key);
+		if (result.isEmpty()) {
+			return null;
+		} else {
+			return result.get(0);
+		}
+	}
+	
 	public static void main(String[] args) throws SQLException {
 //		List<UserLanguage> list = new UserLanguageDao().getByField("user_id", 14);
 //		

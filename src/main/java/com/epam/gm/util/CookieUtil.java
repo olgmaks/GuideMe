@@ -6,7 +6,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.gm.model.Language;
 import com.epam.gm.model.User;
+import com.epam.gm.services.LanguageService;
 import com.epam.gm.services.UserService;
 import com.epam.gm.sessionrepository.SessionRepository;
 
@@ -16,6 +18,15 @@ public class CookieUtil {
 			return;
 
 		Cookie cookie = new Cookie("lastUserId", user.getId().toString());
+		cookie.setMaxAge(30 * 24 * 60 * 60); // 30 days.
+		response.addCookie(cookie);
+	}
+	
+	public static void saveLastLanguage(HttpServletResponse response, Language language) {
+		if (language == null)
+			return;
+
+		Cookie cookie = new Cookie("lastLanguageId", language.getId().toString());
 		cookie.setMaxAge(30 * 24 * 60 * 60); // 30 days.
 		response.addCookie(cookie);
 	}
@@ -56,4 +67,24 @@ public class CookieUtil {
 		return countryId;
 	}
 
+	
+	public static Language getLastLanguageFromCookie(HttpServletRequest request) throws SQLException {
+		Language res = null;
+		
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null)
+			for (Cookie c : cookies) {
+				if ("lastLanguageId".equals(c.getName())) {
+					if(DataValidator.isPositiveNumber(c.getValue())) {
+						Integer id = Integer.parseInt(c.getValue());
+						res = new LanguageService().getLangById(id);
+
+					}
+					
+					break;
+				}
+			}
+
+		return res;
+	}
 }

@@ -272,5 +272,8 @@ public class UserService {
 		 
 		 buildTagString(list);
 	 }
-
+	 
+	 public void saveUserLang(Integer userId, Integer langId) throws SQLException {
+		 userDao.saveUserLang(userId, langId);
+	 }
 }

@@ -18,11 +18,17 @@ public class Language implements Comparable<Language> {
 	
 	@Column("deleted")
 	private Boolean deleted;
+	
+	@Column("locale")
+	private String locale;
+
+     
 
 	@Override
 	public String toString() {
 		return "Language [id=" + id + ", key=" + key + ", name=" + name
-				+ ", localized=" + localized + "]";
+				+ ", localized=" + localized + ", deleted=" + deleted
+				+ ", locale=" + locale + "]";
 	}
 
 	public Integer getId() {
@@ -65,6 +71,15 @@ public class Language implements Comparable<Language> {
 		this.deleted = deleted;
 	}
 	
+	
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
 	//gryn
 	@Override
 	public boolean equals(Object obj) {
