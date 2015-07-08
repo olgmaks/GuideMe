@@ -39,7 +39,8 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 			throws ServletException, IOException, SQLException,
 			IllegalAccessException {
 		HttpSession session = request.getSession();
-
+		System.out.println("isnece*******"
+				+ request.getParameter("isnecessaryval"));
 		String description = request.getParameter("description");
 		String name = request.getParameter("nameval");
 
@@ -121,9 +122,7 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 		} else {
 			isChanged = true;
 		}
-		
-		
-		
+
 		if (isChanged) {
 			Service newService = new Service();
 			newService.setDescription(description);
@@ -138,7 +137,12 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 		} else {
 			serviceInEvent.setServiceId(newServiceId);
 		}
-		serviceInEvent.setIsNecessaryToPay(0);
+		String isNecessary = request.getParameter("isnecessaryval");
+		if (isNecessary.equals("false")) {
+			serviceInEvent.setIsNecessaryToPay(0);
+		} else {
+			serviceInEvent.setIsNecessaryToPay(1);
+		}
 		serviceInEvent.setEventId(event.getId());
 		serviceInEvent.setAvailableAmountOfPositions(amountOfPosition);
 		/* serviceInEvent.setEventId(eventId); */

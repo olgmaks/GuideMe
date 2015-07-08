@@ -27,7 +27,7 @@
 	<div class="modal-content">
 		<h5>All Services</h5>
 		<ul class="collection">
-			<c:forEach items="${servicesInEvent }" var="serviceInEvent">
+			<c:forEach items="${allServicesInEvent }" var="serviceInEvent">
 				<li id="addedserviceinevent"
 					idofcurrentservice="${serviceInEvent.getId() }"
 					class="collection-item">${serviceInEvent.getService().getName() }<i

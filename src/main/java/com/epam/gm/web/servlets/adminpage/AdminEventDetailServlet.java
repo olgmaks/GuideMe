@@ -69,7 +69,8 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			LanguageService languageService = new LanguageService();
 			List<Language> languageList = languageService.getLocalizedLangs();
 			request.setAttribute("languageList", languageList);
-
+			request.setAttribute("allServicesInEvent",
+					new ServiceInEventDao().getAllServicesByEventId(id));
 			request.setAttribute("servicesInEvent", new ServiceInEventDao()
 					.getAllNotNecessaryServicesByEventId(id, user.getId()));
 			session.setAttribute("neseccaryServices", new ServiceInEventDao()

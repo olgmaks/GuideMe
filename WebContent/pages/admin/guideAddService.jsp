@@ -188,9 +188,12 @@
 																timetoval : datefrom,
 																serviceidval : serviceid,
 																nameval : name,
+
 																positionsval : $(
 																		'#positions')
-																		.val()
+																		.val(),
+																isnecessaryval : document
+																		.getElementById('isNecessary').checked
 
 															},
 
@@ -267,6 +270,13 @@ amount of positons
 <input type="text" style="width: 25%;" id="positions" />
 <input type="checkbox" id="test5" />
 <label for="test5">unlimited</label>
+<p>Is Necessary?
+<div class="switch">
+	<label> No <input id="isNecessary" type="checkbox"> <span
+		class="lever"></span> Yes
+	</label>
+</div>
+
 <br>
 <button disabled class="waves-light btn" type="submit" id="sub"
 	name="action">Add To Event</button>

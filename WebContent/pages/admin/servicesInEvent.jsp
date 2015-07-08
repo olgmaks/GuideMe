@@ -48,20 +48,20 @@
 														str.length - 5);
 												/* 	alert($('.' + id).length); */
 												Materialize.toast('Good', 2000);
-											
-													$("#touchable")
-															.append(
-																	"<div id='servppppp' idofserv="+id+" price2="+serviceprice +"><li class='collection-item'>"
-																			+ str
-																			+ "<i class='mdi-content-remove-circle-outline right'></i></div></li>");
-									
+
+												$("#touchable")
+														.append(
+																"<div id='servppppp' idofserv="+id+" price2="+serviceprice +"><li class='collection-item'>"
+																		+ str
+																		+ "<i class='mdi-content-remove-circle-outline right'></i></div></li>");
+
 												price = price + serviceprice;
 												/* + Number((necessprice)
 														.toFixed(1)); */
 
 											}
 
-											$('.black-text').text('bucket');
+											/* 	$('.black-text').text('bucket'); */
 											$('.grey-text')
 													.text(
 															'Price '
@@ -83,12 +83,11 @@
 										if (index > -1) {
 											boughtArr.splice(index, 1);
 										}
-										Materialize.toast($(this).attr("id"),
-												2000);
+										Materialize.toast("Removed", 2000);
 										var serviceprice2 = $(this).attr(
 												"price2");
 										price = price - serviceprice2;
-										$('.black-text').text('bucket');
+										/* $('.black-text').text('bucket'); */
 										$('.grey-text').text(
 												'Price '
 														+ Number((price)
@@ -99,24 +98,41 @@
 									}
 								});
 
-						$("#buttonbuy").click(
-								function() {
-									$("#generalprice").text(
-											Number((price).toFixed(1)) + " $");
+						$("#buttonbuy")
+								.click(
+										function() {
+											if (price != 0) {
+												$("#buyservices").text("buy");
+												$("#buyservices").attr("href",
+														"buyServices.do");
+												$("#generalprice").text(
+														Number((price)
+																.toFixed(1))
+																+ " $");
 
-									$.ajax({
-										url : 'buyService.do',
-										type : 'POST',
-										data : {
-											boughtArrval : JSON
-													.stringify(boughtArr)
-										},
-										success : function(data) {
+												$
+														.ajax({
+															url : 'buyService.do',
+															type : 'POST',
+															data : {
+																boughtArrval : JSON
+																		.stringify(boughtArr)
+															},
+															success : function(
+																	data) {
 
-										}
-									});
-
-								});
+															}
+														});
+											} else {
+												$("#generalprice")
+														.text(
+																"you didn't add services to buy");
+												$("#buyservices")
+														.text("cancel");
+												$("#buyservices").attr("href",
+														"#");
+											}
+										});
 
 					});
 </script>
@@ -127,6 +143,7 @@
 	});
 </script>
 PAID SERVICES
+
 <ul class="collection with-header" id="paid"
 	data-collapsible="accordion" style="width: 75%;">
 	<c:forEach items="${allPaid }" var="service">
@@ -134,7 +151,7 @@ PAID SERVICES
 			price2="${service.getService().getPrice() }">
 			<li class='collection-item'>${service.getService().getName() }
 				${service.getService().getPrice() }$ <i
-				class='mdi-content-circle-outline right'>paid</i>
+				class='mdi-toggle-check-box right'></i>
 		</div>
 		</li>
 
@@ -151,12 +168,15 @@ AVAILABLE SERVICES
 				id="${serviceinevent.getId() }" data-position="left" data-delay="50"
 				data-tooltip="${serviceinevent.getService().getDescription() }">${serviceinevent.getService().getName() }
 				${serviceinevent.getService().getPrice() }$ <i
-					class="mdi-content-add-circle-outline right"></i>
+					class="mdi-action-add-shopping-cart right"></i>
 			</div>
 		</li>
 	</c:forEach>
 </ul>
-<h4 class="green-text text-darken-4">bucket</h4>
+<h4 class="green-text text-darken-4">
+	bucket<i class='mdi-action-shopping-basket left'></i>
+</h4>
+
 <h4 class="grey-text text-darken-4" id="priceofnecessary"
 	pricenecessary=${sumOfAllNecessary }>Price ${sumOfAllNecessary } $</h4>
 
@@ -164,7 +184,7 @@ AVAILABLE SERVICES
 <a id="buttonbuy" class="waves-light btn modal-trigger" href="#modal1">Buy</a>
 
 
-<ul id="touchable"  class="collection with-header">
+<ul id="touchable" class="collection with-header">
 	<c:forEach items="${neseccaryServices }" var="service">
 		<div id='untouchable' idofserv="${service.getId() }"
 			price2="${service.getService().getPrice() }">
@@ -188,7 +208,7 @@ AVAILABLE SERVICES
 		<p id="generalprice">$</p>
 	</div>
 	<div class="modal-footer">
-		<a href="buyServices.do"
+		<a id="buyservices" href="buyServices.do"
 			class=" modal-action modal-close waves-effect waves-green btn-flat">Pay</a>
 	</div>
 </div>
