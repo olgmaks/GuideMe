@@ -16,7 +16,10 @@ $(function () {
     'use strict';
 
     // Initialize the jQuery File Upload widget:
-    $('#fileupload').fileupload();
+    $('#fileupload').fileupload({
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+        maxFileSize : 10000*1000	//10MB
+    });
 
     // Enable iframe cross-domain access via redirect option:
     $('#fileupload').fileupload(
