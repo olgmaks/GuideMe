@@ -1,9 +1,12 @@
 package com.epam.gm.web.servlets.adminpage;
 
+import groovy.lang.Newify;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.StringJoiner;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +30,7 @@ import com.epam.gm.services.CountryService;
 import com.epam.gm.services.EventService;
 import com.epam.gm.services.LanguageService;
 import com.epam.gm.services.PhotoService;
+import com.epam.gm.services.ServiceInEventService;
 import com.epam.gm.services.TagService;
 import com.epam.gm.services.UserInEventService;
 import com.epam.gm.sessionrepository.SessionRepository;
@@ -51,8 +55,8 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			}
 
 			if (user.isGuide()) {
-				List<Service> list = new ServiceDao().getNotTemporaryServicesByGuideId(user
-						.getId());
+				List<Service> list = new ServiceDao()
+						.getNotTemporaryServicesByGuideId(user.getId());
 				request.setAttribute("listOfServices", list);
 			}
 			EventService eventService = new EventService();
@@ -66,9 +70,16 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			List<Language> languageList = languageService.getLocalizedLangs();
 			request.setAttribute("languageList", languageList);
 
-			request.setAttribute("servicesInEvent",
-					new ServiceInEventDao().getAllServicesByEventId(id));
-
+			request.setAttribute("servicesInEvent", new ServiceInEventDao()
+					.getAllNotNecessaryServicesByEventId(id, user.getId()));
+			session.setAttribute("neseccaryServices", new ServiceInEventDao()
+					.getAllNecessaryServicesByEventId(id, user.getId()));
+			request.setAttribute("sumOfAllNecessary",
+					new ServiceInEventService()
+							.getPriceOfAllNecessaryServicesByEventId(id,
+									user.getId()));
+			request.setAttribute("allPaid", new ServiceInEventDao()
+					.getAllPaidByEventIdAndUserId(id, user.getId()));
 			// gryn - adding try
 			Integer sessionUserId = null;
 			try {

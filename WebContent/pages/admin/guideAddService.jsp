@@ -35,6 +35,7 @@
 						$('#dropdowndef').click(function() {
 							$("#firstchoosen").prop('disabled', true);
 							$("#sub").prop('disabled', false);
+							$("#name2").prop('disabled', false);
 							var selectvalue = $('#dropdowndef').val();
 							$.ajax({
 								url : 'addServicesInEvents.do',
@@ -61,6 +62,12 @@
 											var good = 1;
 											var price = $('#price').val();
 											var name = $('#name2').val();
+											if (!name) {
+												good = 0;
+												Materialize.toast(
+														"name can't be null",
+														1500);
+											}
 											if (!isNaN(price)) {
 												if (price < -1) {
 													good = 0;
@@ -228,7 +235,6 @@
 					});
 </script>
 <div id="sourcefrom">
-
 	<input name="group1" type="radio" id="fromtemplates" checked="checked" />
 	<label for="fromtemplates">From Templates</label> <input name="group1"
 		type="radio" id="newservice" /> <label for="newservice">New</label>
@@ -262,13 +268,12 @@ amount of positons
 <input type="checkbox" id="test5" />
 <label for="test5">unlimited</label>
 <br>
-<button disabled class=" waves-light btn" type="submit" id="sub"
+<button disabled class="waves-light btn" type="submit" id="sub"
 	name="action">Add To Event</button>
 <br>
 <br>
 <a id="deleteservices" class="waves-light btn modal-trigger"
 	href="#modal2">Delete Services From Event</a>
-
 
 
 

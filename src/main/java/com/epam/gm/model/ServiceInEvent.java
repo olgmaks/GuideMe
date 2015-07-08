@@ -1,13 +1,15 @@
 package com.epam.gm.model;
 
+import java.io.Serializable;
 import java.util.Date;
+
 import com.epam.gm.olgmaks.absractdao.annotation.Column;
 import com.epam.gm.olgmaks.absractdao.annotation.Entity;
 import com.epam.gm.olgmaks.absractdao.annotation.ForeignKey;
 import com.epam.gm.olgmaks.absractdao.annotation.OneToMany;
 
 @Entity("service_in_event")
-public class ServiceInEvent {
+public class ServiceInEvent implements Serializable {
 	@Column("id")
 	private Integer id;
 	@Column("date_from")
@@ -92,6 +94,15 @@ public class ServiceInEvent {
 
 	public void setAvailableAmountOfPositions(Integer availableAmountOfPositions) {
 		this.availableAmountOfPositions = availableAmountOfPositions;
+	}
+
+	
+	public Integer getIsNecessaryToPay() {
+		return isNecessaryToPay;
+	}
+
+	public void setIsNecessaryToPay(Integer isNecessaryToPay) {
+		this.isNecessaryToPay = isNecessaryToPay;
 	}
 
 	@Override

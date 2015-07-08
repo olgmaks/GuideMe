@@ -11,7 +11,9 @@
 						var classname2 = document
 								.getElementsByClassName("collection with-header");
 
-						var price = 0;
+						var price = parseFloat($("#priceofnecessary").attr(
+								"pricenecessary"));
+
 						var boughtArr = [];
 
 						$(classname)
@@ -46,14 +48,16 @@
 														str.length - 5);
 												/* 	alert($('.' + id).length); */
 												Materialize.toast('Good', 2000);
-
-												$(classname2)
-														.append(
-																"<div id='servppppp' idofserv="+id+" price2="+serviceprice +"><li class='collection-item'>"
-																		+ str
-																		+ "<i class='mdi-content-remove-circle-outline right'></i></div></li>  ");
-
+											
+													$("#touchable")
+															.append(
+																	"<div id='servppppp' idofserv="+id+" price2="+serviceprice +"><li class='collection-item'>"
+																			+ str
+																			+ "<i class='mdi-content-remove-circle-outline right'></i></div></li>");
+									
 												price = price + serviceprice;
+												/* + Number((necessprice)
+														.toFixed(1)); */
 
 											}
 
@@ -66,58 +70,35 @@
 																	+ ' $');
 
 										});
-						$('body')
-								.on(
-										'click',
-										'#servppppp',
-										function() {
-											var currentId = $(this).attr(
-													"idofserv");
+						$('#touchable').on(
+								'click',
+								'#servppppp',
+								function() {
+									if ($(this).attr("id") == "servppppp") {
+										var currentId = $(this)
+												.attr("idofserv");
 
-											var index = boughtArr
-													.indexOf(currentId);
-											if (index > -1) {
-												boughtArr.splice(index, 1);
-											}
+										var index = boughtArr
+												.indexOf(currentId);
+										if (index > -1) {
+											boughtArr.splice(index, 1);
+										}
+										Materialize.toast($(this).attr("id"),
+												2000);
+										var serviceprice2 = $(this).attr(
+												"price2");
+										price = price - serviceprice2;
+										$('.black-text').text('bucket');
+										$('.grey-text').text(
+												'Price '
+														+ Number((price)
+																.toFixed(1))
+														+ ' $');
 
-											var serviceprice2 = $(this).attr(
-													"price2");
-											price = price - serviceprice2;
-											$('.black-text').text('bucket');
-											$('.grey-text')
-													.text(
-															'Price '
-																	+ Number((price)
-																			.toFixed(1))
-																	+ ' $');
-											$(this).remove();
+										$(this).remove();
+									}
+								});
 
-										});
-
-						/* 					$(classname3)
-													.click(
-															function() {
-																Materialize.toast('sss', 2000);
-																serviceprice2 = $(this).attr(
-																		'price2');
-																var index = boughtArr.indexOf(id);
-																if (index > -1) {
-																	boughtArr.splice(index, 1);
-																}
-																$(this).remove();
-
-																var serviceprice2 = parseFloat();
-
-																price = price - serviceprice2;
-
-																$('.black-text').text('bucket');
-																$('.grey-text')
-																		.text(
-																				'Price '
-																						+ Number((price)
-																								.toFixed(1))
-																						+ ' $');
-															}); */
 						$("#buttonbuy").click(
 								function() {
 									$("#generalprice").text(
@@ -145,13 +126,29 @@
 		$('.modal-trigger').leanModal();
 	});
 </script>
+PAID SERVICES
+<ul class="collection with-header" id="paid"
+	data-collapsible="accordion" style="width: 75%;">
+	<c:forEach items="${allPaid }" var="service">
+		<div id='untouchable' idofserv="${service.getId() }"
+			price2="${service.getService().getPrice() }">
+			<li class='collection-item'>${service.getService().getName() }
+				${service.getService().getPrice() }$ <i
+				class='mdi-content-circle-outline right'>paid</i>
+		</div>
+		</li>
+
+	</c:forEach>
+
+
+</ul>
+AVAILABLE SERVICES
 <ul class="collapsible" data-collapsible="accordion" style="width: 75%;">
 	<c:forEach items="${servicesInEvent }" var="serviceinevent">
 		<li>
 			<div class="collapsible-header tooltipped"
 				price="${serviceinevent.getService().getPrice() }"
-				id="${serviceinevent.getService().getId() }" data-position="left"
-				data-delay="50"
+				id="${serviceinevent.getId() }" data-position="left" data-delay="50"
 				data-tooltip="${serviceinevent.getService().getDescription() }">${serviceinevent.getService().getName() }
 				${serviceinevent.getService().getPrice() }$ <i
 					class="mdi-content-add-circle-outline right"></i>
@@ -160,11 +157,24 @@
 	</c:forEach>
 </ul>
 <h4 class="green-text text-darken-4">bucket</h4>
-<h4 class="grey-text text-darken-4">Price</h4>
+<h4 class="grey-text text-darken-4" id="priceofnecessary"
+	pricenecessary=${sumOfAllNecessary }>Price ${sumOfAllNecessary } $</h4>
 
 
 <a id="buttonbuy" class="waves-light btn modal-trigger" href="#modal1">Buy</a>
-<ul class="collection with-header">
+
+
+<ul id="touchable"  class="collection with-header">
+	<c:forEach items="${neseccaryServices }" var="service">
+		<div id='untouchable' idofserv="${service.getId() }"
+			price2="${service.getService().getPrice() }">
+			<li class='collection-item'>${service.getService().getName() }
+				${service.getService().getPrice() }$ <i
+				class='mdi-content-circle-outline right'>necessary</i>
+		</div>
+		</li>
+	</c:forEach>
+
 
 
 
@@ -178,7 +188,7 @@
 		<p id="generalprice">$</p>
 	</div>
 	<div class="modal-footer">
-		<a href="#!"
+		<a href="buyServices.do"
 			class=" modal-action modal-close waves-effect waves-green btn-flat">Pay</a>
 	</div>
 </div>

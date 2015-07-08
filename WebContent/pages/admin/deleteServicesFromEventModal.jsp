@@ -4,17 +4,20 @@
 		var classname3 = document.getElementsByClassName("collection-item");
 		$(classname3).click(function() {
 			/* 		alert($(this).attr("idofcurrentservice")); */
-			$(this).remove();
-			$.ajax({
-				url : 'deleteServiceFromEvent.do',
-				type : 'POST',
-				data : {
-					idval : $(this).attr("idofcurrentservice")
-				},
-				success : function(data) {
+			if ($(this).attr("id") == "addedserviceinevent") {
 
-				}
-			});
+				$(this).remove();
+				$.ajax({
+					url : 'deleteServiceFromEvent.do',
+					type : 'POST',
+					data : {
+						idval : $(this).attr("idofcurrentservice")
+					},
+					success : function(data) {
+
+					}
+				});
+			}
 
 		});
 	});

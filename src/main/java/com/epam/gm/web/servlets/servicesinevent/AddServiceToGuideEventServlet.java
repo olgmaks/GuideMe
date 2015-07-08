@@ -42,7 +42,7 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 
 		String description = request.getParameter("description");
 		String name = request.getParameter("nameval");
-		System.out.println(name);
+
 		User u = (User) session.getAttribute("sessionUser");
 		double price = 0;
 		try {
@@ -121,6 +121,9 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 		} else {
 			isChanged = true;
 		}
+		
+		
+		
 		if (isChanged) {
 			Service newService = new Service();
 			newService.setDescription(description);
@@ -135,10 +138,12 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 		} else {
 			serviceInEvent.setServiceId(newServiceId);
 		}
+		serviceInEvent.setIsNecessaryToPay(0);
 		serviceInEvent.setEventId(event.getId());
 		serviceInEvent.setAvailableAmountOfPositions(amountOfPosition);
 		/* serviceInEvent.setEventId(eventId); */
 		ServiceInEventDao serviceInEventDao = new ServiceInEventDao();
+		System.out.println("******SAVED");
 		serviceInEventDao.saveServiceInEvent(serviceInEvent);
 
 		Map<String, Object> map = new HashMap<>();
