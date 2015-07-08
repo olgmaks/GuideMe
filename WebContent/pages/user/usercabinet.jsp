@@ -57,6 +57,7 @@
 <body onload="connect();" onunload="disconnect();">
 	<jsp:include page="../home/logoutmodal.jsp" />
 	<jsp:include page="usercabinetheader.jsp" />
+	
 	<%--<jsp:include page="fileupload.jsp"/>--%>
 
 	<table>
@@ -124,6 +125,9 @@
 					</c:when>
 					<c:when test="${centralContent == 'usermessages' }">
 						<jsp:include page="rightpanelmessageuser.jsp" /> -
+					</c:when>
+					<c:when test="${centralContent == 'wallet' }">
+ 						<jsp:include page="wallet.jsp" /> -
 					</c:when>
 					<c:otherwise>
 						<jsp:include page="usercabinetpanelright.jsp" />

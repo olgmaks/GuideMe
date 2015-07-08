@@ -16,9 +16,11 @@ import com.epam.gm.hashpassword.MD5HashPassword;
 import com.epam.gm.model.Address;
 import com.epam.gm.model.City;
 import com.epam.gm.model.User;
+import com.epam.gm.model.Wallet;
 import com.epam.gm.services.AddressService;
 import com.epam.gm.services.CityService;
 import com.epam.gm.services.UserService;
+import com.epam.gm.services.WalletService;
 import com.epam.gm.util.ValidateHelper;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.google.gson.Gson;
@@ -30,6 +32,8 @@ public class SubmitRegisterServlet implements HttpRequestHandler {
 			throws ServletException, IOException, SQLException {
 
 		System.out.println("SubmitRegisterServlet");
+
+
 
 		boolean ok = true;
 
@@ -173,18 +177,28 @@ public class SubmitRegisterServlet implements HttpRequestHandler {
 				e1.printStackTrace();
 			}
 
+
 			UserService userService = new UserService();
+			Wallet wallet = new Wallet();
+			WalletService walletService = new WalletService();
 			try {
-				userService.saveUser(user);
+				Integer userId = userService.saveUserAndRerutnId(user);
+				wallet.setUser_id(userId);
+				wallet.setBalance(0);
+				walletService.saveWallet(wallet);
+
+
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
+
 			//request.getRequestDispatcher("home.do").forward(request, response);
 
+
 		}
-		
+
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		Map<String, Object> map = new HashMap<>();

@@ -88,7 +88,13 @@
 							style="width: 100%; margin-top: 10px; text-align: left; font-size: 90%; text-transform: capitalize">
 							Services Templates</button>
 					</a>
-				</c:if>
+				</c:if> <a href="wallet.do">
+					<button class="btn light-blue waves-effect waves-light"
+						type="submit" name="action"
+						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
+						Wallet<i class="mdi-social-group-add right"></i>
+					</button>
+			</a>
 
 				<h6>
 					<a href="#_" id="modalLanguages">Languages</a>:

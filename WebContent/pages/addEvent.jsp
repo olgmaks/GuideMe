@@ -36,14 +36,8 @@
 
 						<form class="col s12" action="submitEvent.do" method="post">
 
-							<div class="file-field input-field">
-
-								<div class="btn">
-									<span>addEventpage.download_image</span> <input type="file"
-										accept="image/*" name="avatar" id="avatar" />
-								</div>
-							</div>
-							<br> <br> <br>
+							
+							
 							<div class="row">
 								<div class="input-field col s12">
 									<label for="eventName"> addEventpage.eventName:</label> <input
@@ -307,6 +301,7 @@
 										id="videoLinkMessage"></span><br>
 								</div>
 							</div>
+						
 							<div class="row">
 								<div class="col s12">
 									<ul class="collection z-depth-2 ">
@@ -314,7 +309,7 @@
 
 											<div class="row">
 												<div class=" col s12">
-													<table style="width: 100%;">
+													<table style="width: 20%;">
 														<tr>
 
 
@@ -326,23 +321,7 @@
 
 
 
-															<td style="width: 20%;"><input type="number"
-																name="age_limit_from" min="0" id="age_limit_from">
-																<label for="age_limit_from">addEventpage.age_from</label>
-
-															</td>
-															<td style="width: 20%;"><input type="number"
-																name="age_limit_to" min="0" id="age_limit_to"> <label
-																for="age_limit_to">addEventpage.age_to</label></td>
-
-															<td style="width: 20%;"><select
-																id="gender_restriction" name="gender_restriction"
-																class="browser-default">
-																	<option value="" disabled selected>addEventpage.gender_restriction</option>
-																	<option value="male">only_male</option>
-																	<option value="female">only_female</option>
-																	<option value="all">all</option>
-															</select></td>
+															
 
 
 														</tr>
@@ -360,8 +339,7 @@
 							</div>
 
 
-						  Status: <select
-								class="browser-default" id="status" name="status"
+							Status: <select class="browser-default" id="status" name="status"
 								style="width: 50%; text-align: left; font-size: 100%; text-transform: capitalize">
 								<option selected="" value="guest">Guest</option>
 								<option value="resident">Resident</option>
@@ -388,11 +366,8 @@
 								style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
 								<option value="need">Need apartments:</option>
 								<option value="accept">Accepting guests:</option>
-							</select> Persons:
-							<br>
-							 <input  type="number" name="bad_count" min="1"
-								id="bad_count" style="width: 10%;"> 
-								<br>
+							</select> Persons: <br> <input type="number" name="bad_count" min="1"
+								id="bad_count" style="width: 10%;"> <br>
 
 
 

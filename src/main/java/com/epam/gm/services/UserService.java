@@ -34,6 +34,12 @@ public class UserService {
 		userDao.saveUser(user);
 	}
 
+	public Integer saveUserAndRerutnId(User user)
+			throws IllegalArgumentException, IllegalAccessException,
+			SQLException {
+		return userDao.saveUserAndRerutnId(user);
+	}
+
 	public static UserService serve() {
 		return new UserService();
 	}
@@ -259,21 +265,22 @@ public class UserService {
 			throws SQLException {
 		return userDao.getActiveUsersAndGuidesInTheCountry(countryId);
 	}
-    
-     //gryn
-	 public void buildTagString(List<User> list) throws SQLException {
-		 userDao.buildTagString(list);
-	 }
-	 
-	//gryn
-	 public void buildTagString(User user) throws SQLException {
-		 List<User> list = new ArrayList<User>(1);
-		 list.add(user);
-		 
-		 buildTagString(list);
-	 }
-	 
-	 public void saveUserLang(Integer userId, Integer langId) throws SQLException {
-		 userDao.saveUserLang(userId, langId);
-	 }
+
+	// gryn
+	public void buildTagString(List<User> list) throws SQLException {
+		userDao.buildTagString(list);
+	}
+
+	// gryn
+	public void buildTagString(User user) throws SQLException {
+		List<User> list = new ArrayList<User>(1);
+		list.add(user);
+
+		buildTagString(list);
+	}
+
+	public void saveUserLang(Integer userId, Integer langId)
+			throws SQLException {
+		userDao.saveUserLang(userId, langId);
+	}
 }
