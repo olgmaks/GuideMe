@@ -22,24 +22,24 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 
 	private static final String DELETE_BY_EVENT_AND_USER = " event_id = ?eventId AND user_id = ?userId";
 
-	private static final String GET_ACTUAL_EVENTS_BY_USER_ID_WHERE_USER_NOT_MODERATOR = "uie JOIN event e WHERE uie.event_id=e.id AND NOT uie.user_id=e.moderator_id AND e.date_to>NOW() AND uie.user_id=%s;";
+	private static final String GET_ACTUAL_EVENTS_BY_USER_ID_WHERE_USER_IS_MEMBER_AND_NOT_MODERATOR = "uie JOIN event e WHERE uie.event_id=e.id AND NOT uie.user_id=e.moderator_id AND e.date_to>NOW() AND uie.user_id=%s and uie.is_member= 1;";
+
 	private static final String GET_OLD_EVENTS_BY_USER_ID_WHERE_USER_NOT_MODERATOR = "uie JOIN event e WHERE uie.event_id=e.id AND NOT uie.user_id=e.moderator_id AND e.date_to<NOW() AND uie.user_id=%s;";
 
 	private static final String IS_MEMBER_OF_EVENT = "select (%s in( SELECT uie.user_id FROM user_in_event uie   WHERE uie.is_member = TRUE AND uie.event_id = %s ))";
 
-
-  
-	
 	public UserInEventDao() {
 		// gryn
 		// super(ConnectionManager.getConnection(), UserInEvent.class);
 		super(UserInEvent.class);
 	}
 
-	public List<UserInEvent> getAllActualUserInEventWhereUserNotModeratorByUserId(
+	public List<UserInEvent> getAllActualUserInEventWhereUserIsMemberAndNotModeratorByUserId(
 			int id) throws SQLException {
-		List<UserInEvent> list = super.getWithCustomQuery(String.format(
-				GET_ACTUAL_EVENTS_BY_USER_ID_WHERE_USER_NOT_MODERATOR, id));
+		List<UserInEvent> list = super
+				.getWithCustomQuery(String
+						.format(GET_ACTUAL_EVENTS_BY_USER_ID_WHERE_USER_IS_MEMBER_AND_NOT_MODERATOR,
+								id));
 		Collections.sort(list, new Comparator<UserInEvent>() {
 
 			@Override
@@ -151,26 +151,26 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 			SQLException {
 		super.save(userInEvent);
 	}
-	
- 	public void acceptToEvent(Integer eventId, Integer userId) throws IllegalArgumentException, IllegalAccessException, SQLException {
- 		List<UserInEvent> temp =  getByEventAndUser(eventId, userId);
- 		if(temp == null || temp.isEmpty()) return;
- 		
- 		Map<String, Object> map = new HashMap<String, Object>();
- 		map.put("is_member", 1);
- 		
- 		super.updateById(temp.get(0).getId(), 
- 				map);
- 		
- 	}
+
+	public void acceptToEvent(Integer eventId, Integer userId)
+			throws IllegalArgumentException, IllegalAccessException,
+			SQLException {
+		List<UserInEvent> temp = getByEventAndUser(eventId, userId);
+		if (temp == null || temp.isEmpty())
+			return;
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("is_member", 1);
+
+		super.updateById(temp.get(0).getId(), map);
+
+	}
 
 	public Boolean isMemberOfEvent(Integer userId, Integer eventId)
 			throws SQLException {
 		return super.getBoolean(String.format(IS_MEMBER_OF_EVENT, userId,
 				eventId));
 	}
-	
-
 
 	public static void main(String[] args) throws SQLException,
 			IllegalArgumentException, IllegalAccessException {

@@ -1,13 +1,33 @@
 <!-- events in cabinet page -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%@ taglib
-	prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+	prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%><script
+	type="text/javascript">
+		$(document).ready(function() {
+			$("#moreeventswhereown").click(function() {
+				$("#own").attr("class", "collection-item active");
+				$("#resident").attr("class", "collection-item");
+				$("#all").attr("class", "collection-item");
+				$("#moderatoreventjsp").removeAttr("hidden");
+				$("#alleventjsp").attr("hidden", "");
+				$("#membereventjsp").attr("hidden", "");
+			});
+			$("#moreeventswheremember").click(function() {
+				$("#resident").attr("class", "collection-item active");
+				$("#all").attr("class", "collection-item");
+				$("#own").attr("class", "collection-item");
+				$("#membereventjsp").removeAttr("hidden");
+				$("#alleventjsp").attr("hidden", "");
+				$("#moderatoreventjsp").attr("hidden", "");
+			});
+		});
+	</script>
 <br>
 <table>
 	<thead>
 		<tr>
-			<th data-field="id">Your own events. <a href="moderatoEvents.do"
-				class="indigo-text text-darken-4">More...</a></th>
+			<th data-field="id">Your own events. <a id="moreeventswhereown"
+				href="#" class="indigo-text text-darken-4">More...</a></th>
 
 		</tr>
 	</thead>
@@ -25,7 +45,7 @@
 						src="${moderatorevent.avatar.getPath() }">
 				</div>
 				<div class="card-content">
-					<p>${usersevent.getEvent().getCutName(25) }</p>
+					<p>${moderatorevent.getCutName(25) }</p>
 					<br> <span class="grey-text text-darken-1">Date from: </span>
 
 					<p>
@@ -49,8 +69,8 @@
 <table>
 	<thead>
 		<tr>
-			<th data-field="id">Events where you member. <a
-				href="memberEvents.do" class="indigo-text text-darken-4">More...</a></th>
+			<th data-field="id">Events where you member. <a href="#"
+				class="indigo-text text-darken-4" id="moreeventswheremember">More...</a></th>
 
 		</tr>
 	</thead>

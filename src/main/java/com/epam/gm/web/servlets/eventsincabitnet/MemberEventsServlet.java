@@ -30,7 +30,7 @@ public class MemberEventsServlet extends HttpServlet implements
 		User user = (User) session.getAttribute("sessionUser");
 		UserInEventDao userInEventDao = new UserInEventDao();
 		request.setAttribute("listOfUserInEvent", userInEventDao
-				.getAllActualUserInEventWhereUserNotModeratorByUserId(user
+				.getAllActualUserInEventWhereUserIsMemberAndNotModeratorByUserId(user
 						.getId()));
 		request.setAttribute("listOfOldUserInEvent",
 				userInEventDao

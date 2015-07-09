@@ -57,7 +57,7 @@
 <body onload="connect();" onunload="disconnect();">
 	<jsp:include page="../home/logoutmodal.jsp" />
 	<jsp:include page="usercabinetheader.jsp" />
-	
+
 	<%--<jsp:include page="fileupload.jsp"/>--%>
 
 	<table>
@@ -94,7 +94,7 @@
 						<jsp:include page="../guide/guideservices.jsp" />
 					</c:when>
 					<c:when test="${centralContent == 'eventsincabinet' }">
-						<jsp:include page="../eventsincabinet/allevents.jsp" />
+						<jsp:include page="../eventsincabinet/rightpanel.jsp" />
 					</c:when>
 					<c:when test="${centralContent == 'usermessages' }">
 						<jsp:include page="usermessages.jsp" />
@@ -118,7 +118,7 @@
 					</c:when>
 					<c:when
 						test="${centralContent == 'eventsincabinet' || centralContent == 'moderatorevent' ||  centralContent == 'memberevent'}">
-						<jsp:include page="../eventsincabinet/rightpanel.jsp" />
+
 					</c:when>
 					<c:when test="${centralContent == 'usergallery'}">
 						<jsp:include page="usergallerypanelright.jsp" />
@@ -127,7 +127,7 @@
 						<jsp:include page="rightpanelmessageuser.jsp" /> -
 					</c:when>
 					<c:when test="${centralContent == 'wallet' }">
- 						<jsp:include page="wallet.jsp" /> -
+						<jsp:include page="wallet.jsp" /> -
 					</c:when>
 					<c:otherwise>
 						<jsp:include page="usercabinetpanelright.jsp" />

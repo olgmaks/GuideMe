@@ -22,7 +22,7 @@
 						src="${moderatorevent.avatar.getPath() }">
 				</div>
 				<div class="card-content">
-					<p>${usersevent.getEvent().getCutName(25) }</p>
+					<p>${moderatorevent.getCutName(25) }</p>
 					<br> <span class="grey-text text-darken-1">Date from: </span>
 					<p>
 						<fmt:formatDate type="both" dateStyle="short" timeStyle="short"
@@ -59,7 +59,7 @@
 						src="${moderatorevent.avatar.getPath() }">
 				</div>
 				<div class="card-content">
-					<p>${usersevent.getEvent().getCutName(25) }</p>
+					<p>${moderatorevent.getCutName(25) }</p>
 					<br> <span class="grey-text text-darken-1">Date from: </span>
 					<p>
 						<fmt:formatDate type="both" dateStyle="short" timeStyle="short"

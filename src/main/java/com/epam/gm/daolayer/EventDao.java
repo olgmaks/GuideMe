@@ -37,7 +37,7 @@ public class EventDao extends AbstractDao<Event> {
 
 	private static final String GET_NOT_DELETED_BY_MODERATOR_ID = "e WHERE e.deleted = 0 AND e.date_to>NOW() AND e.status = 'active' and moderator_id = '%S'";
 
-	private static final String GET_NOT_DELETED_AND_OLD_BY_MODERATOR_ID = "e WHERE e.deleted = 0 AND e.date_to<NOW() AND e.status = 'active' and moderator_id = '%S'";
+	private static final String GET_NOT_DELETED_AND_OLD_BY_MODERATOR_ID = "e WHERE e.deleted = 0 AND moderator_id = %s AND (e.date_to<NOW() OR not e.status = 'active')";
 
 	private static final String GET_TAGS_BY_EVENTS = "SELECT  e.id, e.name, et.tag_id, t.name AS 'tag_name' "
 			+ "FROM event e JOIN event_tag et ON e.id = et.event_id "
@@ -60,13 +60,11 @@ public class EventDao extends AbstractDao<Event> {
 	private static final String TAG_NAME_EVENTS_FILTER = " e JOIN event_tag et ON e.id = et.event_id "
 			+ " JOIN tag t ON et.tag_id = t.id "
 			+ " WHERE e.deleted = FALSE AND  e.status = 'active' AND  t.name = '?' ";
-	
-	private static final String GET_ALL_ACTIVE_EVENT_WHERE_USER_MODERATOR = " e WHERE e.moderator_id = userId AND e.status = 'active' AND e.deleted = 0 ";
-	
-	private static final String GET_ALL_ACTIVE_EVENT_WHERE_USER_NOT_MODERATOR = 
-			" e WHERE e.moderator_id != userId AND e.status = 'active' AND e.deleted = 0 AND e.id IN ( " +
-			" SELECT uie.event_id FROM user_in_event uie WHERE uie.user_id = userId AND uie.is_member = 1) ";
-	
+
+	private static final String GET_ALL_ACTIVE_EVENT_WHERE_USER_MODERATOR = " e WHERE e.moderator_id = %s AND e.status = 'active' AND e.deleted = 0 ";
+
+	private static final String GET_ALL_ACTIVE_EVENT_WHERE_USER_NOT_MODERATOR = " e WHERE e.moderator_id != userId AND e.status = 'active' AND e.deleted = 0 AND e.id IN ( "
+			+ " SELECT uie.event_id FROM user_in_event uie WHERE uie.user_id = userId AND uie.is_member = 1) ";
 
 	public EventDao() {
 		// gryn
@@ -94,7 +92,7 @@ public class EventDao extends AbstractDao<Event> {
 
 		return newList;
 	}
-	
+
 	public List<Event> getOldAndNotDeletedEventsByModeratorId(int id)
 			throws SQLException {
 		List<Event> newList = super.getWithCustomQuery(String.format(
@@ -406,58 +404,64 @@ public class EventDao extends AbstractDao<Event> {
 		updateById(id, updates);
 
 	}
-	
+
 	public void fixEventLimit(Integer id) throws SQLException {
 		Event event = new EventService().getById(id);
-		if(event.getParticipants_limit() == null || event.getParticipants_limit().equals(0)) {
+		if (event.getParticipants_limit() == null
+				|| event.getParticipants_limit().equals(0)) {
 			return;
 		}
-		
+
 		UserInEventService userInEventService = new UserInEventService();
 		List<UserInEvent> members = userInEventService
 				.getByEventOnlyMembers(event.getId());
-		
-		if(members == null) return;
-		
-		if(members.size() > event.getParticipants_limit()) {
-			//event.setParticipants_limit(members.size());
-			
+
+		if (members == null)
+			return;
+
+		if (members.size() > event.getParticipants_limit()) {
+			// event.setParticipants_limit(members.size());
+
 			Map<String, Object> updateConditions = new HashMap<String, Object>();
 			updateConditions.put("participants_limit", members.size());
-			
+
 			super.updateById(id, updateConditions);
-			
+
 		}
 	}
-	
-	public List<Event> getAllActiveEventsWhereUserModerator(Integer userId) throws SQLException {
+
+	public List<Event> getAllActiveEventsWhereUserModerator(Integer userId)
+			throws SQLException {
 		List<Event> results = new ArrayList<>();
-		String sql = GET_ALL_ACTIVE_EVENT_WHERE_USER_MODERATOR.replaceAll("userId", userId.toString());
+		String sql = GET_ALL_ACTIVE_EVENT_WHERE_USER_MODERATOR.replaceAll(
+				"userId", userId.toString());
 		results = getWithCustomQuery(sql);
 
 		return results;
-	}	
-	
-	public List<Event> getAllActiveEventsWhereUserNotModerator(Integer userId) throws SQLException {
+	}
+
+	public List<Event> getAllActiveEventsWhereUserNotModerator(Integer userId)
+			throws SQLException {
 		List<Event> results = new ArrayList<>();
-		String sql = GET_ALL_ACTIVE_EVENT_WHERE_USER_NOT_MODERATOR.replaceAll("userId", userId.toString());
-		
+		String sql = GET_ALL_ACTIVE_EVENT_WHERE_USER_NOT_MODERATOR.replaceAll(
+				"userId", userId.toString());
+
 		results = getWithCustomQuery(sql);
-		
+
 		return results;
-	}	
-	
-//	public void setEventStatus(List<Event> list) throws SQLException {
-//		list.get(0).getModerator().getUserType();
-//	}
+	}
+
+	// public void setEventStatus(List<Event> list) throws SQLException {
+	// list.get(0).getModerator().getUserType();
+	// }
 
 	public static void main(String[] args) throws SQLException,
 			IllegalAccessException {
 
-//		EventDao dao = new EventDao();
-//		for (Event e : dao.getActiveAndNotDeletedEventsByModeratorId(2)) {
-//			System.out.println(e);
-//		}
+		// EventDao dao = new EventDao();
+		// for (Event e : dao.getActiveAndNotDeletedEventsByModeratorId(2)) {
+		// System.out.println(e);
+		// }
 		// List<Event> list = new
 		// EventDao().getAllNotDeletedEventsInsTheCity(1);
 
@@ -479,18 +483,22 @@ public class EventDao extends AbstractDao<Event> {
 
 		// new EventDao().getAllNotDeletedEventsByPattern("²×").forEach(x ->
 		// System.out.println(x.getName()));
-		
-		List<Event> list = new EventDao().getAllActiveEventsWhereUserNotModerator(25);
-		 //Collections.sort(list, Event.BY_CREATED_DATE);
-		 
-			list.forEach(x -> System.out.println(x.getName() + "  " +
-		 x.getCreatedOn()));
+
+		List<Event> list = new EventDao()
+				.getAllActiveEventsWhereUserNotModerator(25);
+		// Collections.sort(list, Event.BY_CREATED_DATE);
+
+		list.forEach(x -> System.out.println(x.getName() + "  "
+				+ x.getCreatedOn()));
 
 	}
 
-	public void updateEventAvatar(Integer eventId, Integer photoId) throws SQLException {
-		Map<String, Object> updates = new HashMap<>();
-		updates.put("avatar_id",photoId);
-		super.updateById(eventId,updates);
+	public void updateEventAvatar(Integer eventId, Integer photoId)
+			throws SQLException {
+		List<Event> list = new EventDao()
+				.getAllActiveEventsWhereUserModerator(2);
+		for (Event e : list) {
+			System.out.println(e);
+		}
 	}
 }

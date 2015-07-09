@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -36,6 +38,8 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 		userService = new UserService();
 	}
 
+	private static Logger log = Logger.getLogger(LoginServlet.class);
+
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
@@ -50,7 +54,7 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 
 		Map<String, Object> map = new HashMap<>();
 		boolean isValid = false;
-
+		log.warn("good");
 		if (user != null) {
 			try {
 				if (user.getPassword().equals(
@@ -58,14 +62,15 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 								user.getEmail()))) {
 					System.out.println("logination has been successful");
 					SessionRepository.setSessionUser(request, user);
-					
-					//and setting lang 
-					//gryn
-					Language lang = new LanguageService().getLangById(user.getLangId());
+
+					// and setting lang
+					// gryn
+					Language lang = new LanguageService().getLangById(user
+							.getLangId());
 					SessionRepository.setSessionLanguage(request, lang);
-					//and cookie
-					CookieUtil.saveLastLanguage(response, lang);					
-					
+					// and cookie
+					CookieUtil.saveLastLanguage(response, lang);
+
 					// gryn
 					CookieUtil.saveLastUser(response, user);
 					System.out.println("**************saved cookie = "
@@ -73,7 +78,7 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 
 					// save login history
 					new UserLoginingDao().save(user.getId());
-				
+
 					isValid = true;
 					map.put("userEmail", user.getEmail());
 					map.put("sessionUser", user);

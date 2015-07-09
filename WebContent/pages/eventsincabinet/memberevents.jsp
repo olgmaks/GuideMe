@@ -1,8 +1,8 @@
 <!-- events where user member -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib
-	prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<br>
 <table>
 	<thead>
 		<tr>
@@ -11,7 +11,7 @@
 		</tr>
 	</thead>
 </table>
-
+<br>
 <div class="row">
 	<c:forEach items="${listOfUserInEvent }" var="usersevent">
 
@@ -24,11 +24,15 @@
 				<div class="card-content">
 					<p>${usersevent.getEvent().getCutName(25) }</p>
 					<br> <span class="grey-text text-darken-1">Date from: </span>
-					<p><fmt:formatDate type="both" dateStyle="short" timeStyle="short"
-							value="${usersevent.getEvent().getDateFrom()}" /></p>
+					<p>
+						<fmt:formatDate type="both" dateStyle="short" timeStyle="short"
+							value="${usersevent.getEvent().getDateFrom()}" />
+					</p>
 					<br> <span class="grey-text text-darken-2">Date to: </span>
-					<p><fmt:formatDate type="both" dateStyle="short" timeStyle="short"
-							value="${usersevent.getEvent().getDateTo()}" /></p>
+					<p>
+						<fmt:formatDate type="both" dateStyle="short" timeStyle="short"
+							value="${usersevent.getEvent().getDateTo()}" />
+					</p>
 				</div>
 				<div class="card-action">
 					<a href="eventDetail.do?id=${usersevent.getEvent().getId() } ">Event
@@ -59,11 +63,15 @@
 				<div class="card-content">
 					<p>${usersevent.getEvent().getCutName(25) }</p>
 					<br> <span class="grey-text text-darken-1">Date from: </span>
-					<p><fmt:formatDate type="both" dateStyle="short" timeStyle="short"
-							value="${usersevent.getEvent().getDateFrom()}" /></p>
+					<p>
+						<fmt:formatDate type="both" dateStyle="short" timeStyle="short"
+							value="${usersevent.getEvent().getDateFrom()}" />
+					</p>
 					<br> <span class="grey-text text-darken-2">Date to: </span>
-					<p><fmt:formatDate type="both" dateStyle="short" timeStyle="short"
-							value="${usersevent.getEvent().getDateTo()}" /></p>
+					<p>
+						<fmt:formatDate type="both" dateStyle="short" timeStyle="short"
+							value="${usersevent.getEvent().getDateTo()}" />
+					</p>
 				</div>
 				<div class="card-action">
 					<a href="eventDetail.do?id=${usersevent.getEvent().getId() } ">Event
