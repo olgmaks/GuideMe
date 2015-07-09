@@ -39,7 +39,7 @@
 
 
             $("#registerform").submit(function () {
-                $("#").change();
+                $("#firstName").change();
                 $("#lastName").change();
                 $("#email").change();
                 $("#password").change();

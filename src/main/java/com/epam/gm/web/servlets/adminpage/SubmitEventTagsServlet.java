@@ -30,6 +30,7 @@ public class SubmitEventTagsServlet implements HttpRequestHandler {
 			IllegalAccessException {
 
 		System.out.println("SubmitEventTagsServlet");
+		SessionRepository.initBundle(request, "locale.event.messages");
 
 		String id = request.getParameter("id");
 		if (id == null || !ValidateHelper.isNumber(id)) {
@@ -80,9 +81,10 @@ public class SubmitEventTagsServlet implements HttpRequestHandler {
 			}
 		}
 
+		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		Map<String, String> map = new HashMap<>();
-		map.put("valid", "Interests saved !");
+		map.put("valid", SessionRepository.getLocaleMessage("js.Interestssaved"));
 		response.getWriter().write(new Gson().toJson(map));
 	}
 

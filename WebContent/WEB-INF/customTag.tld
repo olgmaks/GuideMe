@@ -22,7 +22,7 @@
             <name>from</name>
             <required>true</required>
             <description>Where came from</description>
-            <rtexprvalue>false</rtexprvalue>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>        
         
     </tag>

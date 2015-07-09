@@ -1,5 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct" %>
+
  
  <link rel="stylesheet"	href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css" />
 
@@ -8,6 +12,15 @@
 	<script	src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
 	
 	<script src="js/jquery.image-gallery.js"></script>
+	
+	
+	<!-- begin Localization -->
+	<jsp:include page="../localization.jsp"/>
+	<ct:showLocale basename="locale.profile.messages" from = "userProfile.do" />
+
+	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+	<fmt:bundle basename="locale.profile.messages">
+	<!-- end Localization -->	
    
   <style>
   nav {
@@ -49,10 +62,15 @@
 
 	
 		</script>
+		
+		<title> <fmt:message key="profile.title" /></title>
+		
+	</fmt:bundle>		
 </head>
 
 <body>
- 
+
+<%--  <jsp:include page="adminHeader.jsp" /> --%>
 
   <div id="w">
     <div id="content" >

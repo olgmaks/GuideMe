@@ -44,6 +44,10 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 		request.setCharacterEncoding("UTF-8");
 		RatingEventDao reDao = new RatingEventDao();
 		System.out.println("eventDetailservlet");
+		
+		SessionRepository.initBundle(request, "locale.event.messages");
+		
+		
 		try {
 			HttpSession session = request.getSession();
 			User user = new User();
@@ -114,6 +118,7 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 					DateParser.SqlMinuteToString(event.getDateTo()));
 
 			request.setAttribute("event", event);
+			request.setAttribute("SendSubmitName",  SessionRepository.getLocaleMessage("js.sendmessage"));
 
 			UserInEventService userInEventService = new UserInEventService();
 
@@ -210,9 +215,9 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 
 			String totalBedStr = "";
 			if (totalBed > 0) {
-				totalBedStr = "Accepting guests: " + totalBed;
+				totalBedStr =  SessionRepository.getLocaleMessage("event.AcceptingGuestsTotal") + ": " + totalBed;
 			} else if (totalBed < 0) {
-				totalBedStr = "Need lodjing: " + (-totalBed);
+				totalBedStr =  SessionRepository.getLocaleMessage("event.NeedLodjingForTotal") +  ": "  + (-totalBed);
 			}
 
 			// System.out.println("#########totalBed = " + totalBed);

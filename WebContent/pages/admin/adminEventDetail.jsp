@@ -1,15 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct" %>
 
 <html>
 <head>
-<title>User Cabinet</title>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
 
-<title>Guide ME</title>
+
 <link href="css/materialize.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet"
@@ -71,6 +72,15 @@
 <script type="text/javascript" src="js/jquery.tagedit.js"></script>
 <!-- tag end     -->
 
+	<!-- begin Localization -->
+	<jsp:include page="../localization.jsp"/>
+	<ct:showLocale basename="locale.event.messages" from = "eventDetail.do?id=${requestScope.event.id}" />
+
+	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+	<fmt:bundle basename="locale.event.messages">
+	<!-- end Localization -->
+
+<title> <fmt:message key="event.title"/> </title>
 
 <style>
 /* .panel { */
@@ -403,13 +413,16 @@ nav {
 		});
 	});
 </script>
-
+</fmt:bundle> 
 </head>
 <body onload="connect();" onunload="disconnect();">
+<fmt:bundle basename="locale.event.messages">
+	
+<!-- 	gryn - changed header -->
+<%-- 	<jsp:include page="adminHeader.jsp" /> --%>
 
-
-	<jsp:include page="adminHeader.jsp" />
-
+	<jsp:include page="../header.jsp" />
+	
 	<table>
 		<tr>
 			<td style="width: 20%; vertical-align: top;"><jsp:include
@@ -433,15 +446,15 @@ nav {
 									<button class="btn light-blue waves-effect waves-light"
 										type="submit" name="action"
 										style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-										Join event<i class="mdi-content-add-circle-outline right"></i>
+										<fmt:message key="event.JoinEvent"/><i class="mdi-content-add-circle-outline right"></i>
 									</button>
 
 
-									<br> <br>Status: <select class="browser-default"
+									<br> <br><fmt:message key="event.Status"/><select class="browser-default"
 										id="status" name="status"
 										style="width: 50%; text-align: left; font-size: 100%; text-transform: capitalize">
-										<option selected value="guest">Guest</option>
-										<option value="resident">Resident</option>
+										<option selected value="guest"><fmt:message key="event.Guest"/></option>
+										<option value="resident"><fmt:message key="event.Resident"/></option>
 									</select>
 
 									<script>
@@ -465,15 +478,15 @@ nav {
 									</script>
 
 
-									<br>Apartments: <select class="browser-default"
+									<br><fmt:message key="event.Apartments"/>: <select class="browser-default"
 										id="bedCountSelect" name="bedCountSelect"
 										style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-										<option value="need">Need apartments:</option>
-										<option value="accept">Accepting guests:</option>
-									</select> <br>Persons: <select class="browser-default"
+										<option value="need"><fmt:message key="event.NeedApartments"/></option>
+										<option value="accept"><fmt:message key="event.AcceptingGuests"/></option>
+									</select> <br><fmt:message key="event.Persons"/>: <select class="browser-default"
 										id="bedCount" name="bedCount"
 										style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-										<option selected value="0">No</option>
+										<option selected value="0"><fmt:message key="event.No"/></option>
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -498,8 +511,8 @@ nav {
 									<button class="btn light-blue waves-effect waves-light"
 										type="submit" name="action"
 										style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-										<c:if test="${showCancel}">Cancel request</c:if>
-										<c:if test="${showQuit}">Quit event</c:if>
+										<c:if test="${showCancel}"><fmt:message key="event.CancelRequest"/></c:if>
+										<c:if test="${showQuit}"><fmt:message key="event.QuitEvent"/></c:if>
 
 										<i class="mdi-navigation-close right"></i>
 									</button>
@@ -540,7 +553,7 @@ nav {
 
 							<br>
 							<br>
-							<b> Event status: ${event.status} </b>
+							<b> <fmt:message key="event.EventStatus"/>: ${event.status} </b>
 							<br>
 
 						</c:if>
@@ -549,20 +562,20 @@ nav {
 							<form action="changeEventStatus.do" method="POST"
 								id="changeEventForm">
 								<input type="hidden" name="id" value="${requestScope.event.id}">
-								<br>Event status: <select class="browser-default"
+								<br><fmt:message key="event.EventStatus"/>: <select class="browser-default"
 									id="eventStatus" name="eventStatus"
 									style="width: 50%; text-align: left; font-size: 100%; text-transform: capitalize">
 
-									<option ${selActive} value="active">Active</option>
-									<option ${selFilled} value="filled">Filled</option>
-									<option ${selCancelled} value="cancelled">Cancelled</option>
-									<option ${selDone} value="done">Done</option>
+									<option ${selActive} value="active"><fmt:message key="event.Active"/></option>
+									<option ${selFilled} value="filled"><fmt:message key="event.Filled"/></option>
+									<option ${selCancelled} value="cancelled"><fmt:message key="event.Canceled"/></option>
+									<option ${selDone} value="done"><fmt:message key="event.Done"/></option>
 								</select>
 
 								<button class="btn light-blue waves-effect waves-light"
 									type="submit" name="action"
 									style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-									Change</i>
+									<fmt:message key="event.Change"/></i>
 								</button>
 
 							</form>
@@ -586,7 +599,7 @@ nav {
 																							data) {
 																						Materialize
 																								.toast(
-																										'Status changed !',
+																										_('js.StatusСhanged'),
 																										2000,
 																										'',
 																										function() {
@@ -600,7 +613,7 @@ nav {
 
 							<form method="POST" id="tagform-editonly">
 								<input type="hidden" name="id" value="${requestScope.event.id}">
-								<br>Interests: <input type="text" name="tag[]" value=""
+								<br><fmt:message key="event.Interests"/>: <input type="text" name="tag[]" value=""
 									class="tag" />
 
 								<c:forEach items="${requestScope.tags}" var="tag">
@@ -612,7 +625,7 @@ nav {
 								<button class="btn light-blue waves-effect waves-light"
 									type="submit" name="action"
 									style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-									Save</i>
+									<fmt:message key="event.Save"/>
 								</button>
 
 							</form>
@@ -624,7 +637,7 @@ nav {
 								src="${event.moderator.avatar.path}" alt="" class="circle">
 
 								<span class="title"><a
-									href="userProfile.do?id=${event.moderator.id}">Author:
+									href="userProfile.do?id=${event.moderator.id}"><fmt:message key="event.Author"/>:
 										${event.moderator.firstName} ${event.moderator.lastName}</a></span>
 
 								<p>
@@ -637,21 +650,21 @@ nav {
 
 						<nav id="profiletabs">
 							<ul class="clearfix">
-								<li><a href="#bio" class="sel">About</a></li>
-								<li><a href="#services">Services</a></li>
-								<li><a href="#photos">Fotos</a></li>
+								<li><a href="#bio" class="sel"><fmt:message key="event.Info"/></a></li>
+								<li><a href="#services"><fmt:message key="event.Services"/></a></li>
+								<li><a href="#photos"><fmt:message key="event.Fotos"/></a></li>
 
 								<c:if test="${isAdmin||isModerator}">
-									<li><a href="#edit">Edit</a></li>
+									<li><a href="#edit"><fmt:message key="event.Edit"/></a></li>
 								</c:if>
-								<li><a href="#members">Members</a></li>
+								<li><a href="#members"><fmt:message key="event.Members"/> </a></li>
 								<c:if test="${isModerator}">
-									<li><a href="#requests">Requests</a></li>
+									<li><a href="#requests"><fmt:message key="event.Requests"/></a></li>
 								</c:if>
-								<li><a href="#chat">Chat</a></li>
+								<li><a href="#chat"><fmt:message key="event.Chat"/></a></li>
 
 								<c:if test="${isModerator}">
-									<li><a href="#addservice">Add Service</a></li>
+									<li><a href="#addservice"><fmt:message key="event.AddService"/></a></li>
 								</c:if>
 								<c:if test="${isAdmin}">
 
@@ -661,47 +674,47 @@ nav {
 
 						<section id="bio">
 							<p>
-								<span><b>Type: </b> </span>
+								<span><b><fmt:message key="event.Type"/>: </b> </span>
 								<c:out value="${type}" />
 							</p>
 
 							<p>
-								<span><b>Description: </b> </span>
+								<span><b><fmt:message key="event.Description"/>: </b> </span>
 								<c:out value="${event.description}" />
 							</p>
 
                        		 <p>
-                        	    <span><b>From: </b></span>
+                        	    <span><b><fmt:message key="event.From"/>: </b></span>
                         	    <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${event.dateFrom}" />
                         	</p>
 
                         	<p>
-                        	    <span><b>To: </b></span>
+                        	    <span><b><fmt:message key="event.To"/>: </b></span>
                         	    <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${event.dateTo}" />
                         	</p>
 
 							<p>
-								<span><b>Address: </b></span>
+								<span><b><fmt:message key="event.Address"/>: </b></span>
 								<c:out value="${event.address.address}" />
 							</p>
 
 							<p>
-								<span><b>City: </b></span>
+								<span><b><fmt:message key="event.City"/>: </b></span>
 								<c:out value="${event.address.city.name}" />
 							</p>
 
 							<p>
-								<span><b>Average mark: </b></span>
+								<span><b><fmt:message key="event.AverageMark"/>: </b></span>
 								<c:out value="${eventMark}" />
 							</p>
 
 							<p>
-								<span><b>Total points: </b></span>
+								<span><b><fmt:message key="event.Points"/>: </b></span>
 								<c:out value="${eventPoints}" />
 							</p>
 							
                         	<p>
-                         	   <span><b>Capacity: </b></span>
+                         	   <span><b><fmt:message key="event.Capacity"/>: </b></span>
                          	   <c:out value="${capacity}"/>
                         	</p>							
 							<br>
@@ -711,7 +724,7 @@ nav {
 
 								<c:if test="${!isModerator}">
 									<p>
-							 		 <span><b>Your mark: </b></span>
+							 		 <span><b> <fmt:message key="event.YourMark"/> </b></span>
 									</p>
 								</c:if>
 
@@ -730,7 +743,7 @@ nav {
 												</div>
 												<div class="input-field col s12">
 													<p>
-														<span> <b> <i> Comment</i>
+														<span> <b> <i> <fmt:message key="event.Comment"/></i>
 														</b>
 														</span> <input required type="text" name="comment">
 													</p>
@@ -741,7 +754,7 @@ nav {
 											<button class="btn light-blue waves-effect waves-light"
 												type="submit" name="action"
 												style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-												Add comment<i class="mdi-content-add-circle-outline right"></i>
+												<fmt:message key="event.AddComment"/><i class="mdi-content-add-circle-outline right"></i>
 											</button>
 										</form>
 
@@ -764,7 +777,7 @@ nav {
 															method="POST">
 
 															<button type="submit" class="secondary-content">
-																<i class="material-icons">delete</i>
+																<i class="material-icons"><fmt:message key="event.delete"/></i>
 															</button>
 
 														</form>
@@ -796,19 +809,19 @@ nav {
 									<a class="update-event-avatar" href="updateUserAvatar.do"
 										data-url="updateEventAvatar.do" id="updateAvatar"> <img
 										src="icons/update-avatar-icon.png"
-										style="width: 30px; height: 30px;"> Set on avatar
+										style="width: 30px; height: 30px;"><fmt:message key="event.SetOnAvatar"/> 
 									</a> <a class="delete-event-photo" data-value="" href="#_"
 										id="deletePhoto" style="float: right"> <img
 										src="icons/delete-photo-icon.png"
-										style="width: 30px; height: 30px;" /> Delete from gallery
+										style="width: 30px; height: 30px;" /> <fmt:message key="event.DeleteFromGallery"/> 
 									</a>
 								</div>
 								</c:if>
 
 							</div>
 							<p>
-								Photos: <a href="upload.do?uploadtype=event"> <span
-									style="float: right;">Upload new photo</span></a>
+								<fmt:message key="event.Photos"/> : <a href="upload.do?uploadtype=event"> <span
+									style="float: right;"> <fmt:message key="event.UploadNewPhoto"/> </span></a>
 							</p>
 
 							<div id="links">
@@ -831,14 +844,15 @@ nav {
 									</table>
 								</div>
 								<input type=text id="enterMessage"
-									onkeydown="if (event.keyCode == 13) sendMessage();"> <input
-									type="submit" value="РќР°РґС‹СЃР»Р°С‚Рё"
-									onclick="sendMessage();" id="submitButton" />
+									onkeydown="if (event.keyCode == 13) sendMessage();"> 
+									<input
+									type="submit" 
+									onclick="sendMessage();" id="submitButton" value = "${SendSubmitName}" >
 							</div>
 						</section>
 
 						<section id="members" class="hidden">
-							<p>Members:</p>
+							<p><fmt:message key="event.Members"/>:</p>
 
 
 							<ul class="collection" id="collectionResults">
@@ -867,7 +881,7 @@ nav {
                                             <c:if test="${isModerator && (m.user.id != user.id)}">
 
                                                 <br>
-                                                <span style="margin-right: 10px;">Remove member</span>
+                                                <span style="margin-right: 10px;"><fmt:message key="event.RemoveMember"/> </span>
                                                 <a class="btn-floating light-blue removefriend"
                                                    data-id="${m.user.id}"> <i
                                                         class="mdi-navigation-close"></i>
@@ -878,7 +892,7 @@ nav {
 
 												<br>
 
-											</p> <a class="secondary-content"><i class="material-icons">${m.status}</i></a>
+											</p> <a class="secondary-content"><i class="material-icons"><fmt:message key="${m.status}"/>  </i></a>
 										</li>
 									</form>
 								</c:forEach>
@@ -886,7 +900,7 @@ nav {
 
 						</section>
 						<section id="edit" class="hidden">
-							<p>Edit event:</p>
+							<p><fmt:message key="event.EditEvent"/>:</p>
 
 							<div class="row">
 								<form action="adminEventRequest.do?action=edit" method="POST">
@@ -896,7 +910,7 @@ nav {
 
 											<input type="text" name="name" id="name"
 												value="${requestScope.event.name}"> <label
-												for="name"> editEvent.eventName:</label>
+												for="name"> <fmt:message key="editEvent.eventName"/>: </label>
 
 
 										</div>
@@ -908,31 +922,31 @@ nav {
 												<tr>
 
 													<td style="width: 34%;"><label for="dateFrom">
-															editEvent.dateFrom:</label> <input type="date" class="datepicker"
+															<fmt:message key="event.From" />: </label> <input type="date" class="datepicker"
 														id="dateFrom" name="dateFrom" value="${dateFrom}" /> <span
 														id="dateMessage"></span></td>
 
 													<td style="width: 8%;"><label for="hourFrom">
-															hour:</label> <input type="number" name="hourFrom" min="00"
+															<fmt:message key="event.Hour" />: </label> <input type="number" name="hourFrom" min="00"
 														max="23" id="hourFrom" value="${hourFrom}"></td>
 													<td style="width: 0%;">:</td>
 
 													<td style="width: 8%;"><label for="minuteFrom">
-															minute:</label> <input type="number" name="minuteFrom" min="00"
+															<fmt:message key="event.Minute" />: </label> <input type="number" name="minuteFrom" min="00"
 														max="59" id="minuteFrom" value="${minuteFrom}"></td>
 
 													<td style="width: 34%;"><label for="dateTo">
-															editEvent.dateTo</label> <input type="date" class="datepicker"
+															<fmt:message key="event.To" /></label> <input type="date" class="datepicker"
 														id="dateTo" name="dateTo" value="${dateTo}" /> <span
 														id="dateMessage"></span></td>
 
 													<td style="width: 8%;"><label for="hourTo">
-															hour:</label> <input type="number" name="hourTo" min="00"
+															<fmt:message key="event.Hour" />: </label> <input type="number" name="hourTo" min="00"
 														max="23" id="hourTo" value="${hourTo}"></td>
 													<td style="width: 0%;">:</td>
 
 													<td style="width: 8%;"><label for="minuteTo">
-															minute:</label> <input type="number" name="minuteTo" min="00"
+															<fmt:message key="event.Minute" />: </label> <input type="number" name="minuteTo" min="00"
 														max="59" id="minuteTo" value="${minuteTo}"></td>
 
 
@@ -942,7 +956,7 @@ nav {
 									</div>
 									<div class="row">
 
-										<label>Address</label>
+										<label><fmt:message key="event.Address" /></label>
 
 										<div>
 											<c:forEach items="${requestScope.languageList}" var="lang">
@@ -951,7 +965,7 @@ nav {
                                             <table style="width: 100%;">
 													<tr>
 
-														<td style="width: 30%;"><label>Country</label> <select
+														<td style="width: 30%;"><label><fmt:message key="event.Country" /></label> <select
 															id="countryByLang_${lang.id}" class="browser-default">
 																<option selected disabled value="choose">
 																	loginpage.country.choose</option>
@@ -1055,10 +1069,10 @@ nav {
 														</select></td>
 
 
-														<td style="width: 30%;"><label>City</label> <select
+														<td style="width: 30%;"><label> <fmt:message key="event.City"/> </label> <select
 															id="cityByLang_${lang.id}" class="browser-default">
 																<option selected value="choose">
-																	loginpage.city.choosecountryfirst</option>
+																	<fmt:message key="loginpage.city.choosecountryfirst" /> </option>
 														</select> <script>
 															$(
 																	'#cityByLang_${lang.id}')
@@ -1146,18 +1160,20 @@ nav {
 										<div class="input-field col s12">
 											<textarea id="description" name="description" rows="10"
 												cols="45" maxlength="400" class="materialize-textarea">${requestScope.event.description}</textarea>
-											<label for="description">editEvent.Description:</label>
+											<label for="description"><fmt:message key="editEvent.Description"/>:</label>
 										</div>
 									</div>
 
-									<div class="row">
-										<div class="input-field col s12">
-											<label for="videoLink"> editEvent.videoLink:</label> <input
-												type="text" id="videoLink" name="videoLink"
-												value="${requestScope.event.videoLink}" /> <span
-												id="videoLinkMessage"></span><br>
-										</div>
-									</div>
+<!-- 									<div class="row"> -->
+<!-- 										<div class="input-field col s12"> -->
+<!-- 											<label for="videoLink"> editEvent.videoLink:</label> <input -->
+<!-- 												type="text" id="videoLink" name="videoLink" -->
+<%-- 												value="${requestScope.event.videoLink}" /> <span --%>
+<!-- 												id="videoLinkMessage"></span><br> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+									
+									
 									<div class="row">
 										<div class="col s12">
 											<ul class="collection z-depth-2 ">
@@ -1173,29 +1189,28 @@ nav {
 																		name="partisipant_limit" min="1"
 																		id="partisipant_limit"
 																		value="${requestScope.event.participants_limit}">
-																		<label for="partisipant_limit">editEvent.Partisipant_limit</label>
-
+																		<label for="partisipant_limit"> <fmt:message key="event.Partisipantlimit"/> </label>
 																	</td>
 
 
-																	<td style="width: 25%;"><input type="number"
-																		name="age_limit_from" min="0" id="age_limit_from">
-																		<label for="age_limit_from">editEvent.age_from</label>
+<!-- 																	<td style="width: 25%;"><input type="number" -->
+<!-- 																		name="age_limit_from" min="0" id="age_limit_from"> -->
+<!-- 																		<label for="age_limit_from">editEvent.age_from</label> -->
 
-																	</td>
-																	<td style="width: 25%;"><input type="number"
-																		name="age_limit_to" min="0" id="age_limit_to">
-																		<label for="age_limit_to">editEvent.age_to</label></td>
+<!-- 																	</td> -->
+<!-- 																	<td style="width: 25%;"><input type="number" -->
+<!-- 																		name="age_limit_to" min="0" id="age_limit_to"> -->
+<!-- 																		<label for="age_limit_to">editEvent.age_to</label></td> -->
 
-																	<td style="width: 25%;"><select
-																		id="gender_restriction" name="gender_restriction"
-																		class="browser-default">
-																			<option value="" disabled selected>
-																				editEvent.gender_restriction</option>
-																			<option value="male">only_male</option>
-																			<option value="female">only_female</option>
-																			<option value="all">all</option>
-																	</select></td>
+<!-- 																	<td style="width: 25%;"><select -->
+<!-- 																		id="gender_restriction" name="gender_restriction" -->
+<!-- 																		class="browser-default"> -->
+<!-- 																			<option value="" disabled selected> -->
+<!-- 																				editEvent.gender_restriction</option> -->
+<!-- 																			<option value="male">only_male</option> -->
+<!-- 																			<option value="female">only_female</option> -->
+<!-- 																			<option value="all">all</option> -->
+<!-- 																	</select></td> -->
 
 
 																</tr>
@@ -1213,12 +1228,12 @@ nav {
 											class="browser-default" id="status" name="status"
 											style="width: 50%; text-align: left; font-size: 100%; text-transform: capitalize">
 											<c:if test="${getstatus=='guest'}">
-												<option selected="" value="guest">Guest</option>
-												<option value="resident">Resident</option>
+												<option selected="" value="guest"> <fmt:message key="event.Guest"/></option>
+												<option value="resident"><fmt:message key="event.Resident"/> </option>
 											</c:if>
 											<c:if test="${getstatus=='resident'}">
-												<option value="guest">Guest</option>
-												<option selected="" value="resident">Resident</option>
+												<option value="guest"><fmt:message key="event.Guest"/></option>
+												<option selected="" value="resident"><fmt:message key="event.Resident"/></option>
 											</c:if>
 
 										</select>
@@ -1245,18 +1260,18 @@ nav {
 										</script>
 
 
-										<br>Apartments: <select class="browser-default"
+										<br><fmt:message key="event.Apartments"/>: <select class="browser-default"
 											id="bedCountSelect" name="bedCountSelect"
 											style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
 											<c:if test="${apartments=='need'}">
-												<option value="need" selected>Need apartments:</option>
-												<option value="accept">Accepting guests:</option>
+												<option value="need" selected><fmt:message key="event.NeedApartments"/>:</option>
+												<option value="accept"><fmt:message key="event.AcceptingGuests"/>:</option>
 											</c:if>
 											<c:if test="${apartments=='accept'}">
-												<option value="need" selected>Need apartments:</option>
-												<option value="accept" selected>Accepting guests:</option>
+												<option value="need" selected><fmt:message key="event.NeedApartments"/>:</option>
+												<option value="accept" selected><fmt:message key="event.AcceptingGuests"/>:</option>
 											</c:if>
-										</select> Persons: <br>
+										</select> <fmt:message key="event.Persons"/>: <br>
 										<input type="number" name="bad_count" min="1" id="bad_count"
 											style="width: 10%;" value="${getbet_count}">
 										<br>
@@ -1264,7 +1279,7 @@ nav {
 									<button class="btn light-blue waves-effect waves-light"
 										type="submit" name="action"
 										style="width: 20%; margin-top: 10px; text-align: center; font-size: 100%; text-transform: capitalize">
-										Edit</button>
+										<fmt:message key="EditEvent.Edit" /> </button>
 								</form>
 							</div>
 						</section>
@@ -1282,7 +1297,7 @@ nav {
 
 						<c:if test="${isModerator}">
 							<section id="requests" class="hidden">
-								<p>Requests:</p>
+								<p> <fmt:message key="event.Requests" />:</p>
 
 
 								<ul class="collection">
@@ -1307,13 +1322,13 @@ nav {
 
 
 												<p>
-													<c:if test="${m.bedCount > 0}">Can accept: ${m.bedCount} guest(s)</c:if>
-													<c:if test="${m.bedCount < 0}">Need lodjing for: ${-m.bedCount} person(s)</c:if>
+													<c:if test="${m.bedCount > 0}"> <fmt:message key="js.CanAccept" />: ${m.bedCount} <fmt:message key="js.persons"/></c:if>
+													<c:if test="${m.bedCount < 0}"> <fmt:message key="js.NeedLodjingFor" />: ${-m.bedCount} <fmt:message key="js.persons"/></c:if>
 
 
 													<c:if test="${isModerator}">
 														<br>
-														<span style="margin-right: 10px;">Accept request</span>
+														<span style="margin-right: 10px;"><fmt:message key="event.AcceptRequest" /></span>
 														<a href="#_"
 															class="btn-floating light-blue acceptfriendrequest"
 															data-id="${m.user.id}"> <i
@@ -1322,7 +1337,7 @@ nav {
 
 														</a>
 
-														<span style="margin-right: 10px;">Remove request</span>
+														<span style="margin-right: 10px;"><fmt:message key="event.RemoveRequest" /> </span>
 														<a  class="btn-floating light-blue removefriend"
 															data-id="${m.user.id}"> <i
 															class="mdi-navigation-close"></i>
@@ -1333,7 +1348,7 @@ nav {
 
 													<br>
 
-												</p> <a class="secondary-content"><i class="material-icons">${m.status}</i></a>
+												</p> <a class="secondary-content"><i class="material-icons"> <fmt:message key="${m.status}"/>  </i></a>
 											</li>
 										</form>
 									</c:forEach>
@@ -1430,19 +1445,20 @@ nav {
 																							+ m.user.lastName
 																							+ "</a></span>";
 																					if (m.bedCount > 0) {
-																						f += "<br>Can accept: "
+																						f += "<br>" + _("js.CanAccept") + ": "
 																								+ m.bedCount
-																								+ " guest(s)";
+																								+ " " + _("js.persons");
 																					} else if (m.bedCount < 0) {
-																						f += "<br>Need lodjing for: "
+																						f += "<br>" + _("js.NeedLodjingFor")  + ": "
 																								+ (-m.bedCount)
-																								+ " person(s)";
+																								+ " " + _("js.persons");
 																					}
 					                                                                <c:if test="${isModerator}">
 																					
 					                                                                if(data.moderatorId != m.userId) {
 					                                                                
-					                                                                    f += "<br><span style='margin-right: 10px;'>Remove member</span>"
+					                                                                    f += "<br><span style='margin-right: 10px;'>" + _("js.RemoveMember") 
+					                                                                     + "</span>"
 					                                                                    + "<a   class='btn-floating light-blue removefriend' data-id='" + m.userId + "'> "
 					                                                                    + "<i class='mdi-navigation-close'></i>"
 					                                                                    + "</a>";
@@ -1451,7 +1467,7 @@ nav {
 					                                                                  </c:if>
 																					
 																					f += "<a  class='secondary-content'><i class='material-icons'>"
-																							+ m.status
+																							+ _("js." + m.status) 
 																							+ "</i></a>"
 																							+
 																							"</form>";
@@ -1482,17 +1498,16 @@ nav {
 	</table>
 	<div id="confirmDeleteModal" class="modal" style="width: 25%">
 		<div class="modal-content">
-			<h4>Delete photo</h4>
+			<h4><fmt:message key="event.DeletePhoto"/></h4>
 
-			<p>Are you sure ?</p>
+			<p><fmt:message key="event.AreYouSure"/> ?</p>
 		</div>
 		<div class="modal-footer">
 			<a href="#_" id="modalDeletePhotoAnchor" data-value=""
-				class=" modal-action modal-close waves-effect waves-green btn-flat">Yes,
-				delete it</a>
+				class=" modal-action modal-close waves-effect waves-green btn-flat"><fmt:message key="event.DeletePhotoConfirm"/></a>
 		</div>
 	</div>
-
+</fmt:bundle>
 </body>
 </html>
 
