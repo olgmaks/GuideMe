@@ -47,8 +47,8 @@
 				<c:forEach var="item" items="${languageList}">
 					<th>${item.name}</th>
 				</c:forEach>
-				<th>edit</th>
-				<th>delete</th>
+				<th ></th>
+				<th ></th>
 			</tr>
 		</thead>
 
@@ -59,14 +59,14 @@
 					<c:forEach var="lang" items="${type.value}">
 						<td>${lang.name}</td>
 					</c:forEach>
-					<td>
+					<td width = "5%">
 						<button name="edit" id="edit" class="edit"
 							style="border: 0; background: transparent">
 							<img src="icons/edit.png"
 								style="height: 20px; width: 20px; object-fit: cover" />
 						</button>
 					</td>
-					<td>
+					<td width = "5%">
 						<button name="delete" id="delete" class="delete"
 							style="border: 0; background: transparent">
 							<img src="icons/delete-photo-icon.png"
@@ -86,11 +86,11 @@
 		
 		<table>
 			<c:forEach var="item" items="${languageList}">
+				<input hidden name="id"	id="id" />
 				<tr>
 					<td>${item.name}</td>
 				</tr>
 				<tr>
-				<td><input hidden name="id"	id="id" /></td>
 					<td><input required type="text" name="langCountry${item.id}"
 						id="langCountry${item.id}" />
 					<td>

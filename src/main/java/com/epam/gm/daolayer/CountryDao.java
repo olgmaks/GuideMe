@@ -4,17 +4,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
 
 import com.epam.gm.model.Country;
-import com.epam.gm.model.Tag;
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
-import com.epam.gm.services.UserService;
+
 
 public class CountryDao extends AbstractDao<Country> {
-
+	   private static final String GET_COUNTRY_BY_PURE_AND_LOCALIZED = "c JOIN language l ON l.id = c.local_id "
+																	   		+ "WHERE c.pure_id = '%S' "
+																	   		+ "AND l.localized = 1  "
+																	   		+ "AND c.deleted = FALSE";
     public CountryDao() {
     	//gryn
     	//super(ConnectionManager.getConnection(), Country.class);
@@ -63,6 +64,11 @@ public class CountryDao extends AbstractDao<Country> {
 		List<Country> result = getByField("deleted", false);
 		return result;
 	}
+    
+    public List<Country> getCountryByPureLocalized(int pureId) throws SQLException {
+        return getWithCustomQuery(String.format(GET_COUNTRY_BY_PURE_AND_LOCALIZED,
+                pureId));
+    }
     
 
 }

@@ -2,11 +2,11 @@
 <script>
 	var id;
 	var nameValid;
+	
 	$(document).ready(
-			function() {
-
+			  function() {
 				var dTable = $('#tagTable').DataTable();
-				
+		
 				$("#tagTable").on("click", ".edit", function() {
 					var tr = $(this).parents("tr");
 					$('#name').val(tr.find("td:eq(1)").html());
@@ -55,7 +55,13 @@
 						if(!nameValid)
 				        	return false;
 				    });
+				 
+				  
 			});
+	$(document).ready(function() {
+	    // Select - Single
+	    $('select:not([multiple])').material_select();
+	});
 </script>
 <link rel="StyleSheet" href="css/dataTables.css" type="text/css"
 	media="all" />
@@ -68,8 +74,8 @@
 			<tr>
 				<th hidden>ID</th>
 				<th>Name</th>
-				<th>edit</th>
-				<th>delete</th>
+				<th width = "5%"></th>
+				<th width = "5%"></th>
 			</tr>
 		</thead>
 
@@ -77,16 +83,16 @@
 			<c:forEach items="${tagList}" var="list">
 				<tr>
 					<td hidden id="tdId">${list.id}</td>
-					<td id="tdName">${list.name}</td>
-					<td>
+					<td id="tdName"><c:out value="${list.name}"/></td>
+					<td width = "5%">
 						<button name="edit" id="edit" class="edit"
 							style="border: 0; background: transparent">
 							<img src="icons/edit.png"
 								style="height: 20px; width: 20px; object-fit: cover" />
 						</button>
 					</td>
-					<td>
-						<button name="delete" id="delete" class="delete"
+					<td width = "5%">
+						<button  name="delete" id="delete" class="delete"
 							style="border: 0; background: transparent">
 							<img src="icons/delete-photo-icon.png"
 								style="height: 20px; width: 20px; object-fit: cover" />

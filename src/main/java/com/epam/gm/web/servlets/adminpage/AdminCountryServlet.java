@@ -28,9 +28,8 @@ public class AdminCountryServlet implements HttpRequestHandler{
 		Map<Country, List<Country>> map = new HashMap<Country, List<Country>>();
 		List<Country> listAll = dao.getCountriesByLocalId(2);
 		for(Country c : listAll){
-			map.put(c, dao.getCountriesByPureId(c.getPureId()));
+			map.put(c, dao.getCountryByPureLocalized(c.getPureId()));
 		}
-		
 		request.setAttribute("countryLocal", map);
 		
 		request.setAttribute("centralContent", "adminCountry");

@@ -2,6 +2,7 @@
 <script>
 var addedit='add';
 var id;
+
 	$(document).ready(function() {
 		var dTable = $('#cityTable').DataTable();
 		$("#cityTable").on("click",".edit",function(){
@@ -40,8 +41,8 @@ var id;
 		            <th>${item.name}</th>
 		            <th>country</th>
 		          </c:forEach>
-				<th>edit</th>
-				<th>delete</th>
+				<th></th>
+				<th></th>
 			</tr>
 		</thead>
 
@@ -53,14 +54,18 @@ var id;
 						<td>${lang.name}</td>
 						<td>${lang.country.name}</td>
 					</c:forEach>
-					<td>
-						<button name ="edit" id = "edit" class ="edit">
-							<img src="icons/edit.jpg" style="height: 20px; width: 20px; object-fit: cover" />
+					<td width = "5%">
+						<button name="edit" id="edit" class="edit"
+							style="border: 0; background: transparent">
+							<img src="icons/edit.png"
+								style="height: 20px; width: 20px; object-fit: cover" />
 						</button>
 					</td>
-					<td>
-						<button name ="delete" id = "delete" class ="delete">
-							<img src="icons/button-delete.ico" style="height: 20px; width: 20px; object-fit: cover" />
+					<td width = "5%">
+						<button  name="delete" id="delete" class="delete"
+							style="border: 0; background: transparent">
+							<img src="icons/delete-photo-icon.png"
+								style="height: 20px; width: 20px; object-fit: cover" />
 						</button>
 					</td>
 				</tr>

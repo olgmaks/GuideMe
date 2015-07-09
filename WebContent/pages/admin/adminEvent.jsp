@@ -1,4 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script>
 	$(document).ready(function() {
 		$('#eventTable').DataTable();
@@ -15,7 +16,8 @@
 			<th>moderator</th>
 			<th>name</th>
 			<th>description</th>
-			
+			<th>date from</th>
+			<th>date to</th>
 		</tr>
 	</thead>
 
@@ -23,10 +25,18 @@
 		<c:forEach items="${eventList}" var="list">
 			<tr>
 				<td>${list.id}</td>
-				<td><a href="userProfile.do?id=${list.moderator.id}">	${list.moderator.lastName} ${list.moderator.firstName} </a></td>
-				<td><a href="eventDetail.do?id=${list.id}">${list.name}</a></td>
-				<td>${list.description}</td>
-		
+				<td><a href="userProfile.do?id=${list.moderator.id}"> ${list.moderator.lastName} ${list.moderator.firstName}	 </a></td>
+				<td><a href="eventDetail.do?id=${list.id}"><c:out value="${list.name}"/></a></td>
+				
+				<td><c:out value="${list.description}"/></td>
+				<td><fmt:formatDate type="both" 
+            		dateStyle="short" timeStyle="short" 
+            		value="${list.dateFrom}" />
+            	</td>
+				<td><fmt:formatDate type="both" 
+            		dateStyle="short" timeStyle="short" 
+            		value="${list.dateTo}" />
+            	</td>
 			</tr>
 		</c:forEach>
 

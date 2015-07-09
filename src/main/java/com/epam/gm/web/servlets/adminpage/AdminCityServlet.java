@@ -26,6 +26,7 @@ public class AdminCityServlet implements HttpRequestHandler{
 		CountryDao countryDao = new CountryDao();
 	    LanguageService ls = new LanguageService();
 	    Map <Language, List<Country>> langCountry = new HashMap<Language, List<Country>>();
+	    
 	    for(Language lang: ls.getLocalizedLangs()){
 	    	langCountry.put(lang, countryDao.getCountriesByLocalId(lang.getId()));
 	    }
@@ -35,7 +36,7 @@ public class AdminCityServlet implements HttpRequestHandler{
 		Map<City, List<City>> map = new HashMap<City, List<City>>();
 		List<City> listAll = dao.getCitiesByLocalId(2);
 		for(City c : listAll){
-			map.put(c, dao.getCitiesByPureId(c.getPureId()));
+			map.put(c, dao.getCityByPureLocalized(c.getPureId()));
 		}
 		
 		request.setAttribute("cityLocal", map);
@@ -43,16 +44,5 @@ public class AdminCityServlet implements HttpRequestHandler{
 		request.setAttribute("cityList",new CityDao().getAll());
 		request.getRequestDispatcher("pages/admin/adminPanel.jsp").forward(request,
 				response);
-	}
-	public static void main(String[] args) throws SQLException {
-		CityDao dao = 	new CityDao();
-		CountryDao countryDao = new CountryDao();
-	    LanguageService ls = new LanguageService();
-	    Map <Language, List<Country>> langCountry = new HashMap<Language, List<Country>>();
-	    for(Language lang: ls.getLocalizedLangs()){
-	    	langCountry.put(lang, countryDao.getCountriesByLocalId(lang.getId()));
-	    }
-
-		System.out.println(langCountry);
 	}
 }

@@ -113,8 +113,8 @@ var keyValid;
 				<th>Name</th>
 				<th>key</th>
 				<th>Localized</th>
-				<th>edit</th>
-				<th>delete</th>
+				<th  width = "5%"></th>
+				<th width = "5%"></th>
 			</tr>
 		</thead>
 
@@ -124,17 +124,17 @@ var keyValid;
 					<td hidden id = "tdId" >${list.id}</td>
 					<td id = "tdName">${list.name}</td>
 					<td id = "tdKey">${list.key}</td>
-					<td id = "tdLocalized">
+					<td id = "tdLocalized" width = "5%">
 						<p>
 							<input type="checkbox" name="Localized" class = "localized"   ${list.localized == 'true' ? 'checked' : ''}>
 						</p>
 					</td>
-					<td>
+					<td width = "5%">
 						<button name ="edit" id = "edit" class ="edit" style="border: 0; background: transparent">							
 							<img src="icons/edit.png" style="height: 20px; width: 20px; object-fit: cover"/>
 						</button>
 					</td>
-					<td>
+					<td width = "5%">
 						<button name ="delete" id = "delete" class ="delete" style="border: 0; background: transparent">
 							<img src="icons/delete-photo-icon.png" style="height: 20px; width: 20px; object-fit: cover"/>
 						</button>

@@ -892,7 +892,7 @@
         }
 
         function nb(a) {
-            for (var b = a.oClasses, c = a.sTableId, e = a.aLengthMenu, d = h.isArray(e[0]), f = d ? e[0] : e, e = d ? e[1] : e, d = h("<select/>", {
+            for (var b = a.oClasses, c = a.sTableId, e = a.aLengthMenu, d = h.isArray(e[0]), f = d ? e[0] : e, e = d ? e[1] : e, d = h("<select class='browser-default'/>", {
                 name: c + "_length",
                 "aria-controls": c,
                 "class": b.sLengthSelect

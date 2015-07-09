@@ -33,6 +33,10 @@ public class MessageUserDao extends AbstractDao<MessageUser> {
 									+ "WHERE mu.user_id = ? OR "
 									+ "mu.sender_id = ?  "
 									+ "ORDER BY mu.created_on DESC LIMIT 1";
+	private String GET_NEW_NUMBER_MESSAGE = "SELECT COUNT(*) AS num "
+											+ "FROM message_user mu "
+											+ "WHERE mu.user_id = %S  "
+											+ "GROUP BY mu.sender_id ";
 	public MessageUserDao() {
     	//gryn
     	//super(ConnectionManager.getConnection(), MessageUser.class);
@@ -89,7 +93,11 @@ public class MessageUserDao extends AbstractDao<MessageUser> {
     public void deleteById(int id) throws IllegalAccessException, SQLException{
     	super.deleteByField("id", id);
     }
+    public Integer getNewMessageUser(int userId) throws SQLException{
+    	return super.getInteger(String.format(GET_NEW_NUMBER_MESSAGE, userId));
+    	
+    }
     public static void main(String[] args) throws SQLException {
-		System.out.println(new MessageUserDao().getLastMessanger(8));
+		System.out.println(new MessageUserDao().getNewMessageUser(11));
 	}
 }

@@ -12,7 +12,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CityDao extends AbstractDao<City> {
-
+	  private static final String GET_CITY_BY_PURE_AND_LOCALIZED = "c JOIN language l ON l.id = c.local_id "
+		   		+ "WHERE c.pure_id = '%S' "
+		   		+ "AND l.localized = 1  "
+		   		+ "AND c.deleted = FALSE";
     public CityDao() {
         //gryn
         //super(ConnectionManager.getConnection(), City.class);
@@ -70,5 +73,11 @@ public class CityDao extends AbstractDao<City> {
 		return result;
     }
 
+    
+    public List<City> getCityByPureLocalized(int pureId) throws SQLException {
+        return getWithCustomQuery(String.format(GET_CITY_BY_PURE_AND_LOCALIZED,
+                pureId));
+    }
+    
 
 }
