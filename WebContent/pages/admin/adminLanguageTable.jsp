@@ -1,18 +1,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct"%>
+<!-- begin Localization -->
+<jsp:include page="../localization.jsp" />
+<ct:showLocale basename="locale.dataTable.dataTable"
+	from="adminlanguage.do" />
+<fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
+<fmt:bundle basename="locale.dataTable.dataTable">
+	<!-- end Localization -->
 
 <style>
 [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
   position: relative;
-  left: 0px;
+  left: 40px;
   }
 </style>
+
 <script>
 var id;
 var nameValid;
 var keyValid;
 	$(document).ready(function() {
-		var dTable = $('#languageTable').DataTable();
-		
+		var dTable = $('#languageTable').DataTable(
+				{
+					"language" : {
+						"lengthMenu" : '<fmt:message key="show" />',
+						"zeroRecords" : "Nothing found - sorry",
+						"info" : "<fmt:message key='info' />",
+						"infoEmpty" : "No records available",
+						"infoFiltered" : "(filtered from _MAX_ total records)",
+						"search" : "<fmt:message key='search' />",
+						"paginate" : {
+							"first" : "First",
+							"last" : "Last",
+							"next" : "<fmt:message key='next' />",
+							"previous" : "<fmt:message key='previous' />"
+						},
+					}
+				});
 		$("#name").change(function(){
 			if (!this.value){
 				 nameValid = false
@@ -101,18 +126,21 @@ var keyValid;
 		});
 	});
 </script>
+</fmt:bundle>
+
 <link rel="StyleSheet" href="css/dataTables.css" type="text/css"
 	media="all" />
 <script type="text/javascript" src="js/dataTables.js"></script>
+<fmt:bundle basename="locale.admin.admin">
 <div
 	style="width: 80%; margin-right: 10%; margin-left: 10%; text-align: center;">
 	<table id="languageTable" class="display" cellspacing="0" width="80%">
 		<thead>
 			<tr>
 				<th hidden>ID</th>
-				<th>Name</th>
-				<th>key</th>
-				<th>Localized</th>
+				<th><fmt:message key="global.name" /></th>
+				<th><fmt:message key="language.key" /></th>
+				<th><fmt:message key="language.localized" /></th>
 				<th  width = "5%"></th>
 				<th width = "5%"></th>
 			</tr>
@@ -152,8 +180,8 @@ var keyValid;
 	style="width: 80%; margin-right: 10%; margin-left: 10%; text-align: center;">
 	<table>
 		<tr>
-			<th>Name<th>
-			<th>key</th>
+			<th><fmt:message key="global.name" /><th>
+			<th><fmt:message key="language.key" /></th>
 		</tr>
 		<tr>
 			<td width = "50%">
@@ -173,8 +201,9 @@ var keyValid;
 		</tr>	
 	</table>	
 	</div>
-		<input type = "submit" value = "Save" id = "save" >
+		<input type = "submit" value = "<fmt:message key='global.save' />" id = "save" >
 	</form>
 </div>
+</fmt:bundle>
 
 	

@@ -37,6 +37,7 @@ public class MessageUserDao extends AbstractDao<MessageUser> {
 											+ "FROM message_user mu "
 											+ "WHERE mu.user_id = %S  "
 											+ "GROUP BY mu.sender_id ";
+	private String GET_MESSAGE_TO_ADMIN = "mu JOIN  user u ON mu.user_id WHERE u.user_type_id = 1";
 	public MessageUserDao() {
     	//gryn
     	//super(ConnectionManager.getConnection(), MessageUser.class);
@@ -98,6 +99,9 @@ public class MessageUserDao extends AbstractDao<MessageUser> {
     	
     }
     public static void main(String[] args) throws SQLException {
-		System.out.println(new MessageUserDao().getNewMessageUser(11));
+		System.out.println(new MessageUserDao().getMessageToAdmin());
 	}
+    public List<MessageUser> getMessageToAdmin() throws SQLException{
+    	return super.getWithCustomQuery(GET_MESSAGE_TO_ADMIN);
+    }
 }

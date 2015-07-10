@@ -13,8 +13,6 @@
 	media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
-<link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
-
 <link rel="stylesheet" type="text/css" media="all"
 	href="css/styleUserProfile.css">
 
@@ -24,10 +22,10 @@
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet"
 	type="text/css" />
-<!-- Include jTable script file. -->
+
 <script src="js/jquery-1.8.2.js" type="text/javascript"></script>
 <script src="js/jquery-ui-1.10.3.custom.js" type="text/javascript"></script>
-<script src="js/jquery.jtable.js" type="text/javascript"></script>
+
 <link type="text/css" rel="stylesheet" href="css/jquery.ratings.css" />
 <script src="js/jquery.ratings.js"></script>
 
@@ -37,20 +35,10 @@
 	});
 </script>
 
-<!-- begin Localization -->
-<jsp:include page="../localization.jsp" />
-<ct:showLocale basename="locale.home.messages" from="home.do" />
-
-<fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
-<fmt:bundle basename="locale.home.messages">
-	<!-- end Localization -->
-</fmt:bundle>
 </head>
 <body>
-	<fmt:bundle basename="locale.home.messages">
-
 		<jsp:include page="../home/logoutmodal.jsp" />
-		<jsp:include page="../user/usercabinetheader.jsp" />
+		<jsp:include page="../header.jsp" />
 
 		<table>
 			<tr>
@@ -86,6 +74,9 @@
 						<c:when test="${centralContent == 'adminLanguage'}">
 							<jsp:include page="adminLanguageTable.jsp" />
 						</c:when>
+						<c:when test="${centralContent == 'adminMessage'}">
+							<jsp:include page="messageToAdmin.jsp" />
+						</c:when>
 
 					</c:choose></td>
 
@@ -115,6 +106,5 @@
 			</div>
 		</footer>
 
-	</fmt:bundle>
 </body>
 </html>

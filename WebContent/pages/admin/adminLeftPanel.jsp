@@ -31,6 +31,12 @@
 	        <i class="mdi-communication-comment right"></i>
 	        </button>
       </a>
+        <a href="messageAdmin.do">
+	        <button class="btn light-blue waves-effect waves-light" type="submit" name="action" style="width: 100%;margin-top: 10px;text-align: left;font-size: 100%;text-transform: capitalize">
+	            message
+	        <i class="mdi-communication-comment right"></i>
+	        </button>
+      </a>
       </li>
     </ul>
   </div>

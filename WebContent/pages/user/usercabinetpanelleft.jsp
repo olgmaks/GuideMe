@@ -56,7 +56,8 @@
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-						Messages<i class="mdi-content-mail right"></i>
+						Messages
+						<i class="mdi-content-mail right"></i>
 					</button>
 			</a> <a href="userfriends.do">
 					<button class="btn light-blue waves-effect waves-light"

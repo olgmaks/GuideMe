@@ -37,8 +37,8 @@ var friendAvatar;
     	$("#enterMessage").show();
 		$("#submitButton").show();
     	$("#friendTitle").html(friendLastName + ' ' + friendFirstName);
-    	var nemberMessageId = '#numberNewMessage' + userId;//recive number of new message
-    	$(nemberMessageId).html(0);
+    	var numberMessageId = '#numberNewMessage' + userId;//recive number of new message
+    	$(numberMessageId).html(0);
     	scrollToBottom();
     	$("#messageUser tr").remove();
     		$.ajax({
@@ -139,9 +139,13 @@ var friendAvatar;
     	room = ${sessionUser.id};
         chatClient = new WebSocket(endPointURL+room);
         chatClient.onmessage = function (event) {
+        	 
                var jsonObj = JSON.parse(event.data);
-               var nemberMessageId = '#numberNewMessage' + jsonObj.userId;//recive number of new message
-               var number = parseInt($(nemberMessageId).html()) +1 ;
+               var numberMessageId = '#numberNewMessage' + jsonObj.userId;//recive number of new message
+               var number = parseInt($(numberMessageId).html()) +1 ;
+           	 Materialize.toast('new message from ' + jsonObj.userName) , 10,'',function(){   
+               
+                };
                if (friendId == jsonObj.userId){
             	   var td = ' <td class = "td-right-round" bgcolor= "#2ECCFA" width="10%">'
 						+ jsonObj.userName
@@ -157,7 +161,8 @@ var friendAvatar;
                		$("#messageUser").append(trHTML);
                	 	scrollToBottom();
                }else{
-          	   		$(nemberMessageId).html(number); // increment new message
+          	   		$(numberMessageId).html(number); // increment new message
+          	   		$(numberMessage).html(number); 
                }
         };
     }
