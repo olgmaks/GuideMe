@@ -26,14 +26,17 @@ public class AdminCountryRequest implements HttpRequestHandler {
 			throws IOException {
 		LanguageService ls = new LanguageService();
 		String action = request.getParameter("action");
-
+		
 		if (action != null) {
+			Integer id = null;
 			try {
 				if (action.equals("list")) {
 
 				} else if (action.equals("add") || action.equals("edit")) {
 					Integer pureId = dao.getLastPureId();
-					int id = Integer.parseInt(request.getParameter("id"));
+					if (!request.getParameter("id").equals("")){
+						id = Integer.parseInt(request.getParameter("id"));
+					}
 					for (Language lang : ls.getLocalizedLangs()) {
 						Country country = new Country();
 						String name = request.getParameter("langCountry"
@@ -41,6 +44,7 @@ public class AdminCountryRequest implements HttpRequestHandler {
 						country.setName(name);
 						country.setPureId(pureId + 1);
 						country.setLocalId(lang.getId());
+						country.setDeleted(false);
 						if (action.equals("add")) {
 							dao.save(country);
 						} else if (action.equals("edit")) {
@@ -54,7 +58,7 @@ public class AdminCountryRequest implements HttpRequestHandler {
 				} else if (action.equals("delete")) {
 					if (request.getParameter("id") != null) {
 
-						int id = Integer.parseInt(request.getParameter("id"));
+						id = Integer.parseInt(request.getParameter("id"));
 						for (Language lang : ls.getLocalizedLangs()) {
 							Map<String, Object> map = new HashMap<>();
 							map.put("deleted", 1);
@@ -67,6 +71,7 @@ public class AdminCountryRequest implements HttpRequestHandler {
 				request.getRequestDispatcher("admincountry.do").forward(
 						request, response);
 			} catch (Exception ex) {
+				ex.printStackTrace();
 				response.getWriter().print(ex.toString());
 			}
 		}

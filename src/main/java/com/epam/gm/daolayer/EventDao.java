@@ -439,7 +439,10 @@ public class EventDao extends AbstractDao<Event> {
 
 		return results;
 	}
-
+public static void main(String[] args) throws SQLException {
+	System.out.println(
+	new EventDao().getAllActiveEventsWhereUserModerator(8));
+}
 	public List<Event> getAllActiveEventsWhereUserNotModerator(Integer userId)
 			throws SQLException {
 		List<Event> results = new ArrayList<>();
@@ -454,44 +457,44 @@ public class EventDao extends AbstractDao<Event> {
 	// public void setEventStatus(List<Event> list) throws SQLException {
 	// list.get(0).getModerator().getUserType();
 	// }
-
-	public static void main(String[] args) throws SQLException,
-			IllegalAccessException {
-
-		// EventDao dao = new EventDao();
-		// for (Event e : dao.getActiveAndNotDeletedEventsByModeratorId(2)) {
-		// System.out.println(e);
-		// }
-		// List<Event> list = new
-		// EventDao().getAllNotDeletedEventsInsTheCity(1);
-
-		// dao.buildTagString(list);
-		// list.forEach(x -> System.out.println(x.getName() + "  " +
-		// x.getTagString()));
-
-		// new EventDao().buildTagString(null);
-
-		// new
-		// EventDao().getAllActiveNotDeletedGuideEventsInTheCity(1).forEach(x ->
-		// System.out.println(x.getId()));
-
-		// List<Event> list = new EventDao().getAllNotDeletedEventsInTheCity(1);
-		// Collections.sort(list, Event.BY_CREATED_DATE);
-
-		// list.forEach(x -> System.out.println(x.getName() + "  " +
-		// x.getCreatedOn()));
-
-		// new EventDao().getAllNotDeletedEventsByPattern("²×").forEach(x ->
-		// System.out.println(x.getName()));
-
-		List<Event> list = new EventDao()
-				.getAllActiveEventsWhereUserNotModerator(25);
-		// Collections.sort(list, Event.BY_CREATED_DATE);
-
-		list.forEach(x -> System.out.println(x.getName() + "  "
-				+ x.getCreatedOn()));
-
-	}
+//
+//	public static void main(String[] args) throws SQLException,
+//			IllegalAccessException {
+//
+//		// EventDao dao = new EventDao();
+//		// for (Event e : dao.getActiveAndNotDeletedEventsByModeratorId(2)) {
+//		// System.out.println(e);
+//		// }
+//		// List<Event> list = new
+//		// EventDao().getAllNotDeletedEventsInsTheCity(1);
+//
+//		// dao.buildTagString(list);
+//		// list.forEach(x -> System.out.println(x.getName() + "  " +
+//		// x.getTagString()));
+//
+//		// new EventDao().buildTagString(null);
+//
+//		// new
+//		// EventDao().getAllActiveNotDeletedGuideEventsInTheCity(1).forEach(x ->
+//		// System.out.println(x.getId()));
+//
+//		// List<Event> list = new EventDao().getAllNotDeletedEventsInTheCity(1);
+//		// Collections.sort(list, Event.BY_CREATED_DATE);
+//
+//		// list.forEach(x -> System.out.println(x.getName() + "  " +
+//		// x.getCreatedOn()));
+//
+//		// new EventDao().getAllNotDeletedEventsByPattern("²×").forEach(x ->
+//		// System.out.println(x.getName()));
+//
+//		List<Event> list = new EventDao()
+//				.getAllActiveEventsWhereUserNotModerator(25);
+//		// Collections.sort(list, Event.BY_CREATED_DATE);
+//
+//		list.forEach(x -> System.out.println(x.getName() + "  "
+//				+ x.getCreatedOn()));
+//
+//	}
 
 	public void updateEventAvatar(Integer eventId, Integer photoId)
 			throws SQLException {

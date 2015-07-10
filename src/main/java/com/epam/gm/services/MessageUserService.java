@@ -13,4 +13,7 @@ public class MessageUserService {
  public User getLastMessanegr(int userId) throws SQLException{
 	 return muDao.getLastMessanger(userId);
  }
+ public void sendMessageToAdmin(int userId, String message) throws SQLException{
+	 muDao.sendMessageToAdmin(userId, message);
+ }
 }

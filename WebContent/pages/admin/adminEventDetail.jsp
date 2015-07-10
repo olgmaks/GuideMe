@@ -13,9 +13,10 @@
 
 <link href="css/materialize.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
-<link href="css/style.css" type="text/css" rel="stylesheet"
-	media="screen,projection" />
-<link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
+<!-- <link href="css/style.css" type="text/css" rel="stylesheet" -->
+<!-- 	media="screen,projection" /> -->
+<!-- <link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" /> -->
+
 <%--<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />--%>
 
 <!-- Include jTable script file. -->
@@ -444,9 +445,14 @@ nav {
 
 		<table>
 			<tr>
-				<td style="width: 20%; vertical-align: top;"><jsp:include
-						page="../user/usercabinetpanelleft.jsp" /></td>
-
+				<td style="width: 20%; vertical-align: top;"><c:choose>
+						<c:when test="${isAdmin}">
+							<jsp:include page="adminLeftPanel.jsp" />
+						</c:when>
+						<c:otherwise>
+							<jsp:include page="../user/usercabinetpanelleft.jsp" />
+						</c:otherwise>
+					</c:choose></td>
 				<td style="width: 80%; vertical-align: top;">
 					<div id="w">
 						<div id="content" class="clearfix">

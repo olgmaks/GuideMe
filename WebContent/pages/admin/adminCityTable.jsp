@@ -1,10 +1,36 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct"%>
+
+<!-- begin Localization -->
+<jsp:include page="../localization.jsp" />
+<ct:showLocale basename="locale.dataTable.dataTable"
+	from="admincity.do" />
+<fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
+<fmt:bundle basename="locale.dataTable.dataTable">
+	<!-- end Localization -->
 <script>
 var addedit='add';
 var id;
 
 	$(document).ready(function() {
-		var dTable = $('#cityTable').DataTable();
+		var dTable = $('#cityTable').DataTable(
+				{
+					"language" : {
+						"lengthMenu" : '<fmt:message key="show" />',
+						"zeroRecords" : "Nothing found - sorry",
+						"info" : "<fmt:message key='info' />",
+						"infoEmpty" : "No records available",
+						"infoFiltered" : "(filtered from _MAX_ total records)",
+						"search" : "<fmt:message key='search' />",
+						"paginate" : {
+							"first" : "First",
+							"last" : "Last",
+							"next" : "<fmt:message key='next' />",
+							"previous" : "<fmt:message key='previous' />"
+						},
+					}
+				});
 		$("#cityTable").on("click",".edit",function(){
 			$('#action').val('edit');
 			var tr = $(this).parents("tr");
@@ -28,9 +54,11 @@ var id;
 		});
 	});
 </script>
+</fmt:bundle>
 <link rel="StyleSheet" href="css/dataTables.css" type="text/css"
 	media="all" />
 <script type="text/javascript" src="js/dataTables.js"></script>
+<fmt:bundle basename="locale.admin.admin">
 <div
 	style="width: 80%; margin-right: 10%; margin-left: 10%; text-align: center;">
 	<table id="cityTable" class="display" cellspacing="0" width="80%">
@@ -38,8 +66,8 @@ var id;
 			<tr>
 				<th hidden>ID</th>
 				<c:forEach var="item" items="${languageList}">
-		            <th>${item.name}</th>
-		            <th>country</th>
+		            <th><fmt:message key="city.city" />(${item.key})</th>
+		            <th><fmt:message key="country.country" />(${item.key})</th>
 		          </c:forEach>
 				<th></th>
 				<th></th>
@@ -107,3 +135,4 @@ var id;
 	</form>
 	</div>
 </div>
+</fmt:bundle>

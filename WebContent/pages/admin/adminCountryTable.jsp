@@ -1,4 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct"%>
+
+<!-- begin Localization -->
+<jsp:include page="../localization.jsp" />
+<ct:showLocale basename="locale.dataTable.dataTable"
+	from="admin.do" />
+<fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
+<fmt:bundle basename="locale.dataTable.dataTable">
+	<!-- end Localization -->
 <script>
 	var addedit = 'add';
 	var id;
@@ -10,7 +20,24 @@
 	$(document).ready(
 			
 			function() {
-				var dTable = $('#countryTable').DataTable();
+				var dTable = $('#countryTable').DataTable(
+						{
+							"language" : {
+								"lengthMenu" : '<fmt:message key="show" />',
+								"zeroRecords" : "Nothing found - sorry",
+								"info" : "<fmt:message key='info' />",
+								"infoEmpty" : "No records available",
+								"infoFiltered" : "(filtered from _MAX_ total records)",
+								"search" : "<fmt:message key='search' />",
+								"paginate" : {
+									"first" : "First",
+									"last" : "Last",
+									"next" : "<fmt:message key='next' />",
+									"previous" : "<fmt:message key='previous' />"
+								},
+							}
+						});
+				
 				$("#countryTable").on("click",".edit",
 						function() {
 							var tr = $(this).parents("tr");
@@ -35,9 +62,11 @@
 				});
 			});
 </script>
+</fmt:bundle>
 <link rel="StyleSheet" href="css/dataTables.css" type="text/css"
 	media="all" />
 <script type="text/javascript" src="js/dataTables.js"></script>
+<fmt:bundle basename="locale.admin.admin">
 <div
 	style="width: 80%; margin-right: 10%; margin-left: 10%; text-align: center;">
 	<table id="countryTable" class="display" cellspacing="0" width="80%">
@@ -45,7 +74,7 @@
 			<tr>
 				<th hidden>ID</th>
 				<c:forEach var="item" items="${languageList}">
-					<th>${item.name}</th>
+					<th><fmt:message key="country.country" />(${item.key})</th>
 				</c:forEach>
 				<th ></th>
 				<th ></th>
@@ -97,9 +126,9 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<input type="submit" value="Save" id="addbtn" />
+		<input type="submit" value="<fmt:message key="global.save" />" id="addbtn" />
 	</form>
 </div>
-
+</fmt:bundle>
 
 
