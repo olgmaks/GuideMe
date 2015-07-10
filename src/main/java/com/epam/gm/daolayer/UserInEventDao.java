@@ -28,10 +28,18 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 
 	private static final String IS_MEMBER_OF_EVENT = "select (%s in( SELECT uie.user_id FROM user_in_event uie   WHERE uie.is_member = TRUE AND uie.event_id = %s ))";
 
+	private static final String WHERE_USER_SENT_REQUEST = "uie WHERE uie.is_member=0 AND uie.user_id=%s;";
+
 	public UserInEventDao() {
 		// gryn
 		// super(ConnectionManager.getConnection(), UserInEvent.class);
 		super(UserInEvent.class);
+	}
+
+	public List<UserInEvent> getAllWhereUserSentRequestByUserId(int id)
+			throws SQLException {
+		return super.getWithCustomQuery(String.format(WHERE_USER_SENT_REQUEST,
+				id));
 	}
 
 	public List<UserInEvent> getAllActualUserInEventWhereUserIsMemberAndNotModeratorByUserId(
@@ -178,7 +186,7 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 				.getAllOldUserInEventWhereUserNotModeratorByUserId(2);
 
 		for (UserInEvent uie : new UserInEventDao()
-				.getAllOldUserInEventWhereUserNotModeratorByUserId(2)) {
+				.getAllWhereUserSentRequestByUserId(2)) {
 			System.out.println(uie.getEvent());
 		}
 		// new

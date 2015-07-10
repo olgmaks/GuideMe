@@ -1,15 +1,13 @@
 package com.epam.gm.daolayer;
 
-import com.epam.gm.hashpassword.MD5HashPassword;
 import com.epam.gm.model.Country;
-import com.epam.gm.model.Event;
+
 import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserActivity;
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
-import java.security.NoSuchAlgorithmException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

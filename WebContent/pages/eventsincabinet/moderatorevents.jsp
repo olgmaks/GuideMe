@@ -26,7 +26,7 @@
 					<br> <span class="grey-text text-darken-1">Date from: </span>
 					<p>
 						<fmt:formatDate type="both" dateStyle="short" timeStyle="short"
-							value="${usersevent.getEvent().getDateFrom()}" />
+							value="${moderatorevent.getDateFrom()}" />
 					</p>
 					<br> <span class="grey-text text-darken-2">Date to: </span>
 					<p>
@@ -63,7 +63,7 @@
 					<br> <span class="grey-text text-darken-1">Date from: </span>
 					<p>
 						<fmt:formatDate type="both" dateStyle="short" timeStyle="short"
-							value="${usersevent.getEvent().getDateFrom()}" />
+							value="${moderatorevent.getDateFrom()}" />
 					</p>
 					<br> <span class="grey-text text-darken-2">Date to: </span>
 					<p>

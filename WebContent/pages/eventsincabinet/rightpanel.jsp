@@ -51,11 +51,12 @@
 </c:if>
 <div id="alleventjsp">
 	<jsp:include page="allevents.jsp" /></div>
+<div hidden="" id="moderatoreventjsp">
+	<jsp:include page="moderatorevents.jsp" /></div>
 <div hidden="" id="membereventjsp">
 	<jsp:include page="memberevents.jsp" /></div>
 
-<div hidden="" id="moderatoreventjsp">
-	<jsp:include page="moderatorevents.jsp" /></div>
+
 <div hidden="" id="requestsjsp">
 	<jsp:include page="requests.jsp" /></div>
 
@@ -78,8 +79,9 @@
 	<ul class="collection with-header">
 		<li class="collection-header"><h4>MENU</h4></li>
 		<li id="all" class="collection-item active"><a href="#">All</a></li>
-		<li id="own" class="collection-item"><a href="#">Own</a></li>
 		<li id="resident" class="collection-item"><a href="#">Resident</a></li>
+		<li id="own" class="collection-item"><a href="#">Own</a></li>
+
 	</ul> <br>
 	<ul class="collection with-header">
 		<li id="yourrequests" class="collection-item"><a href="#">Your
