@@ -7,6 +7,7 @@ import com.epam.gm.model.User;
 import com.epam.gm.model.UserActivity;
 import com.epam.gm.olgmaks.absractdao.dbcontrol.ConnectionManager;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
+import com.epam.gm.olgmaks.absractdao.transformer.ResultTransformer;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -16,6 +17,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import  java.util.Set;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.StringJoiner;
 
@@ -49,7 +53,8 @@ public class UserDao extends AbstractDao<User> {
 			+ "  HAVING tag_count >= %s"
 			+ ") AND currentUser.is_active=true";
 
-	private static final String SEARCH_USER_NON_FRIEND = "u WHERE (not u.id=%1$s)"
+	private static final String SEARCH_USER_NON_FRIEND = "u WHERE (not u.id=%1$s) "
+			+ "  AND (u.user_type_id = 2 OR u.user_type_id = 3)" //check for user type (user and guides)
 			+ "  AND (u.is_active=true)  AND (u.id not in ("
 			+ "select fu.friend_id from friend_user fu WHERE fu.user_id =%1$s AND NOT EXISTS ("
 			+ "SELECT fu1.friend_id FROM friend_user fu1 WHERE fu.friend_id = fu1.user_id AND fu.user_id=fu1.friend_id)"
@@ -72,6 +77,8 @@ public class UserDao extends AbstractDao<User> {
 
 	public static final String IS_USER = "SELECT (%s in( select u.id from user u where is_active=true)) ";
 
+	public static final String GET_AVG_MARK = "SELECT ROUND(AVG(ru.mark),1) FROM raiting_user ru WHERE ru.user_id = %s ";
+
 	// gryn
 	public static final String GET_TAGS_BY_USERS = " SELECT  e.id, et.tag_id, t.name AS 'tag_name' "
 			+ " FROM user e JOIN user_tag et ON e.id = et.user_id "
@@ -92,6 +99,10 @@ public class UserDao extends AbstractDao<User> {
 
 	public Boolean isUserPresent(Integer id) throws SQLException {
 		return super.getBoolean(String.format(IS_USER, id));
+	}
+
+	public Double getUserAvgMark (Integer userId) throws SQLException {
+		return super.getDouble(String.format(GET_AVG_MARK, userId));
 	}
 
 	/*
@@ -330,6 +341,30 @@ public class UserDao extends AbstractDao<User> {
 		//
 		// e.printStackTrace();
 		// }
+	}
+
+//Maks
+	public List<User> callSearchUser (
+			Integer userId, String fName, String lName, String countryName, String cityName, String tags, String userType)
+																						throws SQLException {
+
+		Connection connection = ConnectionManager.getConnection();
+		CallableStatement callableStatement = connection.prepareCall("{call searchUser(?,?,?,?,?,?,?)}");
+
+		callableStatement.setInt(1, userId);
+		callableStatement.setString(2, fName);
+		callableStatement.setString(3, lName);
+		callableStatement.setString(4, countryName);
+		callableStatement.setString(5, cityName);
+		callableStatement.setString(6, tags);
+		callableStatement.setString(7, userType);
+
+		ResultTransformer<User> resultTransformer = new ResultTransformer<User>(User.class);
+
+		List <User> resultsOfSearch = resultTransformer.getAllInstances(connection,callableStatement.executeQuery());
+
+		ConnectionManager.closeConnection(connection);
+		return resultsOfSearch;
 	}
 
 	public Integer saveUserAndRerutnId(User user)

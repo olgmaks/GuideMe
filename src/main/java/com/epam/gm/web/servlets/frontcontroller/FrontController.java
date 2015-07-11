@@ -54,7 +54,7 @@ public class FrontController extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
         try {
-            System.out.println("Front controller");
+//            System.out.println("Front controller");
             
 //            System.out.println("Put langs: " + languages);
 //            request.getServletContext().setAttribute("applicationLangs", languages);
@@ -74,7 +74,7 @@ public class FrontController extends HttpServlet {
                 key = "home";
             }
 
-            System.out.println("froncontroller key : " + key);
+//            System.out.println("froncontroller key : " + key);
 			handler = handlers.get(key);
 
             if (handler != null) {

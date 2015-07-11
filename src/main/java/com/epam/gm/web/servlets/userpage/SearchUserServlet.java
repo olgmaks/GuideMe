@@ -1,7 +1,9 @@
 package com.epam.gm.web.servlets.userpage;
 
+import com.epam.gm.model.Country;
 import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.User;
+import com.epam.gm.services.CountryService;
 import com.epam.gm.services.FriendUserService;
 import com.epam.gm.services.UserService;
 import com.epam.gm.sessionrepository.SessionRepository;
@@ -20,9 +22,11 @@ import java.util.*;
 public class SearchUserServlet implements HttpRequestHandler {
 
     private UserService userService;
+    private CountryService countryService;
 
     public SearchUserServlet(){
         userService = new UserService();
+        countryService = new CountryService();
     }
 
     @Override
@@ -31,35 +35,21 @@ public class SearchUserServlet implements HttpRequestHandler {
         System.out.println("search user servlet ...");
 
         Integer sessionUserId = SessionRepository.getSessionUser(request).getId();
-//
-//        FriendUserService friendUserService =  FriendUserService.serve();
-//
-//        Set<User> sentRequestUsers = new HashSet<>();
-//        for (FriendUser fu : friendUserService.getUserRequestsToFriends(sessionUserId)){
-//            sentRequestUsers.add(fu.getFriend().setFriendCriteria(User.FriendCriteria.sentRequest));
-//        }
-//
-//
-//        Set<User> receivedFriendUsers =  new HashSet<>();
-//        for (FriendUser fu : friendUserService.getUserRequestsFromFriends(sessionUserId)){
-//            receivedFriendUsers.add(fu.getUser().setFriendCriteria(User.FriendCriteria.receivedRequest));
-//        }
-//
-//        Set <User> results = new HashSet<>();
-//        results.addAll(sentRequestUsers);
-//        results.addAll(sentRequestUsers);
 
         List<User> users = UserService.serve().searchNonFriendsUsers(SessionRepository.
                 getSessionUser(request).getId());
-//
-//        for (User user : users) {
-//            user.setFriendCriteria(User.FriendCriteria.notFriend);
-//        }
-//
-//        results.addAll(users);
 
+        Iterator<User> iter = users.iterator();
 
+        while (iter.hasNext()){
+            User user = iter.next();
+            user.setPoints(userService.getUserAvgMark(user.getId()));
+        }
 
+        List<Country> countries = countryService
+                .getCountriesByLocalId(SessionRepository.getSessionLanguage(request).getId());
+
+        request.setAttribute("countryItems", countries);
         request.setAttribute("users", users);
         request.setAttribute("centralContent", "searchuser");
         request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(request, response);

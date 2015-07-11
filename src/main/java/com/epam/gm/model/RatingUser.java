@@ -23,8 +23,17 @@ public class RatingUser {
     @ForeignKey
     @OneToMany(field = "user_id", value = User.class)
     private User user;
+
     @Column("mark")
     private Integer mark;
+
+    public RatingUser () {}
+
+    public RatingUser(Integer estimatorId, Integer userId, Integer mark) {
+        this.estimatorId = estimatorId;
+        this.userId = userId;
+        this.mark = mark;
+    }
 
     public Integer getId() {
 	return id;

@@ -210,7 +210,7 @@ public class AbstractDao<T> {
 	Connection connection = ConnectionManager.getConnection();
 //	PreparedStatement statement = connection.prepareStatement(sql + "as 'value'");
         PreparedStatement statement = connection.prepareStatement(sql);
-	System.out.println(statement);
+//	System.out.println(statement);
 	ResultSet resultSet = statement.executeQuery();
 	resultSet.next();
 //	Boolean res = resultSet.getBoolean("value");
@@ -226,7 +226,7 @@ public class AbstractDao<T> {
 //	PreparedStatement statement = connection.prepareStatement(sql + "as 'value'");
         PreparedStatement statement = connection.prepareStatement(sql);
 
-        System.out.println(statement);
+//        System.out.println(statement);
 	ResultSet resultSet = statement.executeQuery();
 	resultSet.next();
 	Integer res = resultSet.getInt(1);
@@ -240,7 +240,7 @@ public class AbstractDao<T> {
     protected Double getDouble (String sql) throws SQLException {
 	Connection connection = ConnectionManager.getConnection();
 	PreparedStatement statement = connection.prepareStatement(sql);
-	System.out.println(statement);
+//	System.out.println(statement);
 	ResultSet resultSet = statement.executeQuery();
 	resultSet.next();
 	Double res = resultSet.getDouble(1);
@@ -254,7 +254,7 @@ public class AbstractDao<T> {
     protected Object getObject (String sql) throws SQLException {
 	Connection connection = ConnectionManager.getConnection();
 	PreparedStatement statement = connection.prepareStatement(sql);
-	System.out.println(statement);
+//	System.out.println(statement);
 	ResultSet resultSet = statement.executeQuery();
 	resultSet.next();
 	Object res = resultSet.getObject(1);

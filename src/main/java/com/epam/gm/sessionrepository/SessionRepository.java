@@ -33,6 +33,8 @@ public class SessionRepository {
     public static final String SESSION_USER_AVATAR = "sessionUserAvatar";
     public static final String SESSION_LANGUAGE = "sessionLanguage";
 
+	private static final UserService USER_SERVICE = new UserService();
+
 
     public static void setSessionUserAvatar(HttpServletRequest request, Photo avatar) {
         request.setAttribute("sessionUserAvatar", avatar);
@@ -43,7 +45,7 @@ public class SessionRepository {
         HttpSession session = request.getSession(true);
 
         User sessionUser = (User) session.getAttribute(SESSION_USER);
-        System.out.println("session user : " + sessionUser);
+//        System.out.println("session user : " + sessionUser);
 
         if (sessionUser == null) {
             return null;
@@ -52,8 +54,8 @@ public class SessionRepository {
         User updatedSessionUser = null;
         try {
             Integer id = sessionUser.getId();
-            System.out.println("session user id : " + id);
-            updatedSessionUser = UserService.serve().getUserById(id);
+//            System.out.println("session user id : " + id);
+            updatedSessionUser = USER_SERVICE.getUserById(id);
             session.setAttribute(SESSION_USER,updatedSessionUser);
         } catch (SQLException e) {
             e.printStackTrace();

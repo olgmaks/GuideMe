@@ -24,10 +24,20 @@ public class UserServiceTest {
         roleUser = new UserTypeDao().getByField("name", "user").get(0);
     }
 
+    @Test
+    public void getAvgMark () {
+        try {
+            System.out.println("avg mark : " + userService.getUserAvgMark(8));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Ignore
     @Test
     public void testGetUsers() throws SQLException {
         System.out.println("userRole = " + roleUser);
+        
         List<User> users = userService.getAll();
         for (User user : users) {
             System.out.println(user);
@@ -55,7 +65,7 @@ public class UserServiceTest {
         }
     }
 
-    @Test
+    @Test@Ignore
     public void testIsUser() {
         try {
             Boolean b = userService.isUserPresent(8);

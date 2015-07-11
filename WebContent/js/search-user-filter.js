@@ -4,9 +4,10 @@
 
 $(function () {
     //var tags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
+    var tags = [];
 
     function prepareDefaultTags() {
-        var tags = [];
+
 
         $.ajax({
             url: "autocompleteUserTags.do",
@@ -36,7 +37,13 @@ $(function () {
         },
         singleField: true,
         afterTagAdded: function (event, ui) {
-            sendAjaxRequest(getSearchUserFilter());
+            var tagName = ui.tagLabel;
+
+            if ($.inArray(tagName, tags) === -1) {
+                $(this).tagit('removeTagByLabel', tagName);
+            } else {
+                sendAjaxRequest(getSearchUserFilter());
+            }
         },
         afterTagRemoved: function (event, ui) {
             sendAjaxRequest(getSearchUserFilter());
@@ -52,33 +59,71 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
-    console.log('call city ajax');
-    $.ajax({
-        url: "getCitiesByCountry.do",
-        type: "post",
-        dataType: "json",
-        data: {cityRequestType: 'getAllCity'},
-        success: function (data) {
-            console.log('request success');
-            console.log(data);
-
-            var citySelect = $("#city-select");
-            citySelect.empty();
-            citySelect.append("<option value=''>City</option>");
-
-            $.each(data, function (counts, item) {
-                citySelect.append("<option value='" + item + "'>" + item + "</option>");
-            });
-        }
-    });
-});
+//$(document).ready(function () {
+//    console.log('call city ajax');
+//    $.ajax({
+//        url: "getCitiesByCountry.do",
+//        type: "post",
+//        dataType: "json",
+//        data: {cityRequestType: 'getAllCity'},
+//        success: function (data) {
+//            console.log('request success');
+//            console.log(data);
+//
+//            var citySelect = $("#city-select");
+//            citySelect.empty();
+//            citySelect.append("<option value=''>All</option>");
+//
+//            $.each(data, function (counts, item) {
+//                citySelect.append("<option value='" + item + "'>" + item + "</option>");
+//            });
+//        }
+//    });
+//});
 
 //$(document).ready(function () {
 //    $(".send-friend-request").click(function () {
 //        alert('friend-request clicked');
 //    });
 //});
+
+$(document).ready(function () {
+    $("#country-select-control").change(function () {
+
+        var country = $(this).val();
+
+        console.log(country);
+
+        var citySelect = $("#city-select");
+        citySelect.val('');
+        citySelect.empty();
+
+        if (country === 'all') {
+
+
+            citySelect.append("<option value='all'>" + "All" + "</option>");
+
+        } else {
+
+            $.ajax({
+                type: "post",
+                url: 'getCitiesByCountry.do?value=' + country,
+                success: function (cities) { //we're calling the response json array 'cities'
+                    var citySelect = $("#city-select");
+                    citySelect.empty();
+                    citySelect.append("<option value='all'  data-name='all'>" + "All" + "</option>");
+                    //console.log(cities);
+                    $.each(cities, function (index, name) {
+                        //console.log(index + " " + name);
+                        citySelect.append("<option value='" + name + "'>" + name + "</option>");
+                    });
+                }
+            });
+        }
+        sendAjaxRequest(getSearchUserFilter());
+
+    });
+});
 
 $(document).ready(function () {
     $("#city-select").change(function () {
@@ -92,13 +137,14 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function(){
+$(document).ready(function () {
     updateAddFriendAnchors();
 });
 
 function getSearchUserFilter() {
     var userNameInput = $("#userNameInput").val();
     var tags = $("#singleFieldTags").tagit("assignedTags").toString();
+    var countryName = $("#country-select-control").find(":selected").data("name");
     var cityName = $("#city-select").val();
     var tagsMatches = 0;
     var searchRole = $("#user-type-select").val();
@@ -110,6 +156,7 @@ function getSearchUserFilter() {
     var searchUserFilter = {
         userNameInput: userNameInput,
         tags: tags,
+        countryName: countryName,
         cityName: cityName,
         tagsMatches: tagsMatches,
         searchRole: searchRole
@@ -125,16 +172,18 @@ function getCard(user) {
     var fName = user.firstName;
     var lName = user.lastName;
     var cityName = user.address.city.name;
+    var points = user.points;
     var sendFriendRequestId = "sendFriendRequestId" + user.Id;
     var sendFriendRequestClass = "send-friend-request";
 
-    return "<div class='card' id = 'card-"+userId+"' style='height: 150px; width: 330px; float: left; margin-left: 10px;'>" +
+    return "<div class='card' id = 'card-" + userId + "' style='height: 150px; width: 47%; min-width: 300px; max-width:350px; float: left; margin-left: 10px;'>" +
         "<table><tr><td style='width: 120px; vertical-align: top;'>" +
         "<img class='circle' style='height: 120px; width: 120px; object-fit: cover' src='" + pathToImage + "'></td><td><div>" +
         "<div style='height: 40px;'><a href='#_' class='black-text'>" + fName + " " + lName + "</a></div>" +
-        "<div style='height: 40px;'><br><span>" + cityName + "</span></div>" +
+        "<div style='height: 20px;'> <span>Rate: " + points + "</span></div>" +
+        "<div style='height: 20px;'><span>" + cityName + "</span></div>" +
         "<div style='float: right; vertical-align: bottom; margin-bottom: 10px; margin-right: 10px;'>" +
-        "<a href='#_' id='" + sendFriendRequestId + "' data-userid='"+userId+"' class='btn blue waves-effect waves-light " + sendFriendRequestClass + "'>" +
+        "<a href='#_' id='" + sendFriendRequestId + "' data-userid='" + userId + "' class='btn blue waves-effect waves-light " + sendFriendRequestClass + "'>" +
         "ADD</a></div></div></td></tr></table>" +
         "</div>";
 }
@@ -146,13 +195,13 @@ function updateAddFriendAnchors() {
             url: "sendfriendrequest.do",
             type: "post",
             dataType: "json",
-            data: {friendId:friendId},
+            data: {friendId: friendId},
             success: function () {
-                console.log('friend request has been sent on server userId='+friendId);
+                console.log('friend request has been sent on server userId=' + friendId);
             }
         });
 
-        var cardSelector = '#card-'+friendId;
+        var cardSelector = '#card-' + friendId;
         console.log(cardSelector);
         $(cardSelector).remove();
     });
@@ -169,13 +218,15 @@ function sendAjaxRequest(searchUserFilter) {
         dataType: "json",
         data: getSearchUserFilter(),
         success: function (data) {
-            console.log(data);
+            //console.log(data);
 
             var cardCollection = $("#inner-row");
-            cardCollection.empty();
+            var resultsQuantity = $('#resultsQuantity');
 
+            cardCollection.empty();
+            resultsQuantity.text(data.length);
             $.each(data, function (counts, item) {
-                console.log(item);
+                //console.log(item);
                 cardCollection.append(getCard(item));
             });
 

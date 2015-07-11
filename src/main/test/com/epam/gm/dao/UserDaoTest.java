@@ -25,6 +25,63 @@ public class UserDaoTest {
     }
 
     @Test
+    public void callableSeach () {
+        try {
+
+            String tags = "'music','cinema','hiking','camping','tourism'";
+
+            long t1 = System.currentTimeMillis();
+            List<User> users = userDao.callSearchUser(8,"r","d","","","","all");
+            long t2 = System.currentTimeMillis();
+
+            System.out.println("time = "+ (t2-t1));
+
+            for (User user : users) {
+                System.out.println(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test@Ignore
+    public void averageTimeCallableSearch () {
+        try {
+
+            String tags = "'music','cinema','hiking','camping','tourism'";
+
+
+            int index=0;
+            double avg = 0;
+            long totalTime = 0;
+
+            while (index<20) {
+                long t1 = System.currentTimeMillis();
+                List<User> users = userDao.callSearchUser(8, "", "","" ,"", "", "all");
+                long t2 = System.currentTimeMillis();
+
+                totalTime += (t2 - t1);
+
+                index++;
+            }
+
+            avg=totalTime/index;
+
+//            long t1 = System.currentTimeMillis();
+//            List<User> users = userDao.callSearchUser(8,"","","","","all");
+//            long t2 = System.currentTimeMillis();
+
+            System.out.println("avg time = "+ avg + " sec, during = " + totalTime +" sec, after " + index +" times");
+
+//            for (User user : users) {
+//                System.out.println(user);
+//            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test@Ignore
     public void getByTags() throws SQLException {
         String tags = "'music'";
         List<User> users = userDao.searchUserByTags(tags,0);

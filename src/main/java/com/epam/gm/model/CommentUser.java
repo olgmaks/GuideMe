@@ -13,7 +13,7 @@ public class CommentUser {
     @Column("id")
     private Integer id;
 
-    @Column("date")
+    @Column("created_on")
     private Date date;
 
     @Column("commentator_id")

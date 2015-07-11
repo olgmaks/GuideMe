@@ -1,6 +1,7 @@
 package com.epam.gm.services;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.BeforeClass;
@@ -22,8 +23,13 @@ public class UserServiceSearchTest {
     public void searchTest() throws SQLException {
 	System.out.println();
         @SuppressWarnings("unused")
-	String tags = "'music','cinema','camping','hiking','sport','nature','tourism'";
-        Set<User> users = userService.searchUsers(8,"","","",0, UserService.SearchRole.all);
+        long t1 = System.currentTimeMillis();
+	    String tags = "'music','cinema','camping','hiking','sport','nature','tourism'";
+
+        List<User> users = userService.searchUsers(8,"","","","",tags, UserService.SearchRole.all);
+        long t2 = System.currentTimeMillis();
+
+        System.out.println("time = " + (t2-t1));
 
         for (User u : users) {
             System.out.println(u);

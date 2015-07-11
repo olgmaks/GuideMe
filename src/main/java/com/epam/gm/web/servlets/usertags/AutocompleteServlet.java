@@ -1,7 +1,12 @@
 package com.epam.gm.web.servlets.usertags;
 
+import com.epam.gm.model.City;
+import com.epam.gm.model.Country;
 import com.epam.gm.model.Tag;
+import com.epam.gm.services.CityService;
+import com.epam.gm.services.CountryService;
 import com.epam.gm.services.TagService;
+import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -19,9 +24,13 @@ import java.util.StringJoiner;
 public class AutocompleteServlet implements HttpRequestHandler {
 
     private TagService tagService;
+    private CityService cityService;
+    private CountryService countryService;
 
     public AutocompleteServlet() {
         tagService = new TagService();
+        cityService = new CityService();
+        countryService = new CountryService();
     }
 
     @Override
@@ -33,6 +42,7 @@ public class AutocompleteServlet implements HttpRequestHandler {
 //			System.out.println("key:" + entry.getKey());
 //			System.out.println("val:" + entry.getValue()[0]);
 //		}
+
 
         if ("userSearchTags".equals(request.getParameter("getTags"))) {
             System.out.println("get tags has been called");

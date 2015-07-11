@@ -5,12 +5,7 @@ import com.epam.gm.model.Event;
 import com.epam.gm.model.User;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class UserService {
@@ -57,24 +52,38 @@ public class UserService {
 
 	}
 
-	public Set<User> searchUsers(Integer searcherId, String nameFilterInput,
-			String cityName, String tags, Integer tagsMatches,
-			SearchRole searchRole) throws SQLException {
+//Maks
+	public List<User> searchUsers(Integer searcherId, String firstName, String lastName, String countryName,
+								  String cityName, String tags, SearchRole searchRole) throws SQLException {
 
 		System.out.println("****user search started****");
 		long time = System.currentTimeMillis();
-		System.out.println("searcherId : " + searcherId);
-		System.out.println("nameFilterInput : " + nameFilterInput);
-		System.out.println("cityName : " + cityName);
-		System.out.println("tags : " + tags);
-		System.out.println("tagsMatches : " + tagsMatches);
-		System.out.println("searchRole : " + searchRole);
+		System.out.print("searcherId : '" + searcherId + "', ");
+		System.out.print("firstName : '" + firstName +"', ");
+		System.out.print("lastName : '" + lastName+"', ");
+        System.out.print("countryName : '" + countryName+"', ");
+		System.out.print("cityName : '" + cityName+"', ");
+		System.out.print("tags : '" + tags+"', ");
+		System.out.println("searchRole : '" + searchRole + "'");
+
+        if (searcherId==null) {
+            System.out.println("searcher id was not specified");
+            throw  new RuntimeException("searcher id was not specified");
+        }
+
+		if (firstName==null) {firstName="";}
+		if (lastName==null) {lastName="";}
+		if (countryName==null){countryName="";}
+		if (cityName==null) {cityName="";}
+		if (searchRole==null) {searchRole=SearchRole.all;}
+        if (tags==null) {tags ="";}
 
 		String tagWrapper = "'";
 		if (!tags.contains(tagWrapper) && !tags.isEmpty()) {
 			String[] tagList = tags.split(",");
+
 			if (tagList.length == 1) {
-				tags = "'" + tagList + "'";
+                tags = new String("'" + tags + "'");
 			} else {
 				StringBuilder builder = new StringBuilder();
 				String prefix = "";
@@ -86,133 +95,25 @@ public class UserService {
 				tags = builder.toString();
 			}
 		}
+        System.out.println("***tags: " + tags);
 
-		Set<User> results = new LinkedHashSet<>();
+        List<User> results = userDao.callSearchUser(searcherId,firstName,lastName,countryName,cityName,tags,searchRole.name());
 
-		List<User> resultsByName = null;
-		List<User> resultsByCity = null;
-		List<User> resultsByTags = null;
-		List<User> resultsNonFriend = null;
-		List<User> resultsByGuide = null;
+        Iterator<User> iter = results.iterator();
 
-		if (nameFilterInput != null) {
-			resultsByName = userDao.searchUserByName(nameFilterInput);
-			System.out.println("results by name : " + resultsByName.size());
-		}
-		if (cityName != null) {
-			resultsByCity = userDao.searchUserByCityName(cityName);
-			System.out.println("results by city : " + resultsByCity.size());
-		}
-
-		if (tags != null && tags.isEmpty()) {
-			tags = null;
-		}
-
-		if (tags != null) {
-
-			if (tagsMatches == null) {
-
-				if (tags.contains(",")) {
-					tagsMatches = tags.split(",").length;
-				} else {
-					tagsMatches = 0;
-				}
-
-			}
-			resultsByTags = userDao.searchUserByTags(tags, tagsMatches);
-			// System.out.println("results by tags : " +resultsByTags);
-			System.out.println("results by tags : " + resultsByTags.size());
-		}
-
-		if (searchRole == null) {
-			searchRole = SearchRole.all;
-		}
-
-		if (searchRole == SearchRole.guide) {
-			resultsByGuide = userDao.searchUserGuide();
-		}
-
-		if (searchRole == SearchRole.user) {
-			resultsByGuide = userDao.searchUserNonGuide();
-		}
-
-		if (searchRole == SearchRole.all) {
-			resultsByGuide = userDao.searchUserGuide();
-			resultsByGuide.addAll(userDao.searchUserNonGuide());
-		}
-
-		if (searcherId != null) {
-			resultsNonFriend = userDao.searchNonFriendsUsers(searcherId);
-			System.out.println("results by resultsNonFriend : "
-					+ resultsNonFriend.size());
-		}
-
-		System.out.println("Union");
-		/*
-		 * Union operations
-		 */
-		if (resultsByName != null && !resultsByName.isEmpty()) {
-			results.addAll(resultsByName);
-			System.out.print("name : +" + results.size());
-		}
-
-		if (resultsByCity != null && !resultsByCity.isEmpty()) {
-			results.addAll(resultsByCity);
-			System.out.print(" | city : +" + results.size());
-		}
-
-		if (resultsByTags != null && !resultsByTags.isEmpty()) {
-			results.addAll(resultsByTags);
-			System.out.print(" | tags : +" + results.size());
-		}
-
-		if (resultsByGuide != null && !resultsByGuide.isEmpty()) {
-			results.addAll(resultsByGuide);
-			System.out.print(" | guide : +" + results.size());
-		}
-
-		if (resultsNonFriend != null && !resultsNonFriend.isEmpty()) {
-			results.addAll(resultsNonFriend);
-			System.out.println(" | nonFriend : +" + results.size());
-		}
-		System.out.println("Intersection");
-		/*
-		 * Intersection operations
-		 */
-		if (resultsByName != null && !nameFilterInput.isEmpty()) {
-			results.retainAll(resultsByName);
-			System.out.println("name : -" + results.size()
-					+ " nameFilterInput: " + nameFilterInput);
-		}
-
-		if (resultsByCity != null && !cityName.isEmpty()) {
-			results.retainAll(resultsByCity);
-			System.out.println(" | city: -" + results.size() + " cityName: "
-					+ cityName);
-		}
-
-		if (resultsByTags != null && !tags.isEmpty()) {
-			results.retainAll(resultsByTags);
-			System.out
-					.println(" | tags: -" + results.size() + " tags: " + tags);
-		}
-
-		if (resultsByGuide != null && !resultsByGuide.isEmpty()) {
-			results.retainAll(resultsByGuide);
-			System.out.println(" | guide: -" + results.size() + " searchRole: "
-					+ searchRole);
-		}
-
-		if (resultsNonFriend != null) {
-			results.retainAll(resultsNonFriend);
-			System.out.println(" | nonFriends: -" + results.size());
-		}
+        while (iter.hasNext()){
+            User user = iter.next();
+            user.setPoints(getUserAvgMark(user.getId()));
+        }
 
 		System.out.println("****user search ended**** with time = "
-				+ TimeUnit.MILLISECONDS.toMillis(System.currentTimeMillis()
-						- time));
+				+ TimeUnit.MILLISECONDS.toMillis(System.currentTimeMillis() - time));
 		return results;
 	}
+
+    public Double getUserAvgMark (Integer userId) throws SQLException {
+        return userDao.getUserAvgMark(userId);
+    }
 
 	public List<User> searchNonFriendsUsers(Integer searcherId)
 			throws SQLException {

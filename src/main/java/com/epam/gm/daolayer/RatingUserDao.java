@@ -8,7 +8,10 @@ import com.epam.gm.model.RatingUser;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
 public class RatingUserDao extends AbstractDao<RatingUser>{
+
 	private static final String GET_RATE_BY_USER = "where user_id = %S and estimator_id = %S";
+	private static final String VERIFY_MARK_EXISTING = "select COUNT(*) FROM raiting_user ru where ru.estimator_id=%s and ru.user_id=%s";
+
     public RatingUserDao() {
     	//gryn
     	//super(ConnectionManager.getConnection(), RatingUser.class);
@@ -22,6 +25,10 @@ public class RatingUserDao extends AbstractDao<RatingUser>{
 	public void save(RatingUser ru) throws IllegalArgumentException,
 			IllegalAccessException, SQLException {
 		super.save(ru);
+	}
+
+	public Boolean verifyMarkExisting (Integer estimatorId, Integer userId) throws SQLException {
+		return  super.getBoolean(String.format(VERIFY_MARK_EXISTING,estimatorId,userId));
 	}
 
 	public RatingUser getMarkByEvent(int estimatorId, int userId)

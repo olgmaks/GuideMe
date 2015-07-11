@@ -69,7 +69,7 @@ public class ResultTransformer<T> {
 
         List<T> result = new ArrayList<T>();
         try {
-            while (rs.next()) {
+            while (!rs.isClosed()&&rs.next()) {
                 //result.add(toInstance(rs));
                 result.add(toInstance(connection, rs));
             }
