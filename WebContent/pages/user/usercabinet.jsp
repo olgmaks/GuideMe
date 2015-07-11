@@ -108,6 +108,11 @@
 					<c:when test="${centralContent == 'userCabinetComments' }">
 						<jsp:include page="usercabinetcomments.jsp" />
 					</c:when>
+				
+					<c:when test="${centralContent == 'userCabinetEditProfile' }">
+						<jsp:include page="usercabineteditprofile.jsp" />
+					</c:when>
+					
 				</c:choose></td>
 
 

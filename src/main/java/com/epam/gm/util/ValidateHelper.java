@@ -10,6 +10,8 @@ import com.epam.gm.services.UserService;
 //Пізніше будуть юзатись анотації
 public class ValidateHelper {
 	
+	private static final int MAX_LENGTH = 30;
+	
 	public static String validateForScripts(String value) {
 		
 		if(value != null){
@@ -31,17 +33,22 @@ public class ValidateHelper {
 				
 				if(value.trim().length() == 0) 
 					result = "js.valid.firstName.empty";
+				
+				else if(value.trim().length() > MAX_LENGTH) 
+					result = "js.valid.stringtoolong";	
 				else 
 					result = "js.valid.ok";
 			
 			}
 			
 			if(fieldName.equals("lastName")) {
-				
+				if(value.trim().length() > MAX_LENGTH) 
+					result = "js.valid.stringtoolong";
 			}
 			
 			if(fieldName.equals("address")) {
-				
+				if(value.trim().length() > MAX_LENGTH) 
+					result = "js.valid.stringtoolong";
 			}			
 			
 			if(fieldName.equals("email")) {
@@ -50,7 +57,9 @@ public class ValidateHelper {
 				
 				if(value.trim().length() == 0) 
 					result = "js.valid.email.empty";
-				else if(!value.contains("@")) {
+				else if(value.trim().length() > 50) 
+					result = "js.valid.stringtoolong";	
+				else if(! new EmailValidator().validate(value.trim())) {
 					result = "js.valid.email.wrongformat";
 				} else {
 					User temp = null;
@@ -75,6 +84,12 @@ public class ValidateHelper {
 				
 				if(value.trim().length() == 0) 
 					result = "js.valid.password.empty";
+				else if(value.trim().length() > MAX_LENGTH) 
+					result = "js.valid.stringtoolong";
+				else if(value.contains("\t") ||  value.contains("\n"))
+					result = "js.valid.containsscripts";
+				else if(value.startsWith(" ") ||  value.endsWith(" "))
+					result = "js.valid.password.startendspace";
 				else if(value.trim().length() < 4) {
 					result = "js.valid.password.toosmall";
 				} else 
@@ -105,7 +120,8 @@ public class ValidateHelper {
 
 
 			if(fieldName.equals("cellNumber")) {
-				
+				if(value.trim().length() > MAX_LENGTH) 
+					result = "js.valid.stringtoolong";
 			}
 			
 		}

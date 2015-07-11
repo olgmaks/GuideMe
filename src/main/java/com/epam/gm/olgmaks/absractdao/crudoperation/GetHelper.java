@@ -41,7 +41,9 @@ public class GetHelper<T> extends AbstractHelper<T> {
         String baseSelect = AbstractDao.SELECT;
         String sql = String.format(baseSelect,
                 (tableName + " " + sqlWithRestrictions));
-        //System.out.println(sql);
+        
+  //      System.out.println("ABSTRACT***************************************************");
+ //       System.out.println(sql);
         PreparedStatement statement = connection.prepareStatement(sql);
         return statement;
     }

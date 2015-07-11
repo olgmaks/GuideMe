@@ -337,4 +337,17 @@ public class UserDao extends AbstractDao<User> {
 			SQLException {
 		return super.saveAndReturnId(user);
 	}
+	
+	public void updateUserProfile(User user) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("email", user.getEmail());
+		map.put("first_name", user.getFirstName());
+		map.put("last_name", user.getLastName());
+		map.put("sex", user.getSex());
+		map.put("cell_number", user.getCellNumber());
+		map.put("address_id", user.getAddressId());
+		
+		super.updateById(user.getId(), map);
+	}
 }

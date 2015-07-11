@@ -319,19 +319,32 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     <label for="cellNumber"><fmt:message key="register.Cell"/> </label>
-                                    <input type="text" id="cellNumber" name="cellNumber" value="" length="13"/>
+                                    <input type="text" id="cellNumber" name="cellNumber" value="" />
                                     <span id="cellNumberMessage"></span>
                                 </div>
                             </div>
 
 
                             <div class="row">
-                                <label><fmt:message key="register.Adress"/></label>
+                                <label><b><fmt:message key="register.AddressInFewLangs"/></b></label>
 
                                 <div>
+                                <ul class="collapsible" data-collapsible="expandable">
                                     <c:forEach items="${requestScope.languageList}" var="lang">
 
-                                        ${lang.name} :
+                                        
+                                        <li>
+                                        
+                                        
+                                        <c:if test="${lang.id != sessionScope.sessionLanguage.id}">
+                                        <div class="collapsible-header"><fmt:message key="register.language"/>: <span class="blue-text"><u>${lang.name}</u></span></div>
+                                        </c:if>
+                                        
+                                        <c:if test="${lang.id == sessionScope.sessionLanguage.id}">
+                                        <div class="collapsible-header active"><fmt:message key="register.language"/>: <span class="blue-text"><u>${lang.name}</u></span></div>
+                                        </c:if>
+                                        
+                                        <div class="collapsible-body">
                                         <table style="width: 100%;">
                                             <tr>
 
@@ -455,8 +468,13 @@
                                                                     dataType: "json",
                                                                     data: $(this).serialize(),
                                                                     success: function (data) {
-                                                                        $("#addressByLangMessage_${lang.id}").text(data.valid);
-
+                                                                    	
+                                                                        $("#addressByLangMessage_${lang.id}").text(_(data.valid));
+                                                                    	
+                                                                    	if(data.valid.indexOf(".ok") >= 0)
+                                                                        	$("#addressByLangMessage_${lang.id}").attr('class','green-text');
+                                                                        else
+                                                                        	$("#addressByLangMessage_${lang.id}").attr('class','red-text');
                                                                     }
                                                                 });
                                                             });
@@ -466,10 +484,16 @@
                                                 </td>
                                             </tr>
                                         </table>
-
+										</div>
+										</li>
                                     </c:forEach>
 
+                                </ul>
                                 </div>
+                                
+                                
+                                
+                                
                                 <input type="hidden" id="cityId" name="cityId"/> <span id="cityIdMessage"></span>
 
                                 <br>

@@ -283,4 +283,20 @@ public class UserService {
 			throws SQLException {
 		userDao.saveUserLang(userId, langId);
 	}
+	
+	public void updateUserProfile(User user) throws SQLException {
+		userDao.updateUserProfile(user);
+	}
+	
+	public boolean isFbVkUser(User user) {
+		boolean fbVkUser = false;
+		
+		if(user.getFacebookId() != null && user.getFacebookId().trim().length() > 0) {
+			fbVkUser = true;
+		} else if(user.getVkId() != null && user.getVkId().trim().length() > 0) {
+			fbVkUser = true;
+		}
+		
+		return fbVkUser;
+	}
 }

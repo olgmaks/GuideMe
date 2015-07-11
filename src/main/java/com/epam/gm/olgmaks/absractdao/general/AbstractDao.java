@@ -187,6 +187,10 @@ public class AbstractDao<T> {
         //
         // ResultSet resultSet =
         // getHelper.customQuery(sqlWithRestrictions).executeQuery();
+        
+        
+
+        
         ResultSet resultSet = getHelper.customQuery(connection,
                 sqlWithRestrictions).executeQuery();
 
