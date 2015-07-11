@@ -56,8 +56,7 @@
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-						Messages
-						<i class="mdi-content-mail right"></i>
+						Messages <i class="mdi-content-mail right"></i>
 					</button>
 			</a> <a href="userfriends.do">
 					<button class="btn light-blue waves-effect waves-light"
@@ -81,21 +80,27 @@
 						class="btn light-blue waves-effect waves-light" type="submit"
 						name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-						Gallery<i class="mdi-communication-comment right"></i>
+						Gallery<i class="mdi-image-collections right"></i>
 					</button></a> <a href="wallet.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-						Wallet<i class="mdi-social-group-add right"></i>
-					</button> <c:if test="${sessionUser.userTypeId == 3}">
-						<a href="guideservices.do">
-							<button class="btn light-blue waves-effect waves-light"
-								type="submit" name="action"
-								style="width: 100%; margin-top: 10px; text-align: left; font-size: 90%; text-transform: capitalize">
-								Services Templates</button>
-						</a>
-					</c:if>
-			</a>
+						Wallet<i class="mdi-action-account-balance-wallet right"></i>
+					</button>
+			</a> <a href="earnings.do">
+					<button class="btn light-blue waves-effect waves-light"
+						type="submit" name="action"
+						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
+						Earnings<i class="mdi-action-view-list right"></i>
+					</button>
+			</a> <c:if test="${sessionUser.userTypeId == 3}">
+					<a href="guideservices.do">
+						<button class="btn light-blue waves-effect waves-light"
+							type="submit" name="action"
+							style="width: 100%; margin-top: 10px; text-align: left; font-size: 90%; text-transform: capitalize">
+							Services Templates</button>
+					</a>
+				</c:if>
 
 				<h6>
 					<a href="#_" id="modalLanguages">Languages</a>:

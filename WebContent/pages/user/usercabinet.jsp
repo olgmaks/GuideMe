@@ -105,11 +105,15 @@
 					<c:when test="${centralContent == 'userCabinetComments' }">
 						<jsp:include page="usercabinetcomments.jsp" />
 					</c:when>
-				
+					<c:when test="${centralContent == 'wallet' }">
+						<jsp:include page="wallet.jsp" />
+					</c:when>
 					<c:when test="${centralContent == 'userCabinetEditProfile' }">
 						<jsp:include page="usercabineteditprofile.jsp" />
 					</c:when>
-					
+					<c:when test="${centralContent == 'earnings' }">
+						<jsp:include page="../earnings/earnings.jsp" />
+					</c:when>
 				</c:choose></td>
 
 
@@ -128,9 +132,7 @@
 					<c:when test="${centralContent == 'usermessages' }">
 						<jsp:include page="rightpanelmessageuser.jsp" /> -
 					</c:when>
-					<c:when test="${centralContent == 'wallet' }">
-						<jsp:include page="wallet.jsp" /> -
-					</c:when>
+
 					<c:otherwise>
 						<jsp:include page="usercabinetpanelright.jsp" />
 					</c:otherwise>

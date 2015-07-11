@@ -54,23 +54,13 @@
 	<div class="col s12" style="margin-top: 10px;">
 
 
-		<%-- 		<ul class="collection z-depth-2">
-			<li class="collection-item" style="height: 50px;">Gallery</li>
-		</ul>
-		<ul class="collection z-depth-2" style="min-width: 700px;">
-			<li class="collection-item">Balance : ${balance}</li>
-		</ul> --%>
-		<!-- <input type="number" id="someinput" style="width: 45px" /> <span
-			id="convertedtext"></span> <select id="currency"
-			class="browser-default">
-			<option selected="selected" value="UAH">UAH</option>
-			<option value="USD">USD</option>
-			<option value="RUB">RUB</option>
-		</select> <br> --->
-		<input type="text" id="someinput" /> <span id="convertedtextdollars"></span>
+		<input type="text" id="someinput" style="width: 37%;" /> <br> <span
+			id="convertedtextdollars"></span>
 		<p>
-			<span id="convertedtexthrn" /></span><p>
-		 <span id="convertedtextrub" /></span><p>
+			<span id="convertedtexthrn" /></span>
+		<p>
+			<span id="convertedtextrub" /></span>
+		<p>
 			<a href="#paymentModal" id="sendFriendRequestId2" data-userid="2"
 				class="btn blue waves-effect waves-light
 		send-friend-request modal-trigger">Refill</a>
@@ -81,7 +71,7 @@
 
 <div id="paymentModal" class="modal"
 	style="margin-left: 60%; width: 37%;">
-	<!-- Show this window when user not logged -->
+
 	<form id="paymentform">
 		<div class="modal-content">
 			<iframe id="hrefto" frameborder="0" allowtransparency="true"
