@@ -1,7 +1,8 @@
 <nav class="white" role="navigation">
     <div class="nav-wrapper container">
         <ul>
-            <li><a href= ${sessionUser==null ? "home.do" : "userCabinet.do"}>Guide ME</a></li>
+            <li><a href= ${sessionUser==null ? "home.do" : "userCabinet.do"}><div style="height: 100%;">
+                <img src="icons/guide-me.png" style="height: 25px; vertical-align: middle;"></div></a></li>
         </ul>
         <a id="logo-container" href="home.do" class="brand-logo center">
             <div>

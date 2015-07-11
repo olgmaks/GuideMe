@@ -36,7 +36,7 @@ public class RatingUserTest {
 
                 Integer randomEstimatorId = users.get(new Random().nextInt(users.size())).getId();
                 Integer userId = users.get(new Random().nextInt(users.size())).getId();
-                Integer mark = new Random().nextInt(4)+1;
+                Integer mark = new Random().nextInt(3)+2;
 
                 if (randomEstimatorId==userId) {
                     continue;

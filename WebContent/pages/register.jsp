@@ -39,13 +39,13 @@
 
 
             $("#registerform").submit(function () {
-                $("#firstName").change();
-                $("#lastName").change();
-                $("#email").change();
-                $("#password").change();
-                $("#confirm").change();
-                $("#sex").change();
-                $("#cellNumber").change();
+                $("#firstName").keyup();
+                $("#lastName").keyup();
+                $("#email").keyup();
+                $("#password").keyup();
+                $("#confirm").keyup();
+                $("#sex").keyup();
+                $("#cellNumber").keyup();
 
 
                 $.ajax({
@@ -90,7 +90,7 @@
             });
 
 
-            $("#firstName").change(function () {
+            $("#firstName").keyup(function () {
                 $.ajax({
                     url: "registervalidator.do",
                     type: "post",
@@ -111,7 +111,7 @@
             });
 
 
-            $("#lastName").change(function () {
+            $("#lastName").keyup(function () {
                 $.ajax({
                     url: "registervalidator.do",
                     type: "post",
@@ -135,7 +135,7 @@
 //                 });
 //             });
 
-            $("#email").change(function () {
+            $("#email").keyup(function () {
                 $.ajax({
                     url: "registervalidator.do",
                     type: "post",
@@ -154,7 +154,7 @@
             });
             
             
-            $("#password").change(function () {
+            $("#password").keyup(function () {
                 $.ajax({
                     url: "registervalidator.do",
                     type: "post",
@@ -173,7 +173,7 @@
                 });
             });
 
-            $('#confirm').change(function () {
+            $('#confirm').keyup(function () {
                 var pass = $('#password').val();
                 var conf = $('#confirm').val();
 
@@ -194,7 +194,7 @@
 
             });
 
-            $("#sex").change(function () {
+            $("#sex").keyup(function () {
 
                 $.ajax({
                     url: "registervalidator.do",
@@ -215,7 +215,7 @@
                 });
             });
 
-            $("#cellNumber").change(function () {
+            $("#cellNumber").keyup(function () {
                 $.ajax({
                     url: "registervalidator.do",
                     type: "post",

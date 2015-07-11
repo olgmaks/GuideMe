@@ -110,87 +110,87 @@
                 return false;
             });
         });
-    </script> 
-    
-    
-       
+    </script>
+
+
+
     <script type="text/javascript">
-    
+
         $(document).ready(function () {
             $("#searchform").submit(function () {
-            	
-            	
+
+
             	var countryVal = $("#selCountryId").val();
-            	
-            	
+
+
             	if(countryVal == "" || countryVal == "choose") {
-            		
+
 
             		Materialize.toast(_('js.chooseCountry'), 3000,'',function(){})
 
             		return false;
             	}
-            	
+
                 $.ajax({
                     url: 'searchindexpage.do',
                     type: 'post',
                     dataType: 'json',
                     data: $("#searchform").serialize(),
                     success: function (data) {
-                    	
+
                     	var searchEventTitle =  $("#searchEventTitle");
                     	searchEventTitle.empty();
                     	searchEventTitle.append(_("js.searchresults"));
-						
+
                     	var resultCollenction = $("#collectionResults");
-                        resultCollenction.find("li").empty();   
+                        resultCollenction.find("li").empty();
                         resultCollenction = $("#inner-row");
-                        
+
                         if(data.isEmpty)  {
-                        	resultCollenction.append("<span class='blue-text'> <h2> " + _("js.noResults") + "</h2> <h3>"   
+                        	resultCollenction.append("<span class='blue-text'> <h2> " + _("js.noResults") + "</h2> <h3>"
                         			+ _("js.chkParams")  + " </h3></span");
-                        	
+
                         	Materialize.toast(_("js.noResults"), 3000,'',function(){})
                         }
-                        
-                        
+
+
                         $.each(data.results, function (counts, currentEvent) {
-                        	
+
                         	var str = "";
-                        	
+
                         	$.each(currentEvent.tagList, function (countsT, currentTag) {
                         		str +=  "<a href='home.do?tag=" + currentTag + "'> #" + currentTag + "</a>";
                         	});
-                        	
+
                       resultCollenction.append(
                     		  "<form id='eventFormWithId"
                               + currentEvent.id
                               + "'><input type='hidden' id='eventId' class='eventId' name='eventId' value='"
                               + currentEvent.id
-                              + "'></form> " +                   		  
+                              + "'></form> " +
 
-                              
+
                               "<div style='display:inline; width: 45%; float: left; margin-left: 10px'> " +
-                              "<div class='card small'  id='eventCard" + currentEvent.id  + "'> " + 
+                              "<div class='card small'  id='eventCard" + currentEvent.id  + "'> " +
                                   "<div class='card-image waves-effect waves-block waves-light'>" +
                                       "<img class='activator' src='" + currentEvent.avatar.path + "'>" +
                                   "</div>" +
-                                  "<div class='card-content'>" + 
-                                  
-                  				"<p><span class='blue-text'>" + str + 
+                                  "<div class='card-content'>" +
 
-                  				
+                  				"<p><span class='blue-text'>" + str +
+
+
                   				"</span></p>" +
-                                  
-								  "<span class='black-text'>" + 
-								  currentEvent.name + ", " + currentEvent.moderator.firstName + 
-                                  "<i class='mdi-navigation-more-vert right'></i>" + 
-                                  "</span>" + 
+
+								  "<span class='black-text'>" +
+								  currentEvent.name + ", " + currentEvent.moderator.firstName +
+                                  "<i class='mdi-navigation-more-vert right'></i>" +
+                                  "</span>" +
 
                                       "<p>" +
                                           "<a href='eventDetail.do?id=" + currentEvent.id +"'>" +  moment(currentEvent.dateFrom ).format('DD.MM.YY hh:mm')   + " - " + moment(currentEvent.dateTo).format('DD.MM.YY hh:mm')   + ", " + _("js.rate")  + ": " + Math.round(currentEvent.points) + currentEvent.status  + "</a>" +
                                       "</p>" +
-                                  "</div>" + 
+                                  "</div>" +
                                   "<div class='card-reveal'>" +
           									"<span class='card-title grey-text text-darken-4'>" + currentEvent.name  +
           										"<i class='mdi-navigation-close right'></i>" +
@@ -199,14 +199,14 @@
                                       "<p>" + currentEvent.description + "</p>" +
                                   "</div>" +
                               "</div>" +
-                           "</div>"                               
+                           "</div>"
                       );
                   });
                   resultCollenction.append("</li>");
-                  resultCollenction.append("</ul>");                        
-                        
+                  resultCollenction.append("</ul>");
+
                   //alert(data.Valid);
-                    	
+
                     }
                 });
                 return false;
@@ -256,7 +256,7 @@
     <ul class="collapsible" data-collapsible="expandable">
 
     <li>
-      <div class="collapsible-header active"><b><fmt:message key="index.searchIn" />  </b></div>
+      <div class="collapsible-header"><b><fmt:message key="index.searchIn" />  </b></div>
       <div class="collapsible-body">
       
                                     <c:forEach items="${requestScope.languageList}" var="lang">

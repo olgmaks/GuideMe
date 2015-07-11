@@ -7,8 +7,9 @@
 			</li>
 		
 			<li><a id="guide-me-label"
-				href=${sessionUser==null ? "home.do" : "userCabinet.do"}>Guide
-					ME</a></li>
+				href=${sessionUser==null ? "home.do" : "userCabinet.do"}>
+				<%--Guide ME--%>
+			<img src="icons/guide-me.png" style="height: 25px; vertical-align: middle;"></a></li>
 		</ul>
 		<a id="logo-container" href="home.do" class="brand-logo center">
 			<div>
