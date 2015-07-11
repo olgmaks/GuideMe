@@ -11,7 +11,7 @@
 		<div class="col s12" style="margin-top: 10px;">
 			<ul class="collection z-depth-2 " id="collectionResults">
 				<li class="collection-item" id="inner-row">
-				<p><a href="#" > send message to admin</a></p>
+				<p><a href="#" onclick = "openModalWindow()"> send message to admin</a></p>
 				<c:forEach
 						var="userFriend" items="${userFriends}">
 

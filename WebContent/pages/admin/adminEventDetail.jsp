@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct"%>
 
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -10,16 +11,14 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
 
-
 <link href="css/materialize.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
-<!-- <link href="css/style.css" type="text/css" rel="stylesheet" -->
-<!-- 	media="screen,projection" /> -->
-<!-- <link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" /> -->
+<link href="css/style.css" type="text/css" rel="stylesheet"
+	media="screen,projection" />
+<%--Tag it css--%>
+<link href="css/jquery.tagit.css" rel="stylesheet" type="text/css">
+<link href="css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
 
-<%--<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />--%>
-
-<!-- Include jTable script file. -->
 <link rel="shortcut icon" href="http://designshack.net/favicon.ico">
 <link rel="icon" href="http://designshack.net/favicon.ico">
 <link rel="stylesheet" type="text/css" media="all"
@@ -284,7 +283,7 @@ nav {
 			chatClient.close();
 		}
 		function sendMessage() {
-			var userName = '${sessionUser.lastName} ${sessionUser.firstName}';
+			var userName = '${sessionUser.lastName} ' +  ' ' + ' ${sessionUser.firstName}';
 			var inputElement = document.getElementById("enterMessage");
 			var message = inputElement.value.trim();
 			if (message !== "") {
@@ -441,18 +440,22 @@ nav {
 		<!-- 	gryn - changed header -->
 		<%-- 	<jsp:include page="adminHeader.jsp" /> --%>
 
+		<jsp:include page="../home/logoutmodal.jsp" />
 		<jsp:include page="../header.jsp" />
 
 		<table>
-			<tr>
-				<td style="width: 20%; vertical-align: top;"><c:choose>
-						<c:when test="${isAdmin}">
-							<jsp:include page="adminLeftPanel.jsp" />
-						</c:when>
-						<c:otherwise>
-							<jsp:include page="../user/usercabinetpanelleft.jsp" />
-						</c:otherwise>
-					</c:choose></td>
+			<tr style="width: 100%;">
+				<td style="width: 20%; vertical-align: top;">
+		
+				<c:choose>
+					<c:when test="${isAdmin}">
+						<jsp:include page="adminLeftPanel.jsp" />
+					</c:when>
+					<c:otherwise>
+						<jsp:include page="../user/usercabinetpanelleft.jsp" />
+					</c:otherwise>
+				</c:choose>
+				</td>
 				<td style="width: 80%; vertical-align: top;">
 					<div id="w">
 						<div id="content" class="clearfix">
@@ -1513,9 +1516,7 @@ nav {
 						<input type="hidden" name="id" value="${event.id}">
 					</form> <script type="text/javascript">
 						function scrollToBottom() {
-							var scrollBottom = Math.max($('#messageEvent')
-									.height()
-									- $('#divTableMessages').height() + 20, 0);
+							var scrollBottom = Math.max($('#messageEvent').height() - $('#divTableMessages').height() + 20, 0);							
 							$('#divTableMessages').scrollTop(scrollBottom);
 						}
 						$(function() {

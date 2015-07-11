@@ -11,16 +11,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 import com.epam.gm.daolayer.CountryDao;
 import com.epam.gm.model.Country;
-
+import com.epam.gm.model.User;
 import com.epam.gm.services.LanguageService;
+import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class AdminCountryServlet implements HttpRequestHandler{
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
+		User user = new User();
+		user = SessionRepository.getSessionUser(request);
+
+		if (user == null) {
+			response.sendRedirect("401.do");
+			return;
+		}
 	    CountryDao dao = 	new CountryDao();
 	    LanguageService ls = new LanguageService();
 	    

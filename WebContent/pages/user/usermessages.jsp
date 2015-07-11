@@ -235,3 +235,45 @@ var friendAvatar;
     	}
     });
     </script>
+    
+    
+<div id="answerOnCommentWindow" class="modal" style="height: 320px;">
+    <div class="modal-content">
+        <h4>Provide your comment</h4>
+
+        <div class="row" style="margin-left: 10%">
+            <div class="input-field col s6" style="width: 80%">
+                <%--<i class="material-icons prefix">mode_edit</i>--%>
+                <textarea id="messageRespond" class="materialize-textarea" length="120"></textarea>
+                <label for="messageRespond">Your respond</label>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <a href="#_" id="sendRespondOnComment" style="margin-left: 40%;">Post
+            <img src="icons/send-message-icon.png" style="width: 60px;height: 60px;vertical-align:middle"></a>
+    </div>
+</div>
+<script>
+function openModalWindow(){        
+    $('#messageRespond').val("");
+    $('#answerOnCommentWindow').openModal();
+}
+
+$('#sendRespondOnComment').on('click', function () {
+    var textValue = $('#messageRespond').val();
+
+    var respond = {action: 'sendMessage', message: textValue};
+
+    $.ajax({
+        url: 'sendMessageToAdmin.do',
+        type: "post",
+        dataType: "json",
+        data: respond 
+    });
+    $('#answerOnCommentWindow').closeModal();
+
+});
+</script>

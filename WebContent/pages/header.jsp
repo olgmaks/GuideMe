@@ -1,9 +1,9 @@
 <nav class="white" role="navigation">
 	
-	<div class="nav-wrapper container">
+	<div class="nav-wrapper container" >
 		<ul>
 			<li>
-                <div data-country-select="true"></div>
+                <div data-country-select="true" ></div>
 			</li>
 		
 			<li><a id="guide-me-label"

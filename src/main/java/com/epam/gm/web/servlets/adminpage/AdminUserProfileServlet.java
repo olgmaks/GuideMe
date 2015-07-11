@@ -16,14 +16,13 @@ import com.epam.gm.daolayer.UserDao;
 import com.epam.gm.model.Event;
 import com.epam.gm.model.FriendUser;
 import com.epam.gm.model.Language;
-import com.epam.gm.model.Tag;
+
 import com.epam.gm.model.User;
 import com.epam.gm.services.CommentUserService;
 import com.epam.gm.services.EventService;
 import com.epam.gm.services.FriendUserService;
 import com.epam.gm.services.LanguageService;
 import com.epam.gm.services.PhotoService;
-import com.epam.gm.services.TagService;
 import com.epam.gm.services.UserService;
 import com.epam.gm.services.UserTypeService;
 import com.epam.gm.sessionrepository.SessionRepository;
