@@ -178,7 +178,10 @@
 															url : 'addGuideServiceToEvent.do',
 															type : 'POST',
 															data : {
-																priceval : price,
+																priceval : parseFloat(
+																		price)
+																		.toFixed(
+																				1),
 																description : $(
 																		'#desc')
 																		.val(),

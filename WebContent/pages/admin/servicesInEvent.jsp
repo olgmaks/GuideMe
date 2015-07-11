@@ -51,7 +51,7 @@
 
 												$("#touchable")
 														.append(
-																"<div id='servppppp' idofserv="+id+" price2="+serviceprice +"><li class='collection-item'>"
+																"<div id='servppppp' idofserv="+id+" price2="+serviceprice +"><li class='collection-item green lighten-3'>"
 																		+ str
 																		+ "<i class='mdi-content-remove-circle-outline right'></i></div></li>");
 
@@ -149,7 +149,7 @@ PAID SERVICES
 	<c:forEach items="${allPaid }" var="service">
 		<div id='untouchable' idofserv="${service.getId() }"
 			price2="${service.getService().getPrice() }">
-			<li class='collection-item'>${service.getService().getName() }
+			<li class='collection-item lime lighten-3'>${service.getService().getName() }
 				${service.getService().getPrice() }$ <i
 				class='mdi-toggle-check-box right'></i>
 		</div>
@@ -163,7 +163,7 @@ AVAILABLE SERVICES
 <ul class="collapsible" data-collapsible="accordion" style="width: 75%;">
 	<c:forEach items="${servicesInEvent }" var="serviceinevent">
 		<li>
-			<div class="collapsible-header tooltipped"
+			<div class="collapsible-header tooltipped green lighten-3"
 				price="${serviceinevent.getService().getPrice() }"
 				id="${serviceinevent.getId() }" data-position="left" data-delay="50"
 				data-tooltip="${serviceinevent.getService().getDescription() }">${serviceinevent.getService().getName() }

@@ -84,9 +84,9 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 			}
 		}
 		int idEvent = (int) session.getAttribute("eventId");
-		System.out.println("***** " + request.getParameter("serviceidval"));
+		
 		Integer idService = null;
-		if (!request.getParameter("serviceidval").equals("choose")) {
+		if (!request.getParameter("serviceidval").equals("choose") && !request.getParameter("serviceidval").equals("")) {
 			idService = Integer.parseInt(request.getParameter("serviceidval"));
 		}
 		int amountOfPosition = 0;

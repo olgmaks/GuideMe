@@ -124,7 +124,7 @@
 						<jsp:include page="searchrightpanel.jsp" />
 					</c:when>
 					<c:when
-						test="${centralContent == 'eventsincabinet' || centralContent == 'moderatorevent' ||  centralContent == 'memberevent'}">
+						test="${centralContent == 'eventsincabinet' || centralContent == 'moderatorevent' ||  centralContent == 'memberevent' || centralContent == 'earnings'}">
 
 					</c:when>
 					<c:when test="${centralContent == 'usergallery'}">

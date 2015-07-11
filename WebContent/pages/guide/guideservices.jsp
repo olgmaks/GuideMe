@@ -24,7 +24,7 @@ Add new service
 				<div class="card-content black-text">
 					<span class="card-title black-text"><c:out
 							value="${service.getName() }" /> </span>
-					<p>
+					<p class="truncate">
 						Description:
 						<c:out value="${service.getDescription() }" />
 					</p>
