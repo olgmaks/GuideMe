@@ -18,7 +18,7 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 
 public class GuideMeConnectionPool {
 
-	private static int MAX_ACTIVE = 100;
+	private static int MAX_ACTIVE = 500;
 	
 	private GenericObjectPool connectionPool = null;
 	

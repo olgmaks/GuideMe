@@ -437,17 +437,19 @@
 <!--     <div class="col s6">This div is 6-columns wide</div> -->
 <!--     <div class="col s6">This div is 6-columns wide</div> -->
 </div>
-<div class="container" style="width: 100%; margin-left: 0%;">
-    <div class="section">
+<div style="width: 98%;margin-left: 1%">
+    <%--<div class="section">--%>
 
 
-        <table>
+        <table >
             <thead>
+
             <tr>
                 <th style="width: 20%; margin-left: 0%;"> <fmt:message key="index.TopEvents" /></th>
-                <th style="width: 60%; margin-left: 20%;" id = 'searchEventTitle' >${requestScope.searchEventTitle}</th>
+                <th style="width: 60%; margin-left: 20%;"  id = 'searchEventTitle' >${requestScope.searchEventTitle}</th>
                 <th style="width: 20%; margin-left: 80%;"><fmt:message key="index.TopUsers" /></th>
             </tr>
+
             </thead>
             <tbody>
             <tr>
@@ -457,7 +459,7 @@
                 <th style = "vertical-align: top;">
                 <c:forEach items="${requestScope.topUserEvents}" var = "event">
                 
-                    <div class="card small" style="height: 150px; ">
+                    <div class="card small" style="height: 150px; width: 270px;">
                         <table>
                             <tr>
                                 <td style="width: 120px;">
@@ -475,14 +477,14 @@
              
                                
                 </th>
-                <th style = "width: 60%; vertical-align: top">
+                <th style = "width: 60%; vertical-align: top" >
                 
                 <ul id="collectionResults">
                 <c:forEach items="${requestScope.lastEvents}" var = "event">
                 
                 <li id="inner-row">
-                <div style="display:inline; width: 45%; float: left; margin-left: 10px">
-                    <div class="card small">
+                <div style="display:inline; max-width: 360px; float: left; margin-left: 10px">
+                    <div class="card small" style="">
                         <div class="card-image waves-effect waves-block waves-light">
                             <img class="activator" src="${event.avatar.path}">
                         </div>
@@ -526,7 +528,7 @@
                  </li>  
                 
 
-                        </div>
+                        <%--</div>--%>
                     </div>
                  </div> 
                  </li>                  
@@ -539,7 +541,7 @@
                 
                 <th style = "vertical-align: top;">
                     <c:forEach items="${requestScope.topUsers}" var = "usr">
-                    <div class="card small" style="height: 150px; ">
+                    <div class="card small" style="height: 150px; width: 270px;">
                         <table>
                             <tr>
                                 <td style="width: 120px;">
@@ -562,12 +564,12 @@
             </tbody>
         </table>
 
-    </div>
+    <%--</div>--%>
 </div>
 
 
-
-<footer class="page-footer teal">
+<%--<div>--%>
+<footer class="page-footer light-blue">
     <div class="container">
         <div class="row">
             <div class="col l6 s12">
@@ -603,7 +605,7 @@
         </div>
     </div>
 </footer>
-
+<%--</div>--%>
 
 <!--  Scripts-->
 
