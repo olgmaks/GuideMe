@@ -16,6 +16,7 @@ public class CityDao extends AbstractDao<City> {
 		   		+ "WHERE c.pure_id = '%S' "
 		   		+ "AND l.localized = 1  "
 		   		+ "AND c.deleted = FALSE";
+	  private String deleteByPureId = "update city set deleted = true where pure_id = ?";
     public CityDao() {
         //gryn
         //super(ConnectionManager.getConnection(), City.class);
@@ -31,7 +32,8 @@ public class CityDao extends AbstractDao<City> {
     }
 
     public List<City> getCitiesByLocalId(int localId) throws SQLException {
-        return super.getByField("local_id", localId);
+        //return super.getByField("local_id", localId);
+        return super.getWithCustomQuery("where local_id =" +localId+ " and deleted = false");
     }
 
     //gryn
@@ -73,11 +75,24 @@ public class CityDao extends AbstractDao<City> {
 		return result;
     }
 
-    
+
+    public List<City> getAllActive() throws SQLException{
+    	return super.getByField("deleted", "false");
+    }
     public List<City> getCityByPureLocalized(int pureId) throws SQLException {
         return getWithCustomQuery(String.format(GET_CITY_BY_PURE_AND_LOCALIZED,
                 pureId));
     }
+	public void deleteByPureId(int pureId)
+			throws SQLException {
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement stmt = connection
+				.prepareStatement(deleteByPureId);
+		stmt.setInt(1, pureId);
+		stmt.executeUpdate();
+		stmt.close();
+		ConnectionManager.closeConnection(connection);
+	}
     
 
 }

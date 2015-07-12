@@ -24,6 +24,7 @@ public class AdminCountryRequest implements HttpRequestHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		request.setCharacterEncoding("UTF-8");
 		LanguageService ls = new LanguageService();
 		String action = request.getParameter("action");
 		
@@ -57,14 +58,10 @@ public class AdminCountryRequest implements HttpRequestHandler {
 					}
 				} else if (action.equals("delete")) {
 					if (request.getParameter("id") != null) {
-
-						id = Integer.parseInt(request.getParameter("id"));
-						for (Language lang : ls.getLocalizedLangs()) {
-							Map<String, Object> map = new HashMap<>();
-							map.put("deleted", 1);
-							dao.updateById(id++, map);
-							System.out.println("id+++++++" + id);
-						}
+						int countryId = Integer.parseInt(request
+								.getParameter("id"));
+						
+						dao.deleteByPureId(dao.getCountryById(countryId).getPureId());
 
 					}
 				}

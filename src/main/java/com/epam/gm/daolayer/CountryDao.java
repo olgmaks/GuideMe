@@ -16,6 +16,7 @@ public class CountryDao extends AbstractDao<Country> {
 																	   		+ "WHERE c.pure_id = '%S' "
 																	   		+ "AND l.localized = 1  "
 																	   		+ "AND c.deleted = FALSE";
+	   private String deleteByPureId = "update country set deleted = true where pure_id = ?";
     public CountryDao() {
     	//gryn
     	//super(ConnectionManager.getConnection(), Country.class);
@@ -39,7 +40,7 @@ public class CountryDao extends AbstractDao<Country> {
     	return getByField("pure_id", pureId);
     }	
     public List<Country> getCountriesByLocalId(Integer localId) throws SQLException {
-    	return getByField("local_id", localId);
+    	  return super.getWithCustomQuery("where local_id =" +localId+ " and deleted = false");
     }	
     
     public static void main(String[] args) throws SQLException {
@@ -69,6 +70,15 @@ public class CountryDao extends AbstractDao<Country> {
         return getWithCustomQuery(String.format(GET_COUNTRY_BY_PURE_AND_LOCALIZED,
                 pureId));
     }
-    
+    public void deleteByPureId(int pureId)
+			throws SQLException {
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement stmt = connection
+				.prepareStatement(deleteByPureId);
+		stmt.setInt(1, pureId);
+		stmt.executeUpdate();
+		stmt.close();
+		ConnectionManager.closeConnection(connection);
+	}
 
 }

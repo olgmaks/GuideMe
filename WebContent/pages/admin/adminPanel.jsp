@@ -5,11 +5,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>User Cabinet</title>
+<title>Admin Cabinet</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
-<title>Guide ME</title>
+
 <link href="css/materialize.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet"
@@ -30,16 +30,21 @@
 <link type="text/css" rel="stylesheet" href="css/jquery.ratings.css" />
 <script src="js/jquery.ratings.js"></script>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#tabs").tabs();
-	});
-</script>
+
+
+ <script type="text/javascript"> 
+ 	$(document).ready(function() {
+        $('#signinlabel').on('click', function () {   
+        	 $('#logoutModal').openModal();
+ 		});
+ 	});
+ </script> 
 
 </head>
 <body>
 		<jsp:include page="../home/logoutmodal.jsp" />
 		<jsp:include page="../header.jsp" />
+		<jsp:include page="../home/loginmodal.jsp"/>
 
 		<table>
 			<tr>

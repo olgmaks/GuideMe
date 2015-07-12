@@ -22,8 +22,19 @@ public class City {
 	
 	@Column("pure_id")
 	private Integer pureId;
+
+	@Column("deleted")
+	private boolean deleted;
 	
-    @ForeignKey
+    public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	@ForeignKey
     @OneToMany(field="country_id", value=Country.class)
     private Country country;
 

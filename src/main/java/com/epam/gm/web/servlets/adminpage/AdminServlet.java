@@ -12,13 +12,20 @@ import com.epam.gm.daolayer.EventDao;
 import com.epam.gm.model.User;
 import com.epam.gm.services.UserService;
 import com.epam.gm.services.UserTypeService;
+import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class AdminServlet implements HttpRequestHandler {
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-	
+		User user = new User();
+		user = SessionRepository.getSessionUser(request);
+
+		if (user == null) {
+			response.sendRedirect("401.do");
+			return;
+		}
 		UserService userService = new UserService();
 		List<User> userList = userService.getAll();
 		request.setAttribute("eventList", new EventDao().getAllEvents());

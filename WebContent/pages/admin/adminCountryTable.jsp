@@ -108,7 +108,11 @@
 		</tbody>
 	</table>
 
-
+	<input type="submit" value="add" id="add" />
+	<script>
+		$("#add").on('click', function () {   
+		});
+	</script>
 	<form class="collection z-depth-2 " style="width: 50%; margin-right: 25%; margin-left: 25%; text-align: center;"
 		action="admincountryrequest.do" method="post" name="saveForm">
 		<input hidden name="action" id="action" value="add"/> 

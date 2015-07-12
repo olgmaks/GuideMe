@@ -1,6 +1,7 @@
 package com.epam.gm.web.servlets.adminpage;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,12 @@ import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 public class AdminCityServlet implements HttpRequestHandler{
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response){
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try{
 		User user = new User();
 		user = SessionRepository.getSessionUser(request);
@@ -52,7 +59,7 @@ public class AdminCityServlet implements HttpRequestHandler{
 		
 		request.setAttribute("cityLocal", map);
 		request.setAttribute("centralContent", "adminCity");
-		request.setAttribute("cityList",new CityDao().getAll());
+		request.setAttribute("cityList",new CityDao().getAllActive());
 		request.getRequestDispatcher("pages/admin/adminPanel.jsp").forward(request,
 				response);
 	    } catch (SQLException | IOException | ServletException e) {

@@ -32,20 +32,22 @@ var id;
 					}
 				});
 		$("#cityTable").on("click",".edit",function(){
-			$('#action').val('edit');
+			 $(".browser-default").prop('disabled', 'disabled');
 			var tr = $(this).parents("tr");
-			   <c:forEach var="item" items="${languageList}" varStatus="loop">
-					$('#langCity${item.id}').val(tr.find("td:eq(${loop.index+1})").html());
-			   </c:forEach>
-			$('#action').val(tr.find("td:eq(0)").html());
-			$('#action').val('add');
+			var i= 1;   
+			<c:forEach var="item" items="${languageList}" varStatus="loop">
+					$('#langCity${item.id}').val(tr.find("td:eq("+i+")").html());
+					i=i+2;	
+			</c:forEach>
+			$('#id').val(tr.find("td:eq(0)").html());
+			$('#action').val('edit');
 		});
 		
 		$("#cityTable").on("click",".delete",function(){
 			var tr = $(this).parents("tr");
 			id = tr.find("td:eq(0)").html();
 			$.ajax({
-                url: "adminCityRequest.do?action=delete&id=" + id,
+                url: "admincityrequest.do?action=delete&id=" + id,
                 type: "post",
                 success: function () {
                 }
@@ -102,9 +104,16 @@ var id;
 		</tbody>
 	</table>
 	
+	<input type="submit" value="add" id="add" />
+	<script>
+		$("#add").on('click', function () {   
+			$("#add").val("add");
+			 $(".browser-default").removeAttr("disabled");
+		});
+	</script>
 	<div style="width: 50%; margin-left: 25% margin-right: 25% text-align: center;">
 	<form  action="admincityrequest.do" method="post">
-		<input hidden name="action" id = "action" /> 
+		<input hidden name="action" id = "action" value = "add"/> 
 		<input hidden name="id"  id = "id"/> 
 	     
 	      <c:forEach var="item" items="${langCountry}">
@@ -116,10 +125,10 @@ var id;
 	      		</tr>
 		      	<tr>
 			      	<td>				      	
-		         		<input required  type="text" name="langCountry${item.key.id}" id="langCity${item.key.id}" /> 
+		         		<input required  type="text" name="langCity${item.key.id}" id="langCity${item.key.id}" /> 
 			      	</td>
 			      	<td>
-			      		<select id="country" name="country" class="browser-default">
+			      		<select id="country" name="country${item.key.id}" class="browser-default">
 			      			<c:forEach items="${item.value}" var="countries">
 						       <option value="${countries.id}">${countries.name}</option>
 						   </c:forEach>
@@ -131,7 +140,7 @@ var id;
 	      
 	      
 		<br/>
-	<input type="submit" value="Save" id="addbtn" />
+	<input type="submit" value="<fmt:message key="global.save" />" id="addbtn" />
 	</form>
 	</div>
 </div>
