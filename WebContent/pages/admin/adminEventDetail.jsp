@@ -283,7 +283,8 @@ nav {
 			chatClient.close();
 		}
 		function sendMessage() {
-			var userName = '${sessionUser.lastName} ' +  ' ' + ' ${sessionUser.firstName}';
+			var userName = '${sessionUser.lastName} ' + ' '
+					+ ' ${sessionUser.firstName}';
 			var inputElement = document.getElementById("enterMessage");
 			var message = inputElement.value.trim();
 			if (message !== "") {
@@ -445,17 +446,14 @@ nav {
 
 		<table>
 			<tr style="width: 100%;">
-				<td style="width: 20%; vertical-align: top;">
-		
-				<c:choose>
-					<c:when test="${isAdmin}">
-						<jsp:include page="adminLeftPanel.jsp" />
-					</c:when>
-					<c:otherwise>
-						<jsp:include page="../user/usercabinetpanelleft.jsp" />
-					</c:otherwise>
-				</c:choose>
-				</td>
+				<td style="width: 20%; vertical-align: top;"><c:choose>
+						<c:when test="${isAdmin}">
+							<jsp:include page="adminLeftPanel.jsp" />
+						</c:when>
+						<c:otherwise>
+							<jsp:include page="../user/usercabinetpanelleft.jsp" />
+						</c:otherwise>
+					</c:choose></td>
 				<td style="width: 80%; vertical-align: top;">
 					<div id="w">
 						<div id="content" class="clearfix">
@@ -725,12 +723,18 @@ nav {
 									<c:if test="${isModerator}">
 										<li><a href="#addservice"><fmt:message
 													key="event.AddService" /></a></li>
+										<li><a href="#mailsender"><fmt:message
+													key="event.mailsender" /></a></li>
+										</li>
+
 									</c:if>
 									<c:if test="${isAdmin}">
 
 									</c:if>
 								</ul>
 							</nav>
+
+
 
 							<section id="bio">
 								<p>
@@ -1397,7 +1401,9 @@ nav {
 							<section id="services" class="hidden">
 								<jsp:include page="servicesInEvent.jsp" />
 							</section>
-
+							<section id="mailsender" class="hidden">
+								<jsp:include page="../mailinevent/mailsender.jsp" />
+							</section>
 							<section id="addservice" class="hidden">
 
 								<jsp:include page="guideAddService.jsp" />
@@ -1516,7 +1522,9 @@ nav {
 						<input type="hidden" name="id" value="${event.id}">
 					</form> <script type="text/javascript">
 						function scrollToBottom() {
-							var scrollBottom = Math.max($('#messageEvent').height() - $('#divTableMessages').height() + 20, 0);							
+							var scrollBottom = Math.max($('#messageEvent')
+									.height()
+									- $('#divTableMessages').height() + 20, 0);
 							$('#divTableMessages').scrollTop(scrollBottom);
 						}
 						$(function() {

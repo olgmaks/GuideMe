@@ -29,6 +29,7 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 	private static final String IS_MEMBER_OF_EVENT = "select (%s in( SELECT uie.user_id FROM user_in_event uie   WHERE uie.is_member = TRUE AND uie.event_id = %s ))";
 
 	private static final String WHERE_USER_SENT_REQUEST = "uie WHERE uie.is_member=0 AND uie.user_id=%s";
+	private static final String GET_ALL_MEMBERS = "uie JOIN event e ON uie.event_id = e.id WHERE uie.event_id=%s and not uie.user_id = e.moderator_id;";
 
 	public UserInEventDao() {
 		// gryn
@@ -40,6 +41,13 @@ public class UserInEventDao extends AbstractDao<UserInEvent> {
 			throws SQLException {
 		return super.getWithCustomQuery(String.format(WHERE_USER_SENT_REQUEST,
 				id));
+	}
+
+	public List<UserInEvent> getAllUserInEventByEventId(int eventId)
+			throws SQLException {
+		List<UserInEvent> list = super.getWithCustomQuery(String.format(
+				GET_ALL_MEMBERS, eventId));
+		return list;
 	}
 
 	public List<UserInEvent> getAllActualUserInEventWhereUserIsMemberAndNotModeratorByUserId(
