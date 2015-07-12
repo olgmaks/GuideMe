@@ -828,7 +828,7 @@ nav {
 												</button>
 											</form>
 
-											<div class="table-wrapper" id="divTableMessages">
+											<div class="table-wrapper" id="divTableComments">
 												<ul class="collection" id="friendslist">
 
 													<c:forEach items="${requestScope.commentEvent}" var="ce">
