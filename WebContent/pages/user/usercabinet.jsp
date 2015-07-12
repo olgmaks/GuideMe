@@ -63,14 +63,9 @@
 
 
 			<td style="width: 20%; vertical-align: top;">
-			<c:choose>
-			<c:when test="${isAdmin}">
-							<jsp:include page="../admin/adminLeftPanel.jsp" />
-						</c:when>
-						<c:otherwise>
-							<jsp:include page="../user/usercabinetpanelleft.jsp" />
-						</c:otherwise>
-					</c:choose></td>
+			<jsp:include
+					page="usercabinetpanelleft.jsp" /></td>
+
 
 			<td style="width: 60%; vertical-align: top;"><c:choose>
 
