@@ -38,18 +38,23 @@
 			if (checkedUsers == "") {
 				Materialize.toast("no one cheked", 1500);
 			}
+			Materialize.toast(checkedUsers, 1500);
 		});
 
 		$('#checkallusers').click(function() {
 
 			$("input:checkbox[name=type]").each(function() {
-				$(this).attr("checked", "checked");
+				if (typeof ($(this).attr("disabled")) == typeof undefined) {
+					$(this).prop("checked", true);
+
+				}
 			});
 
 		});
+
 		$('#removecheckfromall').click(function() {
 			$("input:checkbox[name=type]:checked").each(function() {
-				$(this).removeAttr("checked");
+				$(this).prop("checked", false);
 			});
 
 		});
@@ -58,17 +63,23 @@
 </script>
 <div class="table-wrapper" id="divTableComments">
 	<ul>
-		<h4>
-			<a id="checkallusers" style="margin-left: 4%;">all</a> <a
-				id="removecheckfromall" style="margin-left: 4%;">remove</a>
-		</h4>
+		<button id="checkallusers" style="margin-left: 4%;"
+			class="btn transparent" type="submit" name="action">
+			<span class="blue-text text-darken-2"> all</span>
+		</button>
+		<button id="removecheckfromall" style="margin-left: 4%;"
+			class="btn transparent" type="submit" name="action">
+			<span class="blue-text text-darken-2"> remove</span>
+		</button>
 
+
+		<br>
 
 
 		<br>
 		<c:forEach items="${allmembersievent }" var="member">
 			<li><input type="checkbox" name="type" class="filled-in"
-				checked="none" id="${member.getUser().getId() }"
+				id="${member.getUser().getId() }"
 				<c:if test="${member.getUser().getEmail() ==null }">disabled="disabled"</c:if> />
 				<label for="${member.getUser().getId()}"><span>${member.getUser().getFirstName()}
 						${member.getUser().getLastName() }</span><br> <span>
