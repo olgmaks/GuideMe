@@ -385,4 +385,5 @@ public class UserDao extends AbstractDao<User> {
 		
 		super.updateById(user.getId(), map);
 	}
+	
 }

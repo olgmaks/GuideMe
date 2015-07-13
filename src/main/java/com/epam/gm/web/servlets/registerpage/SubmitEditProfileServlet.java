@@ -197,6 +197,12 @@ public class SubmitEditProfileServlet implements HttpRequestHandler {
 
 
 			UserService userService = new UserService();
+			
+			if(userService.isFbVkUser(user)) {
+				user.setEmail(email);
+			}
+			
+			
 			userService.updateUserProfile(user);
 			
 			

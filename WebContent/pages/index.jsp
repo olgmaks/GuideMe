@@ -256,11 +256,11 @@
     <ul class="collapsible" data-collapsible="expandable">
 
     <li>
-      <div class="collapsible-header"><b><fmt:message key="index.searchIn" />  </b></div>
+      <div class="collapsible-header active"><b><fmt:message key="index.searchIn" />  </b></div>
       <div class="collapsible-body">
       
                                     <c:forEach items="${requestScope.languageList}" var="lang">
-
+                                    
                                         <table style="width: 100%;">
                                             <tr>
 

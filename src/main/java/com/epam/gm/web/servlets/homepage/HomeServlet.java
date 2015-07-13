@@ -117,8 +117,23 @@ public class HomeServlet extends HttpServlet implements HttpRequestHandler {
 			request.setAttribute("topUsers", topUsers);
 
 			LanguageService languageService = new LanguageService();
-			List<Language> languageList = languageService
+			
+			List<Language> languageList = null;
+			
+			if(user == null) {
+				Language sessionLang = SessionRepository.getSessionLanguage(request);
+				if(sessionLang != null) {
+					languageList  = new ArrayList<Language>();
+					languageList.add(sessionLang);
+				}
+					
+			}
+			
+			if(languageList == null || languageList.isEmpty())
+				languageList = languageService
 					.getUserLangsForLocal(user); // languageService.getLocalizedLangs();
+			
+			
 			request.setAttribute("languageList", languageList);
 
 			CountryService countryService = new CountryService();
