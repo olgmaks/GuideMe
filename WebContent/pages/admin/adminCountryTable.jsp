@@ -41,6 +41,7 @@
 				$("#countryTable").on("click",".edit",
 						function() {
 							var tr = $(this).parents("tr");
+							$("#saveForm").css("visibility","visible");
 							<c:forEach var="item" items="${languageList}" varStatus="loop">
 								$('#langCountry${item.id}').val(tr.find("td:eq(${loop.index+1})").html());
 								$('#id').val(tr.find("td:eq(0)").html());
@@ -110,11 +111,14 @@
 
 	<input type="submit" value="add" id="add" />
 	<script>
-		$("#add").on('click', function () {   
+		$("#add").on('click', function () {
+			$("#saveForm").css("visibility","visible");
+			$("#action").val('add');
 		});
 	</script>
-	<form class="collection z-depth-2 " style="width: 50%; margin-right: 25%; margin-left: 25%; text-align: center;"
-		action="admincountryrequest.do" method="post" name="saveForm">
+
+	<form class="collection z-depth-2 " style="width: 50%; margin-right: 25%; margin-left: 25%; text-align: center; visibility: hidden"
+		action="admincountryrequest.do" method="post" name="saveForm" id = "saveForm">
 		<input hidden name="action" id="action" value="add"/> 
 		
 		<table>
