@@ -24,6 +24,7 @@ public class AdminTagServlet implements HttpRequestHandler {
 			response.sendRedirect("401.do");
 			return;
 		}
+		request.setAttribute("isAdmin", SessionRepository.isAdmin(request));
 		request.setAttribute("centralContent", "adminTag");
 		request.setAttribute("tagList", new TagDao().getAllActiveTags());
 		request.getRequestDispatcher("pages/admin/adminPanel.jsp").forward(

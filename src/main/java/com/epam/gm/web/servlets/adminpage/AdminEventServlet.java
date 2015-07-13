@@ -23,6 +23,7 @@ public class AdminEventServlet implements HttpRequestHandler {
 			response.sendRedirect("401.do");
 			return;
 		}
+		request.setAttribute("isAdmin", SessionRepository.isAdmin(request));
 		request.getRequestDispatcher("pages/adminEvent.jsp").forward(request,
 				response);
 	}

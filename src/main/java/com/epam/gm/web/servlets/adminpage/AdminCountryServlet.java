@@ -30,6 +30,7 @@ public class AdminCountryServlet implements HttpRequestHandler{
 			response.sendRedirect("401.do");
 			return;
 		}
+		request.setAttribute("isAdmin", SessionRepository.isAdmin(request));
 	    CountryDao dao = 	new CountryDao();
 	    LanguageService ls = new LanguageService();
 	    

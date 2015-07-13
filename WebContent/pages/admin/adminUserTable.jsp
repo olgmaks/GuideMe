@@ -64,8 +64,12 @@
 
 
 <fmt:bundle basename="locale.admin.admin">
+	report for all user
 	<form action="UserDetailReport" method="get">
-		<button type="submit">report</button>
+		<button type="submit"
+		style="border: 0; background: transparent">
+							<img src="icons/report-user.png"
+								style="height: 40px; width: 40px; object-fit: cover" /></button>
 	</form>
 	<div
 		style="width: 90%; margin-right: 5%; margin-left: 5%; text-align: center;">
@@ -107,10 +111,18 @@
 						<input type="text" hidden name="userId" value="${list.id}">
 						</form>
 						</td>
-						
 						<td width="5%">
+						<c:choose>
+						<c:when test="${list.userType.name == 'admin'}">								
+								
+						</c:when>
+						<c:otherwise>
+							
 								<input type="checkbox" name="isActive" class="isActive"
 									${list.isActive == 'true' ? 'checked' : ''}>
+							
+						</c:otherwise>
+					</c:choose>
 						</td>
 					</tr>
 				</c:forEach>

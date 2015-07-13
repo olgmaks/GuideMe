@@ -23,6 +23,8 @@ public class MessageToAdminServlet implements HttpRequestHandler {
 			response.sendRedirect("401.do");
 			return;
 		}
+		request.setAttribute("isAdmin", SessionRepository.isAdmin(request));
+	    
 		request.setAttribute("centralContent", "adminMessage");
 		request.setAttribute("messageList",
 				new MessageUserDao().getMessageToAdmin());

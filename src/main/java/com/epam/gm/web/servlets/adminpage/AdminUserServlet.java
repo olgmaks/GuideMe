@@ -33,7 +33,7 @@ public class AdminUserServlet implements HttpRequestHandler {
 			request.setAttribute("userList", userList);
 			request.setAttribute("userType", new UserTypeService().getAll());
 			request.setAttribute("centralContent", "adminUser");
-
+			request.setAttribute("isAdmin", SessionRepository.isAdmin(request));
 			request.getRequestDispatcher("pages/admin/adminPanel.jsp").forward(
 					request, response);
 		} catch (ServletException | IOException | SQLException e) {

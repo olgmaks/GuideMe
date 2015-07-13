@@ -26,6 +26,7 @@ public class AdminServlet implements HttpRequestHandler {
 			response.sendRedirect("401.do");
 			return;
 		}
+		request.setAttribute("isAdmin", SessionRepository.isAdmin(request));
 		UserService userService = new UserService();
 		List<User> userList = userService.getAll();
 		request.setAttribute("eventList", new EventDao().getAllEvents());

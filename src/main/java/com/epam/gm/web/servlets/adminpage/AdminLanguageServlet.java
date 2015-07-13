@@ -26,6 +26,7 @@ public class AdminLanguageServlet implements HttpRequestHandler{
 			response.sendRedirect("401.do");
 			return;
 		}
+		request.setAttribute("isAdmin", SessionRepository.isAdmin(request));
 	    LanguageService ls = new LanguageService();
 	    
 		request.setAttribute("languageList", ls.getAllActiveLangs());

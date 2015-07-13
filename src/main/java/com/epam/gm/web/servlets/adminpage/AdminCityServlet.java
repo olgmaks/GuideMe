@@ -38,6 +38,7 @@ public class AdminCityServlet implements HttpRequestHandler{
 			response.sendRedirect("401.do");
 			return;
 		}
+		request.setAttribute("isAdmin", SessionRepository.isAdmin(request));
 		CityDao dao = 	new CityDao();
 		CountryDao countryDao = new CountryDao();
 	    LanguageService ls = new LanguageService();
