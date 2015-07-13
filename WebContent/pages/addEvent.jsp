@@ -21,7 +21,7 @@
 <title>New event</title>
 </head>
 <body>
-	<jsp:include page="header.jsp" />
+	
 
 
 	<!-- <input type="image"	src="img/guide1.jpg"><br> -->
@@ -29,7 +29,7 @@
 
 
 	<div class="row" style="margin-top: 15px;">
-		<div class="col s12" style="width: 60%; margin-left: 20%">
+		<div class="col s12" style="width: 90%; margin-left: 10%">
 			<ul class="collection z-depth-2 ">
 				<li class="collection-item">
 					<div class="row">
@@ -291,6 +291,8 @@
 									<textarea id="description" name="description" rows="10"
 										cols="45" maxlength="400" class="materialize-textarea"></textarea>
 									<label for="description">addEventpage.Description:</label>
+									
+									
 								</div>
 							</div>
 
@@ -298,7 +300,7 @@
 								<div class="input-field col s12">
 									<label for="videoLink"> addEventpage.videoLink:</label> <input
 										type="text" id="videoLink" name="videoLink" /> <span
-										id="videoLinkMessage"></span><br>
+										id="videoLinkMessage"></span>
 								</div>
 							</div>
 						

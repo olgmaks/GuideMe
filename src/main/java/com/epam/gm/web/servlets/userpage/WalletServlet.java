@@ -28,10 +28,10 @@ public class WalletServlet extends HttpServlet implements HttpRequestHandler {
 		request.setAttribute("centralContent", "wallet");
 
 		wallet = walletService.getByUserId(user.getId());
-	/*	Integer balance = wallet.getBalance();*/
+		Integer balance = wallet.getBalance();
 		
 		request.setAttribute("wallet", wallet);
-/*		request.setAttribute("balance", balance);*/
+		request.setAttribute("balance", balance);
 		request.setAttribute("account", "410013283800566");
 		String eventNamePay = "Pay";
 

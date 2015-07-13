@@ -1358,11 +1358,11 @@ nav {
 
 														<div class="row">
 															<div class=" col s12">
-																<table style="width: 100%;">
+																<table style="width: 15%;">
 																	<tr>
 
 
-																		<td style="width: 25%;"><input type="number"
+																		<td style="width: 10%;"><input type="number"
 																			name="partisipant_limit" min="1"
 																			id="partisipant_limit"
 																			value="${requestScope.event.participants_limit}">
