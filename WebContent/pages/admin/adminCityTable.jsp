@@ -104,18 +104,31 @@ var id;
 		</tbody>
 	</table>
 	
-	<input type="submit" value="add" id="add" />
+		<button name="add" id="add" class="add"
+							style="border: 0; background: transparent">
+							<img src="icons/add.jpg"
+								style="height: 40px; width: 40px; object-fit: cover" />
+						</button>
 	<script>
-		$("#add").on('click', function () {   
-			$("#add").val("add");
-			 $(".browser-default").removeAttr("disabled");
+		$("#add").on('click', function () {
+			$("#saveForm").css("visibility","visible");
+			$("#action").val('add');
+			$(".browser-default").removeAttr("disabled");
 		});
 	</script>
-	<div style="width: 50%; margin-left: 25% margin-right: 25% text-align: center;">
-	<form  action="admincityrequest.do" method="post">
-		<input hidden name="action" id = "action" value = "add"/> 
-		<input hidden name="id"  id = "id"/> 
-	     
+	<div style="width: 80%; margin-left: 10% margin-right: 10% text-align: center;">
+	
+	<form class="collection z-depth-2 " style=" width: 80%; margin-right: 10%; margin-left: 10%;visibility: hidden"
+		action="admincityrequest.do" method="post" name="saveForm" id = "saveForm">
+		<input hidden name="action" id="action" value="add"/> 
+		<input hidden type="text" name="id" id="id">
+		<div align="right">
+		<button name="close" id="close" class="close" 
+							style="border: 0; background: transparent" onclick ='$("#saveForm").css("visibility","hidden")'>
+							<img src="icons/delete-photo-icon.png"
+								style="height: 20px; width: 20px; object-fit: cover"/>
+		</button>
+		</div>     
 	      <c:forEach var="item" items="${langCountry}">
 	      	<table>
 	      		<tr>

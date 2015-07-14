@@ -96,6 +96,7 @@ var keyValid;
 
 		$("#languageTable").on("click",".edit",function(){
 			var tr = $(this).parents("tr");
+			$("#saveForm").css("visibility","visible");
 			$('#name').val(tr.find("td:eq(1)").html());
 			$('#key').val(tr.find("td:eq(2)").html());
 			$('#id').val(tr.find("td:eq(0)").html());
@@ -172,11 +173,29 @@ var keyValid;
 
 		</tbody>
 	</table>
-	<form class="collection z-depth-2 "  action = "adminlanguagerequest.do" method = "post" name = "saveForm"
-		 style="width: 50%; margin-right: 25%; margin-left: 25%; text-align: center;">
-	<input hidden type = "text" name = "action" id = "action" value = "add">
-	<input hidden type = "text" name = "id" id = "id">
-	<div
+	<button name="add" id="add" class="add"
+							style="border: 0; background: transparent">
+							<img src="icons/add.jpg"
+								style="height: 40px; width: 40px; object-fit: cover" />
+						</button>
+	<script>
+		$("#add").on('click', function () {
+			$("#saveForm").css("visibility","visible");
+			$("#action").val('add');
+		});
+	</script>
+	<form class="collection z-depth-2 " style="width: 50%; margin-right: 25%; margin-left: 25%; text-align: center; visibility: hidden"
+		action="adminlanguagerequest.do" method="post" name="saveForm" id = "saveForm">
+		<input hidden name="action" id="action" value="add"/> 
+		<input hidden type="text" name="id" id="id">
+		<div align="right">
+		<button name="close" id="close" class="close" 
+							style="border: 0; background: transparent" onclick ='$("#saveForm").css("visibility","hidden")'>
+							<img src="icons/delete-photo-icon.png"
+								style="height: 20px; width: 20px; object-fit: cover"/>
+		</button>
+		</div>
+			<div
 	style="width: 80%; margin-right: 10%; margin-left: 10%; text-align: center;">
 	<table>
 		<tr>

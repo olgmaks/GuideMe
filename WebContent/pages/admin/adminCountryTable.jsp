@@ -109,7 +109,12 @@
 		</tbody>
 	</table>
 
-	<input type="submit" value="add" id="add" />
+	<button name="add" id="add" class="add"
+							style="border: 0; background: transparent">
+							<img src="icons/add.jpg"
+								style="height: 40px; width: 40px; object-fit: cover" />
+						</button>
+	
 	<script>
 		$("#add").on('click', function () {
 			$("#saveForm").css("visibility","visible");
@@ -119,8 +124,12 @@
 
 	<form class="collection z-depth-2 " style="width: 50%; margin-right: 25%; margin-left: 25%; text-align: center; visibility: hidden"
 		action="admincountryrequest.do" method="post" name="saveForm" id = "saveForm">
-		<input hidden name="action" id="action" value="add"/> 
-		
+		<input hidden type="text" name="id" id="id">
+		<button name="close" id="close" class="close"
+							style="border: 0; background: transparent" onclick ='$("#saveForm").css("visibility","hidden")x'>
+							<img src="icons/delete-photo-icon.png"
+								style="height: 20px; width: 20px; object-fit: cover"/>
+		</button>
 		<table>
 			<c:forEach var="item" items="${languageList}">
 				<input hidden name="id"	id="id" />

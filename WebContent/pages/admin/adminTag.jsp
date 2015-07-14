@@ -36,6 +36,7 @@
 
 							$("#tagTable").on("click", ".edit", function() {
 								var tr = $(this).parents("tr");
+								$("#saveForm").css("visibility","visible");
 								$('#name').val(tr.find("td:eq(1)").html());
 								$('#id').val(tr.find("td:eq(0)").html());
 								$('#action').val('edit');
@@ -141,12 +142,29 @@
 
 			</tbody>
 		</table>
-		<form class="collection z-depth-2 "
-			style="width: 50%; margin-right: 25%; margin-left: 25%; text-align: center;"
-			action="adminTagRequest.do" method="post" name="saveForm">
-			<input hidden type="text" name="action" id="action" value="add">
-			<input hidden type="text" name="id" id="id">
-
+	
+	<button name="add" id="add" class="add"
+							style="border: 0; background: transparent">
+							<img src="icons/add.jpg"
+								style="height: 40px; width: 40px; object-fit: cover" />
+						</button>
+	<script>
+		$("#add").on('click', function () {
+			$("#saveForm").css("visibility","visible");
+			$("#action").val('add');
+		});
+	</script>
+	<form class="collection z-depth-2 " style="width: 50%; margin-right: 25%; margin-left: 25%; text-align: center; visibility: hidden"
+		action="adminTagRequest.do" method="post" name="saveForm" id = "saveForm">
+		<input hidden name="action" id="action" value="add"/> 
+		<input hidden type="text" name="id" id="id">
+		<div align="right">
+		<button name="close" id="close" class="close"
+							style="border: 0; background: transparent" onclick ='$("#saveForm").css("visibility","hidden")'>
+							<img src="icons/delete-photo-icon.png"
+								style="height: 20px; width: 20px; object-fit: cover"/>
+		</button>
+		</div>
 			<table>
 				<tr>
 					<td width="50%"><input required type="text" name="name"
