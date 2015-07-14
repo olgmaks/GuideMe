@@ -65,6 +65,8 @@ public class AccessFilter implements Filter {
                 !URI.contains("home.do") &&
                 !URI.contains("loginPage.do") &&
                 !URI.contains("login.do")&&
+                !URI.contains("loginfb.do")&&
+                !URI.contains("loginvk.do")&&
 				!URI.equals("/GuideMe/")
         )) {
 
