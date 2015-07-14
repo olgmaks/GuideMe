@@ -188,7 +188,13 @@ public class UserService {
 	public void updateUserProfile(User user) throws SQLException {
 		userDao.updateUserProfile(user);
 	}
-	
+
+	public List<User> getUserFriendsOfFriends (Integer userId) throws SQLException {
+		List<User> results = userDao.getUserFriendsOfFriends(userId);
+		Collections.shuffle(results);
+		return results;
+	}
+
 	public boolean isFbVkUser(User user) {
 		boolean fbVkUser = false;
 		

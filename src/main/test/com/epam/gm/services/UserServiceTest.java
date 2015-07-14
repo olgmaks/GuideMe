@@ -25,6 +25,18 @@ public class UserServiceTest {
     }
 
     @Test
+    public void getUserFriendsOfFriends () {
+        try {
+            List<User> users = userService.getUserFriendsOfFriends(8);
+            for (User user : users) {
+                System.out.println(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test@Ignore
     public void getAvgMark () {
         try {
             System.out.println("avg mark : " + userService.getUserAvgMark(8));

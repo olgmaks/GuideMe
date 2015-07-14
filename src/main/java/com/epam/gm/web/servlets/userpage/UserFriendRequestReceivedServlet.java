@@ -2,6 +2,7 @@ package com.epam.gm.web.servlets.userpage;
 
 import com.epam.gm.model.FriendUser;
 import com.epam.gm.services.FriendUserService;
+import com.epam.gm.services.UserService;
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
@@ -18,19 +19,25 @@ import java.util.List;
 public class UserFriendRequestReceivedServlet implements HttpRequestHandler {
 
     private FriendUserService friendUserService;
+    private UserService userService;
 
     public UserFriendRequestReceivedServlet() {
         friendUserService = new FriendUserService();
+        userService = new UserService();
     }
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 
+        Integer sessionUserId = SessionRepository.getSessionUser(request).getId();
+
         List<FriendUser> userRequestsFromFriends = friendUserService.
-                getUserRequestsFromFriends(SessionRepository.getSessionUser(request).getId());
+                getUserRequestsFromFriends(sessionUserId);
 
         request.setAttribute("userFriends", userRequestsFromFriends);
         request.setAttribute("userFriendRequestType", "incoming");
+
+        request.setAttribute("recommendedFriends", userService.getUserFriendsOfFriends(sessionUserId));
 
         request.setAttribute("centralContent", "friends");
         request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(request, response);

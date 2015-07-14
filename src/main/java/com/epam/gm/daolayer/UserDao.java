@@ -86,6 +86,28 @@ public class UserDao extends AbstractDao<User> {
 			+ " WHERE e.id IN (?) "
 			+ " ORDER BY e.id, t.name ";
 
+	private static final String GET_FRIENDS_OF_FRIENDS = "u JOIN friend_user  fu ON u.id = fu.friend_id " +
+			" WHERE  fu.user_id IN (" +
+				" SELECT u.id FROM user u JOIN friend_user  fu2 ON u.id = fu2.friend_id " +
+				" WHERE  fu2.user_id=%1$s  " +
+					" AND EXISTS (" +
+						" SELECT * FROM friend_user fu3 WHERE fu3.user_id=fu2.friend_id " +
+						" AND EXISTS (" +
+						" SELECT * FROM friend_user WHERE fu2.user_id=fu3.friend_id)))" +
+						" AND EXISTS (" +
+						" SELECT * FROM friend_user fu1 WHERE fu1.user_id=fu.friend_id " +
+				" AND EXISTS (" +
+					" SELECT * FROM friend_user WHERE fu.user_id=fu1.friend_id" +
+						" )) and not u.id=%1$s and u.id NOT IN (" +
+							" SELECT u.id FROM user u JOIN friend_user  fu2 ON u.id = fu2.friend_id " +
+								" WHERE  fu2.user_id=%1$s" +
+					" AND EXISTS (" +
+						" SELECT * FROM friend_user fu3 WHERE fu3.user_id=fu2.friend_id" +
+					" AND EXISTS (" +
+						" SELECT * FROM friend_user WHERE fu2.user_id=fu3.friend_id" +
+				"  ))" +
+			"  ) GROUP BY u.id";
+
 	public UserDao() {
 		// gryn
 		// super(ConnectionManager.getConnection(), User.class);
@@ -103,6 +125,10 @@ public class UserDao extends AbstractDao<User> {
 
 	public Double getUserAvgMark (Integer userId) throws SQLException {
 		return super.getDouble(String.format(GET_AVG_MARK, userId));
+	}
+
+	public List<User> getUserFriendsOfFriends (Integer userId) throws SQLException {
+		return super.getWithCustomQuery(String.format(GET_FRIENDS_OF_FRIENDS,userId));
 	}
 
 	/*

@@ -1,6 +1,7 @@
 package com.epam.gm.web.servlets.userpage;
 
 import com.epam.gm.services.FriendUserService;
+import com.epam.gm.services.UserService;
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
@@ -16,16 +17,21 @@ import java.sql.SQLException;
 public class UserFriendsServlet implements HttpRequestHandler {
 
     private FriendUserService friendUserService;
+    private UserService userService;
 
     public UserFriendsServlet() {
         friendUserService = new FriendUserService();
+        userService = new UserService();
     }
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 
-        request.setAttribute("userFriends", friendUserService.getUserFriends(
-                SessionRepository.getSessionUser(request).getId()));
+        Integer sessionUserId = SessionRepository.getSessionUser(request).getId();
+
+        request.setAttribute("userFriends", friendUserService.getUserFriends(sessionUserId));
+
+        request.setAttribute("recommendedFriends", userService.getUserFriendsOfFriends(sessionUserId));
 
 
         request.setAttribute("centralContent", "friends");
