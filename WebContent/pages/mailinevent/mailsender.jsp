@@ -1,4 +1,47 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><script
+	type="text/javascript">
+	$(document).ready(function() {
+		$('#sendmessagetousers').click(function() {
+			var checkedUsers = [];
+			$("input:checkbox[name=type]:checked").each(function() {
+				checkedUsers.push($(this).attr("id"));
+			});
+			if (checkedUsers == "") {
+				Materialize.toast("no one cheked", 1500);
+			} else {
+				$.ajax({
+					url : 'sendEmail.do',
+					type : 'POST',
+					data : {
+						textmessagetosendval : $("#sendmessagetousers").val(),
+						usercheckedtosendval : JSON.stringify(checkedUsers)
+					}
+
+				});
+			}
+
+		});
+
+		$('#checkallusers').click(function() {
+
+			$("input:checkbox[name=type]").each(function() {
+				if (typeof ($(this).attr("disabled")) == typeof undefined) {
+					$(this).prop("checked", true);
+
+				}
+			});
+
+		});
+
+		$('#removecheckfromall').click(function() {
+			$("input:checkbox[name=type]:checked").each(function() {
+				$(this).prop("checked", false);
+			});
+
+		});
+
+	});
+</script>
 <style>
 .table-wrapper {
 	width: 100%;
@@ -28,39 +71,7 @@
 </div>
 <br>
 <br>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#sendmessagetousers').click(function() {
-			var checkedUsers = [];
-			$("input:checkbox[name=type]:checked").each(function() {
-				checkedUsers.push($(this).attr("id"));
-			});
-			if (checkedUsers == "") {
-				Materialize.toast("no one cheked", 1500);
-			}
-			Materialize.toast(checkedUsers, 1500);
-		});
 
-		$('#checkallusers').click(function() {
-
-			$("input:checkbox[name=type]").each(function() {
-				if (typeof ($(this).attr("disabled")) == typeof undefined) {
-					$(this).prop("checked", true);
-
-				}
-			});
-
-		});
-
-		$('#removecheckfromall').click(function() {
-			$("input:checkbox[name=type]:checked").each(function() {
-				$(this).prop("checked", false);
-			});
-
-		});
-
-	});
-</script>
 <div class="table-wrapper" id="divTableComments">
 	<ul>
 		<button id="checkallusers" style="margin-left: 4%;"

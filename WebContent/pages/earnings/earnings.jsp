@@ -107,7 +107,7 @@
 			<!-- <div class="center-align"> -->
 			<p>
 				<a class="modal-trigger waves-effect waves-light btn"
-					href="#withdrawmoneymodal">Withdraw My Money</a>
+					href="#withdrawmoneymodal">Withdraw</a>
 		</div>
 
 	</div>
