@@ -4,6 +4,7 @@ import groovy.lang.Newify;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -64,6 +65,7 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 						.getNotTemporaryServicesByGuideId(user.getId());
 				request.setAttribute("listOfServices", list);
 			}
+			
 			EventService eventService = new EventService();
 			int id = Integer.parseInt(request.getParameter("id"));
 			Event event = new Event();
@@ -90,6 +92,8 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 							user.getId(), id));
 			request.setAttribute("allmembersievent",
 					new UserInEventDao().getAllUserInEventByEventId(id));
+			request.setAttribute("allMembersOrders",
+					new PaidServiceDao().getAllUserAndOrdersByEventId(id));
 			// gryn - adding try
 			Integer sessionUserId = null;
 			try {

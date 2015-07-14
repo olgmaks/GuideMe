@@ -116,10 +116,11 @@ public class SignInFacebookServlet extends HttpServlet implements
 				try {
 					userDao.saveUser(user);
 					User user2 = userDao.getUserByFacebookId(facebookId);
-					SessionRepository.setSessionUser(req, user);
+					SessionRepository.setSessionUser(req, user2);
 					isValid = true;
 					map.put("userEmail", user2.getEmail());
 					map.put("sessionUser", user2);
+					map.put("isValid", isValid);
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 					e.printStackTrace();
 				}
@@ -129,9 +130,10 @@ public class SignInFacebookServlet extends HttpServlet implements
 				isValid = true;
 				map.put("userEmail", user.getEmail());
 				map.put("sessionUser", user);
+				map.put("isValid", isValid);
 			}
 			res.setContentType("application/json");
-			map.put("isValid", isValid);
+
 			res.getWriter().write(new Gson().toJson(map));
 
 			res.sendRedirect(res.encodeRedirectURL(req.getContextPath()

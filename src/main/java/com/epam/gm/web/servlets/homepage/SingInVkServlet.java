@@ -112,7 +112,7 @@ public class SingInVkServlet extends HttpServlet implements HttpRequestHandler {
 				try {
 					userDao.saveUser(user);
 					User user2 = userDao.getUserByVkId(userId);
-					SessionRepository.setSessionUser(req, user);
+					SessionRepository.setSessionUser(req, user2);
 					isValid = true;
 					map.put("userEmail", user2.getEmail());
 					map.put("sessionUser", user2);
