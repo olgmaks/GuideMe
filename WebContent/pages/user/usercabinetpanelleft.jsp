@@ -112,7 +112,14 @@
 					<div id="userInterestsTagReferences" style="width: 200px;"></div>
 				</h6>
 			</li>
+			
 		</ul>
+		<form action="UserServiceReport" method="post">
+		<button type="submit"
+		style="border: 0; background: transparent">
+							<img src="icons/report-user.png"
+								style="height: 40px; width: 40px; object-fit: cover" /></button>
+	</form>
 	</div>
 </div>
 <jsp:include page="modal/userintereststags.jsp" />

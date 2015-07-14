@@ -33,6 +33,7 @@ var id;
 				});
 		$("#cityTable").on("click",".edit",function(){
 			 $(".browser-default").prop('disabled', 'disabled');
+			 $("#saveForm").css("visibility","visible");
 			var tr = $(this).parents("tr");
 			var i= 1;   
 			<c:forEach var="item" items="${languageList}" varStatus="loop">
