@@ -39,11 +39,12 @@
                     <div class='card' id = 'card-${user.id}'style='height: 150px; width: 47%;min-width: 300px; max-width:350px; float: left; margin-left: 10px;'>
                         <table>
                             <tr>
-                                <td style='width: 120px; vertical-align: top;'>
-                                    <img class='circle' style='height: 120px; width: 120px; object-fit: cover' src='${user.avatar.path}'></td>
+                                <td style='width: 120px; vertical-align: top;'><a href="userProfile.do?id=${user.id}">
+                                    <img class='circle' style='height: 120px; width: 120px; object-fit: cover' src='${user.avatar.path}'> </a></td>
+
                                 <td>
                                     <div>
-                                        <div style="height: 40px;"><a href='#_'
+                                        <div style="height: 40px;"><a href="userProfile.do?id=${user.id}"
                                                                       class='black-text'>${user.firstName} ${user.lastName}</a>
                                         </div>
                                         <div style="height: 20px;"> <span>Rate: ${user.points}</span>

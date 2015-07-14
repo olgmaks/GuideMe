@@ -178,8 +178,8 @@ function getCard(user) {
 
     return "<div class='card' id = 'card-" + userId + "' style='height: 150px; width: 47%; min-width: 300px; max-width:350px; float: left; margin-left: 10px;'>" +
         "<table><tr><td style='width: 120px; vertical-align: top;'>" +
-        "<img class='circle' style='height: 120px; width: 120px; object-fit: cover' src='" + pathToImage + "'></td><td><div>" +
-        "<div style='height: 40px;'><a href='#_' class='black-text'>" + fName + " " + lName + "</a></div>" +
+        "<a href='userProfile.do?id="+userId+"'><img class='circle' style='height: 120px; width: 120px; object-fit: cover' src='" + pathToImage + "'></a></td><td><div>" +
+        "<div style='height: 40px;'><a href='userProfile.do?id="+userId+"' class='black-text'>" + fName + " " + lName + "</a></div>" +
         "<div style='height: 20px;'> <span>Rate: " + points + "</span></div>" +
         "<div style='height: 20px;'><span>" + cityName + "</span></div>" +
         "<div style='float: right; vertical-align: bottom; margin-bottom: 10px; margin-right: 10px;'>" +
