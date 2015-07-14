@@ -141,6 +141,13 @@ $(document).ready(function () {
     updateAddFriendAnchors();
 });
 
+$(document).ready(function(){
+    $("#search-submit-button").on('click',function(){
+        sendAjaxRequest(getSearchUserFilter());
+    });
+
+});
+
 function getSearchUserFilter() {
     var userNameInput = $("#userNameInput").val();
     var tags = $("#singleFieldTags").tagit("assignedTags").toString();

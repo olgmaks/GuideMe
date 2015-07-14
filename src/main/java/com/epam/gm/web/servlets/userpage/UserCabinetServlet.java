@@ -40,10 +40,12 @@ public class UserCabinetServlet implements HttpRequestHandler {
 			throws ServletException, IOException, SQLException {
 		User sessionUser = SessionRepository.getSessionUser(request);
 		HttpSession session = request.getSession();
+
 		if (sessionUser == null) {
 			response.sendRedirect("401.do");
 			return;
 		}
+
 		User user = (User) session.getAttribute("sessionUser");
 		EventDao eventDao = new EventDao();
 		UserInEventDao userInEventDao = new UserInEventDao();

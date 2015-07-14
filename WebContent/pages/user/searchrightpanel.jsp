@@ -71,8 +71,10 @@
                     <%--<input style="height: 30px;" placeholder="Interests" id="mySingleField" disabled="true" name="tags"/>--%>
                         <ul class="browser-default" id="singleFieldTags">
                         </ul>
-                        <input  class="browser-default" id="visibleInput" type="submit" value="Submit">
+
                     </form>
+                    <br>
+                    <a href="#_" id="search-submit-button" style="margin-left: 10%" class="btn light-blue"><i class="mdi-action-search right"></i>Search</a>
                 </div>
             </li>
         </ul>

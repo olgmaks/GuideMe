@@ -32,8 +32,8 @@
 					</a>
 				</div> <a href="editProfile.do" style="float: right;"> <img
 					class="circle" style="height: 40px; width: 40px;"
-					src="icons/edit-profile.png"></a> <br> <h7>${sessionUser.firstName}
-				${sessionUser.lastName}</h7> <br> <br> <a
+					src="icons/edit-profile.png"></a> <br> <h7><a href="userProfile.do?id=${sessionUser.id}" class="black-text">${sessionUser.firstName}
+				${sessionUser.lastName}</a></h7> <br> <br> <a
 				href="eventsincabinet.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"

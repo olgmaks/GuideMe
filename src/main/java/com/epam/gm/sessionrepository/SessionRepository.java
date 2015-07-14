@@ -40,6 +40,7 @@ public class SessionRepository {
         request.setAttribute("sessionUserAvatar", avatar);
     }
 
+
     public static User getSessionUser(HttpServletRequest request) {
 
         HttpSession session = request.getSession(true);
