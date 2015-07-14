@@ -120,6 +120,13 @@
 							<img src="icons/report-user.png"
 								style="height: 40px; width: 40px; object-fit: cover" /></button>
 	</form>
+	
+	<form action="UserServiceReport" method="get">
+		<button type="submit"
+		style="border: 0; background: transparent">
+							<img src="icons/report-user.png"
+								style="height: 40px; width: 40px; object-fit: cover" /></button>
+	</form>
 	</div>
 </div>
 <jsp:include page="modal/userintereststags.jsp" />

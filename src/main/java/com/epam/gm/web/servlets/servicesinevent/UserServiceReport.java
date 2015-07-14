@@ -41,8 +41,10 @@ public class UserServiceReport extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		printReport(request, response, "/report/report4.jasper",
-				new HashMap<String, Object>());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", SessionRepository.getSessionUser(request).getId());
+		printReport(request, response, "/report/PayedServiceGuide.jasper",
+				map);
 	}
 
 	/**
@@ -53,7 +55,6 @@ public class UserServiceReport extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userId", SessionRepository.getSessionUser(request).getId());
-		System.out.println("userIddd"+SessionRepository.getSessionUser(request).getId());
 		printReport(request, response, "/report/PayedServiceUser.jasper",
 				map);
 	}
