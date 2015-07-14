@@ -81,19 +81,20 @@
 						name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
 						Gallery<i class="mdi-image-collections right"></i>
-					</button></a> <a href="wallet.do">
+					</button></a> <!-- <a href="wallet.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
 						Wallet<i class="mdi-action-account-balance-wallet right"></i>
 					</button>
-			</a> <a href="earnings.do">
-					<button class="btn light-blue waves-effect waves-light"
-						type="submit" name="action"
-						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-						Earnings<i class="mdi-action-view-list right"></i>
-					</button>
-			</a> <c:if test="${sessionUser.userTypeId == 3}">
+			</a> --> <c:if test="${sessionUser.userTypeId == 3}">
+					<a href="earnings.do">
+						<button class="btn light-blue waves-effect waves-light"
+							type="submit" name="action"
+							style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
+							Earnings<i class="mdi-action-view-list right"></i>
+						</button>
+					</a>
 					<a href="guideservices.do">
 						<button class="btn light-blue waves-effect waves-light"
 							type="submit" name="action"

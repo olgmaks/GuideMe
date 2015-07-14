@@ -142,16 +142,19 @@
 		$('.modal-trigger').leanModal();
 	});
 </script>
-PAID SERVICES
+ORDERED SERVICES
 
 <ul class="collection with-header" id="paid"
 	data-collapsible="accordion" style="width: 75%;">
 	<c:forEach items="${allPaid }" var="service">
-		<div id='untouchable' idofserv="${service.getId() }"
-			price2="${service.getService().getPrice() }">
-			<li class='collection-item lime lighten-3'>${service.getService().getName() }
-				${service.getService().getPrice() }$ <i
-				class='mdi-toggle-check-box right'></i>
+		<div id='untouchable'
+			idofserv="${service.getServiceInEvent().getService().getId() }"
+			price2="${service.getServiceInEvent().getService().getPrice() }">
+			<li class='collection-item lime lighten-3'>${service.getServiceInEvent().getService().getName() }
+				${service.getServiceInEvent().getService().getPrice() }$ <c:if
+					test="${service.isAccepted() }">
+					<i class='mdi-toggle-check-box right'></i>
+				</c:if>
 		</div>
 		</li>
 
@@ -181,7 +184,7 @@ AVAILABLE SERVICES
 	pricenecessary=${sumOfAllNecessary }>Price ${sumOfAllNecessary } $</h4>
 
 
-<a id="buttonbuy" class="waves-light btn modal-trigger" href="#modal1">Buy</a>
+<a id="buttonbuy" class="waves-light btn modal-trigger" href="#modal1">Order</a>
 
 
 <ul id="touchable" class="collection with-header">
@@ -209,6 +212,6 @@ AVAILABLE SERVICES
 	</div>
 	<div class="modal-footer">
 		<a id="buyservices" href="buyServices.do"
-			class=" modal-action modal-close waves-effect waves-green btn-flat">Pay</a>
+			class=" modal-action modal-close waves-effect waves-green btn-flat">Order</a>
 	</div>
 </div>

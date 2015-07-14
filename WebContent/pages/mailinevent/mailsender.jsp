@@ -8,16 +8,26 @@
 			});
 			if (checkedUsers == "") {
 				Materialize.toast("no one cheked", 1500);
+			} else if ($("#textmessagetousers").val() == "") {
+				Materialize.toast("message cannot be empty", 1500);
 			} else {
 				$.ajax({
 					url : 'sendEmail.do',
 					type : 'POST',
 					data : {
-						textmessagetosendval : $("#sendmessagetousers").val(),
+						textmessagetosendval : $("#textmessagetousers").val(),
 						usercheckedtosendval : JSON.stringify(checkedUsers)
+					},
+					success : function(data) {
+						Materialize.toast("Message Sent", 1500);
+						$("#textmessagetousers").val("");
+						$("input:checkbox[name=type]:checked").each(function() {
+							$(this).prop("checked", false);
+						});
 					}
 
 				});
+
 			}
 
 		});
@@ -57,7 +67,7 @@
 		<form class="col s12">
 			<div class="row">
 				<div class="input-field col s12">
-					<textarea id="textarea1" class="materialize-textarea"
+					<textarea id="textmessagetousers" class="materialize-textarea"
 						placeholder="message"></textarea>
 
 				</div>

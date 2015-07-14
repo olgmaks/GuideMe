@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.epam.gm.calculators.EventCalculator;
 import com.epam.gm.calculators.UserCalculator;
+import com.epam.gm.daolayer.PaidServiceDao;
 import com.epam.gm.daolayer.RatingEventDao;
 import com.epam.gm.daolayer.ServiceDao;
 import com.epam.gm.daolayer.ServiceInEventDao;
@@ -83,8 +84,10 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 					new ServiceInEventService()
 							.getPriceOfAllNecessaryServicesByEventId(id,
 									user.getId()));
-			request.setAttribute("allPaid", new ServiceInEventDao()
-					.getAllPaidByEventIdAndUserId(id, user.getId()));
+			request.setAttribute(
+					"allPaid",
+					new PaidServiceDao().getPaidServiceByUserIdAndEventId(
+							user.getId(), id));
 			request.setAttribute("allmembersievent",
 					new UserInEventDao().getAllUserInEventByEventId(id));
 			// gryn - adding try
@@ -167,7 +170,7 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 
 			boolean isModerator = event.getModeratorId().equals(user.getId());
 			request.setAttribute("isModerator", isModerator);
-
+			request.setAttribute("isGuide", user.isGuide());
 			// if (isModerator) {
 			// moderator
 

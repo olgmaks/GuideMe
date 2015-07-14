@@ -35,7 +35,9 @@ public class SendEmail extends HttpServlet implements HttpRequestHandler {
 		String allCheckedUsers = request.getParameter("usercheckedtosendval");
 		String message = request.getParameter("textmessagetosendval");
 		allCheckedUsers = allCheckedUsers.replaceAll("'", "\"");
+		System.out.println("************" + message);
 		String[] ar = allCheckedUsers.split("\\[|\\]|\\,|\"");
+
 		List<Integer> list = new ArrayList<Integer>();
 		for (int i = 0; i < ar.length; i++) {
 			/* System.out.println(ar[i]); */
@@ -51,12 +53,11 @@ public class SendEmail extends HttpServlet implements HttpRequestHandler {
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 		int eventId = (int) request.getSession(true).getAttribute("eventId");
 
-		Event event = (Event) new EventDao().getByField("id", eventId);
+		Event event = new EventDao().getEventById(eventId);
 
 		for (int i = 0; i < list.size(); i++) {
 			User user = new UserDao().getUserById(list.get(i));
 			executorService.execute(new Runnable() {
-
 				@Override
 				public void run() {
 					SendMailTLS.sendMessage(user.getEmail(), "Guide Me\n"

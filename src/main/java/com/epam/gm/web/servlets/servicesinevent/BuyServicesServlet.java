@@ -60,6 +60,7 @@ public class BuyServicesServlet extends HttpServlet implements
 				paidService.setEventId(eventId);
 				paidService.setUserId(user.getId());
 				paidService.setServiceInEventId(servicesInBill.get(i));
+				paidService.setAccepted(false);
 				new PaidServiceDao().savePaidService(paidService);
 
 			} catch (NumberFormatException e) {
@@ -67,6 +68,6 @@ public class BuyServicesServlet extends HttpServlet implements
 		}
 
 		response.sendRedirect(response.encodeRedirectURL(request
-				.getContextPath() + "/eventDetail.do?id="+eventId));
+				.getContextPath() + "/eventDetail.do?id=" + eventId));
 	}
 }

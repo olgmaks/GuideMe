@@ -283,7 +283,8 @@ nav {
 			chatClient.close();
 		}
 		function sendMessage() {
-			var userName = '${sessionUser.firstName}' + ' ' + '${sessionUser.lastName}';
+			var userName = '${sessionUser.firstName}' + ' '
+					+ '${sessionUser.lastName}';
 			var inputElement = document.getElementById("enterMessage");
 			var message = inputElement.value.trim();
 			if (message !== "") {
@@ -327,20 +328,25 @@ nav {
 											"click",
 											".delete",
 											function() {
-												var id = $(this).attr('data-id');
+												var id = $(this)
+														.attr('data-id');
 												var userName = '${sessionUser.lastName} ${sessionUser.firstName}';
 												var userID = "${sessionUser.id}";
 												$("#messageEvent tr").remove();
-												$.ajax({
+												$
+														.ajax({
 															url : "chatEventRequest.do?action=deleteMessage&id="
 																	+ id,
 															type : "post",
-															success : function(data) {
+															success : function(
+																	data) {
 																var trHTML = '';
 																jQuery
 																		.each(
 																				data,
-																				function(index, item) {
+																				function(
+																						index,
+																						item) {
 																					var avatar = item.sender.avatar.path;
 																					var colorSender = "#CEF6E3";// = item.senderId == "${sessionUser.id}"? "#CEF6E3": "#2ECCFA" ;
 																					var colorRecived = "#2ECCFA";
@@ -358,14 +364,17 @@ nav {
 																							+ '<td bgcolor= "'
 																							+ colorSender
 																							+ '" width="20%"> '
-																							+ moment(item.createdOn)
+																							+ moment(
+																									item.createdOn)
 																									.format(
 																											'hh:mm MM D, YYYY')
 																							+ '</td><td  class = "td-right-round"  bgcolor= "'
 																							+ colorSender
 																							+ '" width="55%">'
-																							+ item.message.replace(
-																									/</g, '&lt')
+																							+ item.message
+																									.replace(
+																											/</g,
+																											'&lt')
 																							+ '</td>'
 																							+ '<td width="10%"></td>'
 
@@ -374,7 +383,8 @@ nav {
 																							+ '<button name ="delete" data-id = "'+item.id+'" id = "delete" class ="delete" style="border: 0; background: transparent">'
 																							+ '<img src="icons/delete-photo-icon.png" style="height: 20px; width: 20px; object-fit: cover"/>'
 																							+ '</button>'
-																							+ '</c:if>' + '</td>'
+																							+ '</c:if>'
+																							+ '</td>'
 
 																							+ '</tr>'
 
@@ -385,14 +395,17 @@ nav {
 																							+ '<td class = "td-left-round" bgcolor= "'
 																							+ colorRecived
 																							+ '" width="20%"> '
-																							+ moment(item.createdOn)
+																							+ moment(
+																									item.createdOn)
 																									.format(
 																											'hh:mm MM D, YYYY')
 																							+ '</td><td bgcolor= "'
 																							+ colorRecived
 																							+ '" width="55%">'
-																							+ item.message.replace(
-																									/</g, '&lt')
+																							+ item.message
+																									.replace(
+																											/</g,
+																											'&lt')
 																							+ '</td>'
 																							+ '<td class = "td-right-round" bgcolor="'
 																							+ colorRecived
@@ -408,13 +421,17 @@ nav {
 																							+ '<button name ="delete" data-id = "'+item.id+'" id = "delete" class ="delete" style="border: 0; background: transparent">'
 																							+ '<img src="icons/delete-photo-icon.png" style="height: 20px; width: 20px; object-fit: cover"/>'
 																							+ '</button>'
-																							+ '</c:if>' + '</td>'
+																							+ '</c:if>'
+																							+ '</td>'
 
 																							+ '</tr>'
 																					trHTML += item.senderId == "${sessionUser.id}" ? tdUser
 																							: tdSender;
 																				});
-																$("#messageEvent").append(trHTML);
+																$(
+																		"#messageEvent")
+																		.append(
+																				trHTML);
 																scrollToBottom();
 															}
 														});
@@ -800,14 +817,14 @@ nav {
 									</c:if>
 									<li><a href="#chat"><fmt:message key="event.Chat" /></a></li>
 
-									<c:if test="${isModerator}">
+									<c:if test="${isModerator && isGuide}">
 										<li><a href="#addservice"><fmt:message
-													key="event.AddService" /></a></li>
-										<li><a href="#mailsender"><fmt:message
-													key="event.mailsender" /></a></li>
-										</li>
-
+													key="event.AddService" /></a>
 									</c:if>
+									<li><a href="#mailsender"><fmt:message
+												key="event.mailsender" /></a></li>
+									</li>
+
 									<c:if test="${isAdmin}">
 
 									</c:if>
@@ -1478,9 +1495,19 @@ nav {
 									</form>
 								</div>
 							</section>
+
 							<section id="services" class="hidden">
-								<jsp:include page="servicesInEvent.jsp" />
+								<c:choose>
+									<c:when test="${isGuide && isModerator}">
+										<jsp:include page="orderedservices.jsp" />
+									</c:when>
+									<c:otherwise>
+										<jsp:include page="servicesInEvent.jsp" />
+									</c:otherwise>
+								</c:choose>
 							</section>
+
+
 							<section id="mailsender" class="hidden">
 								<jsp:include page="../mailinevent/mailsender.jsp" />
 							</section>

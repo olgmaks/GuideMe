@@ -36,8 +36,7 @@ public class EventDao extends AbstractDao<Event> {
 	private static final String GET_NOT_DELETED_BY_PATTERN = "e WHERE (e.name LIKE '%TEXT%' OR e.name RLIKE '%TEXT%' OR e.description LIKE '%TEXT%' OR e.description RLIKE '%TEXT%') AND e.deleted = FALSE";
 
 	private static final String GET_NOT_DELETED_BY_PATTERN_EXTENDED = "e WHERE (_PATTERN_) AND e.deleted = FALSE";
-	
-	
+
 	private static final String GET_NOT_DELETED_BY_MODERATOR_ID = "e WHERE e.deleted = 0 AND e.date_to>NOW() AND e.status = 'active' and moderator_id = '%S'";
 
 	private static final String GET_NOT_DELETED_AND_OLD_BY_MODERATOR_ID = "e WHERE e.deleted = 0 AND moderator_id = %s AND (e.date_to<NOW() OR not e.status = 'active')";
@@ -65,10 +64,9 @@ public class EventDao extends AbstractDao<Event> {
 			+ " WHERE e.deleted = FALSE AND  e.status = 'active' AND  t.name = '?' ";
 
 	private static final String GET_ALL_ACTIVE_EVENT_WHERE_USER_MODERATOR = " e WHERE e.moderator_id = _userId_ AND e.status = 'active' AND e.deleted = 0 ";
-	
-	private static final String GET_ALL_ACTIVE_EVENT_WHERE_USER_NOT_MODERATOR = 
-			" e WHERE e.moderator_id != _userId_ AND e.status = 'active' AND e.deleted = 0 AND e.id IN ( " +
-			" SELECT uie.event_id FROM user_in_event uie WHERE uie.user_id = _userId_ AND uie.is_member = 1) ";
+
+	private static final String GET_ALL_ACTIVE_EVENT_WHERE_USER_NOT_MODERATOR = " e WHERE e.moderator_id != _userId_ AND e.status = 'active' AND e.deleted = 0 AND e.id IN ( "
+			+ " SELECT uie.event_id FROM user_in_event uie WHERE uie.user_id = _userId_ AND uie.is_member = 1) ";
 
 	public EventDao() {
 		// gryn
@@ -351,28 +349,30 @@ public class EventDao extends AbstractDao<Event> {
 
 	public List<Event> getAllNotDeletedEventsByPattern(String text)
 			throws SQLException {
-		
+
 		String txt = "e.name LIKE '%TEXT%' OR e.name RLIKE '%TEXT%' OR e.description LIKE '%TEXT%' OR e.description RLIKE '%TEXT%'";
 
 		List<Event> results = new ArrayList<>();
-		//String sql = GET_NOT_DELETED_BY_PATTERN.replaceAll("TEXT", text);
-		
+		// String sql = GET_NOT_DELETED_BY_PATTERN.replaceAll("TEXT", text);
+
 		StringJoiner sqlJoiner = new StringJoiner(" OR ");
 		String[] tokens = text.split(" ");
-		for(String t: tokens) {
+		for (String t : tokens) {
 			String word = t.trim();
-			
-			if(word.length() == 0) continue;
-			
+
+			if (word.length() == 0)
+				continue;
+
 			sqlJoiner.add(txt.replaceAll("TEXT", word));
-			
+
 		}
-		
-		String sql = GET_NOT_DELETED_BY_PATTERN_EXTENDED.replace("_PATTERN_", sqlJoiner.toString());
-		System.out.println("******************************************************************************************");
+
+		String sql = GET_NOT_DELETED_BY_PATTERN_EXTENDED.replace("_PATTERN_",
+				sqlJoiner.toString());
+		System.out
+				.println("******************************************************************************************");
 		System.out.println(sql);
-		
-		
+
 		results = getWithCustomQuery(sql);
 
 		return results;
@@ -485,16 +485,23 @@ public class EventDao extends AbstractDao<Event> {
 			System.out.println(e);
 		}
 	}
-	
+
+	public Event getEventById(int id) throws SQLException {
+		List<Event> list = super.getByField("id", id);
+		if (list.isEmpty()) {
+			return null;
+		} else {
+			return list.get(0);
+		}
+
+	}
+
 	public static void main(String[] args) throws SQLException {
-		List<Event> list = new EventDao().getAllNotDeletedEventsByPattern("yoga");
-		list.forEach(x->System.out.println(x.getName()));
-		
-		
+		List<Event> list = new EventDao()
+				.getAllNotDeletedEventsByPattern("yoga");
+		list.forEach(x -> System.out.println(x.getName()));
+
 		// "e.name LIKE '%TEXT%' OR e.name RLIKE '%TEXT%' OR e.description LIKE '%TEXT%' OR e.description RLIKE '%TEXT%'";
-		
-		
-		
-		
+
 	}
 }
