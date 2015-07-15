@@ -1,5 +1,17 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><script
-	type="text/javascript">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct"%>
+
+<!-- begin Localization -->
+<jsp:include page="../localization.jsp" />
+<ct:showLocale basename="locale.mailsender.messages" from="eventsincabinet.do" />
+
+<fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
+<fmt:bundle basename="locale.mailsender.messages" >
+<!-- end Localization -->
+
+
+<script type="text/javascript">
 	$(document).ready(function() {
 		$('#sendmessagetousers').click(function() {
 			var checkedUsers = [];
@@ -60,7 +72,7 @@
 }
 </style>
 <br>
-<h4>Mail Sender</h4>
+<h4><fmt:message key="mailsender.mailsender" /></h4>
 <br>
 <div class="blue lighten-5">
 	<div class="row">
@@ -68,7 +80,7 @@
 			<div class="row">
 				<div class="input-field col s12">
 					<textarea id="textmessagetousers" class="materialize-textarea"
-						placeholder="message"></textarea>
+						placeholder="<fmt:message key="mailsender.message" />"></textarea>
 
 				</div>
 			</div>
@@ -76,7 +88,7 @@
 	</div>
 
 	<button id="sendmessagetousers" class="btn" type="submit" name="action">
-		Send <i class="mdi-content-send right"></i>
+		<fmt:message key="mailsender.send" /> <i class="mdi-content-send right"></i>
 	</button>
 </div>
 <br>
@@ -86,11 +98,11 @@
 	<ul>
 		<button id="checkallusers" style="margin-left: 4%;"
 			class="btn transparent" type="submit" name="action">
-			<span class="blue-text text-darken-2"> all</span>
+			<span class="blue-text text-darken-2"> <fmt:message key="mailsender.all" /></span>
 		</button>
 		<button id="removecheckfromall" style="margin-left: 4%;"
 			class="btn transparent" type="submit" name="action">
-			<span class="blue-text text-darken-2"> remove</span>
+			<span class="blue-text text-darken-2"> <fmt:message key="mailsender.remove" /></span>
 		</button>
 
 
@@ -109,3 +121,4 @@
 	</ul>
 </div>
 <br>
+</fmt:bundle>

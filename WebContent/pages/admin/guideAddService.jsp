@@ -239,7 +239,24 @@
 																Materialize
 																		.toast(
 																				stringToShow,
-																				5000)
+																				5000);
+																$(
+																		"#dropdowndef")
+																		.prop(
+																				'disabled',
+																				true);
+																$('#name2')
+																		.val(
+																				null);
+																$('#desc').val(
+																		null);
+																$('#price')
+																		.val(
+																				null);
+																$("#sub")
+																		.prop(
+																				'disabled',
+																				false);
 															}
 														});
 
