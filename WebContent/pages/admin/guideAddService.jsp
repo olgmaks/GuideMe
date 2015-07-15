@@ -309,7 +309,7 @@
 
 	</div>
 	<select id="dropdowndef" style="width: 20%;" class="browser-default">
-		<option id="firstchoosen">choose</option>
+		<option id="firstchoosen"><fmt:message key="services.choose" /></option>
 		<c:forEach items="${listOfServices }" var="service">
 			<option value='${service.getId() }'>${ service.getName()}</option>
 		</c:forEach>
