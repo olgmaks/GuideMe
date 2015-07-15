@@ -4,9 +4,9 @@
 <!-- begin Localization -->
 	<jsp:include page="../localization.jsp" />
 	<ct:showLocale basename="locale.admin.admin"
-		from="admincity.do" />
+		from="usermessages.do" />
 	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
-	<fmt:bundle basename="locale.dataTable.dataTable">
+	<fmt:bundle basename="locale.admin.admin">
 		<!-- end Localization -->
 <style>
 .table-wrapper {
@@ -151,9 +151,7 @@ var friendAvatar;
                var jsonObj = JSON.parse(event.data);
                var numberMessageId = '#numberNewMessage' + jsonObj.userId;//recive number of new message
                var number = parseInt($(numberMessageId).html()) +1 ;
-           	 Materialize.toast('new message from ' + jsonObj.userName) , 10,'',function(){   
-               
-                };
+         
                if (friendId == jsonObj.userId){
             	   var td = ' <td class = "td-right-round" bgcolor= "#2ECCFA" width="15%">'
 						+ jsonObj.userName

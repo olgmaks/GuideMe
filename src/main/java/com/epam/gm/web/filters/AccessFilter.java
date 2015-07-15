@@ -143,8 +143,12 @@ public class AccessFilter implements Filter {
         //Filter for admin
         if (session != null
                 && user != null
-                && (
-                URI.contains("admin.do")
+                && (URI.contains("admin.do")
+                || URI.contains("adminTag.do")
+                || URI.contains("adminuserservlet.do")
+                || URI.contains("admincity.do")
+                || URI.contains("admincountry.do")
+                || URI.contains("adminlanguage.do")
         )) {
 
             if (user.getUserType().getName().equals("admin")) {

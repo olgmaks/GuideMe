@@ -1,4 +1,13 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct"%>
+<!-- begin Localization -->
+	<jsp:include page="../localization.jsp" />
+	<ct:showLocale basename="locale.admin.admin"
+		from="usermessages.do" />
+	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
+	<fmt:bundle basename="locale.admin.admin">
+		<!-- end Localization -->
 <style>
 .table-wrapper-friend {
 	width: 100%;
@@ -11,7 +20,7 @@
 		<div class="col s12" style="margin-top: 10px;">
 			<ul class="collection z-depth-2 " id="collectionResults">
 				<li class="collection-item" id="inner-row">
-				<p><a href="#" onclick = "openModalWindow()"> send message to admin</a></p>
+				<p><a href="#" onclick = "openModalWindow()"><fmt:message key="messageadmin.sendmessage" /></a></p>
 				<c:forEach
 						var="userFriend" items="${userFriends}">
 
@@ -53,3 +62,4 @@
 		</div>
 	</div>
 </div>
+</fmt:bundle>
