@@ -25,7 +25,7 @@
 
 	<!-- begin Localization -->
 	<jsp:include page="localization.jsp"/>
-	<ct:showLocale basename="locale.register.messages" from = "register.do" />
+	<ct:showLocale basename="locale.register.messages" from = "addEvent.do" />
 
 	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
 	<fmt:bundle basename="locale.register.messages">

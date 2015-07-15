@@ -1,9 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+	<fmt:bundle basename="locale.register.messages">
+
 <div class="row" style="width: 280px;">
   <div class="col s12" style="margin-top:10px;">
     <ul class="collection z-depth-2 ">
       <li class="collection-item">
-        Recommended events
+         <fmt:message  key="Recommendedevents" /> 
       </li>
     </ul>
     <ul class="collection z-depth-2 ">
@@ -37,3 +43,4 @@
     </ul>
   </div>
 </div>
+</fmt:bundle>
