@@ -175,7 +175,7 @@
 							src="img/error.jpg" id="contentImage" border="0" width="50px"
 							height="50px"></a></td>
 			</table>
-			<input type="submit" value="Save" id="save">
+			<input type="submit" value="<fmt:message key="global.save" />" id="save">
 		</form>
 	</div>
 </fmt:bundle>

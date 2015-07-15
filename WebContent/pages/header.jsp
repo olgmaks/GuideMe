@@ -7,7 +7,7 @@
 			</li>
 		
 			<li><a id="guide-me-label"
-				href=${sessionUser==null ? "home.do" : "userCabinet.do"}>
+				href=${sessionUser==null ? "home.do" : sessionUser.userTypeId == 1 ?"admin.do":  "userCabinet.do"}>
 				<%--Guide ME--%>
 			<img src="icons/guide-me.png" style="height: 25px; vertical-align: middle;"></a></li>
 		</ul>
