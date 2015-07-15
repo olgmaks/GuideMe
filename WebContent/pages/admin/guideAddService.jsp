@@ -12,7 +12,7 @@
 <fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
 <fmt:bundle basename="locale.services.messages">
 	<!-- end Localization -->
-	
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#deleteservices").click(function() {
@@ -85,20 +85,20 @@
 													good = 0;
 													Materialize
 															.toast(
-																	"name can't be null",
+																	_('js.namecantnull'),
 																	1500);
 												} else if (name.length > 25) {
 													good = 0;
 													Materialize
 															.toast(
-																	"name can't be to big",
+																	_('js.namecanttobig'),
 																	1500);
 												}
 												if ($('#desc').val().length > 40) {
 													good = 0;
 													Materialize
 															.toast(
-																	"description can't be to big",
+																	_('js.descriptiontobig'),
 																	1500);
 												}
 
@@ -107,14 +107,14 @@
 														good = 0;
 														Materialize
 																.toast(
-																		"price can't be less than null",
+																		_('js.pricecantlessnull'),
 																		1500);
 													}
 												} else if (isNaN(price)) {
 													good = 0;
 													Materialize
 															.toast(
-																	"price must be a number",
+																	_('js.pricemustnumber'),
 																	1500);
 												}
 												/* 			var positions = $('#positions')
@@ -174,7 +174,7 @@
 															good = 0;
 															Materialize
 																	.toast(
-																			"date and time can't null",
+																			_('js.datecantnull'),
 																			1500);
 														}
 													}
@@ -183,19 +183,19 @@
 														good = 0;
 														Materialize
 																.toast(
-																		"date to can't be less than date from",
+																		_('js.datecantlessto'),
 																		1500);
 													} else if (datefrom < today) {
 														good = 0;
 														Materialize
 																.toast(
-																		"date from can't be less than NOW!",
+																		_('js.datecantlessnow'),
 																		1500);
 													} else if (dateto > currenteventdateto) {
 														good = 0;
 														Materialize
 																.toast(
-																		"date to can't be bigger than event date to",
+																		_('js.datecantbiggerfrom'),
 																		1500);
 													}
 
@@ -204,13 +204,13 @@
 															good = 0;
 															Materialize
 																	.toast(
-																			"date to can't be less than date from",
+																			_('js.datetocantlessfrom'),
 																			1500);
 														} else if (timefrom == timeto) {
 															good = 0;
 															Materialize
 																	.toast(
-																			"date from can't equals to",
+																			_('js.datetocantequelsdateto'),
 																			1500);
 														}
 													}
@@ -246,9 +246,9 @@
 
 																success : function(
 																		data) {
-																	var stringToShow = "Service Added"
+																	var stringToShow = _('js.serviceadded')
 																	if (data.isChanged) {
-																		stringToShow = "New Service Added";
+																		stringToShow = _('js.newserviceadded');
 																	}
 																	Materialize
 																			.toast(
@@ -304,8 +304,10 @@
 	</script>
 	<div id="sourcefrom">
 		<input name="group1" type="radio" id="fromtemplates" checked="checked" />
-		<label for="fromtemplates"><fmt:message key="services.fromtemplates" /></label> <input name="group1"
-			type="radio" id="newservice" /> <label for="newservice"><fmt:message key="services.new" /></label>
+		<label for="fromtemplates"><fmt:message
+				key="services.fromtemplates" /></label> <input name="group1" type="radio"
+			id="newservice" /> <label for="newservice"><fmt:message
+				key="services.new" /></label>
 
 	</div>
 	<select id="dropdowndef" style="width: 20%;" class="browser-default">
@@ -314,42 +316,49 @@
 			<option value='${service.getId() }'>${ service.getName()}</option>
 		</c:forEach>
 	</select>
-name
-<input type="text" style="width: 50%;" disabled id="name2" />
+
+	<fmt:message key="services.name" />
+	<input type="text" style="width: 50%;" disabled id="name2" />
 	<br>
-desciption
-<input type="text" style="width: 50%;" id="desc" />
-price
-<input type="text" style="width: 20%;" id="price" /><br>
-date from
-<input type="date" style="width: 25%;" id="datefrom" />
+	<fmt:message key="services.description" />
+	<input type="text" style="width: 50%;" id="desc" />
+	<fmt:message key="services.price" />
+	<input type="text" style="width: 20%;" id="price" />
+	<br>
+	<fmt:message key="services.datefrom" />
+	<input type="date" style="width: 25%;" id="datefrom" />
 	<input type="time" style="width: 25%;" id="timefrom" />
 	<input type="checkbox" id="test6" />
-	<label for="test6">without dates</label>
+	<label for="test6"><fmt:message key="services.withoutdates" /></label>
 	<br>
-date to
-<input type="date" style="width: 25%;" id="dateto" />
+
+	<fmt:message key="services.dateto" />
+	<input type="date" style="width: 25%;" id="dateto" />
 	<input type="time" style="width: 25%;" id="timeto" />
 	<br>
 	<!-- amount of positons
 <input type="text" style="width: 25%;" id="positions" />
 <input type="checkbox" id="test5" />
 <label for="test5">unlimited</label> -->
-	<p>Is Necessary?
+	<p>
+		<fmt:message key="services.isnecessary" />
 	<div class="switch">
-		<label> No <input id="isNecessary" type="checkbox"> <span
-			class="lever"></span> Yes
+		<label> <fmt:message key="services.no" /> <input
+			id="isNecessary" type="checkbox"> <span class="lever"></span>
+			<fmt:message key="services.yes" />
 		</label>
 	</div>
 
 	<br>
 	<button disabled class="waves-light btn" type="submit" id="sub"
-		name="action">Add To Event</button>
+		name="action">
+		<fmt:message key="services.addtoevent" />
+	</button>
 	<br>
 	<br>
 	<a id="deleteservices" class="waves-light btn modal-trigger"
-		href="#modal2">Delete Services From Event</a>
+		href="#modal2"><fmt:message key="services.deletefromevent" /></a>
 
 </fmt:bundle>
 
-	<%-- addServiceToGuideEvent.do?serviceid=${service.getId() } --%>
+<%-- addServiceToGuideEvent.do?serviceid=${service.getId() } --%>

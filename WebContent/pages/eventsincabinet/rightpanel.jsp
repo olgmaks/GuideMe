@@ -1,5 +1,17 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct"%>
+
+
+<!-- begin Localization -->
+<jsp:include page="../localization.jsp" />
+<ct:showLocale basename="locale.eventsincabinet.messages"
+	from="eventsincabinet.do" />
+
+<fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
+<fmt:bundle basename="locale.eventsincabinet.messages">
+	<!-- end Localization -->
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#resident").click(function() {
@@ -77,14 +89,19 @@
 <td style="width: 20%; vertical-align: top;">
 
 	<ul class="collection with-header">
-		<li class="collection-header"><h4>MENU</h4></li>
-		<li id="all" class="collection-item active"><a href="#">All</a></li>
-		<li id="resident" class="collection-item"><a href="#">Resident</a></li>
-		<li id="own" class="collection-item"><a href="#">Own</a></li>
+		<li class="collection-header"><h4><fmt:message
+				key="eventinservice.menu" /></h4></li>
+		<li id="all" class="collection-item active"><a href="#"><span class="black-text"> <fmt:message
+				key="eventinservice.all" /></span></a></li>
+		<li id="resident" class="collection-item"><a href="#"><span class="black-text"><fmt:message
+				key="eventinservice.resident" /></span></a></li>
+		<li id="own" class="collection-item"><a href="#"><span class="black-text"><fmt:message
+				key="eventinservice.own" /></span></a></li>
 
 	</ul> <br>
 	<ul class="collection with-header">
-		<li id="yourrequests" class="collection-item"><a href="#">Your
-				Requests</a></li>
+		<li id="yourrequests" class="collection-item"><a href="#"><fmt:message
+				key="eventinservice.yourrequests" /></a></li>
 	</ul>
 </td>
+</fmt:bundle>
