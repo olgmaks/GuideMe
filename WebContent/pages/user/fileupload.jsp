@@ -1,4 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct" %>	
+
 <%--
   Created by IntelliJ IDEA.
   User: OLEG
@@ -24,12 +27,13 @@
 <html lang="en">
 
 <head>
+<fmt:bundle basename="locale.register.messages">
     <!-- Force latest IE rendering engine or ChromeFrame if installed -->
     <!--[if IE]>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <![endif]-->
     <meta charset="utf-8">
-    <title>jQuery File Upload Demo - jQuery UI version</title>
+    <title><fmt:message key="gal.jQueryUp"/></title>
     <meta name="description"
           content="File Upload widget with multiple file selection, drag&amp;drop support, progress bars, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads and client-side image resizing. Works with any server-side platform (PHP, Python, Ruby on Rails, Java, Node.js, Go etc.) that supports standard HTML form file uploads.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,21 +67,31 @@
     <!--     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
     <!--     <script src="js/materialize.js"></script> -->
     <!--     <script src="js/init.js"></script> -->
+    
+	<!-- begin Localization -->
+	<ct:showLocale basename="locale.register.messages" from = "userCabinetComments.do" />
+
+	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+	
+	<!-- end Localization -->    
+   
+  </fmt:bundle>  
 </head>
 <body>
+<fmt:bundle basename="locale.register.messages">
 <div class="row">
 
     <div class="col s12" style="margin-top: 10px;width:900px;">
 
         <ul class="collection z-depth-2">
-            <li class="collection-item" style="height: 50px;">Drag and drop files or choose in file system
+            <li class="collection-item" style="height: 50px;"><fmt:message key="gal.Draganddrop" /> 
                
                         <c:choose>
                     <c:when test="${uploadtype=='user'}">
-                         <a style="float: right;" href="usergallery.do">Back to Gallery
+                         <a style="float: right;" href="usergallery.do"><fmt:message key="gal.BacktoGallery"/> 
                     </c:when>
                     <c:otherwise>
-                         <a style="float: right;" href="eventDetail.do?id=${eventId}">Back to Event
+                         <a style="float: right;" href="eventDetail.do?id=${eventId}"> <fmt:message key="gal.BacktoEvent" /> 
                     </c:otherwise>
                 </c:choose>
                 <img src="icons/back-icon.png" style="height: 30px;width: 30px;vertical-align: middle"></a>
@@ -97,14 +111,14 @@
 
                             <div style="margin-top:0; display: inline-block;float: left">
            <span class="fileinput-button">
-                <span>Add files...</span>
+                <span> <fmt:message key="gal.Addfiles" />...</span>
                 <input type="file" name="files[]" multiple>
             </span>
                                 <!--             </div> -->
                                 <!-- <div style="margin-top:20px;vertical-align: top"> -->
-                                <button type="submit" class="start">Start upload</button>
-                                <button type="reset" class="cancel">Cancel upload</button>
-                                <button type="button" class="delete">Delete</button>
+                                <button type="submit" class="start"> <fmt:message key="gal.Startupload" /> </button>
+                                <button type="reset" class="cancel"><fmt:message key="gal.Cancelupload"/> </button>
+                                <button type="button" class="delete"><fmt:message key="gal.Delete"/>  </button>
                             </div>
                             <div style=" margin-top: 20px">
                                 <input type="checkbox" class="toggle browser-default" id="checkbox-deleteall">
@@ -252,6 +266,8 @@
 <!--[if (gte IE 8)&(lt IE 10)]>
 <script src="js/cors/jquery.xdr-transport.js"></script>
 <![endif]-->
+
+</fmt:bundle>
 </body>
 </html>
 

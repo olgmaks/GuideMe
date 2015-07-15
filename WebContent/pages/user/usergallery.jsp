@@ -1,6 +1,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <link rel="stylesheet"	href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.css" 	id="theme">
 <link rel="stylesheet"	href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+
+	<!-- begin Localization -->
+	<ct:showLocale basename="locale.register.messages" from = "usergallery.do" />
+
+	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+	<fmt:bundle basename="locale.register.messages">
+	<!-- end Localization -->
+	
+
   <script type="text/javascript">
  	$(document).ready(function() {
  		$(".delete-user-photo").on('click', function() {
@@ -33,7 +44,7 @@
 
 
 		<ul class="collection z-depth-2">
-			<li class="collection-item" style="height: 50px;">Gallery</li>
+			<li class="collection-item" style="height: 50px;"> <fmt:message key="gal.Gallery"/></li>
 		</ul>
 
 		<ul class="collection z-depth-2" style="min-width: 700px;">
@@ -56,15 +67,15 @@
 						class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
 						<div class="slides"></div>
 						<a class="prev"></a> <a class="next"></a> <a class="play-pause"></a>
-						<a class="">Set as avatar</a>
+						<a class=""><fmt:message key="gal.Setasavatar"/></a>
 					</div>
 					<div style="visibility: hidden" id="footer">
 						<a class="update-user-avatar" href="updateUserAvatar.do" data-url="updateUserAvatar.do" id="updateAvatar">
 						<img src="icons/update-avatar-icon.png" style="width: 30px; height: 30px;">
-							Set on avatar</a>
+							<fmt:message key="gal.Setonavatar"/></a>
 						<a class="delete-user-photo" data-value="" href="#_" id="deletePhoto" style="float: right">
 						<img src="icons/delete-photo-icon.png" style="width: 30px; height: 30px;" />
-							Delete from gallery</a>
+							<fmt:message key="gal.Deletefromgallery"/></a>
 					</div>
 				</div> 
 				
@@ -88,10 +99,12 @@
 
   <div id="confirmDeleteModal" class="modal" style="width: 25%">
     <div class="modal-content">
-      <h4>Delete photo</h4>
-      <p>Are you sure ?</p>
+      <h4><fmt:message key="gal.Deletephoto"/></h4>
+      <p><fmt:message key="gal.Areyousure"/> ?</p>
     </div>
     <div class="modal-footer">
-      <a href="#_" id = "modalDeletePhotoAnchor" data-value="" class=" modal-action modal-close waves-effect waves-green btn-flat">Yes, delete it</a>
+      <a href="#_" id = "modalDeletePhotoAnchor" data-value="" class=" modal-action modal-close waves-effect waves-green btn-flat"><fmt:message key="gal.Yesdeleteit"/></a>
     </div>
   </div>
+  
+  </fmt:bundle>

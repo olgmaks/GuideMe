@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link>
 
@@ -5,11 +6,36 @@
 <script src="js/moment.js"></script>
 <script src="js/dataTables.js"></script>
 <%--<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>--%>
+
+	<!-- begin Localization -->
+	<ct:showLocale basename="locale.register.messages" from = "userCabinetComments.do" />
+
+	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+	<fmt:bundle basename="locale.register.messages">
+	<!-- end Localization -->
+
+
 <script>
     $(document).ready(function () {
 
         $('#commentUserTable').DataTable({
-            "bSort": false
+            "bSort": false,
+            
+            "language" : {
+                "lengthMenu" : '<fmt:message key="show" />',
+                "zeroRecords" : '<fmt:message key="nothing" />',
+                "info" : "<fmt:message key='info' />",
+                "infoEmpty" : '<fmt:message key="noavail" />',
+                "infoFiltered" : "(filtered from MAX total records)",
+                "search" : "<fmt:message key='search' />",
+                "paginate" : {
+                 "first" : "First",
+                 "last" : "Last",
+                 "next" : "<fmt:message key='next' />",
+                 "previous" : "<fmt:message key='previous' />"
+                },
+               }            
+            
         });
 
         $('.respond-button').on('click', function () {
@@ -71,10 +97,10 @@
     <div class="col s12" style="margin-top:10px;">
         <ul class="collection z-depth-2">
             <li class="collection-item" style="height : 50px;">
-                <span>Comments from other users</span>
+                <span> <fmt:message key="com.Commentsfrom" /> </span>
                 <div style="display: inline-block; float: right;">
                 <a href="#_" class="respond-button" >
-                    Add comment to your self <img src="icons/respond-icon.png" style="width: 30px;height: 30px;vertical-align: middle"></a></div>
+                    <fmt:message key="com.AddCommenttoyourself"  /> <img src="icons/respond-icon.png" style="width: 30px;height: 30px;vertical-align: middle"></a></div>
             </li>
         </ul>
         <ul class="collection z-depth-2">
@@ -84,8 +110,8 @@
                     <thead>
                     <tr>
                         <th style="width:11%;"></th>
-                        <th style="width:18%; min-width: 100px;">Name</th>
-                        <th style="width:61%;">Comment</th>
+                        <th style="width:18%; min-width: 100px;"> <fmt:message key="com.Name" /> </th>
+                        <th style="width:61%;"> <fmt:message key="com.Comment"/> </th>
                         <th style="width:10%;"></th>
                     </tr>
                     </thead>
@@ -124,20 +150,22 @@
 
 <div id="answerOnCommentWindow" class="modal" style="height: 320px;">
     <div class="modal-content">
-        <h4>Provide your comment</h4>
+        <h4><fmt:message key="com.provide"/></h4>
 
         <div class="row" style="margin-left: 10%">
             <div class="input-field col s6" style="width: 80%">
                 <%--<i class="material-icons prefix">mode_edit</i>--%>
                 <textarea id="messageRespond" class="materialize-textarea" length="120"></textarea>
-                <label for="messageRespond">Your respond</label>
+                <label for="messageRespond"><fmt:message key="com.Yourrespond"/></label>
             </div>
         </div>
 
 
     </div>
     <div class="modal-footer">
-        <a href="#_" id="sendRespondOnComment" style="margin-left: 40%;">Post
+        <a href="#_" id="sendRespondOnComment" style="margin-left: 40%;"> <fmt:message key="com.Post"/> 
             <img src="icons/send-message-icon.png" style="width: 60px;height: 60px;vertical-align:middle"></a>
     </div>
 </div>
+
+</fmt:bundle>
