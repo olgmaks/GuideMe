@@ -3,10 +3,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct" %>
 
 
 <fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
 <fmt:bundle basename="locale.cabinet.messages">
+
+
 
 <script src="js/left-panel-tag-controller.js" type="text/javascript"></script>
 
@@ -23,6 +26,9 @@
 		});
 	});
 </script>
+
+
+
 <div class="row">
 	<div class="col s12" style="margin-top: 10px; width: 270px;">
 		<ul class="collection z-depth-2 " style="height: 100%;">

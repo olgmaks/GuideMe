@@ -11,27 +11,21 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
 
-<link href="css/materialize.css" type="text/css" rel="stylesheet"
-	media="screen,projection" />
-<link href="css/style.css" type="text/css" rel="stylesheet"
-	media="screen,projection" />
+<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <%--Tag it css--%>
 <link href="css/jquery.tagit.css" rel="stylesheet" type="text/css">
 <link href="css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
 
 <link rel="shortcut icon" href="http://designshack.net/favicon.ico">
 <link rel="icon" href="http://designshack.net/favicon.ico">
-<link rel="stylesheet" type="text/css" media="all"
-	href="css/styleUserProfile.css">
+<link rel="stylesheet" type="text/css" media="all" href="css/styleUserProfile.css">
 
 <link type="text/css" rel="stylesheet" href="css/jquery.ratings.css" />
 
 <%--Image gallery css--%>
-<link rel="stylesheet"
-	href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.css"
-	id="theme" />
-<link rel="stylesheet"
-	href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css" />
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.css" id="theme" />
+<link rel="stylesheet"href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css" />
 
 <%--Tag it css--%>
 <link href="css/jquery.tagit.css" rel="stylesheet" type="text/css">
@@ -40,8 +34,7 @@
 <!-- tag start -->
 <%--Maskymuk commented this line to provide goog visibility of img gallery--%>
 <%--<link rel="StyleSheet" href="css/ui-lightness/jquery-ui-1.9.2.custom.min.css" type="text/css" media="all"/>--%>
-<link rel="StyleSheet" href="css/jquery.tagedit.css" type="text/css"
-	media="all" />
+<link rel="StyleSheet" href="css/jquery.tagedit.css" type="text/css" media="all" />
 
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 <script src="js/jquery.ratings.js"></script>
@@ -50,10 +43,8 @@
 <script src="js/moment.js"></script>
 
 <%--Image gallery js--%>
-<script
-	src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-<script
-	src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
 <script src="js/jquery.image-gallery.js"></script>
 
 <script src="js/controller/eventDeletePhotoController.js"></script>

@@ -7,29 +7,33 @@
 <head>
 <title>Admin Cabinet</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
 
-<link href="css/materialize.css" type="text/css" rel="stylesheet"
-	media="screen,projection" />
-<link href="css/style.css" type="text/css" rel="stylesheet"
-	media="screen,projection" />
-<link rel="stylesheet" type="text/css" media="all"
-	href="css/styleUserProfile.css">
+<meta name="viewport"content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
 
+<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+<link rel="stylesheet" type="text/css" media="all" href="css/styleUserProfile.css">
+
+	<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet"
-	type="text/css" />
 
-<script src="js/jquery-1.8.2.js" type="text/javascript"></script>
+<%--<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet"type="text/css" />--%>
+
+<%--<script src="js/jquery-1.8.2.js" type="text/javascript"></script>--%>
 <script src="js/jquery-ui-1.10.3.custom.js" type="text/javascript"></script>
 
 <link type="text/css" rel="stylesheet" href="css/jquery.ratings.css" />
 <script src="js/jquery.ratings.js"></script>
 
+	<%--Tag it--%>
+	<link href="css/jquery.tagit.css" rel="stylesheet" type="text/css">
+	<link href="css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
+
+	<script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>
 
 
  <script type="text/javascript"> 

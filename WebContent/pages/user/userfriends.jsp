@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct" %>
 
-<ct:showLocale basename="locale.cabinet.messages"  from = "userCabinet.do" />
+<ct:showLocale basename="locale.cabinet.messages"  from = "userfriends.do" />
 <fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
 <fmt:bundle basename="locale.cabinet.messages">
 

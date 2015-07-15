@@ -4,16 +4,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct" %>
 
- 
- <link rel="stylesheet"	href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css" />
-
+<link rel="stylesheet"	href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.css" 	id="theme">
+<link rel="stylesheet"	href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
 <!--     <script	src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script> -->
-	
+
+
+
 	<script	src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-	
+<%----%>
 	<script src="js/jquery.image-gallery.js"></script>
-	
-	
+
+
 	<!-- begin Localization -->
 	<jsp:include page="../localization.jsp"/>
 	<ct:showLocale basename="locale.profile.messages" from = "userProfile.do" />
@@ -65,7 +66,7 @@
 		
 		<title> <fmt:message key="profile.title" /></title>
 		
-	</fmt:bundle>		
+	</fmt:bundle>
 </head>
 
 <body>
@@ -233,7 +234,7 @@
 				<ul class="collection" id="commentslist">
 
 					<c:forEach items="${requestScope.commentUser}" var="ce">
-					<li class="collection-item avatar"><img
+					<li class="collection-item avatar"><img style="object-fit: cover"
 					src="${ce.commentator.avatar.path}" alt="" class="circle">
 
 					<span class="title"><a
