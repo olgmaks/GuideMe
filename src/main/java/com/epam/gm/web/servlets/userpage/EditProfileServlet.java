@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.gm.services.*;
 import org.apache.commons.collections.map.HashedMap;
 
 import com.epam.gm.model.Address;
@@ -18,14 +19,16 @@ import com.epam.gm.model.City;
 import com.epam.gm.model.Country;
 import com.epam.gm.model.Language;
 import com.epam.gm.model.User;
-import com.epam.gm.services.AddressService;
-import com.epam.gm.services.CityService;
-import com.epam.gm.services.CountryService;
-import com.epam.gm.services.LanguageService;
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class EditProfileServlet implements HttpRequestHandler {
+
+	private UserService userService;
+
+	public EditProfileServlet () {
+		userService = new UserService();
+	}
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
@@ -51,7 +54,12 @@ public class EditProfileServlet implements HttpRequestHandler {
 		
 		CountryService countryService = new CountryService();
 		List<Country> countryList = countryService.getAll();
-		request.setAttribute("countryList", countryList);	
+		request.setAttribute("countryList", countryList);
+
+
+		//Maks get recommended friends (right panel)
+		List<User> recommendedFriends = userService.getUserFriendsOfFriends(user.getId());
+		request.setAttribute("recommendedFriends", recommendedFriends);
 		
 		String fbVkUser = "disabled";
 		

@@ -64,6 +64,8 @@ public class SessionRepository {
         return updatedSessionUser;
     }
 
+
+
     public static void setSessionUser(HttpServletRequest request, User user) {
         request.getSession(true).setAttribute(SESSION_USER, user);
     }

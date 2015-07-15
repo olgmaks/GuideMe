@@ -3,27 +3,28 @@
   <div class="col s12" style="margin-top:10px;">
     <ul class="collection z-depth-2 ">
       <li class="collection-item">
-        Recommended friends
+        Recommended events
       </li>
     </ul>
     <ul class="collection z-depth-2 ">
       <li class="collection-item">
-        <c:forEach var="recommendedFriend" items="${recommendedFriends}" begin="0" end="9">
+
+        <c:forEach var="recommendedEvent" items="${recommendedEvents}" begin="0" end="9">
 
           <%--<span>${recommendedFriend.firstName} ${recommendedFriend.lastName}</span>--%>
 
           <div class="card" style="height: 60px; width: 200px; float: left; margin-left: 10px;"
-               id="userFriendCard${recommendedFriend.id}">
+               id="userFriendCard${recommendedEvent.id}">
             <table>
               <tr>
-                <td style="width: 40px;"><a href="userProfile.do?id=${recommendedFriend.id}">
+                <td style="width: 40px;"><a href="eventDetail.do?id=${recommendedEvent.id}">
                   <img class="circle" style="margin-top:-5px;height: 40px; width: 40px; object-fit: cover"
-                       src="${recommendedFriend.avatar.path}"></a>
+                       src="${recommendedEvent.avatar.path}"></a>
                 </td>
                 <td>
                   <div>
-                    <a href="userProfile.do?id=${recommendedFriend.id}"
-                       class="black-text">${recommendedFriend.firstName} ${recommendedFriend.lastName}</a>
+                    <a href="eventDetail.do?id=${recommendedEvent.id}"
+                       class="black-text">${recommendedEvent.name}</a>
                   </div>
                 </td>
               </tr>

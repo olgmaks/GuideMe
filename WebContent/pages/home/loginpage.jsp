@@ -98,8 +98,8 @@
 <form id="loginform" method="post">
 
     <br>
-    <span style="margin-left: 40%; font-size: 18px;" >Please, sign in</span>
-    <br>
+    <span style="margin-left: 40%; font-size: 22px;" >Please, sign in</span>
+    <br>  <br>  <br>
      <div class="row" style="width: 80%; margin-left: 10%" id="row-to-be-replaced">
       <div class="row">
         <div class="input-field col s12">

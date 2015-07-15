@@ -68,10 +68,28 @@ public class EventDao extends AbstractDao<Event> {
 	private static final String GET_ALL_ACTIVE_EVENT_WHERE_USER_NOT_MODERATOR = " e WHERE e.moderator_id != _userId_ AND e.status = 'active' AND e.deleted = 0 AND e.id IN ( "
 			+ " SELECT uie.event_id FROM user_in_event uie WHERE uie.user_id = _userId_ AND uie.is_member = 1) ";
 
+	private static final String GET_USER_FRIENDS_EVENTS = "e JOIN user_in_event uie ON e.id = uie.event_id " +
+			"  WHERE uie.user_id IN (" +
+				" SELECT u.id FROM user u JOIN friend_user  fu2 ON u.id = fu2.friend_id " +
+					" WHERE  fu2.user_id=%1$s  " +
+							" AND EXISTS (" +
+				" SELECT * FROM friend_user fu3 WHERE fu3.user_id=fu2.friend_id " +
+							" AND EXISTS (" +
+					" SELECT * FROM friend_user WHERE fu2.user_id=fu3.friend_id" +
+				" ))" +
+			" ) AND e.id NOT IN (" +
+				" SELECT e1.id FROM event e1 JOIN user_in_event uie1 ON e1.id = uie1.event_id WHERE uie1.user_id = %1$s)" +
+			" AND e.deleted=false" +
+			" GROUP BY e.id";
+
 	public EventDao() {
 		// gryn
 		// super(ConnectionManager.getConnection(), Event.class);
 		super(Event.class);
+	}
+
+	public List<Event> getUserFriendsEvents (Integer userId) throws SQLException {
+		return  super.getWithCustomQuery(String.format(GET_USER_FRIENDS_EVENTS, userId));
 	}
 
 	public List<Event> getActiveAndNotDeletedEventsByModeratorId(int id)

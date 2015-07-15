@@ -292,7 +292,7 @@
 
 
 	<div class="row" style="margin-top: 15px;">
-		<div class="col s12" style="width: 90%; margin-left: 10%">
+		<div class="col s12" style="">
 			<ul class="collection z-depth-2 ">
 				<li class="collection-item">
 					<div class="row">

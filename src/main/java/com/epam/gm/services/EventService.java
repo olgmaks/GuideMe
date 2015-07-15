@@ -6,6 +6,7 @@ import com.epam.gm.model.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +42,12 @@ public class EventService {
 
     public List<Event> getUserEvents(Integer moderatorId) throws SQLException {
         return eventDao.getByField("moderator_id", moderatorId);
+    }
+
+    public List<Event> getUserFriendEvents (Integer userId) throws SQLException {
+        List<Event> results = eventDao.getUserFriendsEvents(userId);
+        Collections.shuffle(results);
+        return results;
     }
 
     public List<Event> getAllActiveNotDeletedEvents() throws SQLException {

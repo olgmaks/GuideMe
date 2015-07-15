@@ -31,8 +31,7 @@ public class SingInVkServlet extends HttpServlet implements HttpRequestHandler {
 	private final String REDIRECT_URI = "http://localhost:8080/GuideMe/loginvk.do";
 	private final String APP_ID = "4955136";
 	private final String APP_SECRET = "woAtcmEdvhP9Llc4WNnd";
-	private static final Logger logger = Logger
-			.getLogger(SingInVkServlet.class);
+	private static final Logger logger = Logger.getLogger(SingInVkServlet.class);
 	/**
 	 * 
 	 */

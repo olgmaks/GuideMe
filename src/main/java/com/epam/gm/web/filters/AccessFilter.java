@@ -21,8 +21,12 @@ public class AccessFilter implements Filter {
         HttpServletResponse servletResponse = ((HttpServletResponse) response);
 
         HttpSession session = servletRequest.getSession(false);
+        System.out.println("session : " + session);
+        User user = null;
 
-        User user = SessionRepository.getSessionUser(servletRequest);
+        if (session != null) {
+            user = SessionRepository.getSessionUser(servletRequest);
+        }
 
         String URI = servletRequest.getRequestURI().trim();
 
@@ -48,11 +52,23 @@ public class AccessFilter implements Filter {
 
         //Verifying does session null
         if (session == null && (
-                !URI.contains("home.do") &&
-                !URI.contains("loginPage.do") &&
-                !URI.contains("login.do")&&
-                !URI.equals("/GuideMe/")
-        )) {
+                        !URI.contains("home.do") &&
+                        !URI.contains("loginPage.do") &&
+                        !URI.contains("login.do") &&
+                        !URI.contains("loginfb.do") &&
+                        !URI.contains("loginvk.do") &&
+                        !URI.contains("register.do") &&
+                        !URI.contains("registervalidator.do") &&
+                        !URI.contains("getCitiesByCountry.do") &&
+                        !URI.contains("getLocalCountryAnalogs.do") &&
+                        !URI.contains("getLocalCityAnalogs.do") &&
+                        !URI.contains("registerAddressValidator.do") &&
+                        !URI.contains("confirmValidator.do") &&
+                        !URI.contains("submitRegister.do") &&
+                        !URI.contains("userforgotpassword.do") &&
+                        !URI.contains("sendlinktoresetpass.do") &&
+                        !URI.equals("/GuideMe/")
+         )) {
             System.out.println("session null - redirecting in login ");
 //			request.getRequestDispatcher("loginPage.do").forward(servletRequest,servletResponse);
             servletResponse.sendRedirect("loginPage.do");
@@ -60,14 +76,25 @@ public class AccessFilter implements Filter {
             return;
         }
 //
-        //Verifying does user null
-        if (user == null && (
-                !URI.contains("home.do") &&
-                !URI.contains("loginPage.do") &&
-                !URI.contains("login.do")&&
-                !URI.contains("loginfb.do")&&
-                !URI.contains("loginvk.do")&&
-				!URI.equals("/GuideMe/")
+//        Verifying does user null
+        if (session != null &&
+                user == null && (
+                        !URI.contains("home.do") &&
+                        !URI.contains("loginPage.do") &&
+                        !URI.contains("login.do") &&
+                        !URI.contains("loginfb.do") &&
+                        !URI.contains("loginvk.do") &&
+                        !URI.contains("register.do") &&
+                        !URI.contains("registervalidator.do") &&
+                        !URI.contains("getCitiesByCountry.do") &&
+                        !URI.contains("getLocalCountryAnalogs.do") &&
+                        !URI.contains("getLocalCityAnalogs.do") &&
+                        !URI.contains("registerAddressValidator.do") &&
+                        !URI.contains("confirmValidator.do") &&
+                        !URI.contains("submitRegister.do") &&
+                        !URI.contains("userforgotpassword.do") &&
+                        !URI.contains("sendlinktoresetpass.do") &&
+                        !URI.equals("/GuideMe/")
         )) {
 
             System.out.println("session user null - redirecting in login ");
@@ -79,19 +106,13 @@ public class AccessFilter implements Filter {
 
 
         //Filter for admin
-        if (session!=null
-                && user!=null
+        if (session != null
+                && user != null
                 && (
-                   URI.contains("admin.do")
-                || URI.contains("adminEvent.do")
-                || URI.contains("adminEventRequest.do")
-                || URI.contains("adminUserRequest.do")
-                || URI.contains("adminTag.do")
-                || URI.contains("adminTagRequest.do")
-                || URI.contains("deleteEventComment.do")
-                )){
+                URI.contains("admin.do")
+        )) {
 
-            if(user.getUserType().getName().equals("admin")){
+            if (user.getUserType().getName().equals("admin")) {
                 filterChain.doFilter(request, response);
                 return;
             } else {

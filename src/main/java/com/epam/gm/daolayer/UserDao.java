@@ -114,6 +114,18 @@ public class UserDao extends AbstractDao<User> {
 		super(User.class);
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
 	public void saveUser(User user) throws IllegalArgumentException,
 			IllegalAccessException, SQLException {
 		super.save(user);

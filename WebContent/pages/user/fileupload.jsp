@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: OLEG
@@ -10,114 +10,138 @@
 <!DOCTYPE HTML>
 <!--
 /*
- * jQuery File Upload Plugin jQuery UI Demo 9.1.0
- * https://github.com/blueimp/jQuery-File-Upload
- *
- * Copyright 2013, Sebastian Tschan
- * https://blueimp.net
- *
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
- */
+* jQuery File Upload Plugin jQuery UI Demo 9.1.0
+* https://github.com/blueimp/jQuery-File-Upload
+*
+* Copyright 2013, Sebastian Tschan
+* https://blueimp.net
+*
+* Licensed under the MIT license:
+* http://www.opensource.org/licenses/MIT
+*/
 -->
 
 <html lang="en">
 
 <head>
-<!-- Force latest IE rendering engine or ChromeFrame if installed -->
-<!--[if IE]>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<![endif]-->
-<meta charset="utf-8">
-<title>jQuery File Upload Demo - jQuery UI version</title>
-<meta name="description" content="File Upload widget with multiple file selection, drag&amp;drop support, progress bars, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads and client-side image resizing. Works with any server-side platform (PHP, Python, Ruby on Rails, Java, Node.js, Go etc.) that supports standard HTML form file uploads.">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- jQuery UI styles -->
-<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/dark-hive/jquery-ui.css" id="theme">
-<!-- Demo styles -->
-<link rel="stylesheet" href="css/demo.css">
-<!--[if lte IE 8]>
-<link rel="stylesheet" href="css/demo-ie8.css">
-<![endif]-->
-<style>
-/* Adjust the jQuery UI widget font-size: */
-.ui-widget {
-    font-size: 0.95em;
-}
-</style>
-<!-- blueimp Gallery styles -->
-<link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
-<link rel="stylesheet" href="css/jquery.fileupload.css">
-<link rel="stylesheet" href="css/jquery.fileupload-ui.css">
-<!-- CSS adjustments for browsers with JavaScript disabled -->
-<!-- <link rel="stylesheet" href="css/jquery.fileupload-noscript.css"/>  -->
-<!-- <link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css"/>  -->
+    <!-- Force latest IE rendering engine or ChromeFrame if installed -->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <![endif]-->
+    <meta charset="utf-8">
+    <title>jQuery File Upload Demo - jQuery UI version</title>
+    <meta name="description"
+          content="File Upload widget with multiple file selection, drag&amp;drop support, progress bars, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads and client-side image resizing. Works with any server-side platform (PHP, Python, Ruby on Rails, Java, Node.js, Go etc.) that supports standard HTML form file uploads.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- jQuery UI styles -->
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/dark-hive/jquery-ui.css"
+          id="theme">
+    <!-- Demo styles -->
+    <link rel="stylesheet" href="css/demo.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="css/demo-ie8.css">
+    <![endif]-->
+    <style>
+        /* Adjust the jQuery UI widget font-size: */
+        .ui-widget {
+            font-size: 0.95em;
+        }
+    </style>
+    <!-- blueimp Gallery styles -->
+    <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+    <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+    <link rel="stylesheet" href="css/jquery.fileupload.css">
+    <link rel="stylesheet" href="css/jquery.fileupload-ui.css">
+    <!-- CSS adjustments for browsers with JavaScript disabled -->
+    <!-- <link rel="stylesheet" href="css/jquery.fileupload-noscript.css"/>  -->
+    <!-- <link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css"/>  -->
 
-<!--     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
-<!--     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
-<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
-<!--     <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
-<!--     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
-<!--     <script src="js/materialize.js"></script> -->
-<!--     <script src="js/init.js"></script> -->
+    <!--     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
+    <!--     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
+    <!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+    <!--     <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+    <!--     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
+    <!--     <script src="js/materialize.js"></script> -->
+    <!--     <script src="js/init.js"></script> -->
 </head>
 <body>
+<div class="row">
 
+    <div class="col s12" style="margin-top: 10px;width:900px;">
 
-<!-- <form id="fileupload" action="upload.do" method="POST" enctype="multipart/form-data"> -->
-<form id="fileupload" action="${url}" method="POST" enctype="multipart/form-data">
-    <!-- Redirect browsers with JavaScript disabled to the origin page -->
-    <noscript><input type="hidden" name="redirect" value="upload"></noscript>
-    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-    <div class="fileupload-buttonbar">
-        <div class="fileupload-buttons">
-           
-           <div style="margin-top:0; display: inline-block;float: left"> 
+        <ul class="collection z-depth-2">
+            <li class="collection-item" style="height: 50px;">Drag and drop files or choose in file system
+                <a style="float: right;"
+                        <c:choose>
+                    <c:when test="${uploadtype=='user'}">
+                        href="usergallery.do">Back to Gallery
+                    </c:when>
+                    <c:otherwise>
+                        href="eventDetail.do?id=${eventId}">Back to Event
+                    </c:otherwise>
+                </c:choose>
+                <img src="icons/back-icon.png" style="height: 30px;width: 30px;vertical-align: middle"></a>
+
+            </li>
+
+        </ul>
+        <ul class="collection z-depth-2" style="min-height: 600px;">
+            <div style="margin-left: 50px;">
+                <!-- <form id="fileupload" action="upload.do" method="POST" enctype="multipart/form-data"> -->
+                <form id="fileupload" action="${url}" method="POST" enctype="multipart/form-data">
+                    <!-- Redirect browsers with JavaScript disabled to the origin page -->
+                    <noscript><input type="hidden" name="redirect" value="upload"></noscript>
+                    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                    <div class="fileupload-buttonbar">
+                        <div class="fileupload-buttons">
+
+                            <div style="margin-top:0; display: inline-block;float: left">
            <span class="fileinput-button">
                 <span>Add files...</span>
                 <input type="file" name="files[]" multiple>
-            </span> 
-<!--             </div> -->
-<!-- <div style="margin-top:20px;vertical-align: top"> -->
-            <button type="submit" class="start">Start upload</button>
-            <button type="reset" class="cancel">Cancel upload</button>
-            <button type="button" class="delete">Delete</button>
-            </div>
-            <div style=" margin-top: 20px">
-            <input type="checkbox" class="toggle browser-default" id="checkbox-deleteall">
-            <label for="checkbox-deleteall"></label> 
-            </div>
-             <br>
-            <!-- The global file processing state -->
-            <span class="fileupload-process"></span>
-<!--         </div> -->
-        <!-- The global progress state -->
-        <div class="fileupload-progress fade" style="display:none">
-            <!-- The global progress bar -->
-            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-            <!-- The extended global progress state -->
-            <div class="progress-extended">&nbsp;</div>
-        </div>
-    </div>
-    </div>
-    
-    <!-- The table listing the files available for upload/download -->
-    <table role="presentation"><tbody class="files"></tbody></table>
-</form>
-<br>
+            </span>
+                                <!--             </div> -->
+                                <!-- <div style="margin-top:20px;vertical-align: top"> -->
+                                <button type="submit" class="start">Start upload</button>
+                                <button type="reset" class="cancel">Cancel upload</button>
+                                <button type="button" class="delete">Delete</button>
+                            </div>
+                            <div style=" margin-top: 20px">
+                                <input type="checkbox" class="toggle browser-default" id="checkbox-deleteall">
+                                <label for="checkbox-deleteall"></label>
+                            </div>
+                            <br>
+                            <!-- The global file processing state -->
+                            <span class="fileupload-process"></span>
+                            <!--         </div> -->
+                            <!-- The global progress state -->
+                            <div class="fileupload-progress fade" style="display:none">
+                                <!-- The global progress bar -->
+                                <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                                <!-- The extended global progress state -->
+                                <div class="progress-extended">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
 
-<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
-    <div class="slides"></div>
-    <h3 class="title"></h3>
-    <a class="prev">‹</a>
-    <a class="next">›</a>
-    <a class="close">×</a>
-    <a class="play-pause"></a>
-    <ol class="indicator"></ol>
-</div>
+                    <!-- The table listing the files available for upload/download -->
+                    <table role="presentation">
+                        <tbody class="files"></tbody>
+                    </table>
+                </form>
+                <br>
 
-<script id="template-upload" type="text/x-tmpl">
+                <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+                    <div class="slides"></div>
+                    <h3 class="title"></h3>
+                    <a class="prev">‹</a>
+                    <a class="next">›</a>
+                    <a class="close">×</a>
+                    <a class="play-pause"></a>
+                    <ol class="indicator"></ol>
+                </div>
+
+                <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
         <td>
@@ -141,9 +165,10 @@
         </td>
     </tr>
 {% } %}
-</script>
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-tmpl">
+
+                </script>
+                <!-- The template to display files available for download -->
+                <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
         <td>
@@ -172,7 +197,12 @@
 {% } %}
 
 
-</script>
+
+                </script>
+            </div>
+        </ul>
+    </div>
+</div>
 <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 <!-- The Templates plugin is included to render the upload/download listings -->
@@ -205,19 +235,19 @@
 <script src="js/main.js"></script>
 
 <script>
-//  Initialize the jQuery UI theme switcher: -->
- $(document).ready(function () { 
-     var theme = $('#theme'); 
-      theme.prop(
-          'href', 
-          theme.prop('href').replace( 
-              /[\w\-]+\/jquery-ui.css/, 
+    //  Initialize the jQuery UI theme switcher: -->
+    $(document).ready(function () {
+        var theme = $('#theme');
+        theme.prop(
+                'href',
+                theme.prop('href').replace(
+                        /[\w\-]+\/jquery-ui.css/,
 //               $(this).val() + '/jquery-ui.css' 
-              'start'+ '/jquery-ui.css'
-         ) 
-      );
-  });
-  </script>
+                        'start' + '/jquery-ui.css'
+                )
+        );
+    });
+</script>
 <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
 <!--[if (gte IE 8)&(lt IE 10)]>
 <script src="js/cors/jquery.xdr-transport.js"></script>

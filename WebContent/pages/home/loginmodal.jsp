@@ -1,5 +1,5 @@
 <div id="signInModal" class="modal"
-	style="margin-left: 55%; width: 40%; height: 100%;">
+	style="margin-left: 55%; width: 40%;">
 	<!-- Show this window when user not logged -->
 	<form id="loginform">
 		<div class="modal-content" >

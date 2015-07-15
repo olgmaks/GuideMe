@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
 <html>
 <head>
 <title>User Cabinet</title>
@@ -12,7 +13,7 @@
 <link href="css/style.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
 <script src="http://code.jquery.com/jquery-latest.js">
-	
+
 </script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

@@ -12,17 +12,27 @@ import javax.servlet.http.HttpSession;
 
 import com.epam.gm.model.*;
 import com.epam.gm.services.CountryService;
+import com.epam.gm.services.EventService;
 import com.epam.gm.services.LanguageService;
 import com.epam.gm.services.WalletService;
+import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class AddEventServlet implements HttpRequestHandler {
 
+	private EventService eventService;
+
+	public AddEventServlet () {
+		eventService = new EventService();
+	}
+
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("sessionUser");
+//		HttpSession session = request.getSession();
+//		User user = (User) session.getAttribute("sessionUser");
+		User user = SessionRepository.getSessionUser(request);
+
 		Wallet wallet = new Wallet();
 		WalletService walletService = new WalletService();
 		request.setAttribute("centralContent", "addEvent");
@@ -30,7 +40,10 @@ public class AddEventServlet implements HttpRequestHandler {
 		LanguageService languageService = new LanguageService();
 		List<Language> languageList = languageService.getLocalizedLangs();
 		request.setAttribute("languageList", languageList);
-		
+
+
+		List<Event> recommendedEvents =  eventService.getUserFriendEvents(user.getId());
+		request.setAttribute("recommendedEvents",recommendedEvents);
 		
 		CountryService countryService = new CountryService();
 		List<Country> countryList = countryService.getAll();

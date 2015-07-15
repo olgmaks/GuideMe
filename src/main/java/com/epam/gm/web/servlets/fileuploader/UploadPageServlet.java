@@ -30,6 +30,7 @@ public class UploadPageServlet implements HttpRequestHandler {
 	}
 	
 	 request.setAttribute("url", targerUrl);
+	 request.setAttribute("uploadtype",uploadOwner);
 	 request.setAttribute("centralContent", centralContent);
 	 request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(request, response);
 
