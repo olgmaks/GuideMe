@@ -129,8 +129,10 @@ var friendAvatar;
 					<table  id = "messageUser">
 					</table>		
 		</div>
+		<div class="row" style="margin-left: 10%; margin-right: 10%" >
 				<input  type = text id = "enterMessage" onkeydown="if (event.keyCode == 13) sendMessage();">
-				<input  type="submit" value="Send" onclick="sendMessage();" id = "submitButton"/>
+				<input  type="submit" value="<fmt:message key="global.send" />" onclick="sendMessage();" id = "submitButton"/>
+        </div>
         </div>
 	
     </div>

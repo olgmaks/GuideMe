@@ -2,6 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct"%>
 <!-- begin Localization -->
+<script src="js/jquery-1.8.2.js" type="text/javascript"></script>
+
 <jsp:include page="../localization.jsp" />
 <ct:showLocale basename="locale.dataTable.dataTable"
 	from="adminlanguage.do" />

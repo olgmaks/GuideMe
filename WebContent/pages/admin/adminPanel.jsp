@@ -23,7 +23,6 @@
 
 <%--<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet"type="text/css" />--%>
 
-<%--<script src="js/jquery-1.8.2.js" type="text/javascript"></script>--%>
 <script src="js/jquery-ui-1.10.3.custom.js" type="text/javascript"></script>
 
 <link type="text/css" rel="stylesheet" href="css/jquery.ratings.css" />
