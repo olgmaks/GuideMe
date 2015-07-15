@@ -106,15 +106,15 @@
 			<br> <span class="black-text">Total Finalized Earnings</span>
 			<!-- <div class="center-align"> -->
 			<p>
-				<!-- <a class="modal-trigger waves-effect waves-light btn"
-					href="#withdrawmoneymodal">Withdraw</a> -->
+				<a class="modal-trigger waves-effect waves-light btn"
+					href="#withdrawmoneymodal">Withdraw</a>
 		</div>
 
 	</div>
 
 </div>
 <br>
-<%-- <blockquote>Earning History</blockquote>
+<blockquote>Earning History</blockquote>
 <ul class="collection">
 	<c:forEach items="${allWithdraws }" var="withdrawmoney">
 		<li class="collection-item"><span><fmt:formatDate
@@ -122,4 +122,4 @@
 					value="${ withdrawmoney.getWithdrawDate()}" /></span><span
 			class="purple lighten-5" style="margin-left: 78%;">-${ withdrawmoney.getMoneyAmount()}$</span></li>
 	</c:forEach>
-</ul> --%>
+</ul>

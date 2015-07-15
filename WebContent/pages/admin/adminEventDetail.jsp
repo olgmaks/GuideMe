@@ -806,7 +806,7 @@ nav {
 												<c:when test="${isModerator && isGuide }">
 													<!-- 	font-size: 90%; -->
 													<span style="font-size: 90%;"> <fmt:message
-															key="event.ordered" /></span>
+															key="event.bought" /></span>
 												</c:when>
 												<c:otherwise>
 													<fmt:message key="event.Services" />
@@ -832,10 +832,11 @@ nav {
 										<li><a href="#addservice"><fmt:message
 													key="event.AddService" /></a>
 									</c:if>
-									<li><a href="#mailsender"><fmt:message
-												key="event.mailsender" /></a></li>
-									</li>
-
+									<c:if test="${isModerator}">
+										<li><a href="#mailsender"><fmt:message
+													key="event.mailsender" /></a></li>
+										</li>
+									</c:if>
 									<c:if test="${isAdmin}">
 
 									</c:if>

@@ -2,9 +2,11 @@ package com.epam.gm.daolayer;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.epam.gm.model.ServiceInEvent;
 import com.epam.gm.olgmaks.absractdao.general.AbstractDao;
 
@@ -40,14 +42,14 @@ public class ServiceInEventDao extends AbstractDao<ServiceInEvent> {
 
 	public List<ServiceInEvent> getAllNecessaryServicesByEventId(int eventId,
 			int userId) throws SQLException {
-		return super.getWithCustomQuery(String.format(GET_ALL_NECESSARY_NOT_PAID,
-				eventId, userId));
+		return super.getWithCustomQuery(String.format(
+				GET_ALL_NECESSARY_NOT_PAID, eventId, userId));
 	}
 
 	public List<ServiceInEvent> getAllNotNecessaryServicesByEventId(
 			int eventId, int userId) throws SQLException {
-		return super.getWithCustomQuery(String.format(GET_ALL_NOT_NECESSARY_NOT_PAID,
-				eventId, userId));
+		return super.getWithCustomQuery(String.format(
+				GET_ALL_NOT_NECESSARY_NOT_PAID, eventId, userId));
 	}
 
 	public void updateServiceInEventToDeletedById(int id) throws SQLException {
@@ -59,11 +61,12 @@ public class ServiceInEventDao extends AbstractDao<ServiceInEvent> {
 
 	public static void main(String[] args) throws IllegalArgumentException,
 			IllegalAccessException, SQLException, ParseException {
-		List<ServiceInEvent> list = new ServiceInEventDao()
-				.getAllServicesByEventId(42);
-		for (ServiceInEvent s : list) {
-			System.out.println(s.getService().getName());
-		}
+		ServiceInEvent inEvent = new ServiceInEvent();
+		inEvent.setServiceId(3);
+		inEvent.setEventId(42);
+		inEvent.setDateTo(new Date());
+		inEvent.setIsNecessaryToPay(0);
+		new ServiceInEventDao().save(inEvent);
 	}
 
 }

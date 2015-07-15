@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="js/materialize.js"></script>
 
 <script type="text/javascript">
@@ -102,7 +102,7 @@
 								.click(
 										function() {
 											if (price != 0) {
-												$("#buyservices").text("order");
+												$("#buyservices").text("Buy");
 												$("#buyservices").attr("href",
 														"buyServices.do");
 												$("#generalprice").text(
@@ -142,7 +142,7 @@
 		$('.modal-trigger').leanModal();
 	});
 </script>
-ORDERED SERVICES
+PAID SERVICES
 
 <ul class="collection with-header" id="paid"
 	data-collapsible="accordion" style="width: 75%;">
@@ -167,13 +167,21 @@ AVAILABLE SERVICES
 			<div class="collapsible-header tooltipped green lighten-3"
 				price="${serviceinevent.getService().getPrice() }"
 				id="${serviceinevent.getId() }" data-position="left" data-delay="50"
-				data-tooltip="${serviceinevent.getService().getDescription() }">${serviceinevent.getService().getName() }
-				${serviceinevent.getService().getPrice() }$ <i
-					class="mdi-action-add-shopping-cart right"></i>
+				data-tooltip="${serviceinevent.getService().getDescription() }  ">${serviceinevent.getService().getName() }
+				${serviceinevent.getService().getPrice() }$
+				<c:if test="${!empty serviceinevent.getDateFrom()}"> Date from:
+				<fmt:formatDate type='both' dateStyle='short' timeStyle='short'
+						value='${serviceinevent.getDateFrom()}' />  Date to:
+				
+				</c:if>
+				<fmt:formatDate type='both' dateStyle='short' timeStyle='short'
+					value='${serviceinevent.getDateTo()}' />
+				<i class="mdi-action-add-shopping-cart right"></i>
 			</div>
 		</li>
 	</c:forEach>
 </ul>
+
 <h4 class="green-text text-darken-4">
 	bucket<i class='mdi-action-shopping-basket left'></i>
 </h4>
@@ -182,7 +190,7 @@ AVAILABLE SERVICES
 	pricenecessary=${sumOfAllNecessary }>Price ${sumOfAllNecessary } $</h4>
 
 
-<a id="buttonbuy" class="waves-light btn modal-trigger" href="#modal1">Order</a>
+<a id="buttonbuy" class="waves-light btn modal-trigger" href="#modal1">Buy</a>
 
 
 <ul id="touchable" class="collection with-header">
@@ -210,6 +218,6 @@ AVAILABLE SERVICES
 	</div>
 	<div class="modal-footer">
 		<a id="buyservices" href="buyServices.do"
-			class=" modal-action modal-close waves-effect waves-green btn-flat">Order</a>
+			class=" modal-action modal-close waves-effect waves-green btn-flat">Buy</a>
 	</div>
 </div>

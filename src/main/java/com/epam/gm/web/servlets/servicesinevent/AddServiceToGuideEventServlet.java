@@ -38,9 +38,11 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException,
 			IllegalAccessException {
+		
 		HttpSession session = request.getSession();
 		System.out.println("isnece*******"
 				+ request.getParameter("isnecessaryval"));
+
 		String description = request.getParameter("description");
 		String name = request.getParameter("nameval");
 
@@ -65,28 +67,27 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 				dateFrom = null;
 			}
 			serviceInEvent.setDateFrom(dateFrom);
-		}
-		if (request.getParameter("datetoval") != null
-				|| request.getParameter("datetoval") != ""
-				|| !request.getParameter("datefromval").equals("")) {
-			if (serviceInEvent != null) {
-				String fullDateTo = request.getParameter("datetoval") + "-"
-						+ request.getParameter("timetoval");
-				DateFormat formatTo = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
-				Date dateTo = null;
-				try {
-					dateTo = formatTo.parse(fullDateTo);
-				} catch (ParseException e) {
-					dateTo = null;
+			System.out.println("*********mydateto**************"+request.getParameter("datetoval") + "*****"
+					+ request.getParameter("timetoval"));
+			String fullDateTo = request.getParameter("datetoval") + "-"
+					+ request.getParameter("timetoval");
+			DateFormat formatTo = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
+			Date dateTo = null;
+			try {
+				dateTo = formatTo.parse(fullDateTo);
+			} catch (ParseException e) {
+				dateTo = null;
 
-				}
-				serviceInEvent.setDateTo(dateTo);
 			}
+			serviceInEvent.setDateTo(dateTo);
+			
 		}
+
 		int idEvent = (int) session.getAttribute("eventId");
-		
+
 		Integer idService = null;
-		if (!request.getParameter("serviceidval").equals("choose") && !request.getParameter("serviceidval").equals("")) {
+		if (!request.getParameter("serviceidval").equals("choose")
+				&& !request.getParameter("serviceidval").equals("")) {
 			idService = Integer.parseInt(request.getParameter("serviceidval"));
 		}
 		int amountOfPosition = 0;

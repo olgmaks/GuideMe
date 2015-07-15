@@ -42,7 +42,7 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 
 		String description = request.getParameter("description");
 		String name = request.getParameter("nameval");
-		System.out.println(name);
+		
 		User u = (User) session.getAttribute("sessionUser");
 		double price = 0;
 		try {
@@ -67,20 +67,19 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 		}
 		if (request.getParameter("datetoval") != null
 				|| request.getParameter("datetoval") != ""
-				|| !request.getParameter("datefromval").equals("")) {
-			if (serviceInEvent != null) {
-				String fullDateTo = request.getParameter("datetoval") + "-"
-						+ request.getParameter("timetoval");
-				DateFormat formatTo = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
-				Date dateTo = null;
-				try {
-					dateTo = formatTo.parse(fullDateTo);
-				} catch (ParseException e) {
-					dateTo = null;
+				|| !request.getParameter("datetoval").equals("")) {
 
-				}
-				serviceInEvent.setDateTo(dateTo);
+			String fullDateTo = request.getParameter("datetoval") + "-"
+					+ request.getParameter("timetoval");
+			DateFormat formatTo = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
+			Date dateTo = null;
+			try {
+				dateTo = formatTo.parse(fullDateTo);
+			} catch (ParseException e) {
+				dateTo = null;
+
 			}
+			serviceInEvent.setDateTo(dateTo);
 		}
 		int idEvent = (int) session.getAttribute("eventId");
 		int idService = Integer.parseInt(request.getParameter("serviceidval"));

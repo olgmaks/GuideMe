@@ -44,7 +44,7 @@ public class FrontController extends HttpServlet {
 			System.out.println("Put langs: " + languages);
 			config.getServletContext().setAttribute("applicationLangs", languages);
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			
 			e.printStackTrace();
 		}

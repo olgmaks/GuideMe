@@ -20,7 +20,7 @@
 				<div class="col s4 m3">
 					<div class="card">
 						<div class="card-image">
-							<img style="height: 140px; width: 100%;"
+							<img style="height: 140px; width: 100%;  object-fit:cover;"
 								src="${moderatorevent.avatar.getPath() }">
 						</div>
 						<div class="card-content">
@@ -65,7 +65,7 @@
 				<div class="col s4 m3">
 					<div class="card">
 						<div class="card-image">
-							<img style="height: 140px; width: 100%;"
+							<img style="height: 140px; width: 100%;  object-fit:cover;"
 								src="${moderatorevent.avatar.getPath() }">
 						</div>
 						<div class="card-content">

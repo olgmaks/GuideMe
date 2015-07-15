@@ -3,6 +3,15 @@
 
 <br>
 <jsp:include page="deleteServicesFromEventModal.jsp" />
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#deleteservices").click(function() {
+
+			$('#modal2').openModal();
+		});
+	});
+</script>
 <script type="text/javascript">
 	$(document)
 			.ready(
@@ -62,12 +71,26 @@
 											var good = 1;
 											var price = $('#price').val();
 											var name = $('#name2').val();
+
 											if (!name) {
 												good = 0;
 												Materialize.toast(
 														"name can't be null",
 														1500);
+											} else if (name.length > 25) {
+												good = 0;
+												Materialize.toast(
+														"name can't be to big",
+														1500);
 											}
+											if ($('#desc').val().length > 40) {
+												good = 0;
+												Materialize
+														.toast(
+																"description can't be to big",
+																1500);
+											}
+
 											if (!isNaN(price)) {
 												if (price < -1) {
 													good = 0;
@@ -83,24 +106,24 @@
 																"price must be a number",
 																1500);
 											}
-											var positions = $('#positions')
-													.val();
-											if (!isNaN(positions)) {
+											/* 			var positions = $('#positions')
+																.val();
+														if (!isNaN(positions)) {
 
-												if (positions < -1) {
-													good = 0;
-													Materialize
-															.toast(
-																	"positions can't be less than null",
-																	1500);
-												}
-											} else if (isNaN(positions)) {
-												good = 0;
-												Materialize
-														.toast(
-																"positions must be a number",
-																1500);
-											}
+															if (positions < -1) {
+																good = 0;
+																Materialize
+																		.toast(
+																				"positions can't be less than null",
+																				1500);
+															}
+														} else if (isNaN(positions)) {
+															good = 0;
+															Materialize
+																	.toast(
+																			"positions must be a number",
+																			1500);
+														} */
 											if (document
 													.getElementById('test6').checked) {
 											} else {
@@ -169,8 +192,15 @@
 																.toast(
 																		"date to can't be less than date from",
 																		1500);
+													} else if (timefrom == timeto) {
+														good = 0;
+														Materialize
+																.toast(
+																		"date from can't equals to",
+																		1500);
 													}
 												}
+
 											}
 											if (good == 1) {
 												$
@@ -188,7 +218,7 @@
 																datefromval : datefrom,
 																timefromval : timefrom,
 																datetoval : dateto,
-																timetoval : datefrom,
+																timetoval : timeto,
 																serviceidval : serviceid,
 																nameval : name,
 
@@ -269,10 +299,10 @@ date to
 <input type="date" style="width: 25%;" id="dateto" />
 <input type="time" style="width: 25%;" id="timeto" />
 <br>
-amount of positons
+<!-- amount of positons
 <input type="text" style="width: 25%;" id="positions" />
 <input type="checkbox" id="test5" />
-<label for="test5">unlimited</label>
+<label for="test5">unlimited</label> -->
 <p>Is Necessary?
 <div class="switch">
 	<label> No <input id="isNecessary" type="checkbox"> <span

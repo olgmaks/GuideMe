@@ -30,8 +30,10 @@
 			<c:forEach items="${allServicesInEvent }" var="serviceInEvent">
 				<li id="addedserviceinevent"
 					idofcurrentservice="${serviceInEvent.getId() }"
-					class="collection-item">${serviceInEvent.getService().getName() }<i
-					class='mdi-content-remove-circle-outline right'></i></li>
+					class="collection-item">${serviceInEvent.getService().getName() }
+					${serviceInEvent.getService().getPrice()  }<i
+					class='mdi-content-remove-circle-outline right'></i>
+				</li>
 			</c:forEach>
 		</ul>
 	</div>

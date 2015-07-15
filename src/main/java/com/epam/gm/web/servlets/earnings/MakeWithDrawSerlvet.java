@@ -27,6 +27,7 @@ public class MakeWithDrawSerlvet extends HttpServlet implements
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException,
 			IllegalAccessException {
+		System.out.println("WithDraWWW");
 		User user = new User();
 		user = SessionRepository.getSessionUser(request);
 		Double amountOfMoney = Double.parseDouble(request
@@ -35,7 +36,6 @@ public class MakeWithDrawSerlvet extends HttpServlet implements
 		withdrawMoney.setMoneyAmount(amountOfMoney);
 		withdrawMoney.setUserId(user.getId());
 		new WithdrawMoneyDao().saveWithDrawMoney(withdrawMoney);
-		request.getRequestDispatcher("eventDetail.do").forward(request,
-				response);
+
 	}
 }
