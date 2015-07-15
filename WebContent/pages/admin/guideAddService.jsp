@@ -203,6 +203,8 @@
 
 											}
 											if (good == 1) {
+												
+												alert('11111');
 												$
 														.ajax({
 															url : 'addGuideServiceToEvent.do',
@@ -232,6 +234,9 @@
 
 															success : function(
 																	data) {
+																
+																alert('22222');
+																
 																var stringToShow = "Service Added"
 																if (data.isChanged) {
 																	stringToShow = "New Service Added";

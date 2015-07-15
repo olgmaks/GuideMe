@@ -26,8 +26,7 @@ import com.epam.gm.services.EventService;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 import com.google.gson.Gson;
 
-public class AddServiceToGuideEventServlet extends HttpServlet implements
-		HttpRequestHandler {
+public class AddServiceToGuideEventServlet implements HttpRequestHandler {
 
 	/**
 	 * 
@@ -38,6 +37,17 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 	public void handle(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException,
 			IllegalAccessException {
+		
+		
+		System.out.println("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+		
+		System.out
+				.println("********************************************************");
+		System.out.println(request.getParameter("datefromval"));
+		System.out.println(request.getParameter("timefromval"));
+		System.out.println(request.getParameter("datetoval"));
+		System.out.println(request.getParameter("timetoval"));
+
 		HttpSession session = request.getSession();
 
 		String description = request.getParameter("description");
@@ -52,10 +62,11 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 		}
 		ServiceInEvent serviceInEvent = new ServiceInEvent();
 		if (request.getParameter("datefromval") != null
-				|| request.getParameter("datefromval") != ""
-				|| !request.getParameter("datefromval").equals("")) {
+
+		|| !request.getParameter("datefromval").equals("")) {
 			String fullDateFrom = request.getParameter("datefromval") + "-"
 					+ request.getParameter("timefromval");
+			System.out.println("*********fulldatefrom" + fullDateFrom);
 			DateFormat formatFrom = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
 			Date dateFrom = null;
 			try {
@@ -66,7 +77,6 @@ public class AddServiceToGuideEventServlet extends HttpServlet implements
 			serviceInEvent.setDateFrom(dateFrom);
 		}
 		if (request.getParameter("datetoval") != null
-				|| request.getParameter("datetoval") != ""
 				|| !request.getParameter("datetoval").equals("")) {
 
 			String fullDateTo = request.getParameter("datetoval") + "-"

@@ -39,7 +39,9 @@ public class AccessFilter implements Filter {
         	return;
         }
         
-
+        System.out.println("before Allowing");
+        
+        
         //Allowing image
         if (URI.endsWith("css")
                 || URI.endsWith("js")
@@ -50,8 +52,10 @@ public class AccessFilter implements Filter {
                 || URI.endsWith("woff")
                 || URI.endsWith("ttf")
                 || URI.endsWith("woff2")
+                    || URI.endsWith("ico")
                 ) {
 
+        	System.out.println("do filter ");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
@@ -186,6 +190,10 @@ public class AccessFilter implements Filter {
         // }
         //
         // ((HttpServletRequest)request).getSession(true);
+        
+        
+        System.out.println("chain end ");
+        
         filterChain.doFilter(request, response);
 
     }

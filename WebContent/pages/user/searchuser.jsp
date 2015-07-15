@@ -1,4 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct" %>
+
+	<!-- begin Localization -->
+	<jsp:include page="../localization.jsp"/>
+	<ct:showLocale basename="locale.searchuser.messages" from = "searchuser.do" />
+
+	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+	<fmt:bundle basename="locale.searchuser.messages">
+	<!-- end Localization -->
+	
+
 <script src="js/search-user-filter.js"></script>
 
 <div class="row">
@@ -17,7 +29,7 @@
                             <div class="input-field" style="margin-top:-15px;">
                                 <input style="height: 30px;" placeholder="User name" name="userNameInput"
                                        id="userNameInput"/>
-                                <span style="float: right;margin-top: 3px;" >Results : <span id ="resultsQuantity">${users.size()}</span></span>
+                                <span style="float: right;margin-top: 3px;" > <fmt:message key="searchuser.Results" />: <span id ="resultsQuantity">${users.size()}</span></span>
                             </div>
                             <%--<input  class="browser-default" placeholder="Filter" name="friendfilter" id="friendfilter"/>--%>
                         </td>
@@ -47,12 +59,12 @@
                                         <div style="height: 40px;"><a href="userProfile.do?id=${user.id}"
                                                                       class='black-text'>${user.firstName} ${user.lastName}</a>
                                         </div>
-                                        <div style="height: 20px;"> <span>Rate: ${user.points}</span>
+                                        <div style="height: 20px;"> <span> <fmt:message key="searchuser.Rate"/>: ${user.points}</span>
                                         </div>
                                         <div style="height: 20px;"><span>${user.address.city.name}</span></div>
                                         <div style="float: right; vertical-align: bottom; margin-bottom: 10px; margin-right: 10px;">
                                             <a href='#_' id='sendFriendRequestId${user.id}' data-userid='${user.id}' class='btn blue send-friend-request waves-effect waves-light {3}'>
-                                                ADD</a>
+                                                <fmt:message key="searchuser.ADD" />  </a>
                                         </div>
                                     </div>
                                 </td>
@@ -66,3 +78,5 @@
         </ul>
     </div>
 </div>
+
+</fmt:bundle>

@@ -1,15 +1,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct" %>
+
+	<!-- begin Localization -->
+	<jsp:include page="../localization.jsp"/>
+	<ct:showLocale basename="locale.searchuser.messages" from = "searchuser.do" />
+
+	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+	<fmt:bundle basename="locale.searchuser.messages">
+	<!-- end Localization -->
+	
+
 <%--<script type="text/javascript" src="js/city-country-selecting.js" ></script>--%>
 <div class="row">
     <div class="col s12" style="margin-top:10px;">
         <ul class="collection z-depth-2 ">
             <li class="collection-item" >
-                Search options
+                <fmt:message key="rpanel.Searchoptions" /> 
             </li>
         </ul>
         <ul class="collection z-depth-2 ">
             <li class="collection-item">
-                Options
+                <fmt:message key="rpanel.options" />  
 
                 <div class="input-field" style="margin-top: 50px;">
                     <%--<div>--%>
@@ -18,11 +30,11 @@
                     <%--</div><div>--%>
                     <%--<input type="checkbox" class="filled-in" id="isUser" checked="checked"/>--%>
                     <%--<label for="isUser">User</label></div>--%>
-                        <label for="user-type-select" style="margin-top: -35px;">User or Guide</label>
+                        <label for="user-type-select" style="margin-top: -35px;"><fmt:message key="rpanel.UserorGuide"/> </label>
                         <select class="browser-default" style="height: 30px;" id="user-type-select">
-                            <option value="all">All</option>
-                            <option value="guide">Guides</option>
-                            <option value="user">Users</option>
+                            <option value="all"><fmt:message key="rpanel.All"/> </option>
+                            <option value="guide"><fmt:message key="rpanel.Guides"/> </option>
+                            <option value="user"><fmt:message key="rpanel.Users"/> </option>
                         </select>
                 </div>
 
@@ -46,10 +58,10 @@
 
 
                 <div class="input-field" style="margin-top: 35px;">
-                    <label for="city-select" style="margin-top: -35px;">Choose country</label>
+                    <label for="city-select" style="margin-top: -35px;"><fmt:message key="rpanel.Choosecountry"/> </label>
                     <select class="browser-default" style="height: 30px;" id="country-select-control">
 
-                        <option value="all" data-name="">All</option>
+                        <option value="all" data-name=""> <fmt:message key="rpanel.All"/> </option>
                         <c:forEach items="${countryItems}" var="countryItem">
                             <option value="${countryItem.id}" data-name="${countryItem.name}">${countryItem.name}</option>
                         </c:forEach>
@@ -57,9 +69,9 @@
                 </div>
 
                 <div class="input-field" style="margin-top: 35px;">
-                    <label for="city-select" style="margin-top: -35px;">Choose city</label>
+                    <label for="city-select" style="margin-top: -35px;"><fmt:message key="rpanel.Choosecity"/></label>
                     <select class="browser-default" style="height: 30px;" id="city-select">
-                        <option value="all">All</option>
+                        <option value="all"><fmt:message key="rpanel.All"/></option>
                     </select>
                 </div>
 
@@ -74,10 +86,12 @@
 
                     </form>
                     <br>
-                    <a href="#_" id="search-submit-button" style="margin-left: 10%" class="btn light-blue"><i class="mdi-action-search right"></i>Search</a>
+                    <a href="#_" id="search-submit-button" style="margin-left: 10%" class="btn light-blue"><i class="mdi-action-search right"></i><fmt:message key="rpanel.Search"/></a>
                 </div>
             </li>
         </ul>
     </div>
 </div>
+
+</fmt:bundle>
 
