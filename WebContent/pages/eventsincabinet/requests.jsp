@@ -9,8 +9,7 @@
 							if ($(this).attr("id") == "cancelrequestinevent"
 									&& $(this).text() != "canceled") {
 
-								Materialize.toast($(this).attr(
-										"userineventcurrentid"), 2000);
+								Materialize.toast("deleted", 2000);
 								$(this).attr("class", "btn red disabled");
 								$(this).text("canceled");
 								$.ajax({
@@ -40,27 +39,34 @@
 <br>
 
 <div class="row">
-	<c:forEach items="${ userRequestsToEvents}" var="userinservice">
-		<div class="col s1 m2">
-			<div class="card">
-				<div class="card-image">
-					<img src="${userinservice.getEvent().getAvatar().getPath() }">
+	<c:choose>
+		<c:when test="${!empty userRequestsToEvents }">
+			<c:forEach items="${ userRequestsToEvents}" var="userinservice">
+				<div class="col s1 m2">
+					<div class="card">
+						<div class="card-image">
+							<img src="${userinservice.getEvent().getAvatar().getPath() }">
 
-				</div>
-				<div class="card-content">
-					<p>${userinservice.getEvent().getCutName(25)}</p>
-				</div>
-				<div class="card-action">
-					<a
-						href="http://localhost:8080/GuideMe/eventDetail.do?id=${userinservice.getEvent().getId() }">Event
-						Detail</a>
-				</div>
+						</div>
+						<div class="card-content">
+							<p>${userinservice.getEvent().getCutName(25)}</p>
+						</div>
+						<div class="card-action">
+							<a
+								href="http://localhost:8080/GuideMe/eventDetail.do?id=${userinservice.getEvent().getId() }">Event
+								Detail</a>
+						</div>
 
-				<button id="cancelrequestinevent"
-					userineventcurrentid="${userinservice.getEvent().getId() }"
-					class="btn blue" style="width: 100%;" type="button" name="action">Cancel</button>
+						<button id="cancelrequestinevent"
+							userineventcurrentid="${userinservice.getEvent().getId() }"
+							class="btn blue" style="width: 100%;" type="button" name="action">Cancel</button>
 
-			</div>
-		</div>
-	</c:forEach>
+					</div>
+				</div>
+			</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<span>No requests yet</span>
+		</c:otherwise>
+	</c:choose>
 </div>

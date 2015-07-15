@@ -11,7 +11,14 @@
 				<span class="black-text">${entry.key.getFirstName() }
 					${entry.key.getLastName() }</span>
 				<p>
-					<span class="black-text"> ${entry.value } </span>
+					<c:choose>
+						<c:when test="${!empty entry.value }">
+							<span class="black-text"> ${entry.value } </span>
+						</c:when>
+						<c:otherwise>
+							<span>no orders</span>
+						</c:otherwise>
+					</c:choose>
 			</div>
 		</div>
 

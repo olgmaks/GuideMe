@@ -802,8 +802,19 @@ nav {
 								<ul class="clearfix">
 									<li><a href="#bio" class="sel"><fmt:message
 												key="event.Info" /></a></li>
-									<li><a href="#services"><fmt:message
-												key="event.Services" /></a></li>
+									<li><a href="#services"> <c:choose>
+												<c:when test="${isModerator && isGuide }">
+													<!-- 	font-size: 90%; -->
+													<span style="font-size: 90%;"> <fmt:message
+															key="event.ordered" /></span>
+												</c:when>
+												<c:otherwise>
+													<fmt:message key="event.Services" />
+												</c:otherwise>
+											</c:choose>
+									</a></li>
+
+
 									<li><a href="#photos"><fmt:message key="event.Fotos" /></a></li>
 
 									<c:if test="${isAdmin||isModerator}">

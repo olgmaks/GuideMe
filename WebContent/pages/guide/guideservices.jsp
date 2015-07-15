@@ -8,7 +8,6 @@
 <br>
 <br>
 <jsp:include page="createservicemodal.jsp" />
-<jsp:include page="editservicemodal.jsp" />
 <a style="margin-left: 2%;"
 	class="modal-trigger btn-floating btn-large waves-effect waves-light red"
 	href="#createservicemodal" id="createserivece"> <i
