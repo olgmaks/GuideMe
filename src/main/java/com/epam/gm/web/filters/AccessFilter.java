@@ -33,6 +33,12 @@ public class AccessFilter implements Filter {
         System.out.println(URI);
 
         System.out.println(session);
+        
+        if(URI.contains("//")) {
+        	servletResponse.sendRedirect("404.do");
+        	return;
+        }
+        
 
         //Allowing image
         if (URI.endsWith("css")
@@ -49,7 +55,24 @@ public class AccessFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
+        
+        
+//        if (URI.endsWith(".html") || URI.endsWith(".jsp")) {
+//       	 servletResponse.sendRedirect("http://localhost:8080/GuideMe/404.do");
+//       	 return;
+//        }        
+        
+        if (!URI.contains(".do") && (
+				!URI.equals("/GuideMe/")
+				)) {
+			System.out.println("uri not contains");
+			System.out.println(URI);
+			servletResponse.sendRedirect("404.do");
+			return;
+		}
+		
 
+		
         //Verifying does session null
         if (session == null && (
                         !URI.contains("home.do") &&
@@ -67,6 +90,8 @@ public class AccessFilter implements Filter {
                         !URI.contains("submitRegister.do") &&
                         !URI.contains("userforgotpassword.do") &&
                         !URI.contains("sendlinktoresetpass.do") &&
+                        !URI.contains("searchindexpage.do") &&
+                        !URI.contains("404.do") &&
                         !URI.equals("/GuideMe/")
          )) {
             System.out.println("session null - redirecting in login ");
@@ -94,6 +119,8 @@ public class AccessFilter implements Filter {
                         !URI.contains("submitRegister.do") &&
                         !URI.contains("userforgotpassword.do") &&
                         !URI.contains("sendlinktoresetpass.do") &&
+                        !URI.contains("searchindexpage.do") &&
+                        !URI.contains("404.do") &&
                         !URI.equals("/GuideMe/")
         )) {
 

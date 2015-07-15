@@ -16,8 +16,9 @@ public class AccessForRegisteredServlet implements HttpRequestHandler {
 			throws ServletException, IOException, SQLException,
 			IllegalAccessException {
 		
-		request.getRequestDispatcher("pages/401.jsp").forward(request, response);
+		//request.getRequestDispatcher("pages/401.jsp").forward(request, response);
 		
+		response.sendRedirect("loginPage.do");
 	}
 
 }
