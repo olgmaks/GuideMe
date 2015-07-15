@@ -63,7 +63,9 @@ public class AccessFilter implements Filter {
 //        }        
         
         if (!URI.contains(".do") && (
-				!URI.equals("/GuideMe/")
+				!URI.equals("/GuideMe/") &&
+				!URI.contains("chat") &&
+				!(URI.contains("Report"))
 				)) {
 			System.out.println("uri not contains");
 			System.out.println(URI);

@@ -64,7 +64,7 @@
 
 
 <fmt:bundle basename="locale.admin.admin">
-	report for all user
+	<fmt:message key="user.history" />
 	<form action="UserDetailReport" method="get">
 		<button type="submit"
 		style="border: 0; background: transparent">
@@ -84,8 +84,8 @@
 					<th><fmt:message key="user.type" /></th>
 				
 					<th><fmt:message key="user.city" /></th>
-					<th>report</th>
-					<th width="5%">active</th>
+					<th><fmt:message key="user.report" /></th>
+					<th width="5%"><fmt:message key="user.active" /></th>
 				</tr>
 			</thead>
 

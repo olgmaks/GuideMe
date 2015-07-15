@@ -14,7 +14,6 @@
 	var id;
 	
 	 $('form[name=saveForm]').submit(function(){
-			alert(1)
 			return false;
 	    });
 	$(document).ready(

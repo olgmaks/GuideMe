@@ -1,4 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct"%>
+<!-- begin Localization -->
+	<jsp:include page="../localization.jsp" />
+	<ct:showLocale basename="locale.admin.admin"
+		from="admincity.do" />
+	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
+	<fmt:bundle basename="locale.dataTable.dataTable">
+		<!-- end Localization -->
 <style>
 .table-wrapper {
 	table-layout: fixed;
@@ -23,6 +32,7 @@
 }
 
 </style>
+
 <script src="js/moment.js"></script>
 <script type="text/javascript">
 var friendId;
@@ -54,7 +64,7 @@ var friendAvatar;
 						var tdUser = '<tr>'
 								+ '<td class = "td-left-round" bgcolor="'
 								+ colorSender
-								+ '" width="10%">'
+								+ '" width="15%">'
 								+ item.sender.firstName
 								+ " "
 								+ item.sender.lastName
@@ -68,15 +78,15 @@ var friendAvatar;
 												'hh:mm MM D, YYYY')
 								+ '</td><td  class = "td-right-round"  bgcolor= "'
 								+ colorSender
-								+ '" width="40%">'
+								+ '" width="50%">'
 								+ item.message.replace(
 										/</g, '&lt')
 								+ '</td>'
-								+ '<td width="10%"></td>'
+								+ '<td width="15%"></td>'
 								+ '</tr>'
 					
 						var tdSender = '<tr>'
-								+ '<td width = "10%"></td>'
+								+ '<td width = "15%"></td>'
 								+ '<td class = "td-left-round" bgcolor= "'
 								+ colorRecived
 								+ '" width="20%"> '
@@ -85,13 +95,13 @@ var friendAvatar;
 												'hh:mm MM D, YYYY')
 								+ '</td><td bgcolor= "'
 								+ colorRecived
-								+ '" width="40%">'
+								+ '" width="50%">'
 								+ item.message.replace(
 										/</g, '&lt')
 								+ '</td>'
 								+ '<td class = "td-right-round" bgcolor="'
 								+ colorRecived
-								+ '" width="10%">'
+								+ '" width="15%">'
 								+ item.sender.firstName
 								+ " "
 								+ item.sender.lastName
@@ -101,9 +111,7 @@ var friendAvatar;
 						trHTML += item.senderId == "${sessionUser.id}" ? tdUser
 								: tdSender;
 					
-	                	
-	                	
-	                	      
+	                	  	      
 	                });
 	             
 	                $("#messageUser").append(trHTML);
@@ -112,20 +120,20 @@ var friendAvatar;
 	        });    		
     }
 </script>
-
+	
+	
 <div class="row">
 <h5 id = "friendTitle"></h5>
-    	<div class="col s12" style="margin-top:10px;">
+    	<div class="collection z-depth-2 " style="margin-top:10px;">
 				<div class="table-wrapper" id = "divTableMessages">
 					<table  id = "messageUser">
 					</table>		
-				</div>
+		</div>
 				<input  type = text id = "enterMessage" onkeydown="if (event.keyCode == 13) sendMessage();">
 				<input  type="submit" value="Send" onclick="sendMessage();" id = "submitButton"/>
         </div>
 	
     </div>
-
     <script>
  // Websocket Endpoint url
     var host = window.location.host;
@@ -147,15 +155,15 @@ var friendAvatar;
                
                 };
                if (friendId == jsonObj.userId){
-            	   var td = ' <td class = "td-right-round" bgcolor= "#2ECCFA" width="10%">'
+            	   var td = ' <td class = "td-right-round" bgcolor= "#2ECCFA" width="15%">'
 						+ jsonObj.userName
 						+ '<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="'
                            + jsonObj.friendAvatar
                            + '" ></td>';
-					var trHTML = '<tr><td></td>'
+					var trHTML = '<tr><td width = "15%"></td>'
 						+ '<td class = "td-left-round" bgcolor= "#2ECCFA" width = "20%">'
 						+ moment().format('hh:mm MM D, YYYY')
-						+ '</td><td bgcolor= "#2ECCFA" width="70%">  '
+						+ '</td><td bgcolor= "#2ECCFA" width="50%">  '
 						+ jsonObj.message.replace(/</g, '&lt') + '</td>' + td
 						+ '</tr>';
                		$("#messageUser").append(trHTML);
@@ -187,14 +195,14 @@ var friendAvatar;
              var table = document.getElementById("messageUser");
              var rowCount = table.rows.length;
              var trHTML = '<tr>'
-					+ '<td class = "td-left-round" bgcolor= "#CEF6E3" width="10%">'
+					+ '<td class = "td-left-round" bgcolor= "#CEF6E3" width="15%">'
 					+ userName
 					+ '<img class="circle" style="height: 30px; width: 30px; object-fit: cover" src="${sessionUser.avatar.path}"></td>'
 					+ '<td bgcolor= "#CEF6E3" width = "20%">'
 					+ moment().format('hh:mm MM D, YYYY')
-					+ '</td><td class = "td-right-round" bgcolor= "#CEF6E3" width="60%">  '
+					+ '</td><td class = "td-right-round" bgcolor= "#CEF6E3" width="50%">  '
 					+ message.replace(/</g, '&lt')
-					+ '</td><td width="10%"></td></tr>';
+					+ '</td><td width="15%"></td></tr>';
              $("#messageUser").append(trHTML);
              scrollToBottom();
              inputElement.value = "";
@@ -239,13 +247,12 @@ var friendAvatar;
     
 <div id="answerOnCommentWindow" class="modal" style="height: 320px;">
     <div class="modal-content">
-        <h4>Provide your comment</h4>
+        <h4><fmt:message key="messageadmin.head" /></h4>
 
         <div class="row" style="margin-left: 10%">
             <div class="input-field col s6" style="width: 80%">
                 <%--<i class="material-icons prefix">mode_edit</i>--%>
                 <textarea id="messageRespond" class="materialize-textarea" length="120"></textarea>
-                <label for="messageRespond">Your respond</label>
             </div>
         </div>
 
@@ -277,3 +284,4 @@ $('#sendRespondOnComment').on('click', function () {
 
 });
 </script>
+</fmt:bundle>
