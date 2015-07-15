@@ -92,8 +92,7 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 							user.getId(), id));
 			request.setAttribute("allmembersievent",
 					new UserInEventDao().getAllUserInEventByEventId(id));
-			request.setAttribute("allMembersOrders",
-					new PaidServiceDao().getAllUserAndOrdersByEventId(id));
+			
 			// gryn - adding try
 			Integer sessionUserId = null;
 			try {
