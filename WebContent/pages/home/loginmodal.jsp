@@ -1,3 +1,5 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct" %>
 <div id="signInModal" class="modal"
 	style="margin-left: 55%; width: 40%;">
 	<!-- Show this window when user not logged -->

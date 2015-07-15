@@ -4,6 +4,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
+<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+<fmt:bundle basename="locale.cabinet.messages">
+
 <script src="js/left-panel-tag-controller.js" type="text/javascript"></script>
 
 <script>
@@ -12,6 +16,7 @@
 			$('#modalInterestsWindow').openModal();
 			$('.ui-autocomplete').css('z-index', '1001');
 		});
+		
 		$('#modalLanguages').click(function() {
 			$('#modalLanguagesWindow').openModal();
 			$('.ui-autocomplete').css('z-index', '1001');
@@ -19,7 +24,7 @@
 	});
 </script>
 <div class="row">
-	<div class="col s12" style="margin-top: 10px; width: 260px;">
+	<div class="col s12" style="margin-top: 10px; width: 270px;">
 		<ul class="collection z-depth-2 " style="height: 100%;">
 			<li class="collection-item">
 				<div class="" align="center">
@@ -38,49 +43,49 @@
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; text-align: left; font-size: 100%; text-transform: capitalize">
-						Events<i class="mdi-action-extension right"></i>
+						<fmt:message key="menu.events"/><i class="mdi-action-extension right"></i>
 					</button>
 			</a> <a href="addEvent.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-						New event<i class="mdi-content-add-circle-outline right"></i>
+						<fmt:message key="menu.newEvent"/><i class="mdi-content-add-circle-outline right"></i>
 					</button>
 			</a> <a href="home.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-						Find event<i class="mdi-action-search right"></i>
+						<fmt:message key="menu.findEvent"/><i class="mdi-action-search right"></i>
 					</button>
 			</a> <a href="usermessages.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-						Messages <i class="mdi-content-mail right"></i>
+						<fmt:message key="menu.messages"/> <i class="mdi-content-mail right"></i>
 					</button>
 			</a> <a href="userfriends.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-						Friends<i class="mdi-social-group right"></i>
+						<fmt:message key="menu.friends"/><i class="mdi-social-group right"></i>
 					</button>
 			</a> <a href="searchuser.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-						Find friends<i class="mdi-social-group-add right"></i>
+						<fmt:message key="menu.findFriends"/><i class="mdi-social-group-add right"></i>
 					</button>
 			</a> <a href="userCabinetComments.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-						Comments<i class="mdi-communication-comment right"></i>
+						<fmt:message key="menu.comments"/><i class="mdi-communication-comment right"></i>
 					</button>
 			</a> <a href="usergallery.do"><button
 						class="btn light-blue waves-effect waves-light" type="submit"
 						name="action"
 						style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-						Gallery<i class="mdi-image-collections right"></i>
+						<fmt:message key="menu.gallery"/><i class="mdi-image-collections right"></i>
 					</button></a> <!-- <a href="wallet.do">
 					<button class="btn light-blue waves-effect waves-light"
 						type="submit" name="action"
@@ -92,23 +97,23 @@
 						<button class="btn light-blue waves-effect waves-light"
 							type="submit" name="action"
 							style="width: 100%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-							Earnings<i class="mdi-action-view-list right"></i>
+							<fmt:message key="menu.earnings"/><i class="mdi-action-view-list right"></i>
 						</button>
 					</a>
 					<a href="guideservices.do">
 						<button class="btn light-blue waves-effect waves-light"
 							type="submit" name="action"
 							style="width: 100%; margin-top: 10px; text-align: left; font-size: 90%; text-transform: capitalize">
-							Services Templates</button>
+							<fmt:message key="menu.servicesTemplates"/></button>
 					</a>
 				</c:if>
 
 				<h6>
-					<a href="#_" id="modalLanguages">Languages</a>:
+					<a href="#_" id="modalLanguages"><fmt:message key="menu.languages"/></a>:
 					<div id="userLanguagesTagReferences" style="width: 200px;"></div>
 				</h6>
 				<h6>
-					<a href="#_" id="modalInterests">Interests</a>:
+					<a href="#_" id="modalInterests"><fmt:message key="menu.interests"/></a>:
 					<div id="userInterestsTagReferences" style="width: 200px;"></div>
 				</h6>
 			</li>
@@ -129,6 +134,9 @@
 	</form>
 	</div>
 </div>
+
+</fmt:bundle>
+
 <jsp:include page="modal/userintereststags.jsp" />
 <jsp:include page="modal/userlanguages.jsp" />
 

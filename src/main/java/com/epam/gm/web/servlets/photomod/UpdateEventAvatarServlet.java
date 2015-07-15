@@ -20,7 +20,8 @@ public class UpdateEventAvatarServlet implements HttpRequestHandler{
 	// TODO Auto-generated method stub
         String path = request.getParameter("location");
         Photo photo = PhotoService.serve().getPhotoByPath(path);
-
+        	
+        
 
         Integer eventId = (Integer)request.getSession(true).getAttribute("eventId");
         Integer photoId = photo.getId();

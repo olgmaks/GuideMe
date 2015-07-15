@@ -1,6 +1,10 @@
 <nav class="white" role="navigation">
 	<div class="nav-wrapper container">
 		<ul>
+		<li>
+             <div data-country-select="true" ></div>
+	    </li>
+		
 			<li><a href=${sessionUser==null ? "home.do" : "userCabinet.do"}><div
 						style="height: 100%;">
 						<img src="icons/guide-me.png"

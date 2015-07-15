@@ -94,6 +94,7 @@ public class AccessFilter implements Filter {
                         !URI.contains("sendlinktoresetpass.do") &&
                         !URI.contains("searchindexpage.do") &&
                         !URI.contains("404.do") &&
+                        !URI.contains("local.do") &&
                         !URI.equals("/GuideMe/")
          )) {
             System.out.println("session null - redirecting in login ");
@@ -123,6 +124,7 @@ public class AccessFilter implements Filter {
                         !URI.contains("sendlinktoresetpass.do") &&
                         !URI.contains("searchindexpage.do") &&
                         !URI.contains("404.do") &&
+                        !URI.contains("local.do") &&
                         !URI.equals("/GuideMe/")
         )) {
 

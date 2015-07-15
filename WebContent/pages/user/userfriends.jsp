@@ -1,4 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct" %>
+
+<ct:showLocale basename="locale.cabinet.messages"  from = "userCabinet.do" />
+<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+<fmt:bundle basename="locale.cabinet.messages">
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -100,7 +106,7 @@
                                 + currentUser.friend.avatar.path
                                 + "'>"+"</a>"+"</td><td><div><a href='userProfile.do?id="+currentUser.friend.Id+"'class='black-text'>"
                                 + currentUser.friend.firstName + " " + currentUser.friend.lastName
-                                + "</a><br><br><div style='float: right; margin-right: 10px;'><span style='margin-right: 10px;'>Remove friend</span><a href='#_' class='btn-floating light-blue removefriend' data-id='"
+                                + "</a><br><br><div style='float: right; margin-right: 10px;'><span style='margin-right: 10px;'>"+_("js.friends.deleteFriend")+"</span><a href='#_' class='btn-floating light-blue removefriend' data-id='"
                                 + currentUser.id
                                 + "'><i class='mdi-navigation-close'></i></a></div></div></td></tr></table></div>"
                         );
@@ -145,11 +151,11 @@
             <li class="collection-item" style="height : 50px;">
                 <table style="width: 700px;height:30px; margin-top:-12px;">
                     <tr>
-                        <td><a class="black-text" href="userfriends.do">Friends</a></td>
-                        <td><a class="black-text" href="userreceivedrequests.do">Incoming Requests</a></td>
-                        <td><a class="black-text" href="usersentrequests.do">Sent Requests</a></td>
+                        <td><a class="black-text" href="userfriends.do"><fmt:message key="friends.friends"/></a></td>
+                        <td><a class="black-text" href="userreceivedrequests.do"><fmt:message key="friends.incomingRequests"/></a></td>
+                        <td><a class="black-text" href="usersentrequests.do"><fmt:message key="friends.sentRequests"/></a></td>
                         <td>
-                            <input placeholder="Filter" name="friendfilter" id="friendfilter" />
+                            <input placeholder="<fmt:message key="friends.filter"/>" name="friendfilter" id="friendfilter" />
                         </td>
                     </tr>
                 </table>
@@ -216,7 +222,7 @@
                                                     <br>
 
                                                     <div style="float: right; margin-right: 10px;">
-                                                        <span style="margin-right: 10px;">Call Back</span>
+                                                        <span style="margin-right: 10px;"><fmt:message key="friends.cancelRequest"/></span>
                                                         <a href="#_"
                                                            class="btn-floating light-blue callbackfriendrequest"
                                                            data-id="${userFriend.id}">
@@ -247,7 +253,7 @@
                                                 <br><br>
 
                                                 <div style="float: right; margin-right: 10px;">
-                                                    <span style="margin-right: 10px;">Remove friend</span>
+                                                    <span style="margin-right: 10px;"><fmt:message key="friends.deleteFriend"/></span>
                                                     <a href="#_" class="btn-floating light-blue removefriend"
                                                        data-id="${userFriend.id}">
                                                         <i class="mdi-navigation-close"></i>
@@ -269,3 +275,5 @@
 
     </div>
 </div>
+</fmt:bundle>
+
