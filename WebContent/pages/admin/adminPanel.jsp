@@ -90,7 +90,7 @@
 			</tr>
 		</table>
 
-
+<fmt:bundle basename="locale.admin.admin">
 		<footer class="page-footer teal">
 			<div class="container">
 				<div class="row">
@@ -113,5 +113,7 @@
 			</div>
 		</footer>
 
+</fmt:bundle>
 </body>
+
 </html>

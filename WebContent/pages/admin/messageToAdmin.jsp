@@ -50,7 +50,7 @@
 			<thead>
 				<tr>
 					<th hidden>ID</th>
-					<th><fmt:message key="global.name" /></th>
+					<th><fmt:message key="user.user" /></th>
 					<th><fmt:message key="message.message" /></th>
 					<th><fmt:message key="message.date" /></th>
 				</tr>
