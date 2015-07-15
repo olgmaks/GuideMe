@@ -101,7 +101,7 @@ $(document).ready(function () {
         if (country === 'all') {
 
 
-            citySelect.append("<option value='all'>" + "All" + "</option>");
+            citySelect.append("<option value='all'>" +  _("js.rpanel.All") + "</option>");
 
         } else {
 
@@ -111,7 +111,7 @@ $(document).ready(function () {
                 success: function (cities) { //we're calling the response json array 'cities'
                     var citySelect = $("#city-select");
                     citySelect.empty();
-                    citySelect.append("<option value='all'  data-name='all'>" + "All" + "</option>");
+                    citySelect.append("<option value='all'  data-name='all'>" + _("js.rpanel.All") + "</option>");
                     //console.log(cities);
                     $.each(cities, function (index, name) {
                         //console.log(index + " " + name);
@@ -182,12 +182,12 @@ function getCard(user) {
     var points = user.points;
     var sendFriendRequestId = "sendFriendRequestId" + user.Id;
     var sendFriendRequestClass = "send-friend-request";
-
+    
     return "<div class='card' id = 'card-" + userId + "' style='height: 150px; width: 47%; min-width: 300px; max-width:350px; float: left; margin-left: 10px;'>" +
         "<table><tr><td style='width: 120px; vertical-align: top;'>" +
         "<a href='userProfile.do?id="+userId+"'><img class='circle' style='height: 120px; width: 120px; object-fit: cover' src='" + pathToImage + "'></a></td><td><div>" +
         "<div style='height: 40px;'><a href='userProfile.do?id="+userId+"' class='black-text'>" + fName + " " + lName + "</a></div>" +
-        "<div style='height: 20px;'> <span>Rate: " + points + "</span></div>" +
+        "<div style='height: 20px;'> <span> "+ _("js.searchuser.Rate")  + ": "  + points + "</span></div>" +
         "<div style='height: 20px;'><span>" + cityName + "</span></div>" +
         "<div style='float: right; vertical-align: bottom; margin-bottom: 10px; margin-right: 10px;'>" +
         "<a href='#_' id='" + sendFriendRequestId + "' data-userid='" + userId + "' class='btn blue waves-effect waves-light " + sendFriendRequestClass + "'>" +

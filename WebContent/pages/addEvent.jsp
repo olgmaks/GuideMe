@@ -348,7 +348,7 @@
 												<td style="width: 30%;"><label> <fmt:message key="register.Country" /></label> <select
 													id="countryByLang_${lang.id}" class="browser-default">
 														<option selected value="choose" disabled selected>
-															loginpage.country.choose</option>
+															<fmt:message key="js.choosecountry"/></option>
 
 														<c:forEach items="${requestScope.countryList}"
 															var="country">
@@ -418,7 +418,7 @@
 																																					'choose');
 
 																																	optFirst
-																																			.text('loginpage.city.choose');
+																																			.text(_('js.citychoose'));
 																																	$(
 																																			'#cityByLang_'
 																																					+ countryId)
@@ -457,10 +457,10 @@
 												</select></td>
 
 
-												<td style="width: 30%;"><label>City</label> <select
+												<td style="width: 30%;"><label> <fmt:message key="register.City" /></label> <select
 													id="cityByLang_${lang.id}" class="browser-default">
 														<option selected value="choose">
-															loginpage.city.choosecountryfirst</option>
+															<fmt:message key="js.choosecountryfirst"/>   </option>
 												</select> <script>
 													$('#cityByLang_${lang.id}')
 															.change(
@@ -506,7 +506,7 @@
 
 												<td style="width: 40%;">
 													<div class="input-field">
-														<label for="addressByLang_${lang.id}">Adress</label> <input
+														<label for="addressByLang_${lang.id}"> <fmt:message key="register.Adress"/> </label> <input
 															type="text" id="addressByLang_${lang.id}"
 															name="addressByLang_${lang.id}" /> <span
 															id="addressByLangMessage_${lang.id}"></span>
