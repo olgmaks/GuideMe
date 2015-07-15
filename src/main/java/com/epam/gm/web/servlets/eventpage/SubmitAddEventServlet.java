@@ -2,11 +2,9 @@ package com.epam.gm.web.servlets.eventpage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -17,17 +15,16 @@ import com.epam.gm.dateparser.DateParser;
 import com.epam.gm.model.Address;
 import com.epam.gm.model.City;
 import com.epam.gm.model.Event;
-
 import com.epam.gm.model.User;
 import com.epam.gm.model.UserInEvent;
 import com.epam.gm.services.AddressService;
 import com.epam.gm.services.CityService;
 import com.epam.gm.services.EventService;
 import com.epam.gm.services.UserInEventService;
-
 import com.epam.gm.sessionrepository.SessionRepository;
 import com.epam.gm.util.ValidateHelper;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
+import com.google.gson.Gson;
 
 public class SubmitAddEventServlet implements HttpRequestHandler {
 
@@ -192,6 +189,7 @@ public class SubmitAddEventServlet implements HttpRequestHandler {
 			event.setDateFrom(dateFrom);
 			event.setDateTo(dateTo);
 			event.setDescription(description);
+			event.setDeleted(false);
 			event.setStatus("active");
 
 			event.setModeratorId(user.getId());
@@ -283,9 +281,21 @@ public class SubmitAddEventServlet implements HttpRequestHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			request.getRequestDispatcher("home.do").forward(request, response);
-
+			
+			//request.getRequestDispatcher("home.do").forward(request, response);
 		}
+		
+		
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		Map<String, Object> map = new HashMap<>();
+		map.put("isValid", ok);
+		
+		System.out.println("---------------------------------------------------------");
+		System.out.println("Result of submit event: " + ok);
+		
+		response.getWriter().write(new Gson().toJson(map));
+		
 
 	}
 }

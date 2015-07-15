@@ -2,6 +2,7 @@ package com.epam.gm.util;
 
 import java.sql.SQLException;
 
+import com.epam.gm.model.Event;
 import com.epam.gm.model.User;
 import com.epam.gm.services.UserService;
 
@@ -22,11 +23,74 @@ public class ValidateHelper {
 		return "";
 	}
 	
+	private static String[] eventFields = "eventName description partisipant_limit bad_count".split(" ");
+	
 	public static String validateField(String fieldName, String value, Class<?> clazz) {
 		String result = validateForScripts(value);
 		
 		if(!"".equals(result))
 			return result;
+		
+		if(clazz == Event.class) {
+			
+			if(fieldName.equals("eventName")) {
+				
+				if(value.trim().length() == 0) 
+					result = "js.valid.eventName.empty";
+				
+				else if(value.trim().length() > 250) 
+					result = "js.valid.stringtoolong";	
+				else 
+					result = "js.valid.ok";
+			
+			}
+			
+			if(fieldName.equals("description")) {
+				
+				if(value.trim().length() == 0) 
+					result = "js.valid.description.empty";
+				
+				else if(value.trim().length() > 1000) 
+					result = "js.valid.stringtoolong";	
+				else 
+					result = "js.valid.ok";
+			
+			}
+			
+			if(fieldName.equals("partisipant_limit")) {
+				
+				if(value.trim().length() == 0) 
+					result = "js.partisipant_limit.empty";
+				
+				else if( !isPositiveNumber(value)) 
+					result = "js.partisipant_limit.notint";	
+	
+				else if( Integer.parseInt(value.trim()) > 10000)
+					result = "js.partisipant_limit.toobig";	
+				else if(value.trim().length() > 4) 
+					result = "js.partisipant_limit.wrong";				
+				else 
+					result = "js.valid.ok";
+			
+			}	
+			
+			if(fieldName.equals("bad_count")) {
+				
+				if(value.trim().length() == 0) 
+					result = "js.partisipant_limit.empty";
+				
+				else if( !isNumber(value) || Integer.parseInt(value.trim()) < 0) 
+					result = "js.partisipant_limit.notint";	
+	
+				else if( Integer.parseInt(value.trim()) > 10000)
+					result = "js.partisipant_limit.toobig";	
+				else if(value.trim().length() > 4) 
+					result = "js.partisipant_limit.wrong";				
+				else 
+					result = "js.valid.ok";
+			}
+			
+		}
 		
 		if(clazz == User.class) {
 			if(fieldName.equals("firstName")) {
@@ -133,10 +197,16 @@ public class ValidateHelper {
 
 	private static String[] userFields = "email firstName lastName sex cellNumber password address cityId".split(" ");
 	
+	
+	
 	public static String[] getArrayOfFields(Class<?> clazz) {
 		
 		if(clazz == User.class) {
 			return userFields;
+		}
+		
+		if(clazz == Event.class) {
+			return eventFields;
 		}
 		
 		return null;
