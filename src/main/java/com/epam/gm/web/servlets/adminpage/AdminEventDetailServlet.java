@@ -77,6 +77,12 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			int id = Integer.parseInt(request.getParameter("id"));
 			Event event = new Event();
 			event = eventService.getById(id);
+			
+			if(event == null || event.getDeleted()) {
+				response.sendRedirect("404.do");
+				return;
+			}
+			
 
 			eventService.buildTagString(event);
 

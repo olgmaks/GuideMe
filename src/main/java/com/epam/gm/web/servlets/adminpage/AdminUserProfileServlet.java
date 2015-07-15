@@ -55,10 +55,17 @@ public class AdminUserProfileServlet implements HttpRequestHandler {
 		int id = Integer.parseInt(request.getParameter("id"));
 		UserService userService = new UserService();
 		User profile = userService.getUserById(id);
+		
 		if(profile == null) {
 			response.sendRedirect("404.do");
 			return;
 		}
+		
+		if(!profile.getIsActive()) {
+			response.sendRedirect("404.do");
+			return;
+		}
+		
 		userService.buildTagString(profile);
 		
 

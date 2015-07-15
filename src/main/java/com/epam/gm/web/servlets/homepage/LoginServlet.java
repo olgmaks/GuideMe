@@ -48,6 +48,8 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 
 		User user = userService.getUserByEmail(email);
 
+		
+
 		System.out.println(email);
 		System.out.println(password);
 		System.out.println("ajax query has been parsed !");
@@ -59,7 +61,11 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
 			try {
 				if (user.getPassword().equals(
 						MD5HashPassword.getHashPassword(password,
-								user.getEmail()))) {
+								user.getEmail()))  && (user.getIsActive()) 
+						&& (user.getUserTypeId().equals(1) || user.getUserTypeId().equals(2) || user.getUserTypeId().equals(3))		
+						
+						
+						) {
 					System.out.println("logination has been successful");
 					SessionRepository.setSessionUser(request, user);
 
