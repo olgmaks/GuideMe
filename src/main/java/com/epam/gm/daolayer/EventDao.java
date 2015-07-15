@@ -495,14 +495,11 @@ public class EventDao extends AbstractDao<Event> {
 		return results;
 	}
 
-	public void updateEventAvatar(Integer eventId, Integer photoId)
-			throws SQLException {
-		List<Event> list = new EventDao()
-				.getAllActiveEventsWhereUserModerator(2);
-		for (Event e : list) {
-			System.out.println(e);
-		}
-	}
+	public void updateEventAvatar(Integer eventId, Integer photoId) throws SQLException {
+		  Map<String, Object> updates = new HashMap<>();
+		  updates.put("avatar_id",photoId);
+		  super.updateById(eventId,updates);
+		 }
 
 	public Event getEventById(int id) throws SQLException {
 		List<Event> list = super.getByField("id", id);

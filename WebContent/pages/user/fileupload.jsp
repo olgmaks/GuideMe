@@ -71,13 +71,13 @@
 
         <ul class="collection z-depth-2">
             <li class="collection-item" style="height: 50px;">Drag and drop files or choose in file system
-                <a style="float: right;"
+               
                         <c:choose>
                     <c:when test="${uploadtype=='user'}">
-                        href="usergallery.do">Back to Gallery
+                         <a style="float: right;" href="usergallery.do">Back to Gallery
                     </c:when>
                     <c:otherwise>
-                        href="eventDetail.do?id=${eventId}">Back to Event
+                         <a style="float: right;" href="eventDetail.do?id=${eventId}">Back to Event
                     </c:otherwise>
                 </c:choose>
                 <img src="icons/back-icon.png" style="height: 30px;width: 30px;vertical-align: middle"></a>

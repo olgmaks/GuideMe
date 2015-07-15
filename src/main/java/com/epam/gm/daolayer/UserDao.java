@@ -86,27 +86,37 @@ public class UserDao extends AbstractDao<User> {
 			+ " WHERE e.id IN (?) "
 			+ " ORDER BY e.id, t.name ";
 
-	private static final String GET_FRIENDS_OF_FRIENDS = "u JOIN friend_user  fu ON u.id = fu.friend_id " +
-			" WHERE  fu.user_id IN (" +
-				" SELECT u.id FROM user u JOIN friend_user  fu2 ON u.id = fu2.friend_id " +
-				" WHERE  fu2.user_id=%1$s  " +
-					" AND EXISTS (" +
-						" SELECT * FROM friend_user fu3 WHERE fu3.user_id=fu2.friend_id " +
-						" AND EXISTS (" +
-						" SELECT * FROM friend_user WHERE fu2.user_id=fu3.friend_id)))" +
-						" AND EXISTS (" +
-						" SELECT * FROM friend_user fu1 WHERE fu1.user_id=fu.friend_id " +
-				" AND EXISTS (" +
-					" SELECT * FROM friend_user WHERE fu.user_id=fu1.friend_id" +
-						" )) and not u.id=%1$s and u.id NOT IN (" +
-							" SELECT u.id FROM user u JOIN friend_user  fu2 ON u.id = fu2.friend_id " +
-								" WHERE  fu2.user_id=%1$s" +
-					" AND EXISTS (" +
-						" SELECT * FROM friend_user fu3 WHERE fu3.user_id=fu2.friend_id" +
-					" AND EXISTS (" +
-						" SELECT * FROM friend_user WHERE fu2.user_id=fu3.friend_id" +
-				"  ))" +
-			"  ) GROUP BY u.id";
+	private static final String GET_FRIENDS_OF_FRIENDS = "u JOIN friend_user  fu ON u.id = fu.friend_id \n" +
+			"  WHERE  fu.user_id IN (\n" +
+			"        SELECT u.id FROM user u JOIN friend_user  fu2 ON u.id = fu2.friend_id \n" +
+			"        WHERE  fu2.user_id=%1$s  \n" +
+			"            AND EXISTS (\n" +
+			"            SELECT * FROM friend_user fu3 WHERE fu3.user_id=fu2.friend_id \n" +
+			"            AND EXISTS (\n" +
+			"            SELECT * FROM friend_user WHERE fu2.user_id=fu3.friend_id)))\n" +
+			"      AND EXISTS (\n" +
+			"      SELECT * FROM friend_user fu1 WHERE fu1.user_id=fu.friend_id \n" +
+			"      AND EXISTS (\n" +
+			"      SELECT * FROM friend_user WHERE fu.user_id=fu1.friend_id\n" +
+			"    )) and not u.id=%1$s and u.id NOT IN (\n" +
+			"       SELECT u.id FROM user u JOIN friend_user  fu2 ON u.id = fu2.friend_id \n" +
+			"       WHERE  fu2.user_id=%1$s  \n" +
+			"      AND EXISTS (\n" +
+			"      SELECT * FROM friend_user fu3 WHERE fu3.user_id=fu2.friend_id \n" +
+			"      AND EXISTS (\n" +
+			"      SELECT * FROM friend_user WHERE fu2.user_id=fu3.friend_id\n" +
+			"    ))\n" +
+			"  ) AND u.id NOT IN (\n" +
+			"      select fu.friend_id FROM friend_user fu  \n" +
+			"             WHERE fu.user_id = %1$s AND NOT EXISTS ( \n" +
+			"SELECT * FROM friend_user fu1 WHERE fu.friend_id = fu1.user_id AND fu.user_id=fu1.friend_id)\n" +
+			"  ) \n" +
+			"  AND u.id NOT IN (\n" +
+			"select fu.user_id FROM friend_user fu \n" +
+			"  WHERE fu.friend_id = %1$s AND NOT EXISTS (\n" +
+			"  SELECT * FROM friend_user fu1 WHERE fu.friend_id = fu1.user_id AND fu.user_id=fu1.friend_id)\n" +
+			"  )\n" +
+			"  GROUP BY u.id";
 
 	public UserDao() {
 		// gryn
