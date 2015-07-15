@@ -791,9 +791,9 @@ nav {
 
 							<nav id="profiletabs">
 								<ul class="clearfix">
-									<li><a href="#bio" class="sel"><fmt:message
+									<li><a href="#bio" class="sel white-text"><fmt:message
 												key="event.Info" /></a></li>
-									<li><a href="#services"> <c:choose>
+									<li><a href="#services" class="white-text"> <c:choose>
 												<c:when test="${isModerator && isGuide }">
 													<!-- 	font-size: 90%; -->
 													<span style="font-size: 90%;"> <fmt:message
@@ -806,25 +806,25 @@ nav {
 									</a></li>
 
 
-									<li><a href="#photos"><fmt:message key="event.Fotos" /></a></li>
+									<li><a href="#photos" class="white-text"><fmt:message key="event.Fotos" /></a></li>
 
 									<c:if test="${isAdmin||isModerator}">
-										<li><a href="#edit"><fmt:message key="event.Edit" /></a></li>
+										<li><a href="#edit"  class="white-text"><fmt:message key="event.Edit" /></a></li>
 									</c:if>
-									<li><a href="#members"><fmt:message
+									<li><a href="#members" class="white-text"><fmt:message
 												key="event.Members" /> </a></li>
 									<c:if test="${isModerator}">
-										<li><a href="#requests"><fmt:message
+										<li><a href="#requests" class="white-text"><fmt:message
 													key="event.Requests" /></a></li>
 									</c:if>
-									<li><a href="#chat"><fmt:message key="event.Chat" /></a></li>
+									<li><a href="#chat" class="white-text"><fmt:message key="event.Chat" /></a></li>
 
 									<c:if test="${isModerator && isGuide}">
-										<li><a href="#addservice"><fmt:message
+										<li><a href="#addservice" class="white-text"><fmt:message
 													key="event.AddService" /></a>
 									</c:if>
 									<c:if test="${isModerator}">
-										<li><a href="#mailsender"><fmt:message
+										<li><a href="#mailsender" class="white-text"><fmt:message
 													key="event.mailsender" /></a></li>
 										</li>
 									</c:if>
@@ -1533,7 +1533,7 @@ nav {
 									<ul class="collection">
 										<c:forEach items="${requestScope.requests}" var="m">
 
-											<form id="userFriendFormWithId${m.user.id}">
+											<form id="userFriendFormWithId${m.user.id}" style="height: 110px;">
 												<input type="hidden" id="userFriendId" class="userFriendId"
 													name="userFriendId" value="${m.user.id}"> <input
 													type="hidden" id="memberEventId" class="memberEventId"
@@ -1563,7 +1563,7 @@ nav {
 
 
 														<c:if test="${isModerator}">
-															<br>
+															<%--<br>--%>
 															<span style="margin-right: 10px;"><fmt:message
 																	key="event.AcceptRequest" /></span>
 															<a href="#_"
