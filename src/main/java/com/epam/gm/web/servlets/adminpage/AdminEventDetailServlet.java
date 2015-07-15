@@ -5,7 +5,9 @@ import groovy.lang.Newify;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 import javax.servlet.ServletException;
@@ -59,13 +61,18 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 				response.sendRedirect("401.do");
 				return;
 			}
+			List<String> someList = new ArrayList<String>();
+			someList.add("first");
+			someList.add("second");
+	
+			
 
 			if (user.isGuide()) {
 				List<Service> list = new ServiceDao()
 						.getNotTemporaryServicesByGuideId(user.getId());
 				request.setAttribute("listOfServices", list);
 			}
-			
+
 			EventService eventService = new EventService();
 			int id = Integer.parseInt(request.getParameter("id"));
 			Event event = new Event();
@@ -92,7 +99,7 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 							user.getId(), id));
 			request.setAttribute("allmembersievent",
 					new UserInEventDao().getAllUserInEventByEventId(id));
-			
+			request.setAttribute("myusersandorders", new PaidServiceDao().getAllUsersAndOrdersByEventId(id));
 			// gryn - adding try
 			Integer sessionUserId = null;
 			try {

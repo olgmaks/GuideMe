@@ -102,7 +102,7 @@
 								.click(
 										function() {
 											if (price != 0) {
-												$("#buyservices").text("buy");
+												$("#buyservices").text("order");
 												$("#buyservices").attr("href",
 														"buyServices.do");
 												$("#generalprice").text(
@@ -151,10 +151,8 @@ ORDERED SERVICES
 			idofserv="${service.getServiceInEvent().getService().getId() }"
 			price2="${service.getServiceInEvent().getService().getPrice() }">
 			<li class='collection-item lime lighten-3'>${service.getServiceInEvent().getService().getName() }
-				${service.getServiceInEvent().getService().getPrice() }$ <c:if
-					test="${service.isAccepted() }">
-					<i class='mdi-toggle-check-box right'></i>
-				</c:if>
+				${service.getServiceInEvent().getService().getPrice() }$ <i
+				class='mdi-toggle-check-box right'></i>
 		</div>
 		</li>
 

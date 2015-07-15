@@ -32,7 +32,37 @@ public class PaidServiceDao extends AbstractDao<PaidService> {
 				ALL_PAID_BY_USER_AND_EVENT_ID, userId, eventId));
 	}
 
-	public static void main(String[] args) throws SQLException {
+	public Map<User, List<PaidService>> getAllUsersAndOrdersByEventId(
+			int eventId) throws SQLException {
+		List<UserInEvent> list = new UserInEventDao()
+				.getAllUserInEventByEventId(eventId);
+		Map<User, List<PaidService>> map = new HashMap<User, List<PaidService>>();
+
+		if (list.isEmpty()) {
+			return null;
+		} else {
+			for (UserInEvent uie : list) {
+				List<PaidService> paidService = new PaidServiceDao()
+						.getByField("user_id", uie.getUser().getId());
+				map.put(uie.getUser(), paidService);
+
+			}
+			return map;
+		}
 
 	}
+
+	public static void main(String[] args) throws SQLException {
+		Map<User, List<PaidService>> map = new PaidServiceDao()
+				.getAllUsersAndOrdersByEventId(29);
+		for (Map.Entry<User, List<PaidService>> entry : map.entrySet()) {
+			System.out.println(entry.getKey());
+			for (PaidService p : entry.getValue()) {
+				System.out.println(p);
+			}
+
+		}
+
+	}
+
 }

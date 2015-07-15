@@ -60,7 +60,7 @@ public class BuyServicesServlet extends HttpServlet implements
 				paidService.setEventId(eventId);
 				paidService.setUserId(user.getId());
 				paidService.setServiceInEventId(servicesInBill.get(i));
-				paidService.setAccepted(false);
+			
 				new PaidServiceDao().savePaidService(paidService);
 
 			} catch (NumberFormatException e) {

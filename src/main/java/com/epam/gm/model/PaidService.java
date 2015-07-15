@@ -15,8 +15,7 @@ public class PaidService {
 	private Integer eventId;
 	@Column("service_in_event_id")
 	private Integer serviceInEventId;
-	@Column("accepted")
-	private Integer accepted;
+
 	@ForeignKey
 	@OneToMany(field = "user_id", value = User.class)
 	private User user;
@@ -57,24 +56,6 @@ public class PaidService {
 		this.serviceInEventId = serviceInEventId;
 	}
 
-	public boolean isAccepted() {
-		if (this.accepted == 1) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
-	public void setAccepted(boolean accepted) {
-		if (accepted) {
-			this.accepted = 1;
-		} else {
-			this.accepted = 0;
-		}
-
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -89,6 +70,12 @@ public class PaidService {
 
 	public void setServiceInEvent(ServiceInEvent serviceInEvent) {
 		this.serviceInEvent = serviceInEvent;
+	}
+
+	@Override
+	public String toString() {
+		return getServiceInEvent().getService().getName() + " "
+				+ getServiceInEvent().getService().getPrice() + "\n";
 	}
 
 }
