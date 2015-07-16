@@ -17,7 +17,7 @@
 
 	<!-- begin Localization -->
 	<jsp:include page="../localization.jsp"/>
-	<ct:showLocale basename="locale.profile.messages" from = "userProfile.do" />
+	<ct:showLocale basename="locale.profile.messages" from = "userProfile.do?id=${requestScope.profileId}" />
 
 	<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
 	<fmt:bundle basename="locale.profile.messages">
@@ -70,6 +70,8 @@
 </head>
 
 <body>
+<fmt:bundle basename="locale.profile.messages">
+
 
 <%--  <jsp:include page="adminHeader.jsp" /> --%>
 
@@ -88,13 +90,13 @@
 	<ul class="collection">
 			<li class="collection-item">
 			
-			<span style="margin-right: 10px;">Accept request</span>
+			<span style="margin-right: 10px;"><fmt:message key="Acceptrequest"  />  </span>
 			<a href="userProfileFriends.do?operation=accept&id=${requestScope.requestedId}&profile=${requestScope.profileId}" 
 			class="btn-floating light-blue acceptfriendrequest"
 			data-id=""> <i	class="mdi-navigation-check"></i>
 			</a>
    		    
-   		    <span style="margin-right: 10px;">Discard request</span>
+   		    <span style="margin-right: 10px;"><fmt:message key="Discardrequest"  /></span>
 			<a href="userProfileFriends.do?operation=discard&id=${requestScope.requestedId}&profile=${requestScope.profileId}" 
 			class="btn-floating light-blue removefriend"
 			data-id=""> <i
@@ -109,7 +111,7 @@
 	<ul class="collection">
 			<li class="collection-item">
 			
-   		    <span style="margin-right: 10px;">Callback request</span>
+   		    <span style="margin-right: 10px;"><fmt:message key="CancelRequest"  /></span>
 			<a href="userProfileFriends.do?operation=callback&id=${requestScope.requesterId}&profile=${requestScope.profileId}" 
 			class="btn-floating light-blue removefriend"
 			data-id=""> <i
@@ -124,7 +126,7 @@
 	<ul class="collection">
 			<li class="collection-item">
 			
-   		    <span style="margin-right: 10px;">Add Friend</span>
+   		    <span style="margin-right: 10px;"><fmt:message key="AddFriend"  /> </span>
 			<a href="userProfileFriends.do?operation=add&id=${requestScope.profileId}&profile=${requestScope.profileId}" 
 			class="btn-floating light-blue removefriend"
 			data-id=""> <i
@@ -139,7 +141,7 @@
 	<ul class="collection">
 			<li class="collection-item">
 			
-   		    <span style="margin-right: 10px;">Remove friend</span>
+   		    <span style="margin-right: 10px;"><fmt:message key="Removefriend"/> </span>
 			<a href="userProfileFriends.do?operation=remove&id=${requestScope.friendId}&profile=${requestScope.profileId}" 
 			class="btn-floating light-blue removefriend"
 			data-id=""> <i
@@ -153,18 +155,18 @@
       <nav id="profiletabs">
       <div class="nav-wrapper">
         <ul>
-          <li><a href="#bio" class="white-text">Info</a></li>
-		  <li><a href="#photos" class="white-text">Photos</a></li>
-          <c:if test="${isAdmin}" >
-          <li><a href="#activity" class="white-text">Activity</a></li>
+          <li><a href="#bio"><fmt:message key="profile.Info" /></a></li>
+		  <li><a href="#photos"> <fmt:message key="profile.Photos"/> </a></li>          
+          <c:if test="${isAdmin}">
+          <li><a href="#activity"><fmt:message key="profile.Activity"/> </a></li>
           </c:if>
 <!--           <li><a href="#friends">Friends</a></li> -->
           
-          <li><a href="#newfriends" class="white-text">Friends</a></li>
+          <li><a href="#newfriends"> <fmt:message key="profile.Friends" /> </a></li>
           
-          <li><a href="#moderatorEvents" class="white-text">Author of</a></li>
+          <li><a href="#moderatorEvents"> <fmt:message key="profile.Author" /></a></li>
           
-          <li><a href="#memberEvents" class="white-text">Member of</a></li>
+          <li><a href="#memberEvents"> <fmt:message key="profile.Member" /></a></li>
           
 <!--           <li><a href="#settings">Settings</a></li> -->
           
@@ -176,10 +178,10 @@
        <p><span><b>E-mail: </b> </span><c:out value="${requestScope.user['email']} "/></p>  
        </c:if>
        
-       <p><span><b>First name: </b></span><c:out value="${requestScope.user['firstName']} "/></p>  
-       <p><span><b>Last Name: </b></span><c:out value="${requestScope.user['lastName']} "/></p>  
+       <p><span><b><fmt:message key="profile.Firstname" />: </b></span><c:out value="${requestScope.user['firstName']} "/></p>  
+       <p><span><b><fmt:message key="profile.LastName" />: </b></span><c:out value="${requestScope.user['lastName']} "/></p>  
        
-       <p><span><b>Gender: </b></span><c:out value="${requestScope.user['sex']} "/></p> 
+       <p><span><b><fmt:message key="profile.Gender" /> : </b></span> <fmt:message key = "${requestScope.user['sex']}" /> </p> 
        
        <c:if test="${isAdmin}">
        <p><span><b>Facebook id: </b></span><c:out value="${requestScope.user['facebookId']} "/></p>  
@@ -187,16 +189,16 @@
        </c:if>   
        
        <c:if test="${isAdmin || isFriend}">
-       <p><span><b> Cell Number: </b></span><c:out value="${requestScope.user['cellNumber']} "/></p> 
+       <p><span><b> <fmt:message key="profile.CellNumber"/>: </b></span><c:out value="${requestScope.user['cellNumber']} "/></p> 
        </c:if>
        
-       <p><span><b> User type: </b></span><c:out value="${requestScope.user.userType['name']} "/></p>   
+       <p><span><b> <fmt:message key="profile.Usertype"/>: </b></span><c:out value="${requestScope.user.userType['name']} "/></p>   
        
-       <p><span><b> Languages: </b></span><c:out value="${requestScope.langs} "/></p>   
+       <p><span><b> <fmt:message key="profile.Languages"/>: </b></span><c:out value="${requestScope.langs} "/></p>   
        
-       <p><span><b>Average mark: </b></span><c:out value="${requestScope.averMark} "/></p>
+       <p><span><b> <fmt:message key="profile.Averagemark" /> : </b></span><c:out value="${requestScope.averMark} "/></p>
        
-       <p><span><b>Total points: </b></span><c:out value="${requestScope.total} "/></p>
+       <p><span><b><fmt:message key="profile.Totalpoints" />: </b></span><c:out value="${requestScope.total} "/></p>
        
        <c:choose>
 		    <c:when test="${not empty userLogined}">
@@ -211,7 +213,7 @@
 				        </div>
 				        	
 				        <div class="input-field col s12">       
-				       	<p><span><b>Comment</b></span>
+				       	<p><span><b> <fmt:message key="Comment" /> </b></span>
 				       	<input required type ="text" name="comment"></p>
 				  		</div>
 				  		
@@ -219,7 +221,7 @@
 				<button class="btn light-blue waves-effect waves-light"
 					type="submit" name="action"
 					style="width: 50%; margin-top: 10px; text-align: left; font-size: 100%; text-transform: capitalize">
-					Add comment<i class="mdi-content-add-circle-outline right"></i>
+					<fmt:message key="Addcomment" /> <i class="mdi-content-add-circle-outline right"></i>
 				</button>		   	   
 		   	   
 		   	   </form>
@@ -249,7 +251,7 @@
 					method="POST">
 
 							<button type="submit" class="secondary-content">
-							<i class="material-icons">delete</i>
+							<i class="material-icons"> <fmt:message  key="delete" /> </i>
 							</button>
 
 					</form>
@@ -320,7 +322,7 @@
 								</div>
 							</div>
 							<p>
-								Photos: 
+								 <fmt:message key="Photos" /> : 
 <!-- 								<a href="upload.do?uploadtype=event"> <span -->
 <!-- 									style="float: right;">Upload new photo</span></a> -->
 									
@@ -346,7 +348,7 @@
 	</section>      
       
 	  <section id="newfriends" class="hidden">
-			<p>Friends:</p>
+			<p> <fmt:message key="Friends" />:</p>
 
 
 			<ul class="collection" id="collectionResults">
@@ -356,7 +358,7 @@
 													${m.friend.firstName} ${m.friend.lastName}</a></span>
 													
 				<p>
-				<i>Average user mark: ${Math.round(m.rate)} Total points: ${Math.round(m.points)} </i> <br>
+				<i> <fmt:message key="profile.Averagemark"/>: ${Math.round(m.rate)} Total points: ${Math.round(m.points)} </i> <br>
 				</p> <%--       <a  class="secondary-content"><i class="material-icons">${m.status}</i></a> --%>													
 													
 				<form id="userFriendFormWithId${m.friend.id}">
@@ -371,7 +373,7 @@
 		</section>    
 		
 	  <section id="moderatorEvents" class="hidden">
-			<p>Author of:</p>
+			<p> <fmt:message key="profile.Author" />:</p>
 
 
 			<ul class="collection" id="collectionResults">
@@ -381,7 +383,7 @@
 												<c:out value="${m.name}"/></a></span>
 													
 				<p>
-				Date: <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${m.dateFrom}" /> - <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${m.dateTo}" /> 
+				<fmt:message key="Date"/>: <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${m.dateFrom}" /> - <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${m.dateTo}" /> 
 				</p>
 				
 				</li>
@@ -393,7 +395,7 @@
 		
 		
 	  <section id="memberEvents" class="hidden">
-			<p>Member of:</p>
+			<p> <fmt:message  key="profile.Member" />:</p>
 
 
 			<ul class="collection" id="collectionResults">
@@ -403,7 +405,7 @@
 												<c:out value="${m.name}"/></a></span>
 													
 				<p>
-				Date: <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${m.dateFrom}" /> - <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${m.dateTo}" /> 
+				<fmt:message key="Date" /> : <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${m.dateFrom}" /> - <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${m.dateTo}" /> 
 				</p>
 				
 				</li>
@@ -475,3 +477,5 @@ $(function(){
   });
 });
 </script>
+</fmt:bundle>
+</body>

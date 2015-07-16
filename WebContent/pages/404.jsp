@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -6,6 +7,8 @@
 <html>
 <head>
 <title>404</title>
+
+
 
 <link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
 <style type="text/css">
@@ -64,17 +67,19 @@ body{
 
 
 <body>
+<fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
+<fmt:bundle basename="locale.register.messages">
 	<div class="wrap">
 	   <div class="logo">
 	   <h1>404</h1>
-	    <p>Page not Found !</p>
+	    <p> <fmt:message key="PagenotFound" /> !</p>
   	      <div class="sub">
-	        <p><a href="home.do">Home</a></p>
+	        <p><a href="home.do"> <fmt:message key="Home"  />  </a></p>
 	      </div>
         </div>
 	</div>
 	
 	<div class="footer">
 	</div>
-	
+</fmt:bundle>	
 </body>
