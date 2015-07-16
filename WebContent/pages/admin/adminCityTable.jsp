@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct"%>
+<script src="js/jquery-1.8.2.js" type="text/javascript"></script>
 
 <!-- begin Localization -->
 <jsp:include page="../localization.jsp" />

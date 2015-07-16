@@ -27,6 +27,7 @@ public class AdminCityRequest implements HttpRequestHandler {
 		request.setCharacterEncoding("UTF-8");
 		LanguageService ls = new LanguageService();
 		String action = request.getParameter("action");
+		System.out.println("action = " + action);
 		Integer id = null;
 		if (action != null) {
 			try {

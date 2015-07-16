@@ -32,6 +32,7 @@ public class AdminTagRequest implements HttpRequestHandler {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		response.setContentType("application/json");
 
+		request.setCharacterEncoding("UTF-8");
 		if (action != null) {
 			try {
 				if (action.equals("add") || action.equals("edit")) {

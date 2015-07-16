@@ -89,6 +89,7 @@ public class CityDao extends AbstractDao<City> {
 		PreparedStatement stmt = connection
 				.prepareStatement(deleteByPureId);
 		stmt.setInt(1, pureId);
+		System.out.println("pureid =  "+pureId);
 		stmt.executeUpdate();
 		stmt.close();
 		ConnectionManager.closeConnection(connection);
