@@ -1,9 +1,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%@ taglib
 	prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+	<%@ taglib uri="/WEB-INF/customTag.tld" prefix="ct"%>
+	
+	<!-- begin Localization -->
+<jsp:include page="../localization.jsp" />
+<ct:showLocale basename="locale.earnings.messages"
+	from="earnings.do" />
+
+<fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
+<fmt:bundle basename="locale.earnings.messages">
+	<!-- end Localization -->
 <jsp:include page="withdrawmoneymodal.jsp" />
 <br>
 <br>
-<blockquote>Estimated Earnings</blockquote>
+<blockquote><fmt:message
+				key="earnings.estimated" /></blockquote>
 <script type="text/javascript">
 	$(document)
 			.ready(
@@ -23,7 +34,7 @@
 												good = 0;
 												Materialize
 														.toast(
-																'Quantity must be bigger than 25',
+																_('js.notbigger'),
 																2000);
 
 											} else {
@@ -33,7 +44,7 @@
 												if (amountofmoney.val() > parseFloat(totalamountofmoney)) {
 													Materialize
 															.toast(
-																	"You haven't such big amount",
+																	_('js.nosuchmoney'),
 																	2000);
 													good = 0;
 												}
@@ -60,7 +71,7 @@
 														});
 
 												Materialize.toast(
-														'Successful payout',
+														_('js.successpayout'),
 														6000);
 												$('#withdrawmoneymodal')
 														.closeModal();
@@ -74,47 +85,55 @@
 	<div class="col s5 m4">
 		<div class="card-panel grey lighten-4">
 			<span class="black-text">$${todayEarnings }</span><br> <br>
-			<span class="black-text">Today so far</span>
+			<span class="black-text"><fmt:message
+				key="earnings.today" /></span>
 		</div>
 	</div>
 	<div class="col s5 m4">
 		<div class="card-panel grey lighten-4">
 			<span class="black-text">$${yesterdayEarnings }</span><br> <br>
-			<span class="black-text">Yesteday</span>
+			<span class="black-text"><fmt:message
+				key="earnings.yesterday" /></span>
 		</div>
 	</div>
 	<div class="col s5 m4">
 		<div class="card-panel grey lighten-4">
 			<span class="black-text">$${thisMonthEarnings }</span><br> <br>
-			<span class="black-text">This Month so far</span>
+			<span class="black-text"><fmt:message
+				key="earnings.thismonth" /></span>
 		</div>
 	</div>
 	<div class="col s5 m4">
 		<div class="card-panel grey lighten-4">
 			<span class="black-text">$${lastMonthEarnings }</span><br> <br>
-			<span class="black-text">Last Month</span>
+			<span class="black-text"><fmt:message
+				key="earnings.lastmonth" /></span>
 		</div>
 	</div>
 </div>
-<blockquote>Finalized Earnings</blockquote>
+<blockquote><fmt:message
+				key="earnings.finalized" /></blockquote>
 <div class="row teal accent-1">
 	<div class="col s5 m4">
 		<div class="card-panel grey lighten-4">
 			<span id="totalmountofmoney" totalamount="${allNotWithDrawEarnings }"
 				class="black-text">$<fmt:formatNumber
 					value="${allNotWithDrawEarnings }" maxFractionDigits="1" /></span><br>
-			<br> <span class="black-text">Total Finalized Earnings</span>
+			<br> <span class="black-text"><fmt:message
+				key="earnings.total" /></span>
 			<!-- <div class="center-align"> -->
 			<p>
 				<a class="modal-trigger waves-effect waves-light btn"
-					href="#withdrawmoneymodal">Withdraw</a>
+					href="#withdrawmoneymodal"><fmt:message
+				key="earnings.withdraw" /></a>
 		</div>
 
 	</div>
 
 </div>
 <br>
-<blockquote>Earning History</blockquote>
+<blockquote><fmt:message
+				key="earnings.history" /></blockquote>
 <ul class="collection">
 	<c:forEach items="${allWithdraws }" var="withdrawmoney">
 		<li class="collection-item"><span><fmt:formatDate
@@ -123,3 +142,4 @@
 			class="purple lighten-5" style="margin-left: 78%;">-${ withdrawmoney.getMoneyAmount()}$</span></li>
 	</c:forEach>
 </ul>
+</fmt:bundle>
