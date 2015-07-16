@@ -27,7 +27,7 @@
                         <%--<td><a class="black-text" href="usersentrequests.do">Sent Requests</a></td>--%>
                         <td>
                             <div class="input-field" style="margin-top:-15px;">
-                                <input style="height: 30px;" placeholder="User name" name="userNameInput"
+                                <input style="height: 30px;" placeholder="<fmt:message key="searchuser.userNameFilter" />" name="userNameInput"
                                        id="userNameInput"/>
                                 <span style="float: right;margin-top: 3px;" > <fmt:message key="searchuser.Results" />: <span id ="resultsQuantity">${users.size()}</span></span>
                             </div>
