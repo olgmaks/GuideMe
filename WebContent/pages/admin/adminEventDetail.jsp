@@ -458,8 +458,11 @@ nav {
 				});
 				console.log(strSelector);
 				$(strSelector).remove();
+
+				var forDelete = '#userFriendFormWithId'+value;
+				$(forDelete).remove();
 			});
-			$(".removefriend").on("click", function() {
+			$(".removefriend").on("click",'.removefriend', function() {
 				console.log("removefriend ajax call");
 				var value = $(this).data('id');
 				var strSelector = "#userFriendCard" + value;
@@ -472,6 +475,9 @@ nav {
 				});
 				console.log(strSelector);
 				$(strSelector).remove();
+
+				var forDelete = '#userFriendFormWithId'+value;
+				$(forDelete).remove();
 			});
 			$(document).on('click', '.removefriend', function(e) {
 				console.log("removefriend ajax call");
@@ -486,6 +492,9 @@ nav {
 				});
 				console.log(strSelector);
 				$(strSelector).remove();
+
+				var forDelete = '#userFriendFormWithId'+value;
+				$(forDelete).remove();
 			})
 		});
 	</script>
@@ -1048,7 +1057,7 @@ nav {
 
 											<li class="collection-item avatar"
 												id="userFriendCard${m.user.id}"><img
-												src="${m.user.avatar.path}" alt="" class="circle"> <span
+												src="${m.user.avatar.path}" class="circle" style="object-fit: cover;"> <span
 												class="title"><a
 													href="userProfile.do?id=${m.user.id}">
 														${m.user.firstName} ${m.user.lastName}</a></span>
@@ -1542,7 +1551,7 @@ nav {
 
 												<li class="collection-item avatar"
 													id="userFriendCard${m.user.id}"><img
-													src="${m.user.avatar.path}" alt="" class="circle"> <span
+													src="${m.user.avatar.path}" alt="" class="circle" style="object-fit: cover"> <span
 													class="title"> <a
 														href="userProfile.do?id=${m.user.id}">
 

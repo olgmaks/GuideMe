@@ -153,18 +153,18 @@
       <nav id="profiletabs">
       <div class="nav-wrapper">
         <ul>
-          <li><a href="#bio">Info</a></li>
-		  <li><a href="#photos">Photos</a></li>          
-          <c:if test="${isAdmin}">
-          <li><a href="#activity">Activity</a></li>
+          <li><a href="#bio" class="white-text">Info</a></li>
+		  <li><a href="#photos" class="white-text">Photos</a></li>
+          <c:if test="${isAdmin}" >
+          <li><a href="#activity" class="white-text">Activity</a></li>
           </c:if>
 <!--           <li><a href="#friends">Friends</a></li> -->
           
-          <li><a href="#newfriends">Friends</a></li>
+          <li><a href="#newfriends" class="white-text">Friends</a></li>
           
-          <li><a href="#moderatorEvents">Author of</a></li>
+          <li><a href="#moderatorEvents" class="white-text">Author of</a></li>
           
-          <li><a href="#memberEvents">Member of</a></li>
+          <li><a href="#memberEvents" class="white-text">Member of</a></li>
           
 <!--           <li><a href="#settings">Settings</a></li> -->
           
