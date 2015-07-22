@@ -23,11 +23,15 @@
 
   <!-- begin Localization -->
   <jsp:include page="../localization.jsp"/>
+  
   <ct:showLocale basename="locale.home.messages"  from = "loginPage.do" />
 
   <fmt:setLocale value="${sessionScope.sessionLanguage.locale}"/>
   <fmt:bundle basename="locale.home.messages"/>
     <!-- end Localization -->
+
+
+
 
   <script type="text/javascript">
     $(document).ready(function () {
@@ -151,4 +155,5 @@
 </div>
 </fmt:bundle>
 </body>
+<jsp:include page="loginmodal.jsp"/>
 </html>

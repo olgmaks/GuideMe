@@ -155,7 +155,7 @@
         <div class="row" style="margin-left: 10%">
             <div class="input-field col s6" style="width: 80%">
                 <%--<i class="material-icons prefix">mode_edit</i>--%>
-                <textarea id="messageRespond" class="materialize-textarea" length="120"></textarea>
+                <textarea id="messageRespond" class="materialize-textarea" ></textarea>
                 <label for="messageRespond"><fmt:message key="com.Yourrespond"/></label>
             </div>
         </div>

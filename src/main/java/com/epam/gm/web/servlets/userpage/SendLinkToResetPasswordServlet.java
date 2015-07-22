@@ -93,13 +93,13 @@ public class SendLinkToResetPasswordServlet extends HttpServlet implements
 
 			t.start();
 
-		}/*
-		 * else { request.setAttribute("isWrong", true);
-		 * request.getRequestDispatcher(
-		 * "pages/user/userforgotpasswordpage.jsp").forward(request, response);
-		 * 
-		 * }
-		 */
+		} else {
+			request.setAttribute("isWrong", true);
+			request.getRequestDispatcher(
+					"pages/user/userforgotpasswordpage.jsp").forward(request,
+					response);
+
+		}
 
 	}
 }

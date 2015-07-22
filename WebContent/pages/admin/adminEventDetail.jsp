@@ -65,10 +65,11 @@
 
 <!-- begin Localization -->
 <jsp:include page="../localization.jsp" />
+<fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
 <ct:showLocale basename="locale.event.messages"
 	from="eventDetail.do?id=${requestScope.event.id}" />
 
-<fmt:setLocale value="${sessionScope.sessionLanguage.locale}" />
+
 <fmt:bundle basename="locale.event.messages">
 	<!-- end Localization -->
 
@@ -1693,25 +1694,25 @@ nav {
 																								+ "</a></span>";
 																						if (m.bedCount > 0) {
 																							f += "<br>"
-																									+ _("js.CanAccept")
+																									+ "Can accept"
 																									+ ": "
 																									+ m.bedCount
 																									+ " "
-																									+ _("js.persons");
+																									+ "persons";
 																						} else if (m.bedCount < 0) {
 																							f += "<br>"
-																									+ _("js.NeedLodjingFor")
+																									+ "Need Lodjing for"
 																									+ ": "
 																									+ (-m.bedCount)
 																									+ " "
-																									+ _("js.persons");
+																									+ "persons";
 																						}
 																						<c:if test="${isModerator}">
 
 																						if (data.moderatorId != m.userId) {
 
 																							f += "<br><span style='margin-right: 10px;'>"
-																									+ _("js.RemoveMember")
+																									+ "Remove member"
 																									+ "</span>"
 																									+ "<a   class='btn-floating light-blue removefriend' data-id='" + m.userId + "'> "
 																									+ "<i class='mdi-navigation-close'></i>"
@@ -1721,8 +1722,7 @@ nav {
 																						</c:if>
 
 																						f += "<a  class='secondary-content'><i class='material-icons'>"
-																								+ _("js."
-																										+ m.status)
+																								+ m.status
 																								+ "</i></a>"
 																								+ "</form>";
 																						resultCollenction

@@ -15,12 +15,12 @@
 <link href="css/materialize.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="js/materialize.js"></script>
-<script src="js/init.js"></script>
+<!-- <script -->
+<!-- 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+<!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+<!-- <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
+<!-- <script src="js/materialize.js"></script> -->
+<!-- <script src="js/init.js"></script> -->
 
 
 	<!-- begin Localization -->
