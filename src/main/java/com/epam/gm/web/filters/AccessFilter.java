@@ -133,7 +133,8 @@ public class AccessFilter implements Filter {
                         !URI.contains("local.do") &&
                         !URI.contains("changepassword.do")&&
                         !URI.contains("changingpassword.do")&&
-                        !URI.equals("/GuideMe/")
+                        !URI.equals("/GuideMe/")&&
+                        !URI.contains("mapstest.do")
         )) {
 
             System.out.println("session user null - redirecting in login ");
