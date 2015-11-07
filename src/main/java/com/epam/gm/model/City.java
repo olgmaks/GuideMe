@@ -26,6 +26,12 @@ public class City {
 	@Column("deleted")
 	private boolean deleted;
 	
+	@Column("lattitude")
+	private Double lattitude;
+	
+	@Column("longitude")
+	private Double longitude;
+	
     public boolean isDeleted() {
 		return deleted;
 	}
@@ -87,14 +93,31 @@ public class City {
 	public void setPureId(Integer pureId) {
 		this.pureId = pureId;
 	}
+	
+	
+
+	public Double getLattitude() {
+		return lattitude;
+	}
+
+	public void setLattitude(Double lattitude) {
+		this.lattitude = lattitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
 
 	@Override
-    public String toString() {
-	return "City [" + (id != null ? "id=" + id + ", " : "")
-		+ (name != null ? "name=" + name + ", " : "")
-		+ (countryId != null ? "countryId=" + countryId + ", " : "")
-		+ (country != null ? "country=" + country : "") + "]";
-    }
+	public String toString() {
+		return "City [id=" + id + ", name=" + name + ", lattitude=" + lattitude + ", longitude=" + longitude + "]";
+	}
+
+
 
  
 

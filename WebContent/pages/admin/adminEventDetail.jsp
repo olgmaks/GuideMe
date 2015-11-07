@@ -554,7 +554,11 @@ nav {
 					</c:choose></td>
 				<td style="width: 80%; vertical-align: top;">
 					<div id="w">
+						
+
+						
 						<div id="content" class="clearfix">
+						
 							<div id="userphoto">
 								<img src="${event.avatar.path}" alt="default avatar"
 									style="height: 120px; width: 120px; object-fit: cover">
@@ -666,6 +670,45 @@ nav {
 							</h3>
 
 							<p>
+							
+					
+					<c:if test="${requestScope.lattitude != null}">		
+                    <div id="map"  style="width:420px; height:170px"  ></div>
+                     <script>
+                     var marker;
+                     function initMap() {
+                       var map = new google.maps.Map(document.getElementById('map'), {
+                       zoom: 13,
+                       center: {lat:  <c:out value="${lattitude} " />, lng: <c:out value="${longitude} " />  }
+                      });
+
+                       marker = new google.maps.Marker({
+                       map: map,
+                       draggable: false,
+                       //animation: google.maps.Animation.DROP,
+                       animation: google.maps.Animation.BOUNCE,
+                       position: {lat: <c:out value="${lattitude} " />, lng: <c:out value="${longitude} " /> }
+                      });
+                       marker.addListener('click', toggleBounce);
+                       //marker.setAnimation(google.maps.Animation.BOUNCE);
+                     }
+
+                     function toggleBounce() {
+                     if (marker.getAnimation() !== null) {
+                         marker.setAnimation(null);
+                     } else {
+                        marker.setAnimation(google.maps.Animation.BOUNCE);
+                     
+                     }
+                   }
+                 </script>
+                 <script async defer
+                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAChmV8QcGApCfKoRqav4KAqBF0OEAqPnE&signed_in=true&callback=initMap">
+                 </script>
+				</c:if>			
+							
+							
+							<p>
 							<div id='totalNeed'>
 								<c:if test="${requestScope.totalBed > 0}">
 									<span class="blue-text">${requestScope.totalBedStr}</span>
@@ -683,6 +726,7 @@ nav {
 							<!-- 			   </div> -->
 
 							<!-- 			   </form>      -->
+
 
 
 							<c:if test="${!isModerator}">
@@ -1771,6 +1815,11 @@ nav {
 						key="event.DeletePhotoConfirm" /></a>
 			</div>
 		</div>
+		
+		
+
+	
+		
 	</fmt:bundle>
 </body>
 </html>

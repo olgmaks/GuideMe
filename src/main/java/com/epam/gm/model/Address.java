@@ -20,6 +20,12 @@ public class Address {
 	private Integer localId;
 	@Column("pure_id")
 	private Integer pureId;
+	
+	@Column("lattitude")
+	private Double lattitude;
+	
+	@Column("longitude")
+	private Double longitude;	
 
 	@ForeignKey
 	@OneToMany(field = "city_id", value = City.class)
@@ -73,6 +79,23 @@ public class Address {
 		this.city = city;
 	}
 
+	
+	public Double getLattitude() {
+		return lattitude;
+	}
+
+	public void setLattitude(Double lattitude) {
+		this.lattitude = lattitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
 	@Override
 	public String toString() {
 		StringJoiner res = new StringJoiner(", ");
@@ -82,7 +105,7 @@ public class Address {
 		if(address != null && address.trim().length() > 0)
 			res.add(address);
 		
-		return res.toString();			
+		return res.toString() + " lat: " + lattitude + " long: " + longitude;			
 	}
 
 	

@@ -330,6 +330,28 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			List<Tag> tags = new TagService().getAllEventTags(event.getId());
 
 			request.setAttribute("tags", tags);
+			
+			
+			Double lattitude = null;
+			Double longitude = null;
+			
+			if(event != null && event.getAddress() != null) {
+				if(event.getAddress().getLattitude() != null) {
+					lattitude = event.getAddress().getLattitude();
+					longitude = event.getAddress().getLongitude();
+				} else {
+					if(event.getAddress().getCity() != null ) {
+						lattitude = event.getAddress().getCity().getLattitude();
+						longitude = event.getAddress().getCity().getLongitude();
+					}
+				}
+			}
+			request.setAttribute("lattitude", lattitude);
+			request.setAttribute("longitude", longitude);
+			
+			System.out.println("lattitude = " + lattitude);
+			System.out.println("longitude = " + longitude);
+			
 
 			System.out.println(new PhotoService().getEventPhotos(id));
 			request.getRequestDispatcher("pages/admin/adminEventDetail.jsp")

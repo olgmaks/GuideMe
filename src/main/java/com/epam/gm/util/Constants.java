@@ -9,4 +9,6 @@ public interface Constants {
 	
 	int EN_LANG_ID = 3;
 	int DEFAULT_COUNTRY_ID = 1;
+	
+	String MAPS_KEY = "AIzaSyAChmV8QcGApCfKoRqav4KAqBF0OEAqPnE";
 }

@@ -38,7 +38,7 @@ public class AddressDaoTest {
     public void test3() throws SQLException {
     
     	
-		List<Address> addresses = addressDao.getAddressByPureId(11);
+		List<Address> addresses = addressDao.getAddressByPureId(7);
 		for (Address address : addresses) {
 			System.out.println(address);
 		}    	
