@@ -16,6 +16,7 @@ import com.epam.gm.services.EventService;
 import com.epam.gm.services.LanguageService;
 import com.epam.gm.services.WalletService;
 import com.epam.gm.sessionrepository.SessionRepository;
+import com.epam.gm.util.Constants;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class AddEventServlet implements HttpRequestHandler {
@@ -48,7 +49,28 @@ public class AddEventServlet implements HttpRequestHandler {
 		CountryService countryService = new CountryService();
 		List<Country> countryList = countryService.getAll();
 		request.setAttribute("countryList", countryList);
-
+		
+		Double lattitude = null;
+		Double longitude = null;
+		
+		if(user != null && user.getAddress() != null) {
+			if(user.getAddress().getLattitude() != null) {
+				lattitude = user.getAddress().getLattitude();
+				longitude = user.getAddress().getLongitude();
+			} else {
+				if(user.getAddress().getCity() != null ) {
+					lattitude = user.getAddress().getCity().getLattitude();
+					longitude = user.getAddress().getCity().getLongitude();
+				}
+			}
+		}
+		request.setAttribute("lattitude", lattitude);
+		request.setAttribute("longitude", longitude);
+		request.setAttribute("mapsKey", Constants.MAPS_KEY);
+		
+		System.out.println("lattitude = " + lattitude);
+		System.out.println("longitude = " + longitude);
+		
 		
 		request.getRequestDispatcher("pages/user/usercabinet.jsp").forward(
 				request, response);

@@ -298,7 +298,64 @@
 					<div class="row">
 
 						<form class="col s12" action="submitEvent.do" method="post" name = "registerform" id = "registerform">
+<div class="row">
+							
+  <script>
+var map;
+var infowindow;
 
+function initMap() {
+  var pyrmont = {lat: <c:out value="${lattitude} " />, lng: <c:out value="${longitude} " />};
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: pyrmont,
+    zoom: 15
+  });
+
+  infowindow = new google.maps.InfoWindow();
+
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch({
+    location: pyrmont,
+    radius: 1000,
+    types: ['restaurant', 'cafe']
+  }, callback);
+}
+
+function callback(results, status) {
+  if (status === google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      createMarker(results[i]);
+    }
+  }
+}
+
+function createMarker(place) {
+  var placeLoc = place.geometry.location;
+  var marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+	  document.getElementById('eventName').value=place.name;
+	  document.getElementById('addressByLang_2').value=place.vicinity;
+	  document.getElementById('addressByLang_3').value=place.vicinity;
+	  
+	  
+	  infowindow.setContent(place.name + " (" + place.vicinity + ")");
+    
+    infowindow.open(map, this);
+    //alert(place.name);
+	console.log(place);
+  });
+}
+
+    </script>
+    <div id="map" style="width:800px; height:200px" ></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${mapsKey}" />&signed_in=true&libraries=places&callback=initMap" async defer></script>    
+    
+    </div>						
 							
 							
 							<div class="row">

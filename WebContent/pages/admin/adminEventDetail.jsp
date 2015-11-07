@@ -703,7 +703,7 @@ nav {
                    }
                  </script>
                  <script async defer
-                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAChmV8QcGApCfKoRqav4KAqBF0OEAqPnE&signed_in=true&callback=initMap">
+                 src="https://maps.googleapis.com/maps/api/js?key=<c:out value="${mapsKey}" />&signed_in=true&callback=initMap">
                  </script>
 				</c:if>			
 							

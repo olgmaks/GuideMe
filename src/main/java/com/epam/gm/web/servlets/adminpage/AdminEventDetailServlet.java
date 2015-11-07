@@ -39,6 +39,7 @@ import com.epam.gm.services.ServiceInEventService;
 import com.epam.gm.services.TagService;
 import com.epam.gm.services.UserInEventService;
 import com.epam.gm.sessionrepository.SessionRepository;
+import com.epam.gm.util.Constants;
 import com.epam.gm.web.servlets.frontcontroller.HttpRequestHandler;
 
 public class AdminEventDetailServlet implements HttpRequestHandler {
@@ -348,6 +349,7 @@ public class AdminEventDetailServlet implements HttpRequestHandler {
 			}
 			request.setAttribute("lattitude", lattitude);
 			request.setAttribute("longitude", longitude);
+			request.setAttribute("mapsKey", Constants.MAPS_KEY);
 			
 			System.out.println("lattitude = " + lattitude);
 			System.out.println("longitude = " + longitude);
